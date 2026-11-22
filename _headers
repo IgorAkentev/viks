@@ -1,0 +1,10 @@
+/manifest.webmanifest
+  Content-Type: application/manifest+json
+/sw.js
+  Cache-Control: no-cache
+/version.json
+  Cache-Control: no-cache
+/manifest-neon.webmanifest
+  Content-Type: application/manifest+json
+/manifest-gold.webmanifest
+  Content-Type: application/manifest+json
