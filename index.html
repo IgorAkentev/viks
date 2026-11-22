@@ -1199,8 +1199,10 @@ html.light .ab-card{background:#fff;border-color:#0000000d}
 .ab-tst .un{color:var(--accent2)!important;font-weight:700;margin:1px 0 2px}
 .ab-tst .od{position:absolute;right:1px;bottom:1px;width:13px;height:13px;border-radius:50%;background:#10b981;box-shadow:0 0 0 3px #1b1830}
 .ab-tst>div{flex:1;text-align:center;padding:12px 4px 10px;border-radius:18px;background:#ffffff08;border:1px solid #ffffff10}
-.ab-tst .ci img{width:100%;height:100%;border-radius:50%;object-fit:cover;display:block}
-.ab-tst .ci{position:relative;width:52px;height:52px;margin:0 auto 8px;border-radius:50%;display:grid;place-items:center;font-weight:900;font-size:21px;color:#fff;box-shadow:0 8px 20px #0005}
+.ab-tst .ci img{position:absolute;inset:3px;width:calc(100% - 6px);height:calc(100% - 6px);border-radius:50%;object-fit:cover;display:block;pointer-events:none}
+.ab-tst .tc *{pointer-events:none}
+.ab-tst .tc{cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+.ab-tst .ci{position:relative;box-sizing:border-box;width:52px;height:52px;margin:0 auto 8px;border-radius:50%;display:grid;place-items:center;font-weight:900;font-size:21px;color:#fff;box-shadow:0 8px 20px #0005}
 .ab-tst b{display:block;font-size:14px}.ab-tst small{display:block;font-size:11.5px;color:var(--muted)}
 .ab-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}
 .ab-stats div{border-radius:18px;padding:12px 4px;background:#ffffff08;border:1px solid #ffffff10}
@@ -1415,7 +1417,7 @@ html.light #msgs .day:not(.sys){background:#ffffffcc;color:#4a4566;border-color:
 @keyframes premAura{50%{opacity:.45;transform:translate(-50%,-50%) scale(1.15)}}
 .m.mine .bub.stk.prem::before{animation-name:premAura2}@keyframes premAura2{50%{opacity:.45;transform:translate(0,-50%) scale(1.15)}}
 .prem-tag{position:absolute;top:4px;right:6px;font-size:11px;font-weight:900;padding:2px 7px;border-radius:9px;background:linear-gradient(135deg,#f59e0b,#ec4899,#8b5cf6);color:#fff;box-shadow:0 4px 12px #0006;z-index:1}
-.premfx{position:fixed;inset:0;z-index:400;pointer-events:none;display:grid;place-items:center;overflow:hidden}
+.premfx{position:fixed;inset:0;z-index:5000;pointer-events:none;display:grid;place-items:center;overflow:hidden}
 .premfx .bg{position:absolute;inset:0;background:radial-gradient(circle at 50% 50%,#0009,transparent 70%);animation:pfBg 2.8s ease forwards}
 @keyframes pfBg{0%{opacity:0}15%,70%{opacity:1}100%{opacity:0}}
 .premfx .hero{width:min(70vw,300px);height:min(70vw,300px);object-fit:contain;animation:pfHero 2.8s cubic-bezier(.2,1.4,.35,1) forwards;filter:drop-shadow(0 20px 50px #000a);position:relative;z-index:2}
@@ -1439,7 +1441,7 @@ html.light #msgs .day:not(.sys){background:#ffffffcc;color:#4a4566;border-color:
 .prem-page .perk{display:flex;gap:12px;align-items:center;text-align:left;padding:10px 4px;border-bottom:1px solid #ffffff0d}
 .prem-page .perk .e{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;font-size:20px;background:#ffffff0d;flex:none}
 .prem-page .perk b{display:block;font-size:14.5px}.prem-page .perk small{color:var(--muted);font-size:12.5px}
-.prem-page .demo{display:flex;gap:6px;justify-content:center;margin:12px 0 4px}.prem-page .demo img{width:52px;height:52px}
+.prem-page .demo{display:flex;gap:6px;justify-content:center;margin:12px 0 4px}.prem-page .demo button{padding:4px;border-radius:14px;touch-action:manipulation;transition:transform .15s}.prem-page .demo button:active{transform:scale(.85)}.prem-page .demo img{width:52px;height:52px;pointer-events:none}
 .prem-buy{background:linear-gradient(135deg,#f59e0b,#ec4899,#8b5cf6)!important;color:#fff!important;margin-top:14px}
 .prem-buy[disabled]{opacity:.65}
 .post .pact{gap:6px;flex-wrap:wrap;align-items:center}
@@ -2052,7 +2054,7 @@ function renderMsgs(scroll) {
       if (m.kind === 'voice' && m.media_url) bub.append(mediaNode(m, voiceEl));
       else if (m.kind === 'circle' && m.media_url) bub.append(mediaNode(m, circleEl));
       if (m.image_url && !isAlb) bub.append(el('img', { class: 'pic', src: m.image_url, alt: '', onclick: ev => { ev.stopPropagation(); viewImage(m.image_url); } }));
-      if (m.kind === 'sticker' && /^premium:/.test(m.media_url || '')) { bub.classList.add('stk', 'prem'); bub.append(el('span', { class: 'prem-tag' }, '✦'), animEmoji(m.body)); bub.addEventListener('click', ev => { ev.stopPropagation(); premFx(m.body); }); }
+      if (m.kind === 'sticker' && /^premium:/.test(m.media_url || '')) { bub.classList.add('stk', 'prem'); bub.append(el('span', { class: 'prem-tag' }, '✦'), animEmoji(m.body)); bub.addEventListener('click', ev => { ev.stopPropagation(); premFx(m.body, true); }); }
       else if (m.kind === 'sticker') { bub.classList.add('stk'); const im = animEmoji(m.body, m.media_url); if (m.media_url && !/notoemoji/.test(m.media_url)) im.classList.add('own'); bub.append(im); }
       else if (m.body && !m.image_url && (m.kind || 'text') === 'text' && !m.reply_to && !m.fwd_from && isJumbo(m.body)) { bub.classList.add('jumbo'); const ems = graphemes(m.body.trim()).filter(g => g.trim()); bub.append(ems.length === 1 ? animEmoji(ems[0]) : el('span', { class: 'jt' }, m.body.trim())); }
       else if (m.body && (m.kind || 'text') === 'text' && GEO_RE.test(m.body)) bub.append(locEl(m.body));
@@ -2381,7 +2383,7 @@ async function openGroupInfo(c) {
 
 
 /* ================= SETTINGS & UPDATES ================= */
-const APP_VERSION = '2.13.0';
+const APP_VERSION = '2.13.1';
 const APP_THEMES = {
   neon: { name: 'Неон', a: '#00e5ff', a2: '#7df3ff', a3: '#ff2bd6', mine: '#7a1fd6', bg: '#07060f', panel: '#0f0d1d', panel2: '#171433', line: '#251f48', theirs: '#16132c', wall: 'neon' },
   br: { name: 'Рубин', a: '#ff2d3d', a2: '#ff7a85', a3: '#ff8a00', mine: '#b3101c', bg: '#0b0a0b', panel: '#141214', panel2: '#1d1a1c', line: '#2b2629', theirs: '#1c1a1b', wall: 'rain' },
@@ -3410,7 +3412,7 @@ function openStickers() {
       if (tab === 'prem') {
         const ok = isPremium(); g.className = 'stk-grid pg' + (ok ? '' : ' lock');
         if (!ok) g.append(el('div', { class: 'prem-ban' }, el('div', {}, el('b', {}, '✦ Viks Premium'), 'Стикеры с эффектом на весь экран'), el('button', { onclick: () => { close(); setTimeout(premiumPage, 30); } }, 'Подробнее')));
-        for (const [e] of PREMIUM) g.append(el('button', { title: e, onclick: () => { if (!ok) { premFx(e); setTimeout(() => toast('✦ Это стикер Viks Premium'), 400); return; } close(); sendSticker(e, 'premium:' + e); } }, animEmoji(e)));
+        for (const [e] of PREMIUM) g.append(el('button', { title: e, onclick: () => { if (!ok) { premFx(e, true); setTimeout(() => toast('✦ Это стикер Viks Premium'), 400); return; } close(); sendSticker(e, 'premium:' + e); } }, animEmoji(e)));
         return;
       }
       if (tab.startsWith('p:')) { const pk = packs.find(x => 'p:' + x.id === tab); if (pk) { await drawPack(pk, g, close, draw); return; } tab = 'emoji'; }
@@ -6592,8 +6594,9 @@ function iconPicker() {
 const PREMIUM = [['🤩', ['✨', '⭐', '🌟', '💫']], ['👑', ['💎', '✨', '⭐', '👑']], ['🔥', ['🔥', '💥', '✨']], ['💖', ['💖', '💕', '💗', '💘']], ['🦄', ['🌈', '✨', '💜', '🦄']], ['🐉', ['🔥', '✨', '🐉']], ['🎉', ['🎊', '🎉', '🥳']], ['💸', ['💸', '💵', '🤑']], ['🌈', ['🌈', '☁️', '✨']], ['💥', ['💥', '⚡', '✨']], ['🍾', ['🫧', '🥂', '✨']], ['🌹', ['🌹', '🥀', '💋']], ['😈', ['🔥', '😈', '💀']], ['🥶', ['❄️', '🧊', '💨']], ['🚀', ['⭐', '🌟', '💫']], ['💎', ['💎', '✨', '💠']], ['🍀', ['🍀', '✨', '🌿']], ['🥳', ['🎊', '🎈', '🎉']], ['😍', ['😍', '💕', '✨']], ['💀', ['💀', '👻', '⚡']]];
 function isPremium(p) { p = p || (me && (profiles.get(me.id) || me)); return !!(p && (p.badges || []).includes('premium')); }
 let lastPremFx = 0;
-function premFx(e) {
-  if (Date.now() - lastPremFx < 1200 || matchMedia('(prefers-reduced-motion: reduce)').matches) return; lastPremFx = Date.now();
+function premFx(e, force) {
+  if (Date.now() - lastPremFx < (force ? 400 : 1200) || (!force && matchMedia('(prefers-reduced-motion: reduce)').matches)) return; lastPremFx = Date.now();
+  document.querySelector('.premfx')?.remove();
   const P = (PREMIUM.find(x => x[0] === e) || [e, ['✨', e]])[1];
   const box = el('div', { class: 'premfx' }, el('div', { class: 'bg' }));
   const hero = animEmoji(e); hero.className = 'hero'; box.append(hero);
@@ -6606,7 +6609,7 @@ function premiumPage() {
   sheet((s, close) => s.append(el('div', { class: 'prem-page' },
     el('div', { class: 'hero' }, '✦'), el('h2', {}, 'Viks Premium'),
     el('div', { class: 'stt ' + (on ? 'on' : 'off') }, on ? '✅ У тебя Premium' : 'Пока не активен'),
-    el('div', { class: 'demo' }, PREMIUM.slice(0, 5).map(([e]) => el('button', { onclick: () => premFx(e) }, animEmoji(e)))),
+    el('div', { class: 'demo' }, PREMIUM.slice(0, 5).map(([e]) => el('button', { onclick: () => premFx(e, true) }, animEmoji(e)))),
     el('div', { class: 'hint', style: 'margin:0 0 8px' }, 'Тапни стикер — посмотри эффект 👆'),
     [['✦', 'Премиум-стикеры', '20 живых стикеров с эффектом на весь экран у собеседника'], ['💎', 'Значок ✦ у имени', 'Все видят, что ты с Premium'], ['🚀', 'Новые фишки первым', 'Всё новое сначала у Premium'], ['💜', 'Поддержка Viks', 'Помогаешь проекту расти']].map(([e, t, d]) => el('div', { class: 'perk' }, el('div', { class: 'e' }, e), el('div', {}, el('b', {}, t), el('small', {}, d)))),
     on ? el('button', { class: 'btn prem-buy', onclick: close }, '💜 Спасибо, что с нами') : el('button', { class: 'btn prem-buy', onclick: () => toast('Покупка Premium скоро появится 🔜') }, '✦ Купить Premium — скоро'))));
