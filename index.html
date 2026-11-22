@@ -1840,6 +1840,48 @@ body:has(.mfs) .sheet-bg{z-index:75}
 .shop .log{margin-top:14px}.shop .log div{display:flex;justify-content:space-between;gap:10px;padding:7px 2px;font-size:13px;border-bottom:1px solid #ffffff0a}.shop .log .p{color:#34d399;font-weight:800}.shop .log .m{color:#fb7185;font-weight:800}
 .gift-panel .gg button .vp{position:absolute;right:4px;top:4px;font-size:10px;font-weight:900;background:#f59e0b;color:#111;padding:1px 5px;border-radius:7px}
 .gift-panel .gg button{position:relative}
+
+/* ===== 2.25 shop+ ===== */
+.shop .ae,.shop .pv img.ae{width:42px!important;height:42px!important;object-fit:contain}
+.av.fr-fr_neon{box-shadow:0 0 0 2px var(--bg),0 0 0 4.5px #22d3ee,0 0 18px #22d3ee}
+.av.fr-fr_love{box-shadow:0 0 0 2px var(--bg),0 0 0 4.5px #fb7185,0 0 12px #fb7185aa}
+.av.fr-fr_fire{box-shadow:0 0 0 2px var(--bg),0 0 0 4.5px #f97316,0 -4px 14px #f59e0b,0 0 22px #ef444499}
+.av.fr-fr_rainbow{box-shadow:0 0 0 2px var(--bg),0 0 0 4.5px #a855f7,0 0 14px #ec4899}
+.av.fr-fr_diamond{box-shadow:0 0 0 2px var(--bg),0 0 0 4.5px #e0f2fe,0 0 0 7px #93c5fd88,0 0 24px #bfdbfe;animation:frDia 2s ease-in-out infinite}
+@keyframes frDia{50%{box-shadow:0 0 0 2px var(--bg),0 0 0 5px #fff,0 0 0 8px #a5b4fc99,0 0 34px #e0e7ff}}
+.av.fr-fr_lucky{box-shadow:0 0 0 2px var(--bg),0 0 0 4.5px #22c55e,0 0 0 7px #86efac66,0 0 18px #4ade80}
+.bub.sk-lava{background:linear-gradient(135deg,#450a0a,#b91c1c 40%,#f97316 70%,#fbbf24)!important;background-size:250% 250%!important;animation:skLava 6s ease-in-out infinite;color:#fff}
+@keyframes skLava{50%{background-position:100% 100%}}
+.nf-round{font-family:'Comfortaa',system-ui,sans-serif;font-weight:700}.nf-serif{font-family:'Playfair Display',Georgia,serif;font-weight:700}.nf-hand{font-family:'Caveat',cursive;font-weight:700;font-size:1.18em}.nf-wide{font-family:'Unbounded',system-ui,sans-serif;font-weight:700;letter-spacing:.01em}.nf-pixel{font-family:'Press Start 2P',monospace;font-size:.72em;line-height:1.5}.nf-gothic{font-family:'UnifrakturMaguntia',serif;font-size:1.12em}
+.shop .feat{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}
+.shop .feat button{padding:11px 4px;border-radius:16px;background:#ffffff0d;display:flex;flex-direction:column;align-items:center;gap:2px;font-weight:800;font-size:12.5px;position:relative}
+.shop .feat button i{font-style:normal;font-size:24px}
+.shop .feat button .bd{position:absolute;top:-5px;right:-2px;font-size:9.5px;font-weight:900;background:#10b981;color:#fff;padding:2px 6px;border-radius:8px}
+.shop .deal{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:18px;background:linear-gradient(135deg,#ef444433,#f59e0b33);margin-bottom:12px;cursor:pointer}
+.shop .deal b{display:block;font-size:14px}.shop .deal small{color:var(--muted);font-size:12px}.shop .deal .t{margin-left:auto;font-weight:900;font-variant-numeric:tabular-nums;color:#fbbf24}
+.shop .it{position:relative}.shop .it .gf{position:absolute;top:8px;right:8px;width:30px!important;height:30px;padding:0!important;border-radius:50%!important;background:#ffffff14!important;font-size:15px}
+.shop .it .off{position:absolute;top:8px;left:8px;font-size:11px;font-weight:900;background:#ef4444;color:#fff;padding:2px 7px;border-radius:8px}
+.shop .it s{opacity:.6;font-weight:600;margin-right:2px}
+.shop .it .rare{position:absolute;top:8px;left:8px;font-size:10.5px;font-weight:900;background:linear-gradient(135deg,#a855f7,#ec4899);color:#fff;padding:2px 7px;border-radius:8px}
+.wheel-wrap{position:relative;width:290px;height:290px;margin:6px auto 14px}
+.wheel{width:100%;height:100%;border-radius:50%;position:relative;transition:transform 4.2s cubic-bezier(.17,.67,.12,1);box-shadow:0 0 0 6px #ffffff18,0 12px 40px #0008}
+.wheel span{position:absolute;left:50%;top:50%;transform-origin:0 0;font-weight:900;font-size:17px;color:#fff;text-shadow:0 1px 3px #0009}
+.wheel-wrap .ptr{position:absolute;left:50%;top:-12px;transform:translateX(-50%);font-size:30px;z-index:2;filter:drop-shadow(0 2px 3px #0008)}
+.wheel-wrap .hub{position:absolute;left:50%;top:50%;width:54px;height:54px;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle at 35% 30%,#fde68a,#f59e0b 60%,#b45309);display:grid;place-items:center;font-weight:900;color:#7c2d12;font-size:20px;box-shadow:0 2px 10px #0008}
+.chest{font-size:110px;text-align:center;margin:10px 0;cursor:pointer;user-select:none}
+.chest.shake{animation:chShake .12s linear infinite}
+@keyframes chShake{25%{transform:rotate(-6deg) scale(1.04)}75%{transform:rotate(6deg) scale(1.04)}}
+.chest-res{text-align:center;animation:pop .5s cubic-bezier(.2,1.6,.4,1)}
+@keyframes pop{from{transform:scale(.3);opacity:0}}
+.chest-res .big{font-size:44px;font-weight:900;display:flex;align-items:center;justify-content:center;gap:10px;margin:6px 0}
+.quest{display:flex;align-items:center;gap:12px;padding:11px 12px;border-radius:16px;background:#ffffff0b;margin-bottom:8px}
+.quest .tx{flex:1;min-width:0}.quest b{display:block;font-size:14px}.quest .bar{height:6px;border-radius:4px;background:#ffffff1a;margin-top:6px;overflow:hidden}.quest .bar i{display:block;height:100%;background:linear-gradient(90deg,#f59e0b,#ec4899);border-radius:4px}
+.quest small{color:var(--muted);font-size:12px}
+.quest button{padding:8px 12px;border-radius:12px;font-weight:800;font-size:13px;background:#ffffff14;white-space:nowrap}.quest button.go{background:linear-gradient(135deg,#f59e0b,#ec4899);color:#fff}.quest button.done{background:#10b98126;color:#34d399}
+.toprow{display:flex;align-items:center;gap:10px;padding:8px 4px;border-bottom:1px solid #ffffff0a}.toprow .n{width:28px;text-align:center;font-weight:900}.toprow b{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.toprow span{font-weight:800;display:flex;align-items:center;gap:4px}
+.gcard{display:flex;align-items:center;gap:12px;min-width:220px;cursor:pointer}.gcard .ic{width:54px;height:54px;border-radius:16px;background:linear-gradient(135deg,#f59e0b,#ec4899);display:grid;place-items:center;font-size:28px;flex:none}
+.gcard b{display:block;font-size:14.5px}.gcard small{opacity:.8;font-size:12.5px}
+.wall .lk{position:absolute;top:4px;right:4px;font-size:12px}
 </style>
 </head>
 <body>
@@ -2471,7 +2513,7 @@ function renderMsgs(scroll) {
     const firstOfRun = !prev || prev.sender_id !== m.sender_id || new Date(prev.created_at).toDateString() !== d.toDateString();
     const sender = profiles.get(m.sender_id);
     const isCirc = !m.deleted && m.kind === 'circle';
-    const skn = !m.deleted && (m.kind || 'text') === 'text' && !m.image_url && !m.poll && !m.game && m.body && !/^(♫|🎵 listen:|📺 watch:|✦gift:|🎁|📍|👤 contact:)/.test(m.body) && sender && sender.bubble ? ' sk sk-' + sender.bubble.slice(3) : '';
+    const skn = !m.deleted && (m.kind || 'text') === 'text' && !m.image_url && !m.poll && !m.game && m.body && !/^(♫|🎵 listen:|📺 watch:|✦gift:|🎁|📍|👤 contact:|🛍gift:|🪙send:)/.test(m.body) && sender && sender.bubble ? ' sk sk-' + sender.bubble.slice(3) : '';
     const bub = el('div', { class: 'bub' + (m.deleted ? ' del' : '') + (isCirc ? ' circ' : '') + skn });
     if (current.is_group && !current.is_channel && !mine && firstOfRun) bub.append(el('div', { class: 'who', style: 'color:' + (sender?.name_color || nameColor(m.sender_id)) }, ngn(sender, sender?.display_name || '…'), decor(sender)));
     if (!m.deleted && m.fwd_from) bub.append(el('div', { class: 'fwd' }, '↪️ Переслано от ' + (profiles.get(m.fwd_from)?.display_name || '…')));
@@ -2495,6 +2537,7 @@ function renderMsgs(scroll) {
       else if (m.body && !m.image_url && (m.kind || 'text') === 'text' && !m.reply_to && !m.fwd_from && isJumbo(m.body)) { bub.classList.add('jumbo'); const ems = graphemes(m.body.trim()).filter(g => g.trim()); bub.append(ems.length === 1 ? animEmoji(ems[0]) : el('span', { class: 'jt' }, m.body.trim())); }
       else if (m.body && (m.kind || 'text') === 'text' && /^♫au:/.test(m.body)) bub.append(muCard(m.body, m));
       else if (m.body && (m.kind || 'text') === 'text' && /^♫pl:/.test(m.body)) bub.append(plCard(m.body));
+      else if (m.body && (m.kind || 'text') === 'text' && /^(🛍gift:|🪙send:)/.test(m.body)) bub.append(vixCard(m));
       else if (m.body && (m.kind || 'text') === 'text' && /^✦gift:\d+$/.test(m.body)) { bub.classList.add('giftb'); const dd = +m.body.split(':')[1]; bub.append(el('div', { class: 'gift-card', onclick: ev => { ev.stopPropagation(); premFx('👑', true); } }, animEmoji('🎁'), el('b', {}, 'Viks Premium в подарок!'), el('small', {}, 'на ' + dd + ' ' + plural(dd, 'день', 'дня', 'дней') + ' ✦'))); }
       else if (m.body && (m.kind || 'text') === 'text' && GEO_RE.test(m.body)) bub.append(locEl(m.body));
       else if (m.body && (m.kind || 'text') === 'text' && /^🛰 live:/.test(m.body)) bub.append(liveLocEl(m));
@@ -2826,7 +2869,7 @@ async function openGroupInfo(c) {
 
 
 /* ================= SETTINGS & UPDATES ================= */
-const APP_VERSION = '2.24.0';
+const APP_VERSION = '2.25.0';
 const TK1 = (() => { const t = document.createElement('template'); t.innerHTML = '<svg viewBox="0 0 16 11" width="15" height="11"><path d="M1.5 6l3 3 6.5-7.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>'; return t.content; })();
 const TK2 = (() => { const t = document.createElement('template'); t.innerHTML = '<svg viewBox="0 0 20 11" width="18" height="11"><path d="M1.5 6l3 3 6.5-7.5M8 8.5l.8.6 6.7-7.6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>'; return t.content; })();
 const APP_THEMES = {
@@ -2871,6 +2914,10 @@ const WALLS = {
   sakura: { name: 'Сакура', live: true, css: 'radial-gradient(ellipse at 80% 0%,#ff7eb655,transparent 55%),radial-gradient(ellipse at 0% 100%,#a855f744,transparent 55%),linear-gradient(#170b16,#1f0d1c)' },
   fireflies: { name: 'Светлячки', live: true, css: 'radial-gradient(ellipse at 50% 120%,#14532d,transparent 60%),linear-gradient(#050d08,#0a1a10)' },
   aurora: { name: 'Сияние ✦', live: true, css: 'linear-gradient(#030712,#071226 60%,#0b1a2e)' },
+  matrix: { name: 'Матрица', live: true, shop: 'wl_matrix', n: 46, css: 'linear-gradient(#010a04,#03170b)' },
+  hearts: { name: 'Сердца', live: true, shop: 'wl_hearts', n: 26, css: 'radial-gradient(ellipse at 50% 110%,#be185d66,transparent 60%),linear-gradient(#14040c,#1f0614)' },
+  embers: { name: 'Искры', live: true, shop: 'wl_embers', n: 70, css: 'radial-gradient(ellipse at 50% 120%,#9a340088,transparent 60%),linear-gradient(#0c0503,#170804)' },
+  galaxy: { name: 'Галактика', live: true, shop: 'wl_galaxy', n: 220, css: 'radial-gradient(ellipse at 50% 50%,#3b0764aa,transparent 65%),linear-gradient(#04020c,#0a0418)' },
 };
 const LIGHT_WALLS = {
   glow: 'radial-gradient(ellipse at 15% 0%,color-mix(in srgb,var(--accent) 22%,transparent),transparent 60%),radial-gradient(ellipse at 100% 100%,color-mix(in srgb,var(--accent3) 20%,transparent),transparent 55%),#f4f2fb',
@@ -3007,7 +3054,7 @@ function buildSettings(s, close) {
     const walls = el('div', { class: 'walls' });
     const drawWalls = () => {
       walls.innerHTML = '';
-      for (const [k, w] of Object.entries(WALLS)) walls.append(el('div', { class: 'wall' + (settings.wall === k ? ' on' : ''), style: 'background:' + wallCss(k), onclick: () => { settings.wall = k; saveSettings(); drawWalls(); } }, w.live ? el('span', { class: 'lvb', style: 'background:none' }, '✨') : null, el('span', {}, w.name)));
+      for (const [k, w] of Object.entries(WALLS)) walls.append(el('div', { class: 'wall' + (settings.wall === k ? ' on' : ''), style: 'background:' + wallCss(k), onclick: () => { if (w.shop && !owns(w.shop)) { shopPage('wall'); return; } settings.wall = k; saveSettings(); drawWalls(); } }, w.shop && !owns(w.shop) ? el('span', { class: 'lk' }, '🔒') : null, w.live ? el('span', { class: 'lvb', style: 'background:none' }, '✨') : null, el('span', {}, w.name)));
       let img = null; try { img = localStorage.getItem('viks-wall-img'); } catch {}
       walls.append(el('div', { class: 'wall' + (settings.wall === 'photo' ? ' on' : ''), style: img ? `background:url(${img}) center/cover` : 'background:#ffffff10;display:grid;place-items:center;font-size:24px', onclick: async () => {
         const f = await pickFile(); if (!f) return;
@@ -3077,7 +3124,7 @@ $('#setBtn').onclick = () => switchTab('Settings');
 let rec = null, playing = null, storiesT = null;
 const mediaNodes = new Map();
 const fmtDur = s => { s = Math.max(0, Math.round(s || 0)); return Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0'); };
-const msgLabel = m => (m.kind || 'text') === 'text' && /^♫pl:/.test(m.body || '') ? '📚 Плейлист' : (m.kind || 'text') === 'text' && /^♫au:/.test(m.body || '') ? '🎵 ' + (muParse(m.body).title || 'Трек') : (m.kind || 'text') === 'text' && /^✦gift:\d+$/.test(m.body || '') ? '🎁 Viks Premium в подарок' : (m.kind || 'text') === 'text' && /^🎵 listen:/.test(m.body || '') ? '🎵 ' + (m.body.split('|')[1] || 'Трек') : (m.kind || 'text') === 'text' && /^📺 watch:/.test(m.body || '') ? '📺 Совместный просмотр' : m.kind === 'sea' ? '🚢 Морской бой' : m.kind === 'rps' ? '✊ Камень-ножницы-бумага' : (m.kind || 'text') === 'text' && m.body && /^e2e:/.test(m.body) ? '🔐 Зашифрованное сообщение' : (m.kind || 'text') === 'text' && m.body && /^🛰 live:/.test(m.body) ? '🛰 Делится местом' : (m.kind || 'text') === 'text' && m.body && /^📍 geo:/.test(m.body) ? '📍 Геолокация' : m.kind === 'voice' ? '🎤 Голосовое' : m.kind === 'circle' ? '⭕ Кружок' : m.kind === 'video' ? '🎬 ' + (m.body || 'Видео') : m.kind === 'file' ? '📎 ' + (m.file_name || 'Файл') : m.kind === 'sticker' ? (m.body || 'Стикер') : m.kind === 'call' ? '📞 ' + (m.body || 'Звонок') : m.kind === 'poll' ? '📊 ' + (m.body || 'Опрос') : m.kind === 'game' ? (m.body || '🎲') + ' Игра' : m.kind === 'ttt' ? '❌⭕ Крестики-нолики' : m.kind === 'system' ? '⏱ ' + (m.body || '') : m.image_url ? '📷 ' + (m.body || 'Фото') : (m.body || '');
+const msgLabel = m => (m.kind || 'text') === 'text' && /^🛍gift:/.test(m.body || '') ? '🎁 Подарок из магазина' : (m.kind || 'text') === 'text' && /^🪙send:/.test(m.body || '') ? '🪙 Перевод виксов' : (m.kind || 'text') === 'text' && /^♫pl:/.test(m.body || '') ? '📚 Плейлист' : (m.kind || 'text') === 'text' && /^♫au:/.test(m.body || '') ? '🎵 ' + (muParse(m.body).title || 'Трек') : (m.kind || 'text') === 'text' && /^✦gift:\d+$/.test(m.body || '') ? '🎁 Viks Premium в подарок' : (m.kind || 'text') === 'text' && /^🎵 listen:/.test(m.body || '') ? '🎵 ' + (m.body.split('|')[1] || 'Трек') : (m.kind || 'text') === 'text' && /^📺 watch:/.test(m.body || '') ? '📺 Совместный просмотр' : m.kind === 'sea' ? '🚢 Морской бой' : m.kind === 'rps' ? '✊ Камень-ножницы-бумага' : (m.kind || 'text') === 'text' && m.body && /^e2e:/.test(m.body) ? '🔐 Зашифрованное сообщение' : (m.kind || 'text') === 'text' && m.body && /^🛰 live:/.test(m.body) ? '🛰 Делится местом' : (m.kind || 'text') === 'text' && m.body && /^📍 geo:/.test(m.body) ? '📍 Геолокация' : m.kind === 'voice' ? '🎤 Голосовое' : m.kind === 'circle' ? '⭕ Кружок' : m.kind === 'video' ? '🎬 ' + (m.body || 'Видео') : m.kind === 'file' ? '📎 ' + (m.file_name || 'Файл') : m.kind === 'sticker' ? (m.body || 'Стикер') : m.kind === 'call' ? '📞 ' + (m.body || 'Звонок') : m.kind === 'poll' ? '📊 ' + (m.body || 'Опрос') : m.kind === 'game' ? (m.body || '🎲') + ' Игра' : m.kind === 'ttt' ? '❌⭕ Крестики-нолики' : m.kind === 'system' ? '⏱ ' + (m.body || '') : m.image_url ? '📷 ' + (m.body || 'Фото') : (m.body || '');
 const EXT = { 'audio/webm': 'webm', 'audio/mp4': 'm4a', 'audio/ogg': 'ogg', 'audio/mpeg': 'mp3', 'video/webm': 'webm', 'video/mp4': 'mp4', 'video/quicktime': 'mov', 'image/jpeg': 'jpg' };
 function nameColor(id) { let h = 0; for (const ch of String(id)) h = (h * 31 + ch.charCodeAt(0)) >>> 0; return ['#ff8a80', '#ffb74d', '#ffd54f', '#81c784', '#4dd0e1', '#82a8ff', '#b39dff', '#f48fb1'][h % 8]; }
 function syncComposer() {
@@ -3939,7 +3986,7 @@ function chatThemePicker(chatId) {
     const sw = el('div', { class: 'swatches' });
     const drawSw = () => { sw.innerHTML = ''; for (const [k, t] of Object.entries(THEMES)) sw.append(el('div', { class: 'swatch' + (cur.theme === k ? ' on' : ''), style: `background:linear-gradient(135deg,${t.a},${t.a3})`, onclick: () => { cur.theme = k; chatThemes[chatId] = cur; save(); drawSw(); } })); };
     const walls = el('div', { class: 'walls' });
-    const drawW = () => { walls.innerHTML = ''; for (const [k, w] of Object.entries(WALLS)) walls.append(el('div', { class: 'wall' + (cur.wall === k ? ' on' : ''), style: 'background:' + wallCss(k), onclick: () => { cur.wall = k; chatThemes[chatId] = cur; save(); drawW(); } }, w.live ? el('span', { class: 'lvb', style: 'background:none' }, '✨') : null, el('span', {}, w.name))); };
+    const drawW = () => { walls.innerHTML = ''; for (const [k, w] of Object.entries(WALLS)) walls.append(el('div', { class: 'wall' + (cur.wall === k ? ' on' : ''), style: 'background:' + wallCss(k), onclick: () => { if (w.shop && !owns(w.shop)) { shopPage('wall'); return; } cur.wall = k; chatThemes[chatId] = cur; save(); drawW(); } }, w.live ? el('span', { class: 'lvb', style: 'background:none' }, '✨') : null, el('span', {}, w.name))); };
     drawSw(); drawW();
     s.append(el('h3', {}, '🎨 Тема чата'), el('div', { class: 'hint', style: 'margin:-6px 0 10px' }, 'Только для этого чата и только у тебя на телефоне'),
       el('div', { class: 'set-title' }, 'Цвет'), el('div', { class: 'set-group' }, sw),
@@ -5067,7 +5114,7 @@ function sendOptions() {
   const ta = $('#ta');
   if (!ta?.value.trim()) { toast('Сначала напиши текст'); return; }
   sheet((s, close) => s.append(el('h3', {}, 'Отправить…'),
-    el('div', { class: 'game-grid' }, [['confetti', '🎉', 'Конфетти'], ['fireworks', '🎆', 'Салют'], ['hearts', '❤️', 'Сердечки'], ['balloons', '🎈', 'Шарики']].map(([k, e, n]) => el('button', { onclick: () => { close(); sendText(k); } }, e, el('small', {}, n))),
+    el('div', { class: 'game-grid' }, [['confetti', '🎉', 'Конфетти'], ['fireworks', '🎆', 'Салют'], ['hearts', '❤️', 'Сердечки'], ['balloons', '🎈', 'Шарики'], ['money', '💸', 'Деньги', 'fx_money'], ['snow', '❄️', 'Снег', 'fx_snow'], ['stars', '🌟', 'Звёзды', 'fx_stars'], ['fire', '🔥', 'Огонь', 'fx_fire']].map(([k, e, n, it]) => el('button', { onclick: () => { if (it && !owns(it)) { close(); setTimeout(() => shopPage('fx'), 30); return; } close(); sendText(k); } }, e, el('small', {}, (it && !owns(it) ? '🔒 ' : '') + n))),
       el('button', { class: 'wide', onclick: () => { close(); setTimeout(scheduleSheet, 30); } }, '🕓', el('small', { style: 'font-size:14px' }, 'Отправить позже')))));
 }
 function playEffect(kind) {
@@ -5076,8 +5123,9 @@ function playEffect(kind) {
   const rnd = (a, b) => a + Math.random() * (b - a), P = [], t0 = performance.now(), DUR = kind === 'fireworks' ? 3600 : 3200;
   const pal = ['#ff4f9a', '#ffd54f', '#4dd0e1', '#82a8ff', '#b39dff', '#3ddc97', '#ff8a3d', '#ffffff'];
   if (kind === 'confetti') for (let i = 0; i < 170; i++) P.push({ x: rnd(0, W), y: rnd(-H * .6, -10), vx: rnd(-1.5, 1.5) * dpr, vy: rnd(2.5, 6) * dpr, r: rnd(0, 6.3), vr: rnd(-.2, .2), w: rnd(6, 11) * dpr, h: rnd(10, 16) * dpr, c: pal[i % pal.length] });
-  const emo = { hearts: ['❤️', '💖', '💕', '💗', '💜'], balloons: ['🎈', '🎈', '🎈', '🎉'] }[kind];
-  if (emo) for (let i = 0; i < (kind === 'hearts' ? 46 : 22); i++) P.push({ x: rnd(0, W), y: H + rnd(0, H * .7), vy: -rnd(2.2, 4.5) * dpr * (kind === 'balloons' ? .8 : 1), ph: rnd(0, 6), sz: rnd(24, kind === 'balloons' ? 58 : 40) * dpr, e: emo[i % emo.length] });
+  const emo = { hearts: ['❤️', '💖', '💕', '💗', '💜'], balloons: ['🎈', '🎈', '🎈', '🎉'], money: ['💸', '🪙', '💰', '💵', '🪙'], snow: ['❄️', '❄️', '❅', '☃️', '✨'], stars: ['⭐', '🌟', '✨', '💫'], fire: ['🔥', '🔥', '💥', '✨'] }[kind];
+  const down = kind === 'money' || kind === 'snow';
+  if (emo) for (let i = 0; i < (kind === 'hearts' ? 46 : kind === 'balloons' ? 22 : 44); i++) P.push({ x: rnd(0, W), y: down ? -rnd(0, H * .8) : H + rnd(0, H * .7), vy: (down ? rnd(2.4, 5) : -rnd(2.2, 4.5)) * dpr * (kind === 'balloons' ? .8 : 1), ph: rnd(0, 6), sz: rnd(24, kind === 'balloons' ? 58 : 42) * dpr, e: emo[i % emo.length] });
   const bursts = [];
   if (kind === 'fireworks') for (let i = 0; i < 7; i++) bursts.push({ at: i * 420 + rnd(0, 200), x: rnd(W * .15, W * .85), y: rnd(H * .15, H * .5), c: pal[i % pal.length], done: false });
   if (settings.vibro) try { navigator.vibrate && navigator.vibrate(kind === 'fireworks' ? [30, 400, 30, 400, 30] : 25); } catch {}
@@ -5115,14 +5163,14 @@ function startLiveWall() {
   stopLiveWall();
   if (!current) return;
   const key = (chatThemes[current.chat_id] && chatThemes[current.chat_id].wall) || settings.wall;
-  if (!WALLS[key] || !WALLS[key].live) return;
+  if (!WALLS[key] || !WALLS[key].live || (WALLS[key].shop && !owns(WALLS[key].shop))) return;
   const c = el('canvas', { class: 'livewall' }); main.prepend(c); main.classList.add('lw');
   const x = c.getContext('2d'), dpr = Math.min(2, devicePixelRatio || 1);
   let W = 0, H = 0; const fit = () => { const r = main.getBoundingClientRect(); W = c.width = Math.max(1, r.width * dpr); H = c.height = Math.max(1, r.height * dpr); };
   fit();
   const acc = getComputedStyle(main).getPropertyValue('--accent').trim() || '#7c5cff', acc3 = getComputedStyle(main).getPropertyValue('--accent3').trim() || '#5b8cff';
   const rnd = (a, b) => a + Math.random() * (b - a);
-  const N = { snow: 90, stars: 140, bubbles: 34, rain: 130, sakura: 38, fireflies: 46, aurora: 70 }[key] || 0;
+  const N = { snow: 90, stars: 140, bubbles: 34, rain: 130, sakura: 38, fireflies: 46, aurora: 70 }[key] || WALLS[key].n || 0;
   const P = Array.from({ length: N }, () => ({ x: rnd(0, 1), y: rnd(0, 1), z: rnd(.3, 1), ph: rnd(0, 6.28), s: rnd(.4, 1) }));
   let meteor = null; const t0 = performance.now();
   const frame = now => {
@@ -7247,7 +7295,9 @@ function premFx(e, force) {
 }
 const PREM_REACTS = ['👑', '💎', '🚀', '🦄', '🤩'];
 const NG = [['aurora', 'Сияние'], ['gold', 'Золото'], ['fire', 'Огонь'], ['candy', 'Конфета'], ['ocean', 'Океан'], ['neon', 'Неон']];
-function ngn(p, txt) { return p && p.name_grad && isPremium(p) ? el('span', { class: 'ng ng-' + p.name_grad }, txt) : txt; }
+function ngn(p, txt) { const g = p && p.name_grad && (isPremium(p) || (p.perks || []).includes('grad')), f = p && p.name_font; if (!g && !f) return txt; if (f) nfLoad(); return el('span', { class: (g ? 'ng ng-' + p.name_grad : '') + (f ? ' nf nf-' + f.slice(3) : '') }, txt); }
+let nfLoaded = false;
+function nfLoad() { if (nfLoaded) return; nfLoaded = true; document.head.append(el('link', { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Comfortaa:wght@700&family=Playfair+Display:wght@700&family=Press+Start+2P&family=Unbounded:wght@700&family=UnifrakturMaguntia&display=swap' })); }
 function coverVid(p, cov) { if (p && p.cover_video && isPremium(p)) { const v = el('video', { class: 'cvv', src: p.cover_video, autoplay: '', loop: '', muted: '', playsinline: '' }); v.muted = true; v.playsInline = true; cov.append(v); } return cov; }
 const RECV_SOUNDS = [['classic', 'Обычный'], ['drop', '💧 Капля'], ['bell', '🔔 Колокол'], ['chord', '🎹 Аккорд'], ['space', '🛸 Космос'], ['custom', '🎵 Свой']];
 function playRecvSound(k) {
@@ -7577,6 +7627,7 @@ function promoSheet() {
       const { data, error } = await sb.rpc('redeem_promo', { c });
       go.disabled = false;
       if (error) { const m = error.message || ''; toast(/bad_code/.test(m) ? 'Такого кода нет' : /used_up/.test(m) ? 'Код уже использовали' : /already/.test(m) ? 'Ты уже вводил этот код' : /expired/.test(m) ? 'Код просрочен' : /too_fast/.test(m) ? 'Не так быстро 😅' : 'Не вышло'); hap(30); return; }
+      if (data && data.vix) { close(); fullBurst('🪙'); vix.bal = data.balance; toast('🪙 +' + data.vix + ' виксов!'); return; }
       await refreshMe(); close(); premFx('👑', true); toast('✦ +' + data.days + ' ' + plural(data.days, 'день', 'дня', 'дней') + ' Premium!'); renderMe?.();
     } }, '✦ Активировать');
     s.append(el('h3', {}, '🎟 Промокод'), el('div', { class: 'hint', style: 'margin:-6px 0 12px' }, 'Введи код, и Premium включится сразу'), el('div', { class: 'field' }, inp), go);
@@ -7756,9 +7807,12 @@ function adminPanel() {
           const d2 = () => { o2.innerHTML = ''; [[1, '1 человек'], [10, '10'], [50, '50'], [500, '500']].forEach(([u, l]) => o2.append(el('button', { class: uses === u ? 'on' : '', onclick: () => { uses = u; d2(); } }, l))); };
           d1(); d2();
           const list = el('div', { style: 'margin-top:14px' });
-          const load = async () => { const { data } = await sb.rpc('list_promos'); list.innerHTML = ''; (data || []).forEach(p => list.append(el('div', { class: 'promo' }, el('div', { class: 'tx' }, el('code', {}, p.code), el('small', {}, p.days + ' дн. · ' + p.uses + '/' + p.max_uses + ' исп.' + (p.note ? ' · ' + p.note : ''))), el('button', { class: 'icon-btn', title: 'Копировать', onclick: () => copy(p.code) }, '📋'), el('button', { class: 'icon-btn', title: 'Удалить', onclick: async () => { if (!confirm('Удалить код ' + p.code + '?')) return; await sb.rpc('delete_promo', { c: p.code }); load(); } }, '🗑')))); if (!(data || []).length) list.append(el('div', { class: 'empty' }, 'Кодов пока нет')); };
+          const load = async () => { const { data } = await sb.rpc('list_promos'); list.innerHTML = ''; (data || []).forEach(p => list.append(el('div', { class: 'promo' }, el('div', { class: 'tx' }, el('code', {}, p.code), el('small', {}, (p.vix ? '🪙 ' + p.vix + ' виксов' : p.days + ' дн.') + ' · ' + p.uses + '/' + p.max_uses + ' исп.' + (p.note ? ' · ' + p.note : ''))), el('button', { class: 'icon-btn', title: 'Копировать', onclick: () => copy(p.code) }, '📋'), el('button', { class: 'icon-btn', title: 'Удалить', onclick: async () => { if (!confirm('Удалить код ' + p.code + '?')) return; await sb.rpc('delete_promo', { c: p.code }); load(); } }, '🗑')))); if (!(data || []).length) list.append(el('div', { class: 'empty' }, 'Кодов пока нет')); };
           body.append(el('div', { class: 'hint', style: 'margin:0 0 6px;font-weight:700' }, 'Срок Premium'), o1, el('div', { class: 'hint', style: 'margin:0 0 6px;font-weight:700' }, 'Сколько раз можно ввести'), o2, note,
-            el('button', { class: 'btn prem-buy', style: 'margin-top:0', onclick: async () => { const { data, error } = await sb.rpc('create_promo', { days, max_uses: uses, note: note.value.trim() || null }); if (error) { toast('Не вышло'); return; } copy(data); toast('Код ' + data + ' скопирован'); note.value = ''; load(); } }, '🎟 Создать код'), list);
+            el('button', { class: 'btn prem-buy', style: 'margin-top:0', onclick: async () => { const { data, error } = await sb.rpc('create_promo', { days, max_uses: uses, note: note.value.trim() || null }); if (error) { toast('Не вышло'); return; } copy(data); toast('Код ' + data + ' скопирован'); note.value = ''; load(); } }, '🎟 Создать код'),
+            el('div', { class: 'hint', style: 'margin:16px 0 6px;font-weight:700' }, '🪙 Или код на виксы (сколько раз — выбрано выше)'),
+            el('div', { class: 'opts' }, [100, 300, 1000, 5000].map(n => el('button', { onclick: async () => { const { data, error } = await sb.rpc('create_promo_vix', { amount: n, max_uses: uses, note: note.value.trim() || null }); if (error) { toast('Не вышло'); return; } copy(data); toast('Код ' + data + ' на ' + n + ' виксов скопирован'); note.value = ''; load(); } }, '🪙 ' + n))),
+            list);
           load();
         } else if (tab === 'log') {
           const { data, error } = await sb.rpc('admin_log_list'); if (error) throw error;
@@ -8471,14 +8525,18 @@ const owns = k => vix.items.has(k);
 const VX = () => el('span', { class: 'vx-c' }, 'V');
 function frm(p, a) { if (p && p.frame && a) a.classList.add('fr', 'fr-' + p.frame); return a; }
 async function vixLoad() { try { const { data, error } = await sb.rpc('vix_state'); if (error || !data) return null; vix.st = data; vix.bal = data.balance; vix.items = new Set(data.items || []); return data; } catch { return null; } }
-const SHOP_TABS = [['frame', '🖼 Рамки'], ['bubble', '💬 Пузыри'], ['theme', '🎨 Темы'], ['sticker', '✦ Стикеры'], ['premium', '👑 Premium']];
+const SHOP_TABS = [['frame', '🖼 Рамки'], ['bubble', '💬 Пузыри'], ['fx', '✨ Эффекты'], ['nick', '🔤 Ник'], ['wall', '🌌 Обои'], ['theme', '🎨 Темы'], ['sticker', '✦ Стикеры'], ['premium', '👑 Premium'], ['mine', '🎒 Моё']];
+let shopItems = [];
+const tabOf = it => it.kind === 'font' || it.kind === 'perk' ? 'nick' : it.kind;
 async function shopPage(tab0) {
   let tab = typeof tab0 === 'string' ? tab0 : 'frame';
-  const [st, { data: items }] = await Promise.all([vixLoad(), sb.from('shop_items').select('*').eq('active', true).order('sort')]);
+  const [st, { data: items }] = await Promise.all([vixLoad(), sb.from('shop_items').select('*').order('sort')]);
   if (!st) { toast('Магазин не открылся, попробуй ещё раз'); return; }
+  shopItems = items || [];
   sheet((s, close) => {
-    const box = el('div', { class: 'shop' });
+    const box = el('div', { class: 'shop' }); let dealT = null;
     const draw = () => {
+      clearInterval(dealT);
       const S = vix.st; box.innerHTML = '';
       const actEarn = Math.min(Math.floor(S.msgs / 5), 20) - S.act_claimed, refEarn = (S.refs - S.ref_claimed) * 100;
       const claim = async (fn, okMsg) => { const { data, error } = await sb.rpc(fn); if (error) { toast(error.message); return; } vix.bal = data.balance; hap([10, 30, 10]); fullBurst('🪙'); toast(okMsg(data)); await vixLoad(); draw(); };
@@ -8486,45 +8544,185 @@ async function shopPage(tab0) {
         el('div', { class: 'earn' },
           el('button', { class: S.can_daily ? 'go' : '', onclick: () => S.can_daily ? claim('vix_daily', d => '🎁 +' + d.got + ' виксов · день ' + d.streak + ' подряд') : toast('Завтра будет ещё! Серия: ' + S.streak + ' дн.') }, el('i', {}, '🎁'), 'Бонус дня', el('small', {}, S.can_daily ? 'забрать +' + (10 + Math.min(S.streak, 6) * 5) : '✅ серия ' + S.streak + ' дн.')),
           el('button', { class: actEarn > 0 ? 'go' : '', onclick: () => actEarn > 0 ? claim('vix_activity', d => '💬 +' + d.got + ' за активность') : toast('1 викс за каждые 5 сообщений, до 20 в день') }, el('i', {}, '💬'), 'Общение', el('small', {}, actEarn > 0 ? 'забрать +' + actEarn : Math.min(S.msgs, 100) + '/100 сообщ.')),
-          el('button', { class: refEarn > 0 ? 'go' : '', onclick: () => refEarn > 0 ? claim('vix_ref', d => '👥 +' + d.got + ' за друзей') : (close(), setTimeout(inviteFriends, 30)) }, el('i', {}, '👥'), 'Друзья', el('small', {}, refEarn > 0 ? 'забрать +' + refEarn : '+100 за друга'))));
+          el('button', { class: refEarn > 0 ? 'go' : '', onclick: () => refEarn > 0 ? claim('vix_ref', d => '👥 +' + d.got + ' за друзей') : (close(), setTimeout(inviteFriends, 30)) }, el('i', {}, '👥'), 'Друзья', el('small', {}, refEarn > 0 ? 'забрать +' + refEarn : '+100 за друга'))),
+        el('div', { class: 'feat' },
+          el('button', { onclick: () => wheelSheet(draw) }, S.spin_free ? el('span', { class: 'bd' }, 'бесплатно') : null, el('i', {}, '🎡'), 'Колесо'),
+          el('button', { onclick: () => chestSheet(draw) }, el('i', {}, '📦'), 'Сундук'),
+          el('button', { onclick: () => questsSheet(draw) }, el('i', {}, '🏅'), 'Задания'),
+          el('button', { onclick: () => topSheet(draw) }, el('i', {}, '🏆'), 'Рейтинг'),
+          el('button', { onclick: () => sendVixSheet(draw) }, el('i', {}, '💸'), 'Перевод'),
+          el('button', { onclick: () => { close(); setTimeout(promoSheet, 30); } }, el('i', {}, '🎟'), 'Промокод')));
+      const di = shopItems.find(i => i.id === S.deal);
+      if (di) { const tm = el('span', { class: 't' }); const tick = () => { const ms = Math.max(0, new Date(S.deal_end) - Date.now()), h = Math.floor(ms / 36e5), m = Math.floor(ms / 6e4) % 60, sc = Math.floor(ms / 1e3) % 60; tm.textContent = [h, m, sc].map(v => String(v).padStart(2, '0')).join(':'); }; tick(); dealT = setInterval(() => { if (!tm.isConnected) { clearInterval(dealT); return; } tick(); }, 1000);
+        box.append(el('div', { class: 'deal', onclick: () => { tab = tabOf(di); draw(); } }, el('span', { style: 'font-size:26px' }, '🔥'), el('div', {}, el('b', {}, 'Скидка дня −30%'), el('small', {}, di.title + ' · ' + Math.floor(di.price * 7 / 10) + ' вместо ' + di.price)), tm)); }
       const tabs = el('div', { class: 'tabs' }, SHOP_TABS.map(([k, l]) => el('button', { class: tab === k ? 'on' : '', onclick: () => { tab = k; draw(); } }, l)));
       const grid = el('div', { class: 'grid' });
-      (items || []).filter(i => i.kind === tab).forEach(it => grid.append(shopCard(it, draw)));
+      const list = tab === 'mine' ? shopItems.filter(i => owns(i.id)) : shopItems.filter(i => i.active && tabOf(i) === tab);
+      list.forEach(it => grid.append(shopCard(it, draw)));
+      if (!list.length) grid.append(el('div', { class: 'empty', style: 'grid-column:1/-1' }, tab === 'mine' ? 'Пока ничего нет. Покупай, крути колесо или открывай сундуки 📦' : 'Пусто'));
       box.append(tabs, grid, el('button', { class: 'btn ghost', style: 'margin-top:14px', onclick: () => vixHistory() }, '📜 История виксов'));
     };
     draw(); s.append(el('h3', {}, '🛍 Магазин'), box);
   });
 }
+const EQK = { frame: 'frame', bubble: 'bubble', font: 'name_font' };
+function shopPreview(it) {
+  const k = it.id.slice(3);
+  if (it.kind === 'frame') return frm({ frame: it.id }, avatar(me.display_name, me.avatar_url, 64));
+  if (it.kind === 'bubble') return el('div', { class: 'bub sk sk-' + k }, 'Йо, как дела? 😎');
+  if (it.kind === 'font') { nfLoad(); return el('div', { class: 'nf-' + k, style: 'font-size:22px;max-width:100%;overflow:hidden;white-space:nowrap;text-overflow:ellipsis' }, (me.display_name || 'Viks').split(' ')[0]); }
+  if (it.kind === 'perk') return el('div', { style: 'font-size:22px;font-weight:900' }, el('span', { class: 'ng ng-aurora' }, (me.display_name || 'Viks').split(' ')[0]));
+  if (it.kind === 'fx') return el('button', { style: 'font-size:46px;background:none', onclick: e => { e.stopPropagation(); playEffect(k); } }, { money: '💸', snow: '❄️', stars: '🌟', fire: '🔥' }[k] || '✨');
+  if (it.kind === 'wall') return el('div', { style: 'width:100%;height:84px;border-radius:14px;background:' + wallCss(k) + ';display:grid;place-items:center;font-size:26px' }, { matrix: '💻', hearts: '💗', embers: '🔥', galaxy: '🌌' }[k] || '✨');
+  if (it.kind === 'theme') { const t = APP_THEMES[k] || {}; return el('div', { style: `width:84px;height:84px;border-radius:20px;background:linear-gradient(135deg,${t.a || '#888'},${t.a3 || '#444'});box-shadow:0 8px 24px ${t.a || '#888'}66;display:grid;place-items:center;font-size:30px` }, '🎨'); }
+  if (it.kind === 'sticker') return el('div', { style: 'display:flex;gap:4px' }, PREMIUM.slice(0, 3).map(([e]) => el('button', { onclick: () => premFx(e, true), style: 'width:46px;height:46px' }, animEmoji(e))));
+  return el('div', { style: 'font-size:52px' }, '👑');
+}
 function shopCard(it, redraw) {
   const have = it.kind === 'premium' ? false : owns(it.id);
-  const eqKind = it.kind === 'frame' ? 'frame' : it.kind === 'bubble' ? 'bubble' : null;
-  const on = eqKind && me[eqKind] === it.id;
-  let pv;
-  if (it.kind === 'frame') pv = frm({ frame: it.id }, avatar(me.display_name, me.avatar_url, 64));
-  else if (it.kind === 'bubble') pv = el('div', { class: 'bub sk sk-' + it.id.slice(3) }, 'Йо, как дела? 😎');
-  else if (it.kind === 'theme') { const t = APP_THEMES[it.id.slice(3)] || {}; pv = el('div', { style: `width:84px;height:84px;border-radius:20px;background:linear-gradient(135deg,${t.a || '#888'},${t.a3 || '#444'});box-shadow:0 8px 24px ${t.a || '#888'}66;display:grid;place-items:center;font-size:30px` }, '🎨'); }
-  else if (it.kind === 'sticker') pv = el('div', { style: 'display:flex;gap:4px' }, PREMIUM.slice(0, 3).map(([e]) => el('button', { onclick: () => premFx(e, true), style: 'width:46px;height:46px' }, animEmoji(e))));
-  else pv = el('div', { style: 'font-size:52px' }, '👑');
-  const btn = el('button', { class: on ? 'on' : have ? 'own' : '' }, on ? '✓ Надето — снять' : have ? (eqKind ? 'Надеть' : it.kind === 'theme' ? 'Поставить' : '✓ Куплено') : [VX(), ' ' + it.price]);
+  const eq = EQK[it.kind], on = eq && me[eq] === it.id, k = it.id.slice(3);
+  const deal = vix.st && vix.st.deal === it.id, price = deal ? Math.floor(it.price * 7 / 10) : it.price;
+  const label = on ? '✓ Надето — снять' : have ? (eq ? 'Надеть' : it.kind === 'theme' || it.kind === 'wall' ? 'Поставить' : it.kind === 'perk' ? '🌈 Выбрать цвет' : it.kind === 'fx' ? '✓ Есть в «Отправить…»' : '✓ Куплено') : it.active ? [deal ? el('s', {}, String(it.price)) : null, VX(), ' ' + price] : 'Только в сундуке';
+  const btn = el('button', { class: on ? 'on' : have ? 'own' : '' }, label);
   btn.onclick = async () => {
     if (have) {
-      if (eqKind) { const { error } = await sb.rpc('vix_equip', { kind: eqKind, item: on ? null : it.id }); if (error) { toast(errText(error)); return; } me[eqKind] = on ? null : it.id; profiles.set(me.id, me); toast(on ? 'Снято' : '✨ Надето! Все увидят'); redraw(); if (current) renderMsgs(false); loadChats(); return; }
-      if (it.kind === 'theme') { const k = it.id.slice(3), t = APP_THEMES[k]; settings.appTheme = k; if (t) settings.wall = t.wall; saveSettings(); toast('🎨 Тема поставлена'); return; }
+      if (eq) { const { error } = await sb.rpc('vix_equip', { kind: it.kind, item: on ? null : it.id }); if (error) { toast(errText(error)); return; } me[eq] = on ? null : it.id; profiles.set(me.id, me); toast(on ? 'Снято' : '✨ Надето! Все увидят'); redraw(); if (current) renderMsgs(false); loadChats(); renderMe?.(); return; }
+      if (it.kind === 'theme') { const t = APP_THEMES[k]; settings.appTheme = k; if (t) settings.wall = t.wall; saveSettings(); toast('🎨 Тема поставлена'); return; }
+      if (it.kind === 'wall') { settings.wall = k; saveSettings(); if (current) { applyChatTheme(current.chat_id); startLiveWall(); } toast('🌌 Обои поставлены во все чаты'); return; }
+      if (it.kind === 'perk') { ngPick(); return; }
+      if (it.kind === 'fx') { playEffect(k); toast('Выбирай его в меню «Отправить…» (долгое нажатие на кнопку отправки)'); }
       return;
     }
-    if (vix.bal < it.price) { toast('🪙 Не хватает ' + (it.price - vix.bal) + ' виксов. Забирай бонусы сверху 👆'); return; }
-    if (!confirm('Купить «' + it.title + '» за ' + it.price + ' виксов?')) return;
+    if (!it.active) { toast('Эта вещь выпадает только из сундука 📦'); return; }
+    if (vix.bal < price) { toast('🪙 Не хватает ' + (price - vix.bal) + ' виксов. Забирай бонусы и задания 👆'); return; }
+    if (!confirm('Купить «' + it.title + '» за ' + price + ' виксов?')) return;
     btn.disabled = true;
     const { data, error } = await sb.rpc('vix_buy', { item: it.id });
     if (error) { toast(errText(error)); btn.disabled = false; return; }
     vix.bal = data.balance; if (it.kind !== 'premium') vix.items.add(it.id); hap([15, 40, 15]); fullBurst(it.kind === 'premium' ? '👑' : '🛍');
-    if (it.kind === 'premium') { const { data: pr } = await sb.from('profiles').select('*').eq('id', me.id).single(); if (pr) { me = pr; profiles.set(me.id, me); } toast('👑 Premium продлён на 7 дней!'); }
-    else if (eqKind) { await sb.rpc('vix_equip', { kind: eqKind, item: it.id }); me[eqKind] = it.id; profiles.set(me.id, me); toast('🛍 Куплено и надето!'); if (current) renderMsgs(false); loadChats(); }
+    if (it.kind === 'premium' || it.kind === 'perk') { const { data: pr } = await sb.from('profiles').select('*').eq('id', me.id).single(); if (pr) { me = pr; profiles.set(me.id, me); } }
+    if (it.kind === 'premium') toast('👑 Premium продлён на 7 дней!');
+    else if (eq) { await sb.rpc('vix_equip', { kind: it.kind, item: it.id }); me[eq] = it.id; profiles.set(me.id, me); toast('🛍 Куплено и надето!'); if (current) renderMsgs(false); loadChats(); }
+    else if (it.kind === 'perk') { toast('🌈 Куплено! Выбери цвет ника'); setTimeout(ngPick, 400); }
+    else if (it.kind === 'fx') { toast('✨ Куплено! Ищи в меню «Отправить…»'); playEffect(k); }
     else toast('🛍 Куплено!');
     await vixLoad(); redraw();
   };
-  return el('div', { class: 'it' + (it.kind === 'premium' || it.kind === 'sticker' ? ' wide' : '') }, el('div', { class: 'pv' }, pv), el('b', {}, it.title), btn);
+  const gf = it.active ? el('button', { class: 'gf', title: 'Подарить другу', onclick: e => { e.stopPropagation(); giftItemSheet(it, redraw); } }, '🎁') : null;
+  return el('div', { class: 'it' + (it.kind === 'premium' || it.kind === 'sticker' ? ' wide' : '') }, deal && !have ? el('span', { class: 'off' }, '−30%') : !it.active ? el('span', { class: 'rare' }, 'РЕДКОЕ') : null, gf, el('div', { class: 'pv' }, shopPreview(it)), el('b', {}, it.title), btn);
 }
+function ngPick() {
+  sheet((s, close) => {
+    const row = el('div', { class: 'ngp' });
+    const draw = () => { row.innerHTML = ''; [[null, 'Без'], ...NG].forEach(([k, n]) => row.append(el('button', { class: (me.name_grad || null) === k ? 'on' : '', onclick: async () => { const { data, error } = await sb.from('profiles').update({ name_grad: k }).eq('id', me.id).select().single(); if (error) { toast('Не вышло'); return; } me = data; profiles.set(me.id, me); draw(); renderMe?.(); } }, k ? el('span', { class: 'ng ng-' + k }, n) : n))); };
+    draw(); s.append(el('h3', {}, '🌈 Цвет ника'), el('div', { class: 'hint', style: 'margin:-6px 0 10px' }, 'Переливается во всех чатах'), row, el('button', { class: 'btn', style: 'margin-top:12px', onclick: close }, 'Готово'));
+  });
+}
+function pickFriend(title, cb) {
+  const list = chats.filter(c => !c.is_group && !c.saved && c.peer_id && !isBotId(c.peer_id));
+  sheet((s, close) => s.append(el('h3', {}, title), list.length ? el('div', { style: 'max-height:60vh;overflow:auto' }, list.map(c => el('div', { class: 'prow', style: 'cursor:pointer', onclick: () => { close(); setTimeout(() => cb(c), 30); } }, avatar(c.title, c.avatar_url, 40), el('div', { class: 'tx' }, el('b', {}, c.title || '…'))))) : el('div', { class: 'empty' }, 'Сначала напиши кому-нибудь в личку')));
+}
+function giftItemSheet(it, redraw) {
+  pickFriend('🎁 Кому подарить «' + it.title + '»?', async c => {
+    if (vix.bal < it.price) { toast('🪙 Не хватает ' + (it.price - vix.bal) + ' виксов'); return; }
+    if (!confirm('Подарить «' + it.title + '» — ' + c.title + ' за ' + it.price + ' виксов?')) return;
+    const { data, error } = await sb.rpc('vix_gift_item', { target: c.peer_id, item: it.id });
+    if (error) { toast(errText(error)); return; }
+    vix.bal = data.balance; fullBurst('🎁'); hap([15, 40, 15]);
+    await sb.from('messages').insert({ chat_id: c.chat_id, sender_id: me.id, body: '🛍gift:' + it.id + '|' + it.title });
+    toast('🎁 Подарено! ' + c.title + ' получил уведомление в чат'); await vixLoad(); redraw && redraw();
+  });
+}
+function sendVixSheet(redraw) {
+  pickFriend('💸 Кому перевести виксы?', c => {
+    const inp = el('input', { type: 'number', min: 1, max: 500, value: 50, style: 'width:100%;box-sizing:border-box;font-size:22px;text-align:center;font-weight:800' });
+    sheet((s, close) => s.append(el('h3', {}, '💸 Перевод — ' + c.title), el('div', { class: 'hint', style: 'margin:-6px 0 10px' }, 'Баланс: ' + vix.bal + ' · до 500 виксов в день'),
+      el('div', { class: 'opts', style: 'margin-bottom:10px' }, [10, 50, 100, 500].map(n => el('button', { onclick: () => { inp.value = n; } }, String(n)))), el('div', { class: 'field' }, inp),
+      el('button', { class: 'btn', onclick: async ev => { const n = parseInt(inp.value) || 0; if (n < 1) return; if (n > vix.bal) { toast('Не хватает виксов'); return; } ev.currentTarget.disabled = true; const { data, error } = await sb.rpc('vix_send', { target: c.peer_id, n }); if (error) { toast(error.message); ev.currentTarget.disabled = false; return; } vix.bal = data.balance; close(); fullBurst('🪙'); await sb.from('messages').insert({ chat_id: c.chat_id, sender_id: me.id, body: '🪙send:' + n }); toast('💸 Отправлено ' + n + ' виксов'); await vixLoad(); redraw && redraw(); } }, 'Перевести')));
+  });
+}
+function vixCard(m) {
+  const b = m.body, mine = m.sender_id === me.id;
+  if (/^🪙send:/.test(b)) { const n = parseInt(b.replace(/^🪙send:/, '')) || 0; return el('div', { class: 'gcard', onclick: e => { e.stopPropagation(); if (!mine) shopPage(); } }, el('div', { class: 'ic' }, '🪙'), el('div', {}, el('b', {}, (mine ? 'Ты перевёл ' : 'Тебе перевели ') + n + ' виксов'), el('small', {}, mine ? 'перевод отправлен' : 'уже на балансе · открыть магазин'))); }
+  const [id, title] = b.replace(/^🛍gift:/, '').split('|');
+  return el('div', { class: 'gcard', onclick: e => { e.stopPropagation(); if (!mine) shopPage('mine'); } }, el('div', { class: 'ic' }, '🎁'), el('div', {}, el('b', {}, mine ? 'Ты подарил: ' + (title || '') : 'Тебе подарок: ' + (title || '')), el('small', {}, mine ? 'подарок из магазина' : 'тапни — надеть в «🎒 Моё»')));
+}
+const WHEEL = [['5', '#7c3aed'], ['10', '#2563eb'], ['20', '#0891b2'], ['30', '#059669'], ['50', '#ca8a04'], ['100', '#ea580c'], ['200', '#dc2626'], ['🍀', '#16a34a']];
+function wheelSheet(redraw) {
+  sheet((s, close) => {
+    const seg = 360 / WHEEL.length;
+    const wh = el('div', { class: 'wheel', style: 'background:conic-gradient(' + WHEEL.map(([, c], i) => c + ' ' + (i * seg) + 'deg ' + ((i + 1) * seg) + 'deg').join(',') + ')' }, WHEEL.map(([l], i) => el('span', { style: `transform:rotate(${i * seg + seg / 2 - 90}deg) translate(88px,-11px)` }, l)));
+    let rot = 0, busy = false;
+    const res = el('div', { class: 'hint', style: 'text-align:center;min-height:20px;font-weight:700' });
+    const btn = el('button', { class: 'btn prem-buy' }, vix.st.spin_free ? '🎡 Крутить бесплатно' : '🎡 Крутить за 30 виксов');
+    btn.onclick = async () => {
+      if (busy) return; busy = true; btn.disabled = true; res.textContent = '';
+      const { data, error } = await sb.rpc('vix_spin');
+      if (error) { toast(error.message); busy = false; btn.disabled = false; return; }
+      const target = 360 - (data.idx * seg + seg / 2) + (Math.random() - .5) * seg * .6;
+      rot = rot - (rot % 360) + 360 * 6 + target; wh.style.transform = 'rotate(' + rot + 'deg)'; hap(15);
+      setTimeout(async () => {
+        vix.bal = data.balance; await vixLoad();
+        if (data.item) { fullBurst('🍀'); res.textContent = '🍀 ДЖЕКПОТ! Редкая рамка «Клевер» — уже в «🎒 Моё»'; vix.items.add(data.item); }
+        else { fullBurst('🪙'); res.textContent = '🎉 +' + data.got + ' виксов!'; }
+        hap([20, 50, 20]); busy = false; btn.disabled = false; btn.textContent = '🎡 Ещё раз за 30 виксов'; redraw && redraw();
+      }, 4300);
+    };
+    s.append(el('h3', { style: 'text-align:center' }, '🎡 Колесо удачи'), el('div', { class: 'hint', style: 'text-align:center;margin:-6px 0 6px' }, 'Раз в день бесплатно. Может выпасть редкая рамка 🍀'), el('div', { class: 'wheel-wrap' }, el('div', { class: 'ptr' }, '▼'), wh, el('div', { class: 'hub' }, 'V')), res, btn);
+  });
+}
+function chestSheet(redraw) {
+  sheet((s, close) => {
+    const ch = el('div', { class: 'chest' }, '📦'), res = el('div');
+    const btn = el('button', { class: 'btn prem-buy' }, [VX(), ' Открыть за 100']);
+    btn.onclick = async () => {
+      if (vix.bal < 100) { toast('🪙 Нужно 100 виксов'); return; }
+      btn.disabled = true; res.innerHTML = ''; ch.textContent = '📦'; ch.classList.add('shake'); hap([10, 30, 10, 30, 10]);
+      const [{ data, error }] = await Promise.all([sb.rpc('vix_chest'), new Promise(r => setTimeout(r, 1500))]);
+      ch.classList.remove('shake');
+      if (error) { toast(error.message); btn.disabled = false; return; }
+      vix.bal = data.balance; ch.textContent = data.item ? (data.rare ? '💎' : '🎁') : data.got >= 500 ? '💰' : '✨';
+      if (data.item) { vix.items.add(data.item); const it = shopItems.find(i => i.id === data.item) || { id: data.item, kind: data.item.startsWith('fr') ? 'frame' : data.item.startsWith('bb') ? 'bubble' : data.item.startsWith('nf') ? 'font' : data.item.startsWith('fx') ? 'fx' : 'wall', title: data.title };
+        res.append(el('div', { class: 'chest-res' }, el('div', { class: 'pv', style: 'display:grid;place-items:center;min-height:80px' }, shopPreview(it)), el('h3', {}, (data.rare ? '💎 РЕДКОЕ: ' : '🎁 ') + data.title), el('div', { class: 'hint' }, 'Уже в «🎒 Моё» — надевай!'))); fullBurst(data.rare ? '💎' : '🎁'); }
+      else { res.append(el('div', { class: 'chest-res' }, el('div', { class: 'big' }, VX(), '+' + data.got), el('div', { class: 'hint' }, data.got >= 500 ? 'ДЖЕКПОТ! 🤑' : data.got > 100 ? 'Ты в плюсе! 🔥' : 'Повезёт в следующий раз 😉'))); fullBurst('🪙'); }
+      hap([20, 50, 20]); btn.disabled = false; btn.innerHTML = ''; btn.append(VX(), ' Ещё за 100'); await vixLoad(); redraw && redraw();
+    };
+    s.append(el('h3', { style: 'text-align:center' }, '📦 Сундук'), el('div', { class: 'hint', style: 'text-align:center;margin:-6px 0 0' }, 'Виксы до 500, вещи из магазина или редкие: 💎 Бриллиант, 🍀 Клевер, 🌋 Лава, Готика'), ch, res, btn);
+  });
+}
+async function questsSheet(redraw) {
+  const { data, error } = await sb.rpc('vix_quests'); if (error) { toast(errText(error)); return; }
+  sheet((s, close) => {
+    const box = el('div');
+    const draw = q => { box.innerHTML = '';
+      [['☀️ Сегодня', q.filter(x => !x.week)], ['📅 Эта неделя', q.filter(x => x.week)]].forEach(([h, L]) => { box.append(el('div', { class: 'mu-sec', style: 'padding-left:2px' }, h)); L.forEach(x => { const done = x.cur >= x.goal;
+        box.append(el('div', { class: 'quest' }, el('div', { class: 'tx' }, el('b', {}, x.title), el('small', {}, x.cur + ' / ' + x.goal + ' · награда ' + x.reward + ' 🪙'), el('div', { class: 'bar' }, el('i', { style: 'width:' + Math.round(x.cur / x.goal * 100) + '%' }))),
+          el('button', { class: x.claimed ? 'done' : done ? 'go' : '', onclick: async () => { if (x.claimed || !done) return; const { data: r, error: e2 } = await sb.rpc('vix_quest_claim', { q: x.id }); if (e2) { toast(e2.message); return; } vix.bal = r.balance; fullBurst('🏅'); hap([10, 30, 10]); toast('🏅 +' + r.got + ' виксов'); const { data: q2 } = await sb.rpc('vix_quests'); draw(q2 || q); await vixLoad(); redraw && redraw(); } }, x.claimed ? '✓' : done ? '+' + x.reward : '…'))); }); });
+    };
+    draw(data || []);
+    s.append(el('h3', {}, '🏅 Задания'), el('div', { class: 'hint', style: 'margin:-6px 0 6px' }, 'Дневные обновляются каждый день, недельные — по понедельникам'), box);
+  });
+}
+async function topSheet(redraw) {
+  const { data, error } = await sb.rpc('vix_top'); if (error) { toast(errText(error)); return; }
+  sheet((s, close) => {
+    let tab = 'givers'; const box = el('div');
+    const draw = () => { box.innerHTML = '';
+      box.append(el('div', { class: 'seg', style: 'display:flex;gap:6px;margin-bottom:10px' }, [['givers', '🎁 Щедрые недели'], ['rich', '💰 Богачи']].map(([k, l]) => el('button', { style: 'flex:1;padding:10px;border-radius:14px;font-weight:800;' + (tab === k ? 'background:var(--accent);color:#fff' : 'background:#ffffff10'), onclick: () => { tab = k; draw(); } }, l))));
+      const L = data[tab] || [];
+      if (tab === 'givers') box.append(el('div', { class: 'hint', style: 'margin:0 0 8px' }, 'Кто больше всех дарит и переводит виксы. В понедельник топ-3 получают 300 / 200 / 100 🪙'));
+      if (!L.length) box.append(el('div', { class: 'empty' }, 'Пока пусто — будь первым!'));
+      L.forEach((r, i) => box.append(el('div', { class: 'toprow', onclick: () => { close(); openProfile(r.id); } }, el('span', { class: 'n' }, ['🥇', '🥈', '🥉'][i] || String(i + 1)), frm(r, avatar(r.display_name, r.avatar_url, 38)), el('b', {}, r.display_name || '…'), el('span', {}, VX(), String(tab === 'rich' ? r.balance : r.spent)))));
+      const pos = (data.prev || []).findIndex(x => x.id === me.id);
+      if (pos >= 0 && !data.claimed) box.prepend(el('button', { class: 'btn prem-buy', style: 'margin-bottom:10px', onclick: async ev => { ev.currentTarget.disabled = true; const { data: r, error: e2 } = await sb.rpc('vix_week_claim'); if (e2) { toast(e2.message); return; } vix.bal = r.balance; data.claimed = true; fullBurst('🏆'); toast('🏆 +' + r.got + ' за топ-' + r.pos + ' прошлой недели!'); draw(); redraw && redraw(); } }, '🏆 Забрать награду за топ-' + (pos + 1) + ' прошлой недели'));
+    };
+    draw(); s.append(el('h3', {}, '🏆 Рейтинг'), box);
+  });
+}
+LW2.matrix = (x, P, W, H, t, px, py, dpr) => { x.font = `${15 * dpr}px monospace`; x.textAlign = 'center'; const ch = 'ｱｲｳｴｵｶｷｸｹｺ01VIKSВИКС'; for (const p of P) { p.y += .0025 * (p.s + .3); if (p.y > 1.25) { p.y = -.2; p.x = Math.random(); } const cx = p.x * W + px * p.z, cy = p.y * H; for (let k = 0; k < 14; k++) { x.globalAlpha = k === 0 ? .95 : (1 - k / 14) * .55 * p.z; x.fillStyle = k === 0 ? '#d1fae5' : '#22c55e'; x.fillText(ch[(Math.floor(t * 8 + p.ph * 10 + k * 3)) % ch.length], cx, cy - k * 17 * dpr); } } };
+LW2.hearts = (x, P, W, H, t, px, py, dpr) => { x.textAlign = 'center'; for (const p of P) { p.y -= .0011 * (p.s + .4); if (p.y < -.08) { p.y = 1.08; p.x = Math.random(); } x.globalAlpha = .25 + .35 * p.z; x.font = `${(14 + 22 * p.z) * dpr}px serif`; x.fillText(['💗', '💖', '❤️', '💜'][Math.floor(p.ph) % 4], (p.x + Math.sin(t + p.ph) * .03) * W + px * p.z, p.y * H + py * p.z); } };
+LW2.embers = (x, P, W, H, t, px, py, dpr) => { for (const p of P) { p.y -= .0016 * (p.s + .3); if (p.y < -.03) { p.y = 1.03; p.x = Math.random(); } const fl = .5 + .5 * Math.sin(t * 6 + p.ph * 3); x.globalAlpha = (.3 + .6 * fl) * p.z; x.shadowBlur = 10 * dpr; x.shadowColor = '#f97316'; x.fillStyle = fl > .7 ? '#fde68a' : '#fb923c'; x.beginPath(); x.arc((p.x + Math.sin(t * .7 + p.ph) * .02) * W + px * p.z, p.y * H + py * p.z, (1 + 2 * p.z) * dpr, 0, 6.29); x.fill(); } x.shadowBlur = 0; };
+LW2.galaxy = (x, P, W, H, t, px, py, dpr, acc, acc3) => { const cx = W / 2 + px, cy = H / 2 + py, R = Math.min(W, H) * .62; for (const p of P) { const arm = Math.floor(p.ph) % 2, r = p.y * R, a = p.x * 6.28 * .25 + arm * Math.PI + r / R * 4 + t * .06 * (1.2 - p.y); x.globalAlpha = (.25 + .7 * p.z) * (1 - p.y * .6); x.fillStyle = p.s > .8 ? acc : p.s > .6 ? acc3 : '#fff'; x.beginPath(); x.arc(cx + Math.cos(a) * r, cy + Math.sin(a) * r * .55, (.5 + 1.4 * p.z) * dpr, 0, 6.29); x.fill(); } };
 async function vixHistory() {
   const { data } = await sb.from('vix_log').select('*').order('created_at', { ascending: false }).limit(60);
   sheet((s, close) => s.append(el('h3', {}, '📜 История виксов'), el('div', { class: 'shop' }, el('div', { class: 'log' }, (data || []).length ? (data || []).map(r => el('div', {}, el('span', {}, r.reason, el('br'), el('small', { style: 'color:var(--muted)' }, new Date(r.created_at).toLocaleString('ru-RU', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }))), el('span', { class: r.delta > 0 ? 'p' : 'm' }, (r.delta > 0 ? '+' : '') + r.delta))) : el('div', { class: 'empty' }, 'Пока пусто'))), el('button', { class: 'btn', style: 'margin-top:12px', onclick: close }, 'Закрыть')));
