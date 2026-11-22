@@ -1569,6 +1569,25 @@ video.ae{object-fit:contain;border-radius:14px}
 .ban-scr{position:fixed;inset:0;z-index:999;background:#0b0a14;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:30px;color:#fff;gap:10px}
 .ban-scr .e{font-size:64px}.ban-scr h2{margin:0}.ban-scr p{opacity:.75;max-width:320px}
 .rep-r{display:flex;flex-direction:column;gap:6px;margin-bottom:10px}.rep-r button{text-align:left;padding:11px 14px;border-radius:14px;background:#ffffff0d;font-weight:700}.rep-r button.on{background:var(--accent);color:#fff}
+
+/* ===== 2.18 ===== */
+.app-banner{display:flex;align-items:center;gap:10px;margin:2px 14px 10px;padding:11px 12px 11px 14px;border-radius:18px;font-size:13.5px;font-weight:700;line-height:1.35;animation:popIn .3s ease}
+.app-banner.info{background:linear-gradient(135deg,#3b82f633,#06b6d433);border:1px solid #3b82f655}
+.app-banner.promo{background:linear-gradient(135deg,#f59e0b33,#ec489933,#8b5cf633);border:1px solid #ec489955}
+.app-banner.warn{background:linear-gradient(135deg,#ef444433,#f59e0b33);border:1px solid #ef444455}
+.app-banner .tx{flex:1}.app-banner button{flex:none;width:28px;height:28px;border-radius:50%;background:#ffffff14;font-size:13px}
+.maint{position:fixed;inset:0;z-index:998;background:radial-gradient(ellipse at 50% 0%,color-mix(in srgb,var(--accent) 35%,#0b0a14),#0b0a14 70%);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:30px;color:#fff;gap:10px}
+.maint .e{font-size:70px;animation:tbSpin 3s linear infinite}.maint h2{margin:0;font-size:24px}.maint p{opacity:.8;max-width:320px;margin:0}
+.adm .dcard{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:0 0 12px}.adm .dcard div{padding:8px;border-radius:14px;background:#ffffff0a;text-align:center}.adm .dcard b{display:block;font-size:17px}.adm .dcard small{font-size:10.5px;color:var(--muted)}
+.adm .sec{font-weight:800;font-size:13px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin:16px 0 8px}
+.adm .trow{display:flex;align-items:center;gap:10px;padding:6px 2px}.adm .trow .n{width:20px;font-weight:900;color:var(--muted);font-size:13px}.adm .trow .tx{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:700;font-size:14px}.adm .trow b{font-size:13px;color:var(--accent2)}
+.adm .split{display:flex;height:14px;border-radius:7px;overflow:hidden;margin:6px 0}.adm .split i{display:block;height:100%}
+.adm .legend{display:flex;gap:12px;font-size:12px;color:var(--muted);flex-wrap:wrap}.adm .legend span::before{content:'';display:inline-block;width:9px;height:9px;border-radius:3px;margin-right:5px;background:var(--c)}
+.adm textarea{width:100%;box-sizing:border-box;border-radius:14px;padding:11px 14px;background:#ffffff0d;border:1px solid #ffffff1a;color:inherit;font:inherit;resize:vertical;min-height:90px;outline:none}
+.adm .card2{padding:14px;border-radius:18px;background:#ffffff08;border:1px solid #ffffff12;margin-bottom:12px}
+.adm .card2 h4{margin:0 0 8px;font-size:15px}
+.adm .lrow{padding:8px 2px;border-bottom:1px solid #ffffff0a;font-size:13.5px}.adm .lrow small{display:block;color:var(--muted);font-size:11.5px;margin-top:2px}
+.adm .tag.m{background:#10b981}
 </style>
 </head>
 <body>
@@ -1803,7 +1822,7 @@ async function start(user) {
   subscribe();
   afterUpdateNotice();
   drawInstallBanner();
-  loadBlocks(); if (settings.notify) ensurePush(); e2eInit(); if (me.banned) bannedScreen(); setTimeout(refClaim, 3000); if (shareAlways()) setTimeout(() => startSharing(10, true), 2500);
+  loadBlocks(); if (settings.notify) ensurePush(); e2eInit(); if (isBannedP(me)) bannedScreen(); setTimeout(refClaim, 3000); loadAppConfig(); setInterval(loadAppConfig, 90000); if (shareAlways()) setTimeout(() => startSharing(10, true), 2500);
   setupInbox();
   drawPushBanner(); flushOutbox(); drawNet(); setupFolderSwipe(); devPing(); setTimeout(bdayCheck, 1500); lockBoot(); setTimeout(maybeOnboarding, 900);
   handleDeepLinks();
@@ -1855,6 +1874,7 @@ async function loadChats() {
 function renderChats() {
   const q = $('#chatSearch').value.trim().toLowerCase();
   const box = $('#chatList'); box.innerHTML = '';
+  const abn = appBanner(); if (abn) box.append(abn);
   drawFolderChips();
   const list = chats.filter(c => (!q || (c.title || '').toLowerCase().includes(q)) && folderMatch(c));
   const bs = $('#brandSub'); if (bs && me) bs.textContent = greeting();
@@ -2500,7 +2520,7 @@ async function openGroupInfo(c) {
 
 
 /* ================= SETTINGS & UPDATES ================= */
-const APP_VERSION = '2.17.0';
+const APP_VERSION = '2.18.0';
 const APP_THEMES = {
   neon: { name: 'Неон', a: '#00e5ff', a2: '#7df3ff', a3: '#ff2bd6', mine: '#7a1fd6', bg: '#07060f', panel: '#0f0d1d', panel2: '#171433', line: '#251f48', theirs: '#16132c', wall: 'neon' },
   br: { name: 'Рубин', a: '#ff2d3d', a2: '#ff7a85', a3: '#ff8a00', mine: '#b3101c', bg: '#0b0a0b', panel: '#141214', panel2: '#1d1a1c', line: '#2b2629', theirs: '#1c1a1b', wall: 'rain' },
@@ -4828,7 +4848,7 @@ function renderSettingsRoot() {
     el('div', { class: 'set-group' },
       catRow(SI.gift, 'linear-gradient(135deg,#c084fc,#9333ea)', 'Пригласить друзей', '3 друга = неделя ✦ Premium', inviteFriends),
       catRow(SI.info, 'linear-gradient(135deg,#7c5cff,#ec4899)', 'О Viks', 'v' + APP_VERSION + ' · команда и что нового', aboutViks)),
-    (me.badges || []).includes('founder') ? el('div', { class: 'set-group' }, catRow('<span style="font-size:17px">🛡</span>', 'linear-gradient(135deg,#0ea5e9,#6366f1)', 'Админ-панель', 'Статистика, люди, жалобы, промокоды', adminPanel)) : null,
+    isStaff() ? el('div', { class: 'set-group' }, catRow('<span style="font-size:17px">🛡</span>', 'linear-gradient(135deg,#0ea5e9,#6366f1)', isFounder() ? 'Админ-панель' : 'Модерация', isFounder() ? 'Статистика, люди, жалобы, рассылка' : 'Жалобы, баны, журнал', adminPanel)) : null,
     el('div', { class: 'set-group' }, catRow(SI.out, 'linear-gradient(135deg,#f87171,#dc2626)', 'Выйти из аккаунта', null, () => sheet((s, close) => s.append(el('h3', {}, 'Выйти из Viks?'), el('button', { class: 'btn danger', onclick: async () => { close(); await logout(); } }, 'Выйти'))))),
     el('div', { class: 'sp-ver' }, 'Viks v' + APP_VERSION));
 }
@@ -7251,51 +7271,125 @@ function reportSheet(t) {
       } }, 'Отправить'));
   });
 }
-function bannedScreen() { if (document.querySelector('.ban-scr')) return; document.body.append(el('div', { class: 'ban-scr' }, el('div', { class: 'e' }, '⛔'), el('h2', {}, 'Аккаунт заблокирован'), el('p', {}, 'Ты нарушил правила Viks, поэтому отправлять сообщения больше нельзя. Если это ошибка — напиши разработчику.'), el('button', { class: 'btn ghost', style: 'max-width:240px', onclick: () => sb.auth.signOut().then(() => location.reload()) }, 'Выйти'))); }
+function isBannedP(p) { return !!p && (p.banned || (p.banned_until && new Date(p.banned_until) > new Date())); }
+function bannedScreen() {
+  if (document.querySelector('.ban-scr')) return;
+  const until = me.banned_until && new Date(me.banned_until) > new Date() ? new Date(me.banned_until) : null;
+  document.body.append(el('div', { class: 'ban-scr' }, el('div', { class: 'e' }, '⛔'), el('h2', {}, until ? 'Аккаунт временно заблокирован' : 'Аккаунт заблокирован'),
+    until ? el('p', { style: 'font-weight:800;opacity:1' }, 'до ' + until.toLocaleString('ru-RU', { day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit' })) : null,
+    el('p', {}, me.ban_reason ? 'Причина: ' + me.ban_reason : 'Ты нарушил правила Viks.'), el('p', {}, 'Если это ошибка — напиши разработчику.'),
+    el('button', { class: 'btn ghost', style: 'max-width:240px', onclick: () => sb.auth.signOut().then(() => location.reload()) }, 'Выйти')));
+  if (until) setTimeout(() => location.reload(), Math.min(until - Date.now() + 2000, 2147000000));
+}
 /* ===== 2.17 admin ===== */
+function isFounder() { return !!me && (me.badges || []).includes('founder'); }
+function isStaff() { return !!me && ((me.badges || []).includes('founder') || (me.badges || []).includes('mod')); }
+let appCfg = {};
+async function loadAppConfig() {
+  try {
+    const { data } = await sb.from('app_config').select('key,value'); const nc = {}; (data || []).forEach(r => nc[r.key] = r.value);
+    const changed = JSON.stringify(nc) !== JSON.stringify(appCfg); appCfg = nc;
+    const mt = appCfg.maintenance;
+    if (mt && mt.on && !isFounder()) { if (!document.querySelector('.maint')) document.body.append(el('div', { class: 'maint' }, el('div', { class: 'e' }, '⚙️'), el('h2', {}, 'Viks обновляется'), el('p', {}, mt.text || 'Делаем Viks ещё лучше. Скоро вернёмся, не уходи далеко 💜'), el('button', { class: 'btn ghost', style: 'max-width:220px;margin-top:10px', onclick: () => location.reload() }, '🔄 Проверить'))); }
+    else document.querySelector('.maint')?.remove();
+    if (changed && curTab === 'Chats') renderChats();
+  } catch {}
+}
+function appBanner() {
+  const b = appCfg.banner; if (!b || !b.on || !b.text) return null;
+  try { if (localStorage.getItem('viks-banner-x') === String(b.id)) return null; } catch {}
+  const bx = el('div', { class: 'app-banner ' + (b.kind || 'info') }, el('div', { class: 'tx' }, b.text), el('button', { title: 'Скрыть', onclick: ev => { ev.stopPropagation(); try { localStorage.setItem('viks-banner-x', String(b.id)); } catch {} bx.remove(); } }, '✕'));
+  if (b.chat) bx.onclick = () => openChat(b.chat);
+  return bx;
+}
+const LOG_NAMES = { ban: '⛔ бан', unban: '✅ разбан', wipe: '🗑 удалил аккаунт', premium_days: '✦ выдал Premium (дн.)', premium_off: '✖ снял Premium', badge_on: '➕ значок', badge_off: '➖ значок', report_done: '🚩 жалоба решена', report_dismissed: '🚩 жалоба закрыта', config_banner: '📢 баннер', config_maintenance: '⚙️ техработы', broadcast: '📣 рассылка' };
+function miniChart(rows, color) { const mx = Math.max(1, ...rows.map(x => x.n)); return el('div', { class: 'chart', style: 'height:90px' }, rows.map((x, i) => el('i', { style: 'height:' + Math.max(3, Math.round(x.n / mx * 100)) + '%;' + (color ? 'background:' + color : ''), title: x.d + ': ' + x.n }, i % 5 === 0 || i === rows.length - 1 ? el('span', {}, String(new Date(x.d).getDate())) : null))); }
 function adminPanel() {
-  let tab = 'stats';
+  const F = isFounder();
+  let tab = F ? 'stats' : 'users';
   sheet((s, close) => {
     const root = el('div', { class: 'adm' }), tabs = el('div', { class: 'tabs2' }), body = el('div', {});
-    const T = [['stats', '📊 Обзор'], ['users', '👥 Люди'], ['reports', '🚩 Жалобы'], ['promo', '🎟 Промокоды']];
-    const drawTabs = (rep) => { tabs.innerHTML = ''; T.forEach(([k, l]) => tabs.append(el('button', { class: tab === k ? 'on' : '', onclick: () => { tab = k; drawTabs(rep); go(); } }, l, k === 'reports' && rep ? el('b', {}, String(rep)) : null))); };
+    const T = F ? [['stats', '📊 Обзор'], ['users', '👥 Люди'], ['reports', '🚩 Жалобы'], ['news', '📣 Рассылка'], ['promo', '🎟 Промокоды'], ['log', '📜 Журнал']] : [['users', '👥 Люди'], ['reports', '🚩 Жалобы'], ['log', '📜 Журнал']];
+    let repN = 0;
+    const drawTabs = () => { tabs.innerHTML = ''; T.forEach(([k, l]) => tabs.append(el('button', { class: tab === k ? 'on' : '', onclick: () => { tab = k; drawTabs(); go(); } }, l, k === 'reports' && repN ? el('b', {}, String(repN)) : null))); };
     const go = async () => {
       body.innerHTML = '<div class="hint" style="text-align:center;padding:30px 0">Загружаю…</div>';
       try {
         if (tab === 'stats') {
-          const { data: st, error } = await sb.rpc('admin_stats'); if (error) throw error;
-          drawTabs(st.reports_open);
-          const mx = Math.max(1, ...(st.by_day || []).map(x => x.n));
+          const [{ data: st, error }, { data: ch }, { data: tp }] = await Promise.all([sb.rpc('admin_stats'), sb.rpc('admin_charts'), sb.rpc('admin_tops')]); if (error) throw error;
+          repN = st.reports_open; drawTabs();
           body.innerHTML = '';
           body.append(el('div', { class: 'tiles' },
-            [['👥', st.users, 'всего людей', 1], ['🟢', st.online, 'сейчас в сети', 1], ['📅', st.active_day, 'заходили за сутки'], ['🆕', st.new_today, 'новых за сутки'], ['📈', st.new_week, 'новых за неделю'], ['✦', st.premium, 'с Premium'], ['💬', st.msgs_today, 'сообщений за сутки'], ['🗂', st.msgs_total, 'сообщений всего'], ['👥', st.groups, 'групп и каналов'], ['🔴', st.lives, 'эфиров сейчас'], ['🚩', st.reports_open, 'открытых жалоб']].map(([e, n, l, hl]) => el('div', { class: 'tile' + (hl ? ' hl' : '') }, el('b', {}, e + ' ' + n), el('small', {}, l)))),
-            el('div', { class: 'hint', style: 'margin:16px 0 0;font-weight:700' }, '💬 Сообщения за 14 дней'),
-            el('div', { class: 'chart' }, (st.by_day || []).map(x => el('i', { style: 'height:' + Math.max(3, Math.round(x.n / mx * 100)) + '%', title: x.d + ': ' + x.n }, el('span', {}, String(new Date(x.d).getDate()))))),
-            el('div', { style: 'height:18px' }));
+            [['👥', st.users, 'всего людей', 1], ['🟢', st.online, 'сейчас в сети', 1], ['📅', st.active_day, 'заходили за сутки'], ['🆕', st.new_today, 'новых за сутки'], ['📈', st.new_week, 'новых за неделю'], ['✦', st.premium, 'с Premium'], ['💬', st.msgs_today, 'сообщений за сутки'], ['🗂', st.msgs_total, 'сообщений всего'], ['👥', st.groups, 'групп и каналов'], ['🔴', st.lives, 'эфиров сейчас'], ['🚩', st.reports_open, 'открытых жалоб']].map(([e, n, l, hl]) => el('div', { class: 'tile' + (hl ? ' hl' : '') }, el('b', {}, e + ' ' + n), el('small', {}, l)))));
+          body.append(el('div', { class: 'sec' }, '💬 Сообщения за 14 дней'), miniChart(st.by_day || []));
+          if (ch) {
+            body.append(el('div', { class: 'sec' }, '🆕 Регистрации за 30 дней'), miniChart(ch.regs || [], 'linear-gradient(#6ee7b7,#10b981)'));
+            body.append(el('div', { class: 'sec' }, '🙋 Активные (писали) за 30 дней'), miniChart(ch.active || [], 'linear-gradient(#7dd3fc,#3b82f6)'));
+            const sr = ch.sources || {}, tot = Math.max(1, (sr.ref || 0) + (sr.organic || 0));
+            body.append(el('div', { class: 'sec' }, '🧭 Откуда пришли'), el('div', { class: 'split' }, el('i', { style: 'width:' + (sr.ref / tot * 100) + '%;background:#ec4899' }), el('i', { style: 'width:' + (sr.organic / tot * 100) + '%;background:#7c5cff' })),
+              el('div', { class: 'legend' }, el('span', { style: '--c:#ec4899' }, 'по реф-ссылке: ' + (sr.ref || 0)), el('span', { style: '--c:#7c5cff' }, 'сами: ' + (sr.organic || 0))));
+            const pr = ch.premium || {};
+            body.append(el('div', { class: 'sec' }, '✦ Premium'), el('div', { class: 'legend' }, el('span', { style: '--c:#f59e0b' }, 'навсегда: ' + (pr.forever || 0)), el('span', { style: '--c:#ec4899' }, 'по сроку: ' + (pr.timed || 0)), el('span', { style: '--c:#8b5cf6' }, 'брали пробный: ' + (pr.trials || 0))));
+          }
+          if (tp) {
+            const top = (title, rows, nm, av) => { body.append(el('div', { class: 'sec' }, title)); if (!rows.length) body.append(el('div', { class: 'hint' }, 'пока пусто')); rows.forEach((r, i) => body.append(el('div', { class: 'trow' }, el('span', { class: 'n' }, String(i + 1)), avatar(nm(r), r.avatar_url, 32), el('div', { class: 'tx' }, nm(r)), el('b', {}, String(r.n))))); };
+            top('🏆 Самые активные за неделю', tp.users || [], r => r.display_name);
+            top('🔥 Самые живые группы за неделю', tp.groups || [], r => (r.is_channel ? '📢 ' : '') + (r.title || 'Группа'));
+            top('🎁 Больше всех пригласили', tp.referrers || [], r => r.display_name);
+          }
+          body.append(el('div', { style: 'height:20px' }));
         } else if (tab === 'users') {
           body.innerHTML = '';
           const q = el('input', { placeholder: 'Поиск по имени или @нику', style: 'width:100%;box-sizing:border-box;margin-bottom:8px' }), list = el('div', {});
           const load = async () => { const { data, error } = await sb.rpc('admin_users', { q: q.value.trim() }); if (error) { list.textContent = 'Ошибка'; return; } list.innerHTML = '';
-            (data || []).forEach(u => { const prem = (u.badges || []).includes('premium') || (u.premium_until && new Date(u.premium_until) > new Date());
-              list.append(el('div', { class: 'urow', onclick: () => userActions(u, load) }, avatar(u.display_name, u.avatar_url, 42), el('div', { class: 'tx' }, el('b', {}, u.display_name || '…', prem ? el('span', { class: 'tag p' }, '✦') : null, (u.badges || []).includes('verified') ? el('span', { class: 'tag v' }, '✓') : null, u.banned ? el('span', { class: 'tag b' }, 'БАН') : null), el('small', {}, '@' + u.username + ' · ' + (u.last_seen ? agoShort(u.last_seen) : '—'))), el('span', { style: 'opacity:.4' }, '›'))); });
+            (data || []).forEach(u => { const prem = (u.badges || []).includes('premium') || (u.premium_until && new Date(u.premium_until) > new Date()), ban = isBannedP(u);
+              list.append(el('div', { class: 'urow', onclick: () => userActions(u, load) }, avatar(u.display_name, u.avatar_url, 42), el('div', { class: 'tx' }, el('b', {}, u.display_name || '…', prem ? el('span', { class: 'tag p' }, '✦') : null, (u.badges || []).includes('verified') ? el('span', { class: 'tag v' }, '✓') : null, (u.badges || []).includes('mod') ? el('span', { class: 'tag m' }, 'МОД') : null, ban ? el('span', { class: 'tag b' }, u.banned_until && !u.banned ? 'БАН ⏳' : 'БАН') : null), el('small', {}, '@' + u.username + ' · ' + (u.last_seen ? agoShort(u.last_seen) : '—'))), el('span', { style: 'opacity:.4' }, '›'))); });
             if (!(data || []).length) list.append(el('div', { class: 'empty' }, 'Никого')); };
           let qt = 0; q.oninput = () => { clearTimeout(qt); qt = setTimeout(load, 300); };
           body.append(q, list); load();
         } else if (tab === 'reports') {
           const { data, error } = await sb.rpc('admin_reports', { st: 'open' }); if (error) throw error;
+          repN = (data || []).length; drawTabs();
           body.innerHTML = '';
           if (!(data || []).length) body.append(el('div', { class: 'empty' }, 'Жалоб нет 🎉'));
           (data || []).forEach(r => { const t = r.target || {}, m = r.message;
-            const card = el('div', { class: 'rep' }, el('div', { class: 'h' }, el('span', {}, 'от ' + ((r.reporter && r.reporter.display_name) || '…')), el('span', {}, agoShort(r.created_at))),
-              el('div', { class: 'why' }, '🚩 ' + r.reason + ' → ' + (t.display_name || '…') + (t.username ? ' @' + t.username : '') + (t.banned ? ' · уже в бане' : '')),
+            body.append(el('div', { class: 'rep' }, el('div', { class: 'h' }, el('span', {}, 'от ' + ((r.reporter && r.reporter.display_name) || '…')), el('span', {}, agoShort(r.created_at))),
+              el('div', { class: 'why' }, '🚩 ' + r.reason + ' → ' + (t.display_name || '…') + (t.username ? ' @' + t.username : '') + (t.banned ? ' · в бане' : '')),
               r.details ? el('div', { class: 'hint', style: 'margin:0 0 4px' }, r.details) : null,
               m ? el('div', { class: 'msg' }, m.deleted ? '🗑 уже удалено' : (m.body || (m.kind ? '[' + m.kind + ']' : '')), m.image_url && !m.deleted ? el('img', { src: m.image_url }) : null) : null,
               el('div', { class: 'acts' },
                 m && !m.deleted ? el('button', { onclick: async () => { await sb.rpc('admin_report_set', { rid: r.id, st: 'done', del_msg: true }); toast('Сообщение удалено'); go(); } }, '🗑 Удалить сообщение') : null,
-                t.id && !t.banned ? el('button', { class: 'r', onclick: async () => { if (!confirm('Забанить ' + (t.display_name || '') + '?')) return; await sb.rpc('admin_set', { target: t.id, what: 'ban', val: 'on' }); await sb.rpc('admin_report_set', { rid: r.id, st: 'done' }); toast('Забанен'); go(); } }, '⛔ Бан') : null,
+                t.id && !t.banned ? el('button', { class: 'r', onclick: () => banSheet(t, async () => { await sb.rpc('admin_report_set', { rid: r.id, st: 'done' }); go(); }) }, '⛔ Бан') : null,
                 t.id ? el('button', { onclick: () => { close(); setTimeout(() => openProfile(t.id), 30); } }, '👤 Профиль') : null,
-                el('button', { onclick: async () => { await sb.rpc('admin_report_set', { rid: r.id, st: 'dismissed' }); toast('Закрыто'); go(); } }, '✓ Закрыть')));
-            body.append(card); });
+                el('button', { onclick: async () => { await sb.rpc('admin_report_set', { rid: r.id, st: 'dismissed' }); toast('Закрыто'); go(); } }, '✓ Закрыть'))));
+          });
+        } else if (tab === 'news') {
+          body.innerHTML = '';
+          const { data: nid } = await sb.rpc('news_id');
+          const c1 = el('div', { class: 'card2' }, el('h4', {}, '📣 Рассылка всем'));
+          if (!nid) c1.append(el('div', { class: 'hint', style: 'margin:0 0 10px' }, 'Создадим официальный канал «📣 Viks Новости» и подпишем на него всех — и тех, кто придёт потом. Пост в канал = пуш каждому.'), el('button', { class: 'btn', onclick: async () => { const { error } = await sb.rpc('news_setup'); if (error) { toast('Не вышло: ' + errText(error)); return; } await loadChats(); toast('Канал создан, все подписаны 📣'); go(); } }, '📣 Создать канал и подписать всех'));
+          else {
+            const ta = el('textarea', { placeholder: 'Текст для всех… Например: 🎉 Вышло обновление 2.18! Что нового: …', maxlength: 3500 });
+            c1.append(el('div', { class: 'hint', style: 'margin:0 0 8px' }, 'Сообщение уйдёт в канал «Viks Новости» — всем придёт пуш'), ta,
+              el('div', { style: 'display:flex;gap:8px;margin-top:8px' },
+                el('button', { class: 'btn', style: 'flex:2', onclick: async ev => { const t = ta.value.trim(); if (!t) { toast('Напиши текст'); return; } if (!confirm('Отправить всем?')) return; const b = ev.currentTarget; b.disabled = true; const { error } = await sb.from('messages').insert({ chat_id: nid, sender_id: me.id, body: t }); b.disabled = false; if (error) { toast('Не отправилось: ' + errText(error)); return; } ta.value = ''; toast('📣 Отправлено всем'); } }, '📣 Отправить всем'),
+                el('button', { class: 'btn ghost', style: 'flex:1', onclick: async () => { close(); await loadChats(); openChat(nid); } }, 'Канал')),
+              el('button', { class: 'btn ghost', style: 'margin-top:8px', onclick: async () => { const { error } = await sb.rpc('news_setup'); toast(error ? 'Не вышло' : 'Все снова подписаны ✅'); } }, '🔄 Подписать всех заново'));
+          }
+          const b = appCfg.banner || {};
+          const bt = el('input', { placeholder: 'Текст баннера: 🎉 Неделя Premium по промокоду VIKS…', maxlength: 160, value: b.text || '', style: 'width:100%;box-sizing:border-box;margin-bottom:8px' });
+          let kind = b.kind || 'info'; const kb = el('div', { class: 'opts' });
+          const dk = () => { kb.innerHTML = ''; [['info', '💙 Инфо'], ['promo', '💜 Акция'], ['warn', '🧡 Важно']].forEach(([k, l]) => kb.append(el('button', { class: kind === k ? 'on' : '', onclick: () => { kind = k; dk(); } }, l))); };
+          dk();
+          const c2 = el('div', { class: 'card2' }, el('h4', {}, '🏷 Баннер на главной ' + (b.on ? '· 🟢 включён' : '· выключен')), bt, kb,
+            el('div', { style: 'display:flex;gap:8px' },
+              el('button', { class: 'btn', style: 'flex:1', onclick: async () => { const t = bt.value.trim(); if (!t) { toast('Напиши текст'); return; } const { error } = await sb.rpc('admin_config', { k: 'banner', v: { on: true, text: t, kind, id: Date.now() } }); if (error) { toast('Не вышло'); return; } await loadAppConfig(); toast('Баннер включён'); go(); } }, b.on ? 'Обновить' : 'Включить'),
+              b.on ? el('button', { class: 'btn ghost', style: 'flex:1', onclick: async () => { await sb.rpc('admin_config', { k: 'banner', v: { ...b, on: false } }); await loadAppConfig(); toast('Баннер выключен'); go(); } }, 'Выключить') : null));
+          const mt = appCfg.maintenance || {};
+          const mtx = el('input', { placeholder: 'Текст (необязательно): Обновляемся, 10 минут…', maxlength: 160, value: mt.text || '', style: 'width:100%;box-sizing:border-box;margin-bottom:8px' });
+          const c3 = el('div', { class: 'card2' }, el('h4', {}, '⚙️ Режим техработ ' + (mt.on ? '· 🔴 ВКЛЮЧЁН' : '· выключен')), el('div', { class: 'hint', style: 'margin:0 0 8px' }, 'Все, кроме тебя, увидят экран «Viks обновляется». Включится у людей в течение 1–2 минут'), mtx,
+            el('button', { class: 'btn' + (mt.on ? '' : ' ghost'), onclick: async () => { if (!mt.on && !confirm('Закрыть Viks для всех на техработы?')) return; const { error } = await sb.rpc('admin_config', { k: 'maintenance', v: { on: !mt.on, text: mtx.value.trim() || null } }); if (error) { toast('Не вышло'); return; } await loadAppConfig(); toast(mt.on ? 'Техработы выключены ✅' : 'Техработы включены ⚙️'); go(); } }, mt.on ? '✅ Выключить техработы' : '⚙️ Включить техработы'));
+          body.append(c1, c2, c3);
         } else if (tab === 'promo') {
           body.innerHTML = '';
           let days = 30, uses = 1;
@@ -7308,26 +7402,50 @@ function adminPanel() {
           body.append(el('div', { class: 'hint', style: 'margin:0 0 6px;font-weight:700' }, 'Срок Premium'), o1, el('div', { class: 'hint', style: 'margin:0 0 6px;font-weight:700' }, 'Сколько раз можно ввести'), o2, note,
             el('button', { class: 'btn prem-buy', style: 'margin-top:0', onclick: async () => { const { data, error } = await sb.rpc('create_promo', { days, max_uses: uses, note: note.value.trim() || null }); if (error) { toast('Не вышло'); return; } copy(data); toast('Код ' + data + ' скопирован'); note.value = ''; load(); } }, '🎟 Создать код'), list);
           load();
+        } else if (tab === 'log') {
+          const { data, error } = await sb.rpc('admin_log_list'); if (error) throw error;
+          body.innerHTML = '';
+          if (!(data || []).length) body.append(el('div', { class: 'empty' }, 'Пока пусто'));
+          (data || []).forEach(l => body.append(el('div', { class: 'lrow' }, el('b', {}, (l.actor || '…') + ' '), (LOG_NAMES[l.action] || l.action) + (l.target ? ' → ' + l.target : '') + (l.details ? ' · ' + (/^config_/.test(l.action) ? (/"on": ?true/.test(l.details) ? 'включён' : 'выключен') : l.details) : ''), el('small', {}, new Date(l.created_at).toLocaleString('ru-RU', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })))));
         }
       } catch (e) { body.innerHTML = ''; body.append(el('div', { class: 'empty' }, 'Не загрузилось: ' + errText(e))); }
     };
-    drawTabs(0); root.append(el('h3', {}, '🛡 Админ-панель'), tabs, body); s.append(root); go();
+    drawTabs(); root.append(el('h3', {}, F ? '🛡 Админ-панель' : '🛡 Модерация'), tabs, body); s.append(root); go();
+  });
+}
+function banSheet(u, after) {
+  let hrs = 24;
+  sheet((s, close) => {
+    const opts = el('div', { class: 'opts' }), why = el('input', { placeholder: 'Причина (её увидит человек)', maxlength: 200, style: 'width:100%;box-sizing:border-box;margin:4px 0 12px;background:#ffffff0d;border:1px solid #ffffff1a;border-radius:14px;padding:11px 14px;color:inherit' });
+    const draw = () => { opts.innerHTML = ''; [[1, '1 час'], [24, 'Сутки'], [168, 'Неделя'], [720, 'Месяц'], [876000, 'Навсегда']].forEach(([h, l]) => opts.append(el('button', { class: hrs === h ? 'on' : '', onclick: () => { hrs = h; draw(); } }, l))); };
+    draw();
+    s.append(el('div', { class: 'adm' }, el('h3', {}, '⛔ Забанить ' + (u.display_name || '')), el('div', { class: 'hint', style: 'margin:-6px 0 10px' }, 'Не сможет писать сообщения. Увидит экран блокировки с причиной и сроком'), opts, why,
+      el('button', { class: 'btn', style: 'background:#ff3b4e', onclick: async () => { const { error } = await sb.rpc('admin_ban', { target: u.id, hours: hrs, reason: why.value.trim() || null }); if (error) { toast('Не вышло: ' + errText(error)); return; } close(); toast('Забанен ⛔'); after && after(); } }, '⛔ Забанить')));
   });
 }
 function userActions(u, reload) {
-  const prem = (u.badges || []).includes('premium') || (u.premium_until && new Date(u.premium_until) > new Date()), ver = (u.badges || []).includes('verified');
+  const F = isFounder();
+  const prem = (u.badges || []).includes('premium') || (u.premium_until && new Date(u.premium_until) > new Date()), ver = (u.badges || []).includes('verified'), mod = (u.badges || []).includes('mod'), ban = isBannedP(u);
   const act = async (what, val, msg) => { const { error } = await sb.rpc('admin_set', { target: u.id, what, val: String(val) }); if (error) { toast('Не вышло: ' + errText(error)); return false; } toast(msg); reload && reload(); return true; };
-  sheet((s, close) => s.append(el('div', { style: 'display:flex;align-items:center;gap:12px;margin-bottom:12px' }, avatar(u.display_name, u.avatar_url, 56), el('div', {}, el('b', { style: 'font-size:17px' }, u.display_name), el('div', { class: 'hint', style: 'margin:0' }, '@' + u.username + ' · с ' + new Date(u.created_at).toLocaleDateString('ru-RU')), el('div', { class: 'hint', style: 'margin:2px 0 0' }, prem ? (u.premium_until ? '✦ Premium до ' + new Date(u.premium_until).toLocaleDateString('ru-RU') : '✦ Premium навсегда') : 'без Premium'))),
-    el('div', { class: 'menu' },
-      el('button', { onclick: async () => { if (await act('premium_days', 7, '+7 дней Premium')) close(); } }, '✦ +7 дней Premium'),
-      el('button', { onclick: async () => { if (await act('premium_days', 30, '+30 дней Premium')) close(); } }, '✦ +30 дней Premium'),
-      el('button', { onclick: async () => { if (await act('premium_days', 365, '+год Premium')) close(); } }, '✦ +год Premium'),
-      prem ? el('button', { onclick: async () => { if (await act('premium_off', '', 'Premium снят')) close(); } }, '✖ Снять Premium') : null,
-      el('button', { onclick: async () => { if (await act(ver ? 'badge_off' : 'badge_on', 'verified', ver ? 'Галочка снята' : 'Галочка выдана ✓')) close(); } }, ver ? '✖ Убрать галочку ✓' : '✓ Выдать галочку'),
-      el('button', { onclick: () => { close(); setTimeout(() => openProfile(u.id), 30); } }, '👤 Открыть профиль'),
-      u.id !== me.id ? el('button', { class: 'red', onclick: async () => { if (!u.banned && !confirm('Забанить ' + u.display_name + '? Он не сможет писать сообщения')) return; if (await act('ban', u.banned ? 'off' : 'on', u.banned ? 'Разбанен' : 'Забанен ⛔')) close(); } }, u.banned ? '✅ Разбанить' : '⛔ Забанить') : null)));
+  sheet((s, close) => {
+    const dc = el('div', { class: 'dcard' }, el('div', {}, el('b', {}, '…'), el('small', {}, 'загружаю')));
+    sb.rpc('admin_user_detail', { target: u.id }).then(({ data: d }) => { if (!d) return; dc.innerHTML = '';
+      [[d.msgs, 'сообщений'], [d.msgs_week, 'за неделю'], [d.chats, 'чатов'], [d.groups, 'групп'], [d.referrals, 'пригласил'], [d.reports_against, 'жалоб на него'], [d.stories, 'историй'], [d.lives, 'эфиров'], [(d.promos || []).length, 'промокодов']].forEach(([n, l]) => dc.append(el('div', {}, el('b', {}, String(n)), el('small', {}, l))));
+      if (d.referred_by) dc.after(el('div', { class: 'hint', style: 'margin:-6px 0 10px' }, '🎁 Пришёл по ссылке ' + d.referred_by.display_name + ' @' + d.referred_by.username)); });
+    s.append(el('div', { class: 'adm' }, el('div', { style: 'display:flex;align-items:center;gap:12px;margin-bottom:12px' }, avatar(u.display_name, u.avatar_url, 56), el('div', {}, el('b', { style: 'font-size:17px' }, u.display_name), el('div', { class: 'hint', style: 'margin:0' }, '@' + u.username + ' · с ' + new Date(u.created_at).toLocaleDateString('ru-RU')),
+        el('div', { class: 'hint', style: 'margin:2px 0 0' }, (prem ? (u.premium_until ? '✦ Premium до ' + new Date(u.premium_until).toLocaleDateString('ru-RU') : '✦ Premium навсегда') : 'без Premium') + (ban ? ' · ⛔ ' + (u.banned_until && !u.banned ? 'бан до ' + new Date(u.banned_until).toLocaleString('ru-RU', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }) : 'бан навсегда') + (u.ban_reason ? ' (' + u.ban_reason + ')' : '') : '')))), dc),
+      el('div', { class: 'menu' },
+        F ? el('button', { onclick: async () => { if (await act('premium_days', 7, '+7 дней Premium')) close(); } }, '✦ +7 дней Premium') : null,
+        F ? el('button', { onclick: async () => { if (await act('premium_days', 30, '+30 дней Premium')) close(); } }, '✦ +30 дней Premium') : null,
+        F ? el('button', { onclick: async () => { if (await act('premium_days', 365, '+год Premium')) close(); } }, '✦ +год Premium') : null,
+        F && prem ? el('button', { onclick: async () => { if (await act('premium_off', '', 'Premium снят')) close(); } }, '✖ Снять Premium') : null,
+        F ? el('button', { onclick: async () => { if (await act(ver ? 'badge_off' : 'badge_on', 'verified', ver ? 'Галочка снята' : 'Галочка выдана ✓')) close(); } }, ver ? '✖ Убрать галочку ✓' : '✓ Выдать галочку') : null,
+        F && u.id !== me.id ? el('button', { onclick: async () => { if (await act(mod ? 'badge_off' : 'badge_on', 'mod', mod ? 'Больше не модератор' : 'Теперь модератор 🛡')) close(); } }, mod ? '✖ Снять модератора' : '🛡 Сделать модератором') : null,
+        el('button', { onclick: () => { close(); setTimeout(() => openProfile(u.id), 30); } }, '👤 Открыть профиль'),
+        u.id !== me.id && !(u.badges || []).includes('founder') ? (ban ? el('button', { onclick: async () => { const { error } = await sb.rpc('admin_ban', { target: u.id, hours: 0 }); if (error) { toast('Не вышло'); return; } toast('Разбанен ✅'); close(); reload && reload(); } }, '✅ Разбанить') : el('button', { class: 'red', onclick: () => { close(); setTimeout(() => banSheet(u, reload), 30); } }, '⛔ Забанить…')) : null,
+        F && u.id !== me.id && !(u.badges || []).includes('founder') ? el('button', { class: 'red', onclick: async () => { if (!confirm('Удалить аккаунт ' + u.display_name + ' и ВСЕ его сообщения? Это не отменить')) return; if (!confirm('Точно? Сообщения пропадут у всех')) return; const { data, error } = await sb.rpc('admin_wipe', { target: u.id }); if (error) { toast('Не вышло: ' + errText(error)); return; } toast('Удалено. Сообщений: ' + data); close(); reload && reload(); } }, '🗑 Удалить аккаунт и сообщения') : null));
+  });
 }
-
 /* ref capture */
 (() => { try { const q = new URLSearchParams(location.search), r = q.get('ref') || q.get('u'); if (r && !localStorage.getItem('viks-ref')) localStorage.setItem('viks-ref', r); } catch {} })();
 /* ================= BOOT ================= */
