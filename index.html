@@ -1796,6 +1796,50 @@ body:has(.mfs) .sheet-bg{z-index:75}
 .lv-kind{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:4px 0 6px}
 .lv-kind button{padding:18px 10px;border-radius:20px;background:#ffffff0d;display:flex;flex-direction:column;align-items:center;gap:6px;font-weight:800}.lv-kind button i{font-style:normal;font-size:34px}.lv-kind button small{font-weight:500;color:var(--muted);font-size:12px}
 .lv-don{display:flex;align-items:center;gap:10px;padding:8px 4px}.lv-don .n{width:26px;text-align:center;font-weight:900}.lv-don b{flex:1}.lv-don span{font-weight:800;color:#fbbf24}
+
+/* ===== 2.24 shop ===== */
+.av.fr{overflow:hidden}
+.av.fr-fr_gold{box-shadow:0 0 0 2px var(--bg),0 0 0 4.5px #f5c542,0 0 14px #f5c54299!important}
+.av.fr-fr_ice{box-shadow:0 0 0 2px var(--bg),0 0 0 4.5px #a5f3fc,0 0 16px #67e8f9aa,0 0 0 7px #e0f2fe55!important}
+.av.fr-fr_neon{animation:frNeon 2.4s linear infinite}
+@keyframes frNeon{0%,100%{box-shadow:0 0 0 2px var(--bg),0 0 0 4.5px #22d3ee,0 0 18px #22d3ee}50%{box-shadow:0 0 0 2px var(--bg),0 0 0 4.5px #d946ef,0 0 18px #d946ef}}
+.av.fr-fr_love{animation:frLove 1.3s ease-in-out infinite}
+@keyframes frLove{0%,100%{box-shadow:0 0 0 2px var(--bg),0 0 0 4.5px #fb7185,0 0 8px #fb718588}50%{box-shadow:0 0 0 2px var(--bg),0 0 0 5.5px #f43f5e,0 0 22px #f43f5ecc}}
+.av.fr-fr_fire{animation:frFire .9s ease-in-out infinite alternate}
+@keyframes frFire{0%{box-shadow:0 0 0 2px var(--bg),0 0 0 4.5px #f97316,0 -4px 14px #f59e0b,0 0 22px #ef444499}100%{box-shadow:0 0 0 2px var(--bg),0 0 0 5px #ef4444,0 -7px 22px #fbbf24,0 0 30px #f9731699}}
+.av.fr-fr_rainbow{animation:frRb 3s linear infinite}
+@keyframes frRb{0%{box-shadow:0 0 0 2px var(--bg),0 0 0 4.5px #ef4444,0 0 14px #ef4444}17%{box-shadow:0 0 0 2px var(--bg),0 0 0 4.5px #f59e0b,0 0 14px #f59e0b}33%{box-shadow:0 0 0 2px var(--bg),0 0 0 4.5px #eab308,0 0 14px #eab308}50%{box-shadow:0 0 0 2px var(--bg),0 0 0 4.5px #22c55e,0 0 14px #22c55e}67%{box-shadow:0 0 0 2px var(--bg),0 0 0 4.5px #3b82f6,0 0 14px #3b82f6}83%{box-shadow:0 0 0 2px var(--bg),0 0 0 4.5px #a855f7,0 0 14px #a855f7}100%{box-shadow:0 0 0 2px var(--bg),0 0 0 4.5px #ef4444,0 0 14px #ef4444}}
+.bub.sk{background-image:none!important}
+.bub.sk-glass{background:#ffffff1c!important;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid #ffffff33;color:#fff}
+.bub.sk-candy{background:linear-gradient(135deg,#f472b6,#fb923c)!important;color:#fff}
+.bub.sk-ocean{background:linear-gradient(135deg,#0ea5e9,#2563eb 60%,#4f46e5)!important;color:#fff}
+.bub.sk-gold{background:linear-gradient(135deg,#a16207,#eab308 45%,#fde68a 55%,#ca8a04)!important;background-size:220% 100%!important;animation:skGold 4s linear infinite;color:#1c1400!important;text-shadow:0 1px 0 #fff6}
+@keyframes skGold{to{background-position:220% 0}}
+.bub.sk-galaxy{background:radial-gradient(circle at 20% 30%,#ffffff22 0 1px,transparent 2px),radial-gradient(circle at 70% 60%,#ffffff33 0 1px,transparent 2px),linear-gradient(135deg,#1e1b4b,#6d28d9 55%,#db2777)!important;background-size:60px 60px,90px 90px,100% 100%!important;color:#fff}
+.bub.sk-matrix{background:#031a0c!important;color:#4ade80!important;font-family:ui-monospace,Menlo,monospace;border:1px solid #16a34a66;text-shadow:0 0 6px #22c55e88}
+.bub.sk-matrix .meta,.bub.sk-matrix .time{color:#4ade80aa!important}
+.vx-c{display:inline-grid;place-items:center;width:1.15em;height:1.15em;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fde68a,#f59e0b 60%,#b45309);color:#7c2d12;font-weight:900;font-size:.8em;vertical-align:-.15em;box-shadow:0 1px 3px #0006}
+.shop{padding:4px 2px 10px}
+.shop .bal{text-align:center;padding:16px 10px 18px;border-radius:24px;background:linear-gradient(135deg,#f59e0b33,#ec489933 60%,#8b5cf633);margin-bottom:12px}
+.shop .bal .n{font-size:40px;font-weight:900;display:flex;align-items:center;justify-content:center;gap:10px}.shop .bal .n .vx-c{font-size:30px}
+.shop .bal small{color:var(--muted)}
+.shop .earn{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px}
+.shop .earn button{padding:12px 6px;border-radius:18px;background:#ffffff0d;display:flex;flex-direction:column;align-items:center;gap:3px;font-weight:800;font-size:13px;position:relative}
+.shop .earn button i{font-style:normal;font-size:24px}.shop .earn button small{font-weight:600;color:var(--muted);font-size:11px;text-align:center}
+.shop .earn button.go{background:linear-gradient(135deg,#f59e0b,#ec4899);color:#fff}.shop .earn button.go small{color:#fffd}
+.shop .tabs{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;margin-bottom:12px}.shop .tabs::-webkit-scrollbar{display:none}
+.shop .tabs button{flex:none;padding:8px 14px;border-radius:14px;background:#ffffff10;font-weight:800;font-size:13.5px}.shop .tabs button.on{background:var(--accent);color:#fff}
+.shop .grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.shop .it{border-radius:20px;background:#ffffff0b;padding:14px 10px 10px;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center}
+.shop .it .pv{height:86px;display:grid;place-items:center;width:100%}
+.shop .it .pv .bub{position:relative;max-width:90%;padding:8px 12px;border-radius:16px;font-size:13.5px;background:var(--accent)}
+.shop .it b{font-size:13.5px}
+.shop .it button{width:100%;padding:9px;border-radius:12px;font-weight:800;font-size:13px;background:linear-gradient(135deg,#f59e0b,#ec4899);color:#fff;display:flex;align-items:center;justify-content:center;gap:5px}
+.shop .it button.own{background:#ffffff14;color:var(--text)}.shop .it button.on{background:#10b98133;color:#34d399}
+.shop .it.wide{grid-column:1/-1}
+.shop .log{margin-top:14px}.shop .log div{display:flex;justify-content:space-between;gap:10px;padding:7px 2px;font-size:13px;border-bottom:1px solid #ffffff0a}.shop .log .p{color:#34d399;font-weight:800}.shop .log .m{color:#fb7185;font-weight:800}
+.gift-panel .gg button .vp{position:absolute;right:4px;top:4px;font-size:10px;font-weight:900;background:#f59e0b;color:#111;padding:1px 5px;border-radius:7px}
+.gift-panel .gg button{position:relative}
 </style>
 </head>
 <body>
@@ -2077,7 +2121,7 @@ async function start(user) {
   subscribe();
   afterUpdateNotice();
   drawInstallBanner();
-  loadBlocks(); if (settings.notify) ensurePush(); e2eInit(); if (isBannedP(me)) bannedScreen(); setTimeout(refClaim, 3000); loadAppConfig(); setInterval(loadAppConfig, 90000); if (shareAlways()) setTimeout(() => startSharing(10, true), 2500);
+  loadBlocks(); if (settings.notify) ensurePush(); e2eInit(); if (isBannedP(me)) bannedScreen(); setTimeout(refClaim, 3000); loadAppConfig(); setTimeout(vixLoad, 1500); setInterval(loadAppConfig, 90000); if (shareAlways()) setTimeout(() => startSharing(10, true), 2500);
   setupInbox();
   drawPushBanner(); flushOutbox(); drawNet(); setupFolderSwipe(); devPing(); setTimeout(bdayCheck, 1500); lockBoot(); setTimeout(maybeOnboarding, 900);
   handleDeepLinks();
@@ -2154,7 +2198,7 @@ function renderChats() {
     if (c.last_kind === 'system') prev = (c.last_sender === me.id ? 'Ты ' : (profiles.get(c.last_sender)?.display_name || '') + ' ') + (c.last_body || '');
     else { const who = c.last_sender === me.id && hasLast ? 'Ты: ' : c.is_group && !c.is_channel && c.last_sender && profiles.get(c.last_sender) ? profiles.get(c.last_sender).display_name + ': ' : ''; if (hasLast) prev = [who, ...kindPrev(c)]; else prev = who + prev; }
     const rowEl = longPress(el('div', { class: 'row' + (current?.chat_id === c.chat_id ? ' active' : '') + (Number(c.unread || 0) && !c.muted ? ' unr' : '') + (/^🤖/.test(c.title || '') || (!c.is_group && isBotId(c.peer_id)) ? ' airow' : ''), style: '--i:' + (ri++), onclick: () => openChat(c.chat_id) },
-      c.saved ? savedAv(52) : avatar(c.title, c.avatar_url, 52, !c.is_group && isOnline(peer)),
+      c.saved ? savedAv(52) : frm(!c.is_group && peer, avatar(c.title, c.avatar_url, 52, !c.is_group && isOnline(peer))),
       el('div', { class: 'meta' },
         el('div', { class: 'l1' }, el('div', { class: 'name' }, !c.is_group ? ngn(peer, c.title || 'Без названия') : (/^\p{Extended_Pictographic}/u.test(c.title || '') ? '' : c.is_channel ? '📢 ' : '👥 ') + (c.title || 'Без названия'), !c.is_group ? decor(peer) : null, !c.is_group && isBday(peer) ? el('span', { class: 'bday-ic' }, '🎂') : null, streakEl(c), c.muted ? el('span', { class: 'mute-ic' }, '🔕') : null, c.pinned ? el('span', { class: 'pin-ic' }, '📌') : null, c.ttl_seconds ? el('span', { class: 'pin-ic' }, '⏱') : null), el('div', { class: 'time' }, shortTime(c.last_at))),
         el('div', { class: 'l2' }, el('div', { class: 'prev' }, tp && tp.until > Date.now() && c.chat_id !== current?.chat_id ? el('span', { class: 'typing-prev' }, (c.is_group ? tp.name + ' ' : '') + 'печатает…') : dr ? [el('span', { class: 'draft' }, 'Черновик: '), dr] : prev), c.unread > 0 ? el('div', { class: 'badge' + (c.muted ? ' muted' : '') }, c.unread > 99 ? '99+' : String(c.unread)) : null)
@@ -2301,7 +2345,7 @@ async function openChat(chatId) {
   const head = el('div', { class: 'top ctop' + (peer && isOnline(peer) ? ' onl' : '') },
     el('button', { class: 'icon-btn', html: ICON.back, onclick: () => innerWidth < 820 ? history.back() : closeChatView(), title: 'Назад' }),
     el('div', { class: 'chat-head', onclick: e => c.saved ? mediaGallery(c.chat_id, 'Избранное') : c.is_group ? openGroupInfo(c) : openProfile(c.peer_id, e.currentTarget.querySelector('.av')) },
-      c.saved ? savedAv(42) : avatar(c.title, c.avatar_url, 42), el('div', { style: 'min-width:0' }, el('div', { class: 't' }, !c.is_group ? ngn(profiles.get(c.peer_id), c.title || '') : (c.title || ''), !c.is_group ? decor(profiles.get(c.peer_id)) : null), sub, headChips(c, peer))),
+      c.saved ? savedAv(42) : frm(!c.is_group && peer, avatar(c.title, c.avatar_url, 42)), el('div', { style: 'min-width:0' }, el('div', { class: 't' }, !c.is_group ? ngn(profiles.get(c.peer_id), c.title || '') : (c.title || ''), !c.is_group ? decor(profiles.get(c.peer_id)) : null), sub, headChips(c, peer))),
     el('div', { class: 'hbtns' },
     !c.is_group && !c.saved ? el('button', { class: 'icon-btn', html: ICON.video, title: 'Видеозвонок', onclick: () => startCall(c.peer_id, true) }) : null,
     !c.is_group && !c.saved ? el('button', { class: 'icon-btn', html: ICON.phone, title: 'Позвонить', onclick: () => startCall(c.peer_id) }) : null,
@@ -2427,7 +2471,8 @@ function renderMsgs(scroll) {
     const firstOfRun = !prev || prev.sender_id !== m.sender_id || new Date(prev.created_at).toDateString() !== d.toDateString();
     const sender = profiles.get(m.sender_id);
     const isCirc = !m.deleted && m.kind === 'circle';
-    const bub = el('div', { class: 'bub' + (m.deleted ? ' del' : '') + (isCirc ? ' circ' : '') });
+    const skn = !m.deleted && (m.kind || 'text') === 'text' && !m.image_url && !m.poll && !m.game && m.body && !/^(♫|🎵 listen:|📺 watch:|✦gift:|🎁|📍|👤 contact:)/.test(m.body) && sender && sender.bubble ? ' sk sk-' + sender.bubble.slice(3) : '';
+    const bub = el('div', { class: 'bub' + (m.deleted ? ' del' : '') + (isCirc ? ' circ' : '') + skn });
     if (current.is_group && !current.is_channel && !mine && firstOfRun) bub.append(el('div', { class: 'who', style: 'color:' + (sender?.name_color || nameColor(m.sender_id)) }, ngn(sender, sender?.display_name || '…'), decor(sender)));
     if (!m.deleted && m.fwd_from) bub.append(el('div', { class: 'fwd' }, '↪️ Переслано от ' + (profiles.get(m.fwd_from)?.display_name || '…')));
     if (!m.deleted && m.reply_to) bub.append(quoteEl(m.reply_to));
@@ -2587,7 +2632,7 @@ async function openProfile(uid, fromEl, view) {
     const dc = dmChat(uid);
     s.append(coverVid(p, el('div', { class: 'cover', style: p.cover_url ? `background-image:url(${p.cover_url})` : `background:linear-gradient(135deg,${p.name_color || 'var(--accent)'},var(--accent3))` })),
       el('div', { class: 'prof-head' },
-      el('div', { style: 'cursor:zoom-in', onclick: () => p.avatar_url && viewImage(p.avatar_url) }, avatar(p.display_name, p.avatar_url, 110)),
+      el('div', { style: 'cursor:zoom-in', onclick: () => p.avatar_url && viewImage(p.avatar_url) }, frm(p, avatar(p.display_name, p.avatar_url, 110))),
       el('div', { class: 'nm', style: p.name_color ? 'color:' + p.name_color : '' }, ngn(p, p.display_name), decor(p)), aliases.has(p.id) ? el('div', { class: 'real-name' }, 'на самом деле: ' + p._real) : null, el('div', { class: 'un' }, '@' + p.username + ' · ' + lastSeenText(p)),
       npChip(p),
       p.status ? el('div', { class: 'pstatus' }, p.status) : null,
@@ -2781,7 +2826,7 @@ async function openGroupInfo(c) {
 
 
 /* ================= SETTINGS & UPDATES ================= */
-const APP_VERSION = '2.23.0';
+const APP_VERSION = '2.24.0';
 const TK1 = (() => { const t = document.createElement('template'); t.innerHTML = '<svg viewBox="0 0 16 11" width="15" height="11"><path d="M1.5 6l3 3 6.5-7.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>'; return t.content; })();
 const TK2 = (() => { const t = document.createElement('template'); t.innerHTML = '<svg viewBox="0 0 20 11" width="18" height="11"><path d="M1.5 6l3 3 6.5-7.5M8 8.5l.8.6 6.7-7.6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>'; return t.content; })();
 const APP_THEMES = {
@@ -3822,8 +3867,8 @@ function openStickers() {
       tabs.append(el('button', { onclick: () => { close(); setTimeout(newPack, 30); } }, '➕ Пак'));
       g.innerHTML = ''; g.className = 'stk-grid';
       if (tab === 'prem') {
-        const ok = isPremium(); g.className = 'stk-grid pg' + (ok ? '' : ' lock');
-        if (!ok) g.append(el('div', { class: 'prem-ban' }, el('div', {}, el('b', {}, '✦ Viks Premium'), 'Стикеры с эффектом на весь экран'), el('button', { onclick: () => { close(); setTimeout(premiumPage, 30); } }, 'Подробнее')));
+        const ok = isPremium() || owns('st_prem'); g.className = 'stk-grid pg' + (ok ? '' : ' lock');
+        if (!ok) g.append(el('div', { class: 'prem-ban' }, el('div', {}, el('b', {}, '✦ Viks Premium'), 'Стикеры с эффектом на весь экран · или купи в магазине'), el('button', { onclick: () => { close(); setTimeout(() => shopPage('sticker'), 30); } }, '🛍 Купить')));
         for (const [e] of PREMIUM) g.append(el('button', { title: e, onclick: () => { if (!ok) { premFx(e, true); setTimeout(() => toast('✦ Это стикер Viks Premium'), 400); return; } close(); sendSticker(e, 'premium:' + e); } }, animEmoji(e)));
         return;
       }
@@ -3859,7 +3904,7 @@ async function addMySticker() {
 async function sendSticker(e, own) {
   if (!current) return;
   const url = own || `https://fonts.gstatic.com/s/e/notoemoji/latest/${emojiCode(e)}/512.gif`;
-  if (/^premium:/.test(url)) { if (!isPremium()) { premiumPage(); return; } setTimeout(() => premFx(e), 120); }
+  if (/^premium:/.test(url)) { if (!isPremium() && !owns('st_prem')) { shopPage('sticker'); return; } setTimeout(() => premFx(e), 120); }
   const rt = takeReply();
   const tmp = { id: 'tmp' + Date.now(), chat_id: current.chat_id, sender_id: me.id, kind: 'sticker', body: e, media_url: url,  reply_to: rt, created_at: new Date().toISOString(), pending: true };
   msgs.push(tmp); renderMsgs(true);
@@ -4283,7 +4328,7 @@ async function watchLive(lv) {
   let pc = null, ice = [];
   const ui = liveShell({ title: host.display_name || 'Эфир', sub: 'в эфире с ' + hm(new Date(lv.started_at)), isHost: false, onClose: () => leave() });
   ui.top.append(el('button', { class: 'icon-btn', html: ICON.close, onclick: () => ui.L.close() }));
-  watching = { lv, ch, ui }; ui.room = { host: lv.user_id };
+  watching = { lv, ch, ui }; ui.room = { host: lv.user_id }; ui.hostId = lv.user_id;
   ui.onName = (uid, name) => { const r = ui.room || {}; if (!(r.mods || []).includes(me.id) || uid === me.id || uid === lv.user_id) return; liveModSheet(null, uid, name, (act) => sendHost({ t: 'modreq', act, uid, name })); };
   ui.sendRx = e => { if (Date.now() - (ui._rxT || 0) < 1200) { toast('Не так быстро 😅'); return; } ui._rxT = Date.now(); liveRxShow(e); ch.send({ type: 'broadcast', event: 'rx', payload: { e, uid: me.id } }); };
   const sendHost = payload => ch.send({ type: 'broadcast', event: 'sig', payload: { ...payload, to: lv.user_id, from: me.id } });
@@ -5141,10 +5186,11 @@ function renderSettingsRoot() {
   box.append(el('button', { class: 'qr-btn', title: 'QR-визитка', html: QR_IC, onclick: () => qrCard() }));
   box.style.position = 'relative';
   box.append(el('div', { class: 'sp-hero', onclick: () => openMyProfile() },
-      avatar(me.display_name, me.avatar_url, 104),
+      frm(me, avatar(me.display_name, me.avatar_url, 104)),
       el('div', { class: 'nm', style: me.name_color ? 'color:' + me.name_color : '' }, ngn(me, me.display_name), decor(me)),
       el('div', { class: 'un' }, '@' + me.username),
       st ? el('div', { class: 'st' }, st) : null),
+    el('div', { class: 'set-group' }, catRow('<span style="font-size:17px">🛍</span>', 'linear-gradient(135deg,#f59e0b,#f97316)', 'Магазин', (vix.bal != null ? vix.bal + ' виксов · ' : '') + 'рамки, пузыри, темы, стикеры', shopPage)),
     el('div', { class: 'set-group' }, catRow('<span style="font-size:17px;color:#fff">✦</span>', 'linear-gradient(135deg,#f59e0b,#ec4899,#8b5cf6)', 'Viks Premium', isPremium() ? 'Активен ✅ · стикеры с эффектами' : 'Премиум-стикеры и фишки · скоро', premiumPage)),
     el('div', { class: 'set-group' },
       catRow(SI.user, 'linear-gradient(135deg,#3b9cff,#1d6fe0)', 'Аккаунт', 'Имя, аватарка, статус, «О себе»', () => openMyProfile()),
@@ -6638,8 +6684,8 @@ async function openWatch(id, m) {
 function appThemeRow(sw) {
   const row = el('div', { class: 'atrow' });
   for (const [k, t] of Object.entries(APP_THEMES)) {
-    const card = el('div', { class: 'atc' + (settings.appTheme === k ? ' on' : '') + (t.prem && !isPremium() ? ' lk' : ''), onclick: () => {
-      if (t.prem && !isPremium()) { toast('✦ Тема для Viks Premium'); premiumPage(); return; }
+    const card = el('div', { class: 'atc' + (settings.appTheme === k ? ' on' : '') + (t.prem && !isPremium() && !owns('th_' + k) ? ' lk' : ''), onclick: () => {
+      if (t.prem && !isPremium() && !owns('th_' + k)) { toast('✦ Тема для Premium — или купи её в магазине'); shopPage('theme'); return; }
       settings.appTheme = k; settings.wall = t.wall; saveSettings(); askTilt();
       row.querySelectorAll('.atc').forEach(x => x.classList.toggle('on', x === card)); sw && sw.querySelectorAll('.swatch').forEach(x => x.classList.remove('on'));
       if (current) { applyChatTheme(current.chat_id); startLiveWall(); }
@@ -7009,7 +7055,7 @@ function homeHub() {
 }
 function pinTiles(pins) {
   return el('div', { class: 'pins' }, pins.map(c => { const peer = c.peer_id ? profiles.get(c.peer_id) : null, n = Number(c.unread || 0);
-    return longPress(el('div', { class: 'pin-t', onclick: () => openChat(c.chat_id) }, c.saved ? savedAv(62) : avatar(c.title, c.avatar_url, 62, !c.is_group && isOnline(peer)), n ? el('span', { class: 'ub' + (c.muted ? ' m' : '') }, n > 99 ? '99+' : String(n)) : null, el('div', { class: 'nm' }, c.saved ? 'Избранное' : (c.title || '').replace(/^\p{Extended_Pictographic}\s*/u, '').split(' ')[0])), () => chatMenu(c)); }));
+    return longPress(el('div', { class: 'pin-t', onclick: () => openChat(c.chat_id) }, c.saved ? savedAv(62) : frm(!c.is_group && peer, avatar(c.title, c.avatar_url, 62, !c.is_group && isOnline(peer))), n ? el('span', { class: 'ub' + (c.muted ? ' m' : '') }, n > 99 ? '99+' : String(n)) : null, el('div', { class: 'nm' }, c.saved ? 'Избранное' : (c.title || '').replace(/^\p{Extended_Pictographic}\s*/u, '').split(' ')[0])), () => chatMenu(c)); }));
 }
 
 
@@ -7383,10 +7429,11 @@ function giftPanel(ui, send) {
   const prem = isPremium();
   const pn = el('div', { class: 'gift-panel' }, el('div', { class: 'gh' }, el('b', {}, '🎁 Подарок ведущему'), el('button', { class: 'icon-btn', html: ICON.close, onclick: () => pn.remove() })),
     el('div', { class: 'gg' }, GIFTS.map(([k, n, pm]) => el('button', { class: pm && !prem ? 'lk' : '', onclick: () => {
-      if (pm && !prem) { toast('✦ Этот подарок только с Viks Premium'); return; }
       if (Date.now() - lastGift < 1500) { toast('Не так быстро 😅'); return; } lastGift = Date.now();
-      const g = { k, name: (me.display_name || '').split(' ')[0], uid: me.id }; send(g); ui.showGift(g); hap(15); pn.remove();
-    } }, animEmoji(k), n[0].toUpperCase() + n.slice(1), pm ? el('span', { class: 'pm' }, '✦') : null))));
+      const g = { k, name: (me.display_name || '').split(' ')[0], uid: me.id };
+      if (pm && !prem) { if (!ui.hostId) return; sb.rpc('vix_gift', { host: ui.hostId, k }).then(({ data, error }) => { if (error) { toast(/хватает/.test(error.message) ? '🪙 Не хватает виксов — загляни в магазин' : 'Не вышло: ' + errText(error)); return; } vix.bal = data.balance; send(g); ui.showGift(g); hap(15); toast('−25 🪙 · ведущий получил +10'); }); pn.remove(); return; }
+      send(g); ui.showGift(g); hap(15); pn.remove();
+    } }, animEmoji(k), n[0].toUpperCase() + n.slice(1), pm ? (prem ? el('span', { class: 'pm' }, '✦') : el('span', { class: 'vp' }, '25 🪙')) : null))));
   ui.root.append(pn);
 }
 /* ===== 2.15 live recording ===== */
@@ -7746,6 +7793,7 @@ function userActions(u, reload) {
     s.append(el('div', { class: 'adm' }, el('div', { style: 'display:flex;align-items:center;gap:12px;margin-bottom:12px' }, avatar(u.display_name, u.avatar_url, 56), el('div', {}, el('b', { style: 'font-size:17px' }, u.display_name), el('div', { class: 'hint', style: 'margin:0' }, '@' + u.username + ' · с ' + new Date(u.created_at).toLocaleDateString('ru-RU')),
         el('div', { class: 'hint', style: 'margin:2px 0 0' }, (prem ? (u.premium_until ? '✦ Premium до ' + new Date(u.premium_until).toLocaleDateString('ru-RU') : '✦ Premium навсегда') : 'без Premium') + (ban ? ' · ⛔ ' + (u.banned_until && !u.banned ? 'бан до ' + new Date(u.banned_until).toLocaleString('ru-RU', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }) : 'бан навсегда') + (u.ban_reason ? ' (' + u.ban_reason + ')' : '') : '')))), dc),
       el('div', { class: 'menu' },
+        F ? el('button', { onclick: async () => { const n = parseInt(prompt('Сколько виксов выдать? (минус — списать)', '100')); if (!n) return; const { data, error } = await sb.rpc('admin_give_vix', { target: u.id, n }); if (error) { toast('Не вышло: ' + errText(error)); return; } toast('🪙 Готово, у него теперь ' + data); close(); } }, '🪙 Выдать виксы') : null,
         F ? el('button', { onclick: async () => { if (await act('premium_days', 7, '+7 дней Premium')) close(); } }, '✦ +7 дней Premium') : null,
         F ? el('button', { onclick: async () => { if (await act('premium_days', 30, '+30 дней Premium')) close(); } }, '✦ +30 дней Premium') : null,
         F ? el('button', { onclick: async () => { if (await act('premium_days', 365, '+год Premium')) close(); } }, '✦ +год Premium') : null,
@@ -8414,6 +8462,72 @@ function liveStatsSheet(lv, after) {
     top ? el('div', { class: 'lv-don', style: 'background:#f59e0b1a;border-radius:16px;padding:10px 12px;margin-bottom:10px' }, el('span', { class: 'n' }, '👑'), el('b', {}, 'Лучший даритель: ' + top.name), el('span', {}, top.pts + ' ✦')) : null,
     lv.room.goal ? el('div', { class: 'hint', style: 'text-align:center' }, (lv.room.goal.done ? '✅ Цель выполнена: ' : '🎯 Цель не добита: ') + lv.room.goal.text) : null,
     el('button', { class: 'btn', onclick: close }, 'Круто')), () => setTimeout(after, 250));
+}
+
+
+/* ===== 2.24 shop & vix ===== */
+const vix = { bal: null, items: new Set(), st: null };
+const owns = k => vix.items.has(k);
+const VX = () => el('span', { class: 'vx-c' }, 'V');
+function frm(p, a) { if (p && p.frame && a) a.classList.add('fr', 'fr-' + p.frame); return a; }
+async function vixLoad() { try { const { data, error } = await sb.rpc('vix_state'); if (error || !data) return null; vix.st = data; vix.bal = data.balance; vix.items = new Set(data.items || []); return data; } catch { return null; } }
+const SHOP_TABS = [['frame', '🖼 Рамки'], ['bubble', '💬 Пузыри'], ['theme', '🎨 Темы'], ['sticker', '✦ Стикеры'], ['premium', '👑 Premium']];
+async function shopPage(tab0) {
+  let tab = typeof tab0 === 'string' ? tab0 : 'frame';
+  const [st, { data: items }] = await Promise.all([vixLoad(), sb.from('shop_items').select('*').eq('active', true).order('sort')]);
+  if (!st) { toast('Магазин не открылся, попробуй ещё раз'); return; }
+  sheet((s, close) => {
+    const box = el('div', { class: 'shop' });
+    const draw = () => {
+      const S = vix.st; box.innerHTML = '';
+      const actEarn = Math.min(Math.floor(S.msgs / 5), 20) - S.act_claimed, refEarn = (S.refs - S.ref_claimed) * 100;
+      const claim = async (fn, okMsg) => { const { data, error } = await sb.rpc(fn); if (error) { toast(error.message); return; } vix.bal = data.balance; hap([10, 30, 10]); fullBurst('🪙'); toast(okMsg(data)); await vixLoad(); draw(); };
+      box.append(el('div', { class: 'bal' }, el('div', { class: 'n' }, VX(), String(vix.bal)), el('small', {}, 'виксы — валюта Viks. Копи и трать на крутые штуки')),
+        el('div', { class: 'earn' },
+          el('button', { class: S.can_daily ? 'go' : '', onclick: () => S.can_daily ? claim('vix_daily', d => '🎁 +' + d.got + ' виксов · день ' + d.streak + ' подряд') : toast('Завтра будет ещё! Серия: ' + S.streak + ' дн.') }, el('i', {}, '🎁'), 'Бонус дня', el('small', {}, S.can_daily ? 'забрать +' + (10 + Math.min(S.streak, 6) * 5) : '✅ серия ' + S.streak + ' дн.')),
+          el('button', { class: actEarn > 0 ? 'go' : '', onclick: () => actEarn > 0 ? claim('vix_activity', d => '💬 +' + d.got + ' за активность') : toast('1 викс за каждые 5 сообщений, до 20 в день') }, el('i', {}, '💬'), 'Общение', el('small', {}, actEarn > 0 ? 'забрать +' + actEarn : Math.min(S.msgs, 100) + '/100 сообщ.')),
+          el('button', { class: refEarn > 0 ? 'go' : '', onclick: () => refEarn > 0 ? claim('vix_ref', d => '👥 +' + d.got + ' за друзей') : (close(), setTimeout(inviteFriends, 30)) }, el('i', {}, '👥'), 'Друзья', el('small', {}, refEarn > 0 ? 'забрать +' + refEarn : '+100 за друга'))));
+      const tabs = el('div', { class: 'tabs' }, SHOP_TABS.map(([k, l]) => el('button', { class: tab === k ? 'on' : '', onclick: () => { tab = k; draw(); } }, l)));
+      const grid = el('div', { class: 'grid' });
+      (items || []).filter(i => i.kind === tab).forEach(it => grid.append(shopCard(it, draw)));
+      box.append(tabs, grid, el('button', { class: 'btn ghost', style: 'margin-top:14px', onclick: () => vixHistory() }, '📜 История виксов'));
+    };
+    draw(); s.append(el('h3', {}, '🛍 Магазин'), box);
+  });
+}
+function shopCard(it, redraw) {
+  const have = it.kind === 'premium' ? false : owns(it.id);
+  const eqKind = it.kind === 'frame' ? 'frame' : it.kind === 'bubble' ? 'bubble' : null;
+  const on = eqKind && me[eqKind] === it.id;
+  let pv;
+  if (it.kind === 'frame') pv = frm({ frame: it.id }, avatar(me.display_name, me.avatar_url, 64));
+  else if (it.kind === 'bubble') pv = el('div', { class: 'bub sk sk-' + it.id.slice(3) }, 'Йо, как дела? 😎');
+  else if (it.kind === 'theme') { const t = APP_THEMES[it.id.slice(3)] || {}; pv = el('div', { style: `width:84px;height:84px;border-radius:20px;background:linear-gradient(135deg,${t.a || '#888'},${t.a3 || '#444'});box-shadow:0 8px 24px ${t.a || '#888'}66;display:grid;place-items:center;font-size:30px` }, '🎨'); }
+  else if (it.kind === 'sticker') pv = el('div', { style: 'display:flex;gap:4px' }, PREMIUM.slice(0, 3).map(([e]) => el('button', { onclick: () => premFx(e, true), style: 'width:46px;height:46px' }, animEmoji(e))));
+  else pv = el('div', { style: 'font-size:52px' }, '👑');
+  const btn = el('button', { class: on ? 'on' : have ? 'own' : '' }, on ? '✓ Надето — снять' : have ? (eqKind ? 'Надеть' : it.kind === 'theme' ? 'Поставить' : '✓ Куплено') : [VX(), ' ' + it.price]);
+  btn.onclick = async () => {
+    if (have) {
+      if (eqKind) { const { error } = await sb.rpc('vix_equip', { kind: eqKind, item: on ? null : it.id }); if (error) { toast(errText(error)); return; } me[eqKind] = on ? null : it.id; profiles.set(me.id, me); toast(on ? 'Снято' : '✨ Надето! Все увидят'); redraw(); if (current) renderMsgs(false); loadChats(); return; }
+      if (it.kind === 'theme') { const k = it.id.slice(3), t = APP_THEMES[k]; settings.appTheme = k; if (t) settings.wall = t.wall; saveSettings(); toast('🎨 Тема поставлена'); return; }
+      return;
+    }
+    if (vix.bal < it.price) { toast('🪙 Не хватает ' + (it.price - vix.bal) + ' виксов. Забирай бонусы сверху 👆'); return; }
+    if (!confirm('Купить «' + it.title + '» за ' + it.price + ' виксов?')) return;
+    btn.disabled = true;
+    const { data, error } = await sb.rpc('vix_buy', { item: it.id });
+    if (error) { toast(errText(error)); btn.disabled = false; return; }
+    vix.bal = data.balance; if (it.kind !== 'premium') vix.items.add(it.id); hap([15, 40, 15]); fullBurst(it.kind === 'premium' ? '👑' : '🛍');
+    if (it.kind === 'premium') { const { data: pr } = await sb.from('profiles').select('*').eq('id', me.id).single(); if (pr) { me = pr; profiles.set(me.id, me); } toast('👑 Premium продлён на 7 дней!'); }
+    else if (eqKind) { await sb.rpc('vix_equip', { kind: eqKind, item: it.id }); me[eqKind] = it.id; profiles.set(me.id, me); toast('🛍 Куплено и надето!'); if (current) renderMsgs(false); loadChats(); }
+    else toast('🛍 Куплено!');
+    await vixLoad(); redraw();
+  };
+  return el('div', { class: 'it' + (it.kind === 'premium' || it.kind === 'sticker' ? ' wide' : '') }, el('div', { class: 'pv' }, pv), el('b', {}, it.title), btn);
+}
+async function vixHistory() {
+  const { data } = await sb.from('vix_log').select('*').order('created_at', { ascending: false }).limit(60);
+  sheet((s, close) => s.append(el('h3', {}, '📜 История виксов'), el('div', { class: 'shop' }, el('div', { class: 'log' }, (data || []).length ? (data || []).map(r => el('div', {}, el('span', {}, r.reason, el('br'), el('small', { style: 'color:var(--muted)' }, new Date(r.created_at).toLocaleString('ru-RU', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }))), el('span', { class: r.delta > 0 ? 'p' : 'm' }, (r.delta > 0 ? '+' : '') + r.delta))) : el('div', { class: 'empty' }, 'Пока пусто'))), el('button', { class: 'btn', style: 'margin-top:12px', onclick: close }, 'Закрыть')));
 }
 
 /* ref capture */
