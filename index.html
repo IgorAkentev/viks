@@ -1540,6 +1540,35 @@ html.light #msgs .day:not(.sys){background:#ffffffcc;color:#4a4566;border-color:
 .gift-card .ae{width:72px;height:72px}.gift-card b{font-size:16px}.gift-card small{opacity:.9;font-size:12.5px}
 .bub.giftb{background:transparent!important;border:0!important;box-shadow:none!important;padding:0!important}
 video.ae{object-fit:contain;border-radius:14px}
+
+/* ===== 2.17 ===== */
+.adm input{background:#ffffff0d;border:1px solid #ffffff1a;border-radius:14px;padding:11px 14px;color:inherit;outline:none;font:inherit}
+.adm .tabs2{display:flex;gap:6px;overflow-x:auto;margin:0 0 12px;scrollbar-width:none}.adm .tabs2::-webkit-scrollbar{display:none}
+.adm .tabs2 button{flex:none;padding:8px 14px;border-radius:14px;background:#ffffff10;font-weight:800;font-size:13.5px;position:relative}.adm .tabs2 button.on{background:var(--accent);color:#fff}
+.adm .tabs2 button b{position:absolute;top:-4px;right:-4px;min-width:18px;height:18px;border-radius:9px;background:#ff3b4e;color:#fff;font-size:11px;display:grid;place-items:center;padding:0 4px}
+.adm .tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.adm .tile{padding:12px 10px;border-radius:18px;background:#ffffff0a;border:1px solid #ffffff12}
+.adm .tile b{display:block;font-size:22px;font-weight:900}.adm .tile small{color:var(--muted);font-size:11.5px}
+.adm .tile.hl{background:linear-gradient(135deg,#7c5cff33,#ec489933)}
+.adm .chart{display:flex;align-items:flex-end;gap:4px;height:110px;margin:14px 0 4px;padding:10px;border-radius:18px;background:#ffffff08}
+.adm .chart i{flex:1;border-radius:6px 6px 2px 2px;background:linear-gradient(var(--accent2),var(--accent));min-height:3px;position:relative}
+.adm .chart i span{position:absolute;bottom:-17px;left:50%;transform:translateX(-50%);font-size:9px;color:var(--muted);font-style:normal}
+.adm .urow{display:flex;align-items:center;gap:10px;padding:8px 4px;border-bottom:1px solid #ffffff0a;cursor:pointer}
+.adm .urow .tx{flex:1;min-width:0}.adm .urow b{display:block;font-size:14.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.adm .urow small{color:var(--muted);font-size:12px}
+.adm .tag{font-size:10.5px;font-weight:900;padding:2px 7px;border-radius:8px;margin-left:4px}
+.adm .tag.p{background:linear-gradient(135deg,#f59e0b,#ec4899)}.adm .tag.b{background:#ff3b4e}.adm .tag.v{background:#3b82f6}
+.adm .rep{padding:12px;border-radius:18px;background:#ffffff0a;border:1px solid #ffffff12;margin-bottom:10px}
+.adm .rep .h{display:flex;justify-content:space-between;font-size:12.5px;color:var(--muted);margin-bottom:6px}
+.adm .rep .why{font-weight:800;margin-bottom:4px}.adm .rep .msg{padding:8px 10px;border-radius:12px;background:#0004;font-size:13.5px;margin:6px 0;white-space:pre-wrap;word-break:break-word}
+.adm .rep .msg img{max-width:100%;border-radius:10px}
+.adm .rep .acts{display:flex;gap:6px;flex-wrap:wrap}.adm .rep .acts button{padding:7px 11px;border-radius:11px;background:#ffffff12;font-weight:700;font-size:12.5px}.adm .rep .acts .r{background:#ff3b4e;color:#fff}
+.adm .promo{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:16px;background:#ffffff0a;margin-bottom:8px}
+.adm .promo code{font-weight:900;font-size:15px;letter-spacing:.04em}.adm .promo .tx{flex:1}.adm .promo small{display:block;color:var(--muted);font-size:12px}
+.adm .opts{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 10px}.adm .opts button{padding:7px 12px;border-radius:12px;background:#ffffff10;font-weight:700;font-size:13px}.adm .opts button.on{background:var(--accent);color:#fff}
+.ref-prog{height:12px;border-radius:6px;background:#ffffff14;overflow:hidden;margin:8px 0 6px}.ref-prog i{display:block;height:100%;border-radius:6px;background:linear-gradient(90deg,#f59e0b,#ec4899,#8b5cf6)}
+.ban-scr{position:fixed;inset:0;z-index:999;background:#0b0a14;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:30px;color:#fff;gap:10px}
+.ban-scr .e{font-size:64px}.ban-scr h2{margin:0}.ban-scr p{opacity:.75;max-width:320px}
+.rep-r{display:flex;flex-direction:column;gap:6px;margin-bottom:10px}.rep-r button{text-align:left;padding:11px 14px;border-radius:14px;background:#ffffff0d;font-weight:700}.rep-r button.on{background:var(--accent);color:#fff}
 </style>
 </head>
 <body>
@@ -1774,7 +1803,7 @@ async function start(user) {
   subscribe();
   afterUpdateNotice();
   drawInstallBanner();
-  loadBlocks(); if (settings.notify) ensurePush(); e2eInit(); if (shareAlways()) setTimeout(() => startSharing(10, true), 2500);
+  loadBlocks(); if (settings.notify) ensurePush(); e2eInit(); if (me.banned) bannedScreen(); setTimeout(refClaim, 3000); if (shareAlways()) setTimeout(() => startSharing(10, true), 2500);
   setupInbox();
   drawPushBanner(); flushOutbox(); drawNet(); setupFolderSwipe(); devPing(); setTimeout(bdayCheck, 1500); lockBoot(); setTimeout(maybeOnboarding, 900);
   handleDeepLinks();
@@ -2256,6 +2285,7 @@ function msgMenu(m) {
     m.body && (m.kind || 'text') === 'text' && !GEO_RE.test(m.body) ? el('button', { onclick: () => { close(); translateMsg(m); } }, translations.has(m.id) ? '🌐 Скрыть перевод' : '🌐 Перевести') : null,
     m.body ? el('button', { onclick: () => { close(); copy(m.body); } }, '📋 Копировать') : null,
     mine && m.body && m.kind === 'text' && !m.image_url ? el('button', { onclick: () => { close(); startEdit(m); } }, '✏️ Редактировать') : null,
+    !mine && typeof m.id === 'number' ? el('button', { onclick: () => { close(); setTimeout(() => reportSheet({ target_user: m.sender_id, message_id: m.id, chat_id: m.chat_id }), 30); } }, '🚩 Пожаловаться') : null,
     mine ? el('button', { class: 'red', onclick: async () => { close(); const { error } = await sb.from('messages').update({ deleted: true }).eq('id', m.id); if (error) toast('Не удалилось'); } }, '🗑 Удалить у всех') : null,
     el('button', { onclick: close }, 'Отмена'))));
 }
@@ -2296,6 +2326,7 @@ async function openProfile(uid, fromEl, view) {
         dc ? el('button', { onclick: () => { close(); setTimeout(() => chatThemePicker(dc.chat_id), 30); } }, '🎨 Тема этого чата') : null,
         dc ? el('button', { onclick: () => { close(); toggleMute(dc); } }, dc.muted ? '🔔 Включить звук' : '🔕 Без звука') : null,
         dc ? el('button', { onclick: () => { close(); setTimeout(() => ttlPicker(dc), 30); } }, '⏱ Исчезающие: ' + ttlName(dc.ttl_seconds)) : null,
+        el('button', { onclick: () => { close(); setTimeout(() => reportSheet({ target_user: uid }), 30); } }, '🚩 Пожаловаться'),
         el('button', { class: 'red', onclick: () => { close(); toggleBlock(uid); } }, myBlocks.has(uid) ? '✅ Разблокировать' : '🚫 Заблокировать')));
   });
 }
@@ -2469,7 +2500,7 @@ async function openGroupInfo(c) {
 
 
 /* ================= SETTINGS & UPDATES ================= */
-const APP_VERSION = '2.16.0';
+const APP_VERSION = '2.17.0';
 const APP_THEMES = {
   neon: { name: 'Неон', a: '#00e5ff', a2: '#7df3ff', a3: '#ff2bd6', mine: '#7a1fd6', bg: '#07060f', panel: '#0f0d1d', panel2: '#171433', line: '#251f48', theirs: '#16132c', wall: 'neon' },
   br: { name: 'Рубин', a: '#ff2d3d', a2: '#ff7a85', a3: '#ff8a00', mine: '#b3101c', bg: '#0b0a0b', panel: '#141214', panel2: '#1d1a1c', line: '#2b2629', theirs: '#1c1a1b', wall: 'rain' },
@@ -3206,7 +3237,7 @@ async function logout() {
   try { const reg = await navigator.serviceWorker?.getRegistration(); const sub = await reg?.pushManager?.getSubscription(); if (sub) { await sb.from('push_subs').delete().eq('endpoint', sub.endpoint); await sub.unsubscribe(); } } catch {}
   await sb.auth.signOut();
 }
-function sendErr(e) { const m = errText(e); return /row-level security|violates/i.test(m) ? 'Не доставлено: человек ограничил тебе сообщения' : 'Не отправилось: ' + m; }
+function sendErr(e) { const m = errText(e); if (/banned/.test(m)) { bannedScreen(); return '⛔ Аккаунт заблокирован'; } return /row-level security|violates/i.test(m) ? 'Не доставлено: человек ограничил тебе сообщения' : 'Не отправилось: ' + m; }
 const snippet = m => !m ? 'Сообщение недоступно' : m.deleted ? 'Сообщение удалено' : msgLabel(m) || '…';
 function setReply(m) {
   if (typeof m.id !== 'number') return;
@@ -4040,7 +4071,7 @@ async function renderContacts() {
       el('div', { class: 'invite-row', onclick: openPeople }, el('div', { class: 'ii', style: 'background:linear-gradient(135deg,#7c5cff,#ec4899)' }, '🌍'), el('div', {}, 'Люди в Viks', el('div', { class: 'sub', style: 'font-weight:500;color:var(--muted);font-size:13px' }, 'Найди новых людей'))),
       el('div', { class: 'invite-row', onclick: openFriendMap }, el('div', { class: 'ii', style: 'background:linear-gradient(135deg,#10b981,#06b6d4)' }, '🗺'), el('div', {}, 'Карта друзей', el('div', { class: 'sub', style: 'font-weight:500;color:var(--muted);font-size:13px' }, 'Кто где, если поделились'))),
       el('div', { class: 'invite-row', onclick: () => qrCard() }, el('div', { class: 'ii', style: 'background:linear-gradient(135deg,#f59e0b,#ef4444)' }, '📱'), el('div', {}, 'Моя QR-визитка', el('div', { class: 'sub', style: 'font-weight:500;color:var(--muted);font-size:13px' }, 'Покажи другу, он отсканирует и напишет'))),
-      el('div', { class: 'invite-row', onclick: async () => { const url = location.origin + location.pathname; if (navigator.share) { try { await navigator.share({ title: 'Viks', text: 'Залетай ко мне в Viks', url }); return; } catch {} } copy(url); } }, el('div', { class: 'ii' }, '🔗'), el('div', {}, 'Пригласить друга', el('div', { class: 'sub', style: 'font-weight:500;color:var(--muted);font-size:13px' }, 'Скинуть ссылку на Viks'))),
+      el('div', { class: 'invite-row', onclick: async () => { const url = inviteUrl(); if (navigator.share) { try { await navigator.share({ title: 'Viks', text: 'Залетай ко мне в Viks', url }); return; } catch {} } copy(url); } }, el('div', { class: 'ii' }, '🔗'), el('div', {}, 'Пригласить друга', el('div', { class: 'sub', style: 'font-weight:500;color:var(--muted);font-size:13px' }, 'Скинуть ссылку на Viks'))),
       res);
   }
   drawContacts(box.querySelector('input').value);
@@ -4795,8 +4826,9 @@ function renderSettingsRoot() {
       catRow(SI.chat, 'linear-gradient(135deg,#60a5fa,#6366f1)', 'Настройки чатов', 'Отправка, папки, архив', () => openSettingsPage('chats')),
       catRow(SI.phone, 'linear-gradient(135deg,#2dd4bf,#0891b2)', 'Приложение', 'Установка, обновления, версия', () => openSettingsPage('device'))),
     el('div', { class: 'set-group' },
-      catRow(SI.gift, 'linear-gradient(135deg,#c084fc,#9333ea)', 'Пригласить друзей', 'Скинуть ссылку на Viks', async () => { const url = location.origin + location.pathname; if (navigator.share) { try { await navigator.share({ title: 'Viks', text: 'Залетай ко мне в Viks', url }); return; } catch {} } copy(url); }),
+      catRow(SI.gift, 'linear-gradient(135deg,#c084fc,#9333ea)', 'Пригласить друзей', '3 друга = неделя ✦ Premium', inviteFriends),
       catRow(SI.info, 'linear-gradient(135deg,#7c5cff,#ec4899)', 'О Viks', 'v' + APP_VERSION + ' · команда и что нового', aboutViks)),
+    (me.badges || []).includes('founder') ? el('div', { class: 'set-group' }, catRow('<span style="font-size:17px">🛡</span>', 'linear-gradient(135deg,#0ea5e9,#6366f1)', 'Админ-панель', 'Статистика, люди, жалобы, промокоды', adminPanel)) : null,
     el('div', { class: 'set-group' }, catRow(SI.out, 'linear-gradient(135deg,#f87171,#dc2626)', 'Выйти из аккаунта', null, () => sheet((s, close) => s.append(el('h3', {}, 'Выйти из Viks?'), el('button', { class: 'btn danger', onclick: async () => { close(); await logout(); } }, 'Выйти'))))),
     el('div', { class: 'sp-ver' }, 'Viks v' + APP_VERSION));
 }
@@ -6118,6 +6150,7 @@ async function loadStreaks() {
   let tz = 'UTC'; try { tz = Intl.DateTimeFormat().resolvedOptions().timeZone || 'UTC'; } catch {}
   const { data, error } = await sb.rpc('my_streaks', { tz }); if (error) return;
   streaks = new Map((data || []).map(r => [r.chat_id, r])); renderChats();
+  claimStreaks(data || [], tz);
 }
 function streakEl(c) {
   const r = c && streaks.get(c.chat_id); if (!r || r.days < 2) return null;
@@ -6674,7 +6707,7 @@ async function aboutViks() {
       el('div', { class: 'ab-quote' }, 'Спасибо, что первыми жмёте на все кнопки и ломаете то, что потом становится лучше 💜')),
     el('div', { style: 'display:flex;gap:8px' },
       el('button', { class: 'btn', onclick: () => { close(); setTimeout(showWhatsNew, 30); } }, '✨ Что нового'),
-      el('button', { class: 'btn ghost', onclick: async () => { const url = location.origin + location.pathname; if (navigator.share) { try { await navigator.share({ title: 'Viks', text: 'Залетай ко мне в Viks', url }); return; } catch {} } copy(url); } }, '📤 Поделиться')),
+      el('button', { class: 'btn ghost', onclick: async () => { const url = inviteUrl(); if (navigator.share) { try { await navigator.share({ title: 'Viks', text: 'Залетай ко мне в Viks', url }); return; } catch {} } copy(url); } }, '📤 Поделиться')),
     el('button', { class: 'pe-out', style: 'color:var(--muted)', onclick: () => { close(); setTimeout(() => onboarding(true), 30); } }, '👋 Показать приветствие'),
     el('div', { class: 'ab-foot' }, 'Сделано с 💜 для своих · 2026'))));
 }
@@ -6896,6 +6929,7 @@ function premiumPage() {
       set.append(el('h4', {}, 'Твоё имя'), ngRow, el('h4', { style: 'margin-top:14px' }, 'Звук новых сообщений'), sndRow, el('h4', { style: 'margin-top:14px' }, 'Ещё'), ghost, cov);
       body.append(set);
     }
+    body.append(el('button', { class: 'btn ghost', style: 'margin-top:10px', onclick: () => { close(); setTimeout(promoSheet, 30); } }, '🎟 Ввести промокод'));
     body.append(el('button', { class: 'btn ghost', style: 'margin-top:10px', onclick: () => { if (!founder) { toast('Подарки Premium скоро появятся 🎁'); return; } close(); setTimeout(giftPremium, 30); } }, '🎁 Подарить Premium другу'));
     s.append(body);
   });
@@ -7154,6 +7188,148 @@ function keyRestoreAsk(auto) {
 }
 async function e2eInitFresh() { try { localStorage.removeItem('viks-e2e-pub'); localStorage.removeItem('viks-e2e-priv'); } catch {} const pk = me.pubkey; me.pubkey = null; await e2eInit(); if (!me.pubkey) me.pubkey = pk; }
 
+
+/* ===== 2.17 promo ===== */
+function promoSheet() {
+  sheet((s, close) => {
+    const inp = el('input', { placeholder: 'VIKS-XXXXXX', maxlength: 20, style: 'text-transform:uppercase;letter-spacing:.06em;font-weight:800;text-align:center' });
+    const go = el('button', { class: 'btn prem-buy', onclick: async () => {
+      const c = inp.value.trim().toUpperCase(); if (c.length < 4) { toast('Введи код'); return; }
+      go.disabled = true;
+      const { data, error } = await sb.rpc('redeem_promo', { c });
+      go.disabled = false;
+      if (error) { const m = error.message || ''; toast(/bad_code/.test(m) ? 'Такого кода нет' : /used_up/.test(m) ? 'Код уже использовали' : /already/.test(m) ? 'Ты уже вводил этот код' : /expired/.test(m) ? 'Код просрочен' : /too_fast/.test(m) ? 'Не так быстро 😅' : 'Не вышло'); hap(30); return; }
+      await refreshMe(); close(); premFx('👑', true); toast('✦ +' + data.days + ' ' + plural(data.days, 'день', 'дня', 'дней') + ' Premium!'); renderMe?.();
+    } }, '✦ Активировать');
+    s.append(el('h3', {}, '🎟 Промокод'), el('div', { class: 'hint', style: 'margin:-6px 0 12px' }, 'Введи код, и Premium включится сразу'), el('div', { class: 'field' }, inp), go);
+    setTimeout(() => inp.focus(), 120);
+  });
+}
+/* ===== 2.17 referrals ===== */
+function inviteUrl() { return location.origin + location.pathname + (me && me.username ? '?ref=' + encodeURIComponent(me.username) : ''); }
+async function refClaim() {
+  let r = null; try { r = localStorage.getItem('viks-ref'); } catch {}
+  if (!r || !me || r.toLowerCase() === (me.username || '').toLowerCase()) return;
+  try { localStorage.removeItem('viks-ref'); } catch {}
+  if (me.created_at && Date.now() - new Date(me.created_at) > 2 * 864e5) return;
+  try { const { data } = await sb.rpc('set_referrer', { ref: r }); if (data && data.ok) toast('👋 Тебя пригласил @' + r); } catch {}
+}
+async function inviteFriends() {
+  const { data } = await sb.rpc('my_referrals'); const n = (data && data.count) || 0, ppl = (data && data.people) || [];
+  const left = 3 - (n % 3), url = inviteUrl();
+  sheet((s, close) => s.append(el('div', { style: 'text-align:center' }, el('div', { style: 'font-size:54px;margin:4px 0 6px' }, '🎁'), el('h3', { style: 'margin:0 0 4px' }, 'Пригласи друзей'),
+    el('div', { class: 'hint', style: 'margin:0 0 10px' }, 'За каждых 3 друзей, которые зарегаются по твоей ссылке — неделя ✦ Premium тебе')),
+    el('div', { style: 'display:flex;justify-content:space-between;font-weight:800;font-size:14px' }, el('span', {}, 'Приглашено: ' + n), el('span', {}, 'до награды: ' + left)),
+    el('div', { class: 'ref-prog' }, el('i', { style: 'width:' + Math.round(((n % 3) / 3) * 100) + '%' })),
+    ppl.length ? el('div', { style: 'display:flex;gap:8px;flex-wrap:wrap;margin:8px 0 12px' }, ppl.slice(0, 12).map(p => el('div', { style: 'text-align:center;width:54px;font-size:11px' }, avatar(p.display_name, p.avatar_url, 44), el('div', { style: 'white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:4px' }, (p.display_name || '').split(' ')[0])))) : el('div', { style: 'height:10px' }),
+    el('div', { class: 'inv-qr' }, (() => { try { return qrCanvas(url); } catch { return null; } })()),
+    el('div', { class: 'link-box' }, url),
+    el('button', { class: 'btn', onclick: async () => { if (navigator.share) { try { await navigator.share({ title: 'Viks', text: 'Залетай ко мне в Viks 💜', url }); return; } catch {} } copy(url); } }, '📤 Поделиться ссылкой')));
+  if (!window.qrcode) loadScript('https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.js').then(() => { const box = document.querySelector('.sheet .inv-qr'); if (box && !box.children.length) { try { box.append(qrCanvas(url)); } catch {} } }).catch(() => {});
+}
+/* ===== 2.17 streak rewards ===== */
+async function claimStreaks(rows, tz) {
+  for (const r of rows) {
+    if (r.days < 30) continue;
+    const k = 'viks-sr-' + r.chat_id + '-' + Math.floor(r.days / 30); try { if (localStorage.getItem(k)) continue; localStorage.setItem(k, '1'); } catch {}
+    try { const { data } = await sb.rpc('claim_streak', { c: r.chat_id, tz }); if (data && data.ok) { await refreshMe(); const c = chats.find(x => x.chat_id === r.chat_id); premFx('🔥', true); toast('🔥 ' + data.days + ' дней подряд с ' + ((c && c.title) || 'другом') + '! +3 дня ✦ Premium вам обоим'); } } catch {}
+  }
+}
+/* ===== 2.17 reports ===== */
+const REP_REASONS = ['Спам или реклама', 'Оскорбления', 'Мошенничество', 'Неприемлемый контент', 'Фейковый аккаунт', 'Другое'];
+function reportSheet(t) {
+  let why = null;
+  sheet((s, close) => {
+    const box = el('div', { class: 'rep-r' }), det = el('textarea', { placeholder: 'Подробнее (необязательно)', maxlength: 900, rows: 3, style: 'width:100%;box-sizing:border-box;border-radius:14px;padding:10px;background:#ffffff0d;border:1px solid #ffffff1a;color:inherit;font:inherit;resize:none' });
+    const draw = () => { box.innerHTML = ''; REP_REASONS.forEach(r => box.append(el('button', { class: why === r ? 'on' : '', onclick: () => { why = r; draw(); } }, r))); };
+    draw();
+    s.append(el('h3', {}, '🚩 Пожаловаться'), el('div', { class: 'hint', style: 'margin:-6px 0 10px' }, 'Жалобу увидит только команда Viks. Человек не узнает, кто пожаловался'), box, det,
+      el('button', { class: 'btn', style: 'margin-top:10px', onclick: async () => {
+        if (!why) { toast('Выбери причину'); return; }
+        const { error } = await sb.from('reports').insert({ target_user: t.target_user || null, message_id: t.message_id || null, chat_id: t.chat_id || null, reason: why, details: det.value.trim() || null });
+        if (error) { toast('Не отправилось'); return; } close(); toast('Спасибо, жалоба отправлена 🙏');
+      } }, 'Отправить'));
+  });
+}
+function bannedScreen() { if (document.querySelector('.ban-scr')) return; document.body.append(el('div', { class: 'ban-scr' }, el('div', { class: 'e' }, '⛔'), el('h2', {}, 'Аккаунт заблокирован'), el('p', {}, 'Ты нарушил правила Viks, поэтому отправлять сообщения больше нельзя. Если это ошибка — напиши разработчику.'), el('button', { class: 'btn ghost', style: 'max-width:240px', onclick: () => sb.auth.signOut().then(() => location.reload()) }, 'Выйти'))); }
+/* ===== 2.17 admin ===== */
+function adminPanel() {
+  let tab = 'stats';
+  sheet((s, close) => {
+    const root = el('div', { class: 'adm' }), tabs = el('div', { class: 'tabs2' }), body = el('div', {});
+    const T = [['stats', '📊 Обзор'], ['users', '👥 Люди'], ['reports', '🚩 Жалобы'], ['promo', '🎟 Промокоды']];
+    const drawTabs = (rep) => { tabs.innerHTML = ''; T.forEach(([k, l]) => tabs.append(el('button', { class: tab === k ? 'on' : '', onclick: () => { tab = k; drawTabs(rep); go(); } }, l, k === 'reports' && rep ? el('b', {}, String(rep)) : null))); };
+    const go = async () => {
+      body.innerHTML = '<div class="hint" style="text-align:center;padding:30px 0">Загружаю…</div>';
+      try {
+        if (tab === 'stats') {
+          const { data: st, error } = await sb.rpc('admin_stats'); if (error) throw error;
+          drawTabs(st.reports_open);
+          const mx = Math.max(1, ...(st.by_day || []).map(x => x.n));
+          body.innerHTML = '';
+          body.append(el('div', { class: 'tiles' },
+            [['👥', st.users, 'всего людей', 1], ['🟢', st.online, 'сейчас в сети', 1], ['📅', st.active_day, 'заходили за сутки'], ['🆕', st.new_today, 'новых за сутки'], ['📈', st.new_week, 'новых за неделю'], ['✦', st.premium, 'с Premium'], ['💬', st.msgs_today, 'сообщений за сутки'], ['🗂', st.msgs_total, 'сообщений всего'], ['👥', st.groups, 'групп и каналов'], ['🔴', st.lives, 'эфиров сейчас'], ['🚩', st.reports_open, 'открытых жалоб']].map(([e, n, l, hl]) => el('div', { class: 'tile' + (hl ? ' hl' : '') }, el('b', {}, e + ' ' + n), el('small', {}, l)))),
+            el('div', { class: 'hint', style: 'margin:16px 0 0;font-weight:700' }, '💬 Сообщения за 14 дней'),
+            el('div', { class: 'chart' }, (st.by_day || []).map(x => el('i', { style: 'height:' + Math.max(3, Math.round(x.n / mx * 100)) + '%', title: x.d + ': ' + x.n }, el('span', {}, String(new Date(x.d).getDate()))))),
+            el('div', { style: 'height:18px' }));
+        } else if (tab === 'users') {
+          body.innerHTML = '';
+          const q = el('input', { placeholder: 'Поиск по имени или @нику', style: 'width:100%;box-sizing:border-box;margin-bottom:8px' }), list = el('div', {});
+          const load = async () => { const { data, error } = await sb.rpc('admin_users', { q: q.value.trim() }); if (error) { list.textContent = 'Ошибка'; return; } list.innerHTML = '';
+            (data || []).forEach(u => { const prem = (u.badges || []).includes('premium') || (u.premium_until && new Date(u.premium_until) > new Date());
+              list.append(el('div', { class: 'urow', onclick: () => userActions(u, load) }, avatar(u.display_name, u.avatar_url, 42), el('div', { class: 'tx' }, el('b', {}, u.display_name || '…', prem ? el('span', { class: 'tag p' }, '✦') : null, (u.badges || []).includes('verified') ? el('span', { class: 'tag v' }, '✓') : null, u.banned ? el('span', { class: 'tag b' }, 'БАН') : null), el('small', {}, '@' + u.username + ' · ' + (u.last_seen ? agoShort(u.last_seen) : '—'))), el('span', { style: 'opacity:.4' }, '›'))); });
+            if (!(data || []).length) list.append(el('div', { class: 'empty' }, 'Никого')); };
+          let qt = 0; q.oninput = () => { clearTimeout(qt); qt = setTimeout(load, 300); };
+          body.append(q, list); load();
+        } else if (tab === 'reports') {
+          const { data, error } = await sb.rpc('admin_reports', { st: 'open' }); if (error) throw error;
+          body.innerHTML = '';
+          if (!(data || []).length) body.append(el('div', { class: 'empty' }, 'Жалоб нет 🎉'));
+          (data || []).forEach(r => { const t = r.target || {}, m = r.message;
+            const card = el('div', { class: 'rep' }, el('div', { class: 'h' }, el('span', {}, 'от ' + ((r.reporter && r.reporter.display_name) || '…')), el('span', {}, agoShort(r.created_at))),
+              el('div', { class: 'why' }, '🚩 ' + r.reason + ' → ' + (t.display_name || '…') + (t.username ? ' @' + t.username : '') + (t.banned ? ' · уже в бане' : '')),
+              r.details ? el('div', { class: 'hint', style: 'margin:0 0 4px' }, r.details) : null,
+              m ? el('div', { class: 'msg' }, m.deleted ? '🗑 уже удалено' : (m.body || (m.kind ? '[' + m.kind + ']' : '')), m.image_url && !m.deleted ? el('img', { src: m.image_url }) : null) : null,
+              el('div', { class: 'acts' },
+                m && !m.deleted ? el('button', { onclick: async () => { await sb.rpc('admin_report_set', { rid: r.id, st: 'done', del_msg: true }); toast('Сообщение удалено'); go(); } }, '🗑 Удалить сообщение') : null,
+                t.id && !t.banned ? el('button', { class: 'r', onclick: async () => { if (!confirm('Забанить ' + (t.display_name || '') + '?')) return; await sb.rpc('admin_set', { target: t.id, what: 'ban', val: 'on' }); await sb.rpc('admin_report_set', { rid: r.id, st: 'done' }); toast('Забанен'); go(); } }, '⛔ Бан') : null,
+                t.id ? el('button', { onclick: () => { close(); setTimeout(() => openProfile(t.id), 30); } }, '👤 Профиль') : null,
+                el('button', { onclick: async () => { await sb.rpc('admin_report_set', { rid: r.id, st: 'dismissed' }); toast('Закрыто'); go(); } }, '✓ Закрыть')));
+            body.append(card); });
+        } else if (tab === 'promo') {
+          body.innerHTML = '';
+          let days = 30, uses = 1;
+          const o1 = el('div', { class: 'opts' }), o2 = el('div', { class: 'opts' }), note = el('input', { placeholder: 'Заметка (кому/за что)', maxlength: 60, style: 'width:100%;box-sizing:border-box;margin-bottom:10px' });
+          const d1 = () => { o1.innerHTML = ''; [[7, '7 дней'], [30, 'Месяц'], [90, '3 мес'], [365, 'Год']].forEach(([d, l]) => o1.append(el('button', { class: days === d ? 'on' : '', onclick: () => { days = d; d1(); } }, l))); };
+          const d2 = () => { o2.innerHTML = ''; [[1, '1 человек'], [10, '10'], [50, '50'], [500, '500']].forEach(([u, l]) => o2.append(el('button', { class: uses === u ? 'on' : '', onclick: () => { uses = u; d2(); } }, l))); };
+          d1(); d2();
+          const list = el('div', { style: 'margin-top:14px' });
+          const load = async () => { const { data } = await sb.rpc('list_promos'); list.innerHTML = ''; (data || []).forEach(p => list.append(el('div', { class: 'promo' }, el('div', { class: 'tx' }, el('code', {}, p.code), el('small', {}, p.days + ' дн. · ' + p.uses + '/' + p.max_uses + ' исп.' + (p.note ? ' · ' + p.note : ''))), el('button', { class: 'icon-btn', title: 'Копировать', onclick: () => copy(p.code) }, '📋'), el('button', { class: 'icon-btn', title: 'Удалить', onclick: async () => { if (!confirm('Удалить код ' + p.code + '?')) return; await sb.rpc('delete_promo', { c: p.code }); load(); } }, '🗑')))); if (!(data || []).length) list.append(el('div', { class: 'empty' }, 'Кодов пока нет')); };
+          body.append(el('div', { class: 'hint', style: 'margin:0 0 6px;font-weight:700' }, 'Срок Premium'), o1, el('div', { class: 'hint', style: 'margin:0 0 6px;font-weight:700' }, 'Сколько раз можно ввести'), o2, note,
+            el('button', { class: 'btn prem-buy', style: 'margin-top:0', onclick: async () => { const { data, error } = await sb.rpc('create_promo', { days, max_uses: uses, note: note.value.trim() || null }); if (error) { toast('Не вышло'); return; } copy(data); toast('Код ' + data + ' скопирован'); note.value = ''; load(); } }, '🎟 Создать код'), list);
+          load();
+        }
+      } catch (e) { body.innerHTML = ''; body.append(el('div', { class: 'empty' }, 'Не загрузилось: ' + errText(e))); }
+    };
+    drawTabs(0); root.append(el('h3', {}, '🛡 Админ-панель'), tabs, body); s.append(root); go();
+  });
+}
+function userActions(u, reload) {
+  const prem = (u.badges || []).includes('premium') || (u.premium_until && new Date(u.premium_until) > new Date()), ver = (u.badges || []).includes('verified');
+  const act = async (what, val, msg) => { const { error } = await sb.rpc('admin_set', { target: u.id, what, val: String(val) }); if (error) { toast('Не вышло: ' + errText(error)); return false; } toast(msg); reload && reload(); return true; };
+  sheet((s, close) => s.append(el('div', { style: 'display:flex;align-items:center;gap:12px;margin-bottom:12px' }, avatar(u.display_name, u.avatar_url, 56), el('div', {}, el('b', { style: 'font-size:17px' }, u.display_name), el('div', { class: 'hint', style: 'margin:0' }, '@' + u.username + ' · с ' + new Date(u.created_at).toLocaleDateString('ru-RU')), el('div', { class: 'hint', style: 'margin:2px 0 0' }, prem ? (u.premium_until ? '✦ Premium до ' + new Date(u.premium_until).toLocaleDateString('ru-RU') : '✦ Premium навсегда') : 'без Premium'))),
+    el('div', { class: 'menu' },
+      el('button', { onclick: async () => { if (await act('premium_days', 7, '+7 дней Premium')) close(); } }, '✦ +7 дней Premium'),
+      el('button', { onclick: async () => { if (await act('premium_days', 30, '+30 дней Premium')) close(); } }, '✦ +30 дней Premium'),
+      el('button', { onclick: async () => { if (await act('premium_days', 365, '+год Premium')) close(); } }, '✦ +год Premium'),
+      prem ? el('button', { onclick: async () => { if (await act('premium_off', '', 'Premium снят')) close(); } }, '✖ Снять Premium') : null,
+      el('button', { onclick: async () => { if (await act(ver ? 'badge_off' : 'badge_on', 'verified', ver ? 'Галочка снята' : 'Галочка выдана ✓')) close(); } }, ver ? '✖ Убрать галочку ✓' : '✓ Выдать галочку'),
+      el('button', { onclick: () => { close(); setTimeout(() => openProfile(u.id), 30); } }, '👤 Открыть профиль'),
+      u.id !== me.id ? el('button', { class: 'red', onclick: async () => { if (!u.banned && !confirm('Забанить ' + u.display_name + '? Он не сможет писать сообщения')) return; if (await act('ban', u.banned ? 'off' : 'on', u.banned ? 'Разбанен' : 'Забанен ⛔')) close(); } }, u.banned ? '✅ Разбанить' : '⛔ Забанить') : null)));
+}
+
+/* ref capture */
+(() => { try { const q = new URLSearchParams(location.search), r = q.get('ref') || q.get('u'); if (r && !localStorage.getItem('viks-ref')) localStorage.setItem('viks-ref', r); } catch {} })();
 /* ================= BOOT ================= */
 (async () => {
   checkUpdate();
