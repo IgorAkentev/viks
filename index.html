@@ -1485,6 +1485,31 @@ html.light #msgs .day:not(.sys){background:#ffffffcc;color:#4a4566;border-color:
 .live .co-leave{background:#ff3b4e;padding:8px 12px;border-radius:12px;font-weight:800;font-size:12.5px}
 .live .lv-top .nm,.live .lv-top .sub{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .live .co-badge{display:inline-block;background:#22c55e;font-size:11px;font-weight:800;padding:2px 7px;border-radius:7px;margin-left:6px;vertical-align:1px}
+
+/* ===== 2.15 ===== */
+.live .gift-btn{width:46px;height:46px;border-radius:50%;background:linear-gradient(135deg,#f59e0b,#ec4899);font-size:21px;display:grid;place-items:center;flex:none}
+.live .gift-cnt{white-space:nowrap;flex:none;background:linear-gradient(135deg,#f59e0b,#ec4899);font-size:12.5px;font-weight:800;padding:3px 9px;border-radius:9px}
+.live .rec-dot{flex:none;display:inline-flex;align-items:center;gap:5px;background:#0007;font-size:12px;font-weight:800;padding:3px 9px;border-radius:9px}
+.live .rec-dot::before{content:'';width:8px;height:8px;border-radius:50%;background:#ff2d55;animation:okP 1.2s ease-in-out infinite}
+.gift-panel{position:absolute;left:0;right:0;bottom:0;z-index:8;background:rgba(20,17,38,.97);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-radius:24px 24px 0 0;padding:16px 14px calc(16px + var(--safe-b));animation:sheetUp .3s cubic-bezier(.2,1,.3,1);color:#fff}
+.gift-panel .gh{display:flex;align-items:center;justify-content:space-between;font-size:17px;margin-bottom:10px}
+.gift-panel .gg{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.gift-panel .gg button{position:relative;padding:12px 4px 10px;border-radius:18px;background:#ffffff0d;border:1px solid #ffffff14;display:flex;flex-direction:column;align-items:center;gap:4px;font-size:12.5px;font-weight:700;color:#fff;transition:transform .15s}
+.gift-panel .gg button:active{transform:scale(.92)}
+.gift-panel .gg img{width:52px;height:52px}
+.gift-panel .gg .pm{position:absolute;top:6px;right:8px;font-size:11px;font-weight:900;padding:1px 6px;border-radius:8px;background:linear-gradient(135deg,#f59e0b,#ec4899,#8b5cf6)}
+.gift-panel .gg .lk img{filter:saturate(.4) brightness(.7)}
+.gift-fly{position:absolute;left:50%;bottom:120px;z-index:6;display:flex;flex-direction:column;align-items:center;pointer-events:none;animation:giftFly 3s cubic-bezier(.2,1,.3,1) forwards}
+.gift-fly img{width:150px;height:150px;filter:drop-shadow(0 12px 30px #000a)}
+.gift-fly span{margin-top:-4px;background:linear-gradient(135deg,#f59e0b,#ec4899);padding:5px 12px;border-radius:12px;font-weight:800;font-size:14px;white-space:nowrap;box-shadow:0 8px 20px #0007}
+@keyframes giftFly{0%{transform:translate(-50%,120px) scale(.3);opacity:0}18%{transform:translate(-50%,-160px) scale(1.1);opacity:1}30%{transform:translate(-50%,-150px) scale(1)}80%{transform:translate(-50%,-170px) scale(1);opacity:1}100%{transform:translate(-50%,-320px) scale(.6);opacity:0}}
+.fmap .flist{display:flex;gap:10px;overflow-x:auto;margin:0 -4px 10px;padding:0 4px;scrollbar-width:none}.fmap .flist::-webkit-scrollbar{display:none}
+.fmap .fl{flex:none;display:flex;align-items:center;gap:8px;padding:6px 10px 6px 6px;border-radius:16px;background:#ffffff10;border:1px solid #ffffff14;cursor:pointer}
+.fmap .fl b{display:block;font-size:13px;white-space:nowrap}.fmap .fl small{display:block;font-size:11px;opacity:.7;white-space:nowrap}
+.fmap .seg button.on{background:var(--accent);color:#fff}
+.hc.map{background:radial-gradient(ellipse at 100% 0%,#06b6d455,transparent 60%),linear-gradient(160deg,#0b2230,#0a1218)}
+.inv-qr{display:flex;justify-content:center;margin:0 0 12px}.inv-qr canvas{width:180px;height:180px;border-radius:18px;background:#fff;padding:10px}
+.join-pv{text-align:center}.join-pv .av{margin:0 auto 10px}.join-pv h2{margin:0 0 4px;font-size:22px}.join-pv .mm{color:var(--muted);font-size:13.5px;margin-bottom:8px}.join-pv p{font-size:14px;opacity:.85;margin:0 0 14px}
 </style>
 </head>
 <body>
@@ -1719,7 +1744,7 @@ async function start(user) {
   subscribe();
   afterUpdateNotice();
   drawInstallBanner();
-  loadBlocks(); if (settings.notify) ensurePush(); e2eInit();
+  loadBlocks(); if (settings.notify) ensurePush(); e2eInit(); if (shareAlways()) setTimeout(() => startSharing(10, true), 2500);
   setupInbox();
   drawPushBanner(); flushOutbox(); drawNet(); setupFolderSwipe(); devPing(); setTimeout(bdayCheck, 1500); lockBoot(); setTimeout(maybeOnboarding, 900);
   handleDeepLinks();
@@ -2411,7 +2436,7 @@ async function openGroupInfo(c) {
 
 
 /* ================= SETTINGS & UPDATES ================= */
-const APP_VERSION = '2.14.0';
+const APP_VERSION = '2.15.0';
 const APP_THEMES = {
   neon: { name: 'Неон', a: '#00e5ff', a2: '#7df3ff', a3: '#ff2bd6', mine: '#7a1fd6', bg: '#07060f', panel: '#0f0d1d', panel2: '#171433', line: '#251f48', theirs: '#16132c', wall: 'neon' },
   br: { name: 'Рубин', a: '#ff2d3d', a2: '#ff7a85', a3: '#ff8a00', mine: '#b3101c', bg: '#0b0a0b', panel: '#141214', panel2: '#1d1a1c', line: '#2b2629', theirs: '#1c1a1b', wall: 'rain' },
@@ -2636,6 +2661,7 @@ function buildSettings(s, close) {
       el('div', { class: 'set-group' },
         profToggle('👻', '#64748b33', 'Скрывать, когда я в сети', 'другие увидят «был(а) недавно»', 'hide_seen'),
         profToggle('📵', '#ef444433', 'Запретить мне звонить', 'входящие звонки будут сбрасываться', 'calls_off'),
+        el('div', { class: 'set-row', onclick: () => { close(); setTimeout(keyBackupPage, 30); } }, el('div', { class: 'ic', style: 'background:#8b5cf633' }, '🗝'), el('div', { class: 'tx' }, el('b', {}, 'Копия ключей шифрования'), el('small', {}, 'чтобы секретные чаты не пропали при смене телефона')), el('span', { style: 'opacity:.4;font-size:20px' }, '›')),
         el('div', { class: 'set-row', onclick: () => { close(); setTimeout(lockSettings, 30); } }, el('div', { class: 'ic', style: 'background:#22c55e33' }, '🔒'), el('div', { class: 'tx' }, el('b', {}, 'Код-пароль'), el('small', {}, getLock() || pinHash() ? 'включён' + (getLock() && getLock().cred ? ' · Face ID' : '') : 'выключен · можно скрывать чаты')), el('div', { class: 'val' }, '›'))),
       el('div', { class: 'set-title' }, 'Чаты'),
       el('div', { class: 'set-group' }, toggleRow('⏎', '#64748b33', 'Отправка по Enter', 'на телефоне Enter = новая строка, если выкл.', 'enterSend'),
@@ -3318,11 +3344,13 @@ function addToGroup(c, mem) {
   } });
 }
 async function inviteLink(c, reset = false) {
+  try { await loadScript('https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.js'); } catch {}
   const { data: code, error } = await sb.rpc('group_invite', { c: c.chat_id, reset });
   if (error) { toast(errText(error)); return; }
   const url = location.origin + location.pathname + '?join=' + code;
   sheet((s, close) => s.append(el('h3', {}, '🔗 Приглашение в группу'),
     el('div', { class: 'hint', style: 'margin:0 0 10px' }, 'Кто откроет ссылку и войдёт в Viks, сразу попадёт в группу'),
+    el('div', { class: 'inv-qr' }, invQr(url)),
     el('div', { class: 'link-box' }, url),
     el('button', { class: 'btn', onclick: async () => { if (navigator.share) { try { await navigator.share({ title: c.title, text: 'Залетай в «' + c.title + '» в Viks', url }); return; } catch {} } copy(url); } }, 'Поделиться'),
     el('div', { style: 'height:8px' }),
@@ -3404,7 +3432,7 @@ async function handleDeepLinks() {
   if (q.get('pack')) { openPackLink(q.get('pack')); return; }
   if (pairQ) { approvePair(pairQ, q.get('k')); return; }
   if (ch) { const { error } = await sb.rpc('join_channel', { c: ch }); if (error) toast(errText(error)); else { await loadChats(); openChat(ch); } return; }
-  if (join) { const { data, error } = await sb.rpc('join_by_code', { code: join }); if (error) toast(errText(error)); else { await loadChats(); openChat(data); toast('Ты в группе 🔥'); } }
+  if (join) joinPreview(join);
   else if (chat) openChat(chat);
 }
 
@@ -3724,13 +3752,16 @@ function liveShell({ title, sub, isHost, onClose }) {
   const center = el('div', { class: 'center' }, isHost ? '' : 'Подключаюсь к эфиру…');
   const inp = el('input', { placeholder: isHost ? 'Написать зрителям…' : 'Комментарий…', maxlength: 200 });
   const heartBtn = el('button', { class: 'heart-btn' }, '❤️');
+  const giftBtn = isHost ? null : el('button', { class: 'gift-btn', title: 'Подарок' }, '🎁');
   const top = el('div', { class: 'lv-top' }, el('span', { class: 'badge-live' }, 'LIVE'), el('div', { style: 'flex:1;min-width:0' }, el('div', { class: 'nm' }, title), el('div', { class: 'sub' }, sub || '')), eye);
-  const root = el('div', { class: 'live' }, bgv, vid, center, top, hearts, el('div', { class: 'lv-bottom' }, cms, el('div', { class: 'row2' }, inp, heartBtn)));
+  const root = el('div', { class: 'live' }, bgv, vid, center, top, hearts, el('div', { class: 'lv-bottom' }, cms, el('div', { class: 'row2' }, inp, giftBtn, heartBtn)));
   document.body.append(root);
   const L = pushLayer(() => { root.remove(); onClose(); });
   const addCm = (name, text, color) => { cms.append(el('div', { class: 'cm' }, el('div', {}, el('b', { style: color ? 'color:' + color : '' }, name), text))); while (cms.children.length > 30) cms.firstChild.remove(); };
   const addHeart = () => { const h = el('span', { style: `--dx:${Math.round(Math.random() * 60 - 30)}px` }, ['❤️', '💜', '💙', '🔥', '😍'][Math.floor(Math.random() * 5)]); hearts.append(h); setTimeout(() => h.remove(), 2300); };
-  return { root, vid, bgv, setSrc, eye, cms, center, inp, heartBtn, top, L, addCm, addHeart };
+  let giftQ = Promise.resolve();
+  const showGift = g => { giftQ = giftQ.then(() => new Promise(ok => { const G = GIFTS.find(x => x[0] === g.k); if (!G) return ok(); const f = el('div', { class: 'gift-fly' }, animEmoji(G[0]), el('span', {}, (g.name || 'Кто-то') + ' дарит ' + G[1])); root.append(f); if (G[2]) fullBurst(G[0]); setTimeout(() => f.remove(), 3000); setTimeout(ok, 1300); })); addCm('🎁', ' ' + (g.name || 'Кто-то') + ' подарил(а) ' + G_NAME(g.k)); };
+  return { root, vid, bgv, setSrc, eye, cms, center, inp, heartBtn, giftBtn, top, L, addCm, addHeart, showGift };
 }
 async function startLive() {
   if (myLive || watching || call) return;
@@ -3762,7 +3793,7 @@ async function startLive() {
   const coBadge = () => { coBtn.querySelector('b')?.remove(); if (myLive && myLive.guests.size) coBtn.append(el('b', {}, String(myLive.guests.size))); };
   const removeGuest = uid => {
     const lv = myLive; if (!lv) return; const g = lv.guests.get(uid); if (!g) return;
-    lv.guests.delete(uid); try { g.pc.close(); } catch {} try { g.a && (g.a.pause(), g.a.srcObject = null); } catch {} try { g.src && g.src.disconnect(); } catch {}
+    lv.guests.delete(uid); try { g.pc.close(); } catch {} try { g.a && (g.a.pause(), g.a.srcObject = null); } catch {} try { g.src && g.src.disconnect(); } catch {} try { g.rsrc && g.rsrc.disconnect(); } catch {}
     liveSetOut(lv); coBadge();
     const msg = { name: '🎙', text: ' ' + (g.name || 'Гость') + ' вышел из эфира' }; ui.addCm(msg.name, msg.text); ch.send({ type: 'broadcast', event: 'cm', payload: msg });
   };
@@ -3821,7 +3852,7 @@ async function startLive() {
       g.pc.ontrack = e => {
         const st = e.streams[0]; if (!st) return; g.stream = st;
         if (!g.v) { g.v = document.createElement('video'); g.v.muted = true; g.v.playsInline = true; g.v.autoplay = true; g.v.srcObject = st; g.v.play().catch(() => {}); }
-        if (e.track.kind === 'audio' && !g.a) { g.a = new Audio(); g.a.autoplay = true; g.a.srcObject = st; g.a.play().catch(() => {}); const comp = liveCompositor(lv); g.src = comp.addAudio(st); }
+        if (e.track.kind === 'audio' && !g.a) { g.a = new Audio(); g.a.autoplay = true; g.a.srcObject = st; g.a.play().catch(() => {}); const comp = liveCompositor(lv); g.src = comp.addAudio(st); if (lv.rec && lv.rec.addAudio) g.rsrc = lv.rec.addAudio(st); }
         liveSetOut(lv);
       };
       await g.pc.setRemoteDescription({ type: 'offer', sdp: m.sdp });
@@ -3835,8 +3866,10 @@ async function startLive() {
   })
   .on('broadcast', { event: 'cm' }, ({ payload: m }) => ui.addCm(m.name, m.text, m.color))
   .on('broadcast', { event: 'ht' }, () => ui.addHeart())
+  .on('broadcast', { event: 'gift' }, ({ payload: g }) => { if (!g) return; ui.showGift(g); if (myLive) { myLive.gifts = (myLive.gifts || 0) + 1; let gc = ui.top.querySelector('.gift-cnt'); if (!gc) { gc = el('span', { class: 'gift-cnt' }); ui.eye.after(gc); } gc.textContent = '🎁 ' + myLive.gifts; hap([10, 30, 10]); } })
   .on('presence', { event: 'sync' }, () => { const n = Object.keys(ch.presenceState()).filter(k => k !== me.id).length; ui.eye.textContent = '👁 ' + n; })
   .subscribe(st => { if (st === 'SUBSCRIBED') ch.track({ host: true }); });
+  liveRecStart(myLive);
   const sendCm = () => { const t = ui.inp.value.trim(); if (!t) return; ui.inp.value = ''; const msg = { name: me.display_name, text: t, color: me.name_color }; ch.send({ type: 'broadcast', event: 'cm', payload: msg }); ui.addCm(msg.name, msg.text, msg.color); };
   ui.inp.onkeydown = e => { if (e.key === 'Enter') sendCm(); };
   ui.heartBtn.onclick = () => { ui.addHeart(); ch.send({ type: 'broadcast', event: 'ht', payload: {} }); };
@@ -3849,12 +3882,14 @@ async function endLive() {
   try { await lv.ch.send({ type: 'broadcast', event: 'ended', payload: {} }); } catch {}
   for (const pc of lv.peers.values()) try { pc.close(); } catch {}
   if (lv.guests) for (const g of lv.guests.values()) { try { g.pc.close(); } catch {} try { g.a && g.a.pause(); } catch {} }
+  const recBlob = await liveRecStop(lv);
   if (lv.comp) try { lv.comp.stop(); } catch {}
   if (lv.pipe) lv.pipe.stop(); else lv.stream.getTracks().forEach(t => t.stop());
   sb.removeChannel(lv.ch);
   await sb.from('lives').update({ ended_at: new Date().toISOString() }).eq('id', lv.row.id);
   if (lv.ui && lv.ui.L.open) lv.ui.L.close();
   toast('Эфир завершён'); loadLives().then(renderStories);
+  if (recBlob && recBlob.size > 20000) liveSaveAsk(recBlob, lv);
 }
 async function watchLive(lv) {
   if (watching || myLive) return;
@@ -3922,6 +3957,7 @@ async function watchLive(lv) {
   })
   .on('broadcast', { event: 'cm' }, ({ payload: m }) => ui.addCm(m.name, m.text, m.color))
   .on('broadcast', { event: 'ht' }, () => ui.addHeart())
+  .on('broadcast', { event: 'gift' }, ({ payload: g }) => g && ui.showGift(g))
   .on('broadcast', { event: 'ended' }, () => { ui.center.textContent = 'Эфир закончился'; ui.vid.srcObject = null; setTimeout(() => ui.L.open && ui.L.close(), 1800); })
   .on('presence', { event: 'sync' }, () => { const n = Object.keys(ch.presenceState()).filter(k => k !== lv.user_id).length; ui.eye.textContent = '👁 ' + n; })
   .subscribe(st => { if (st === 'SUBSCRIBED') { ch.track({ viewer: true }); sendHost({ t: 'join' }); } });
@@ -3929,6 +3965,7 @@ async function watchLive(lv) {
   const sendCm = () => { const t = ui.inp.value.trim(); if (!t) return; ui.inp.value = ''; const msg = { name: me.display_name, text: t, color: me.name_color }; ch.send({ type: 'broadcast', event: 'cm', payload: msg }); ui.addCm(msg.name, msg.text, msg.color); };
   ui.inp.onkeydown = e => { if (e.key === 'Enter') sendCm(); };
   ui.heartBtn.onclick = () => { ui.addHeart(); ch.send({ type: 'broadcast', event: 'ht', payload: {} }); };
+  if (ui.giftBtn) ui.giftBtn.onclick = () => giftPanel(ui, g => ch.send({ type: 'broadcast', event: 'gift', payload: g }));
 }
 
 
@@ -5273,23 +5310,27 @@ function newPost() {
   });
 }
 /* friends map / live location */
-let shareT = null, shareWatch = null;
+let shareT = null, shareWatch = null, shareAlwaysT = null;
+const shareAlways = () => { try { return localStorage.getItem('viks-share-always-' + (me && me.id)) === '1'; } catch { return false; } };
+const setShareAlways = v => { try { localStorage.setItem('viks-share-always-' + me.id, v ? '1' : '0'); } catch {} };
+const geoKm = (a, b, c, d) => { const R = 6371, t = x => x * Math.PI / 180, dl = t(c - a), dn = t(d - b), h = Math.sin(dl / 2) ** 2 + Math.cos(t(a)) * Math.cos(t(c)) * Math.sin(dn / 2) ** 2; return 2 * R * Math.asin(Math.sqrt(h)); };
+const agoShort = ts => { const m = Math.round((Date.now() - new Date(ts)) / 60000); return m < 1 ? 'сейчас' : m < 60 ? m + ' мин назад' : Math.round(m / 60) + ' ч назад'; };
 async function liveLocSheet() {
   sheet((s, close) => s.append(el('h3', {}, '🛰 Делиться местом вживую'), el('div', { class: 'hint', style: 'margin:-6px 0 10px' }, 'Твои люди увидят тебя на карте друзей. Обновляется, пока Viks открыт'),
     el('div', { class: 'menu' }, [[15, '15 минут'], [60, '1 час'], [480, '8 часов']].map(([m, l]) => el('button', { onclick: async () => { close(); if (await startSharing(m) && current) { const until = new Date(Date.now() + m * 60000); sb.from('messages').insert({ chat_id: current.chat_id, sender_id: me.id, body: '🛰 live:' + until.toISOString() }).then(() => {}); } } }, l)))));
 }
-async function startSharing(mins) {
+async function startSharing(mins, quiet) {
   if (!navigator.geolocation) { toast('Телефон не отдаёт геолокацию'); return false; }
-  const until = new Date(Date.now() + mins * 60000).toISOString();
-  const push = pos => sb.from('locations').upsert({ user_id: me.id, lat: pos.coords.latitude, lon: pos.coords.longitude, acc: Math.round(pos.coords.accuracy || 0), until, updated_at: new Date().toISOString() }, { onConflict: 'user_id' }).then(() => {});
+  let until = new Date(Date.now() + mins * 60000).toISOString();
+  const push = pos => { if (shareAlways()) until = new Date(Date.now() + 10 * 60000).toISOString(); return sb.from('locations').upsert({ user_id: me.id, lat: pos.coords.latitude, lon: pos.coords.longitude, acc: Math.round(pos.coords.accuracy || 0), until, updated_at: new Date().toISOString() }, { onConflict: 'user_id' }).then(() => {}); };
   return await new Promise(ok => navigator.geolocation.getCurrentPosition(pos => {
     push(pos); if (shareWatch != null) navigator.geolocation.clearWatch(shareWatch);
     let last = 0; shareWatch = navigator.geolocation.watchPosition(p2 => { if (Date.now() - last > 20000) { last = Date.now(); push(p2); } }, () => {}, { enableHighAccuracy: true, maximumAge: 15000 });
-    clearTimeout(shareT); shareT = setTimeout(stopSharing, mins * 60000);
-    toast('🛰 Делишься местом ' + (mins < 60 ? mins + ' мин' : mins / 60 + ' ч')); ok(true);
+    clearTimeout(shareT); if (!shareAlways()) shareT = setTimeout(stopSharing, mins * 60000); else { clearInterval(shareAlwaysT); shareAlwaysT = setInterval(() => navigator.geolocation.getCurrentPosition(push, () => {}, { maximumAge: 60000 }), 4 * 60000); }
+    if (!quiet || !shareAlways()) toast(shareAlways() ? '🛰 Ты на карте, пока открыт Viks' : '🛰 Делишься местом ' + (mins < 60 ? mins + ' мин' : mins / 60 + ' ч')); ok(true);
   }, err => { toast(err.code === 1 ? 'Разреши доступ к геолокации' : 'Не получилось определить место'); ok(false); }, { enableHighAccuracy: true, timeout: 15000 }));
 }
-async function stopSharing() { if (shareWatch != null) navigator.geolocation.clearWatch(shareWatch); shareWatch = null; clearTimeout(shareT); await sb.from('locations').delete().eq('user_id', me.id); toast('Больше не делишься местом'); }
+async function stopSharing() { if (shareWatch != null) navigator.geolocation.clearWatch(shareWatch); shareWatch = null; clearTimeout(shareT); clearInterval(shareAlwaysT); await sb.from('locations').delete().eq('user_id', me.id); toast('Больше не делишься местом'); }
 function liveLocEl(m) {
   const until = new Date(m.body.slice(8)), on = until > new Date(), p = profiles.get(m.sender_id) || {};
   return el('div', { class: 'livecard', onclick: e => { e.stopPropagation(); openFriendMap(m.sender_id); } }, el('div', { class: 'lp', style: on ? '' : 'background:#64748b;animation:none' }, '🛰'),
@@ -5301,11 +5342,14 @@ async function openFriendMap(focusId) {
     await loadScript('https://unpkg.com/leaflet@1.9.4/dist/leaflet.js');
   } catch { toast('Карта не загрузилась'); return; }
   const mapEl = el('div', { id: 'lmap' });
-  const seg = el('div', { class: 'seg' });
+  const seg = el('div', { class: 'seg' }), flist = el('div', { class: 'flist' });
   const ov = el('div', { class: 'fmap' }, el('div', { class: 'mtop' }, el('button', { class: 'icon-btn', html: ICON.back, onclick: () => L2.close() }), el('b', {}, '🗺 Карта друзей')), mapEl,
-    el('div', { class: 'mbot' }, el('div', { class: 'hint', style: 'margin:0 0 8px' }, shareWatch != null ? '🛰 Ты делишься местом' : 'Поделиться своим местом:'), seg));
-  [[15, '15 мин'], [60, '1 час'], [480, '8 ч']].forEach(([m, l]) => seg.append(el('button', { onclick: async () => { if (await startSharing(m)) refresh(); } }, l)));
-  seg.append(el('button', { onclick: async () => { await stopSharing(); refresh(); } }, 'Выкл'));
+    el('div', { class: 'mbot' }, flist, el('div', { class: 'hint', style: 'margin:0 0 8px' }, shareWatch != null ? (shareAlways() ? '🛰 Ты на карте, пока открыт Viks' : '🛰 Ты делишься местом') : 'Поделиться своим местом:'), seg));
+  const drawSeg = () => { seg.innerHTML = ''; const always = shareAlways();
+    [[15, '15 мин'], [60, '1 час'], [480, '8 ч']].forEach(([m, l]) => seg.append(el('button', { onclick: async () => { setShareAlways(false); if (await startSharing(m)) { refresh(); drawSeg(); } } }, l)));
+    seg.append(el('button', { class: always ? 'on' : '', onclick: async () => { setShareAlways(true); if (await startSharing(10, true)) { refresh(); drawSeg(); } } }, '∞ Всегда'));
+    seg.append(el('button', { onclick: async () => { setShareAlways(false); await stopSharing(); refresh(); drawSeg(); } }, 'Выкл')); };
+  drawSeg();
   document.body.append(ov);
   const map = window.L.map(mapEl, { zoomControl: false, attributionControl: true }).setView([48.48, 135.08], 4);
   window.L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '© OpenStreetMap' }).addTo(map);
@@ -5318,10 +5362,15 @@ async function openFriendMap(focusId) {
     for (const r of data || []) {
       const p = r.user_id === me.id ? me : profiles.get(r.user_id) || { id: r.user_id };
       let mk = markers.get(r.user_id);
-      if (!mk) { mk = window.L.marker([r.lat, r.lon], { icon: pin(p, r.user_id === me.id) }).addTo(map).bindPopup(`<b>${(p.display_name || '').replace(/</g, '')}</b><br>обновлено ${hm(new Date(r.updated_at))}`); markers.set(r.user_id, mk); }
+      if (!mk) { const pop = el('div', { style: 'text-align:center' }, el('b', {}, p.display_name || ''), el('div', { style: 'font-size:12px;opacity:.7;margin:2px 0 6px' }, 'обновлено ' + hm(new Date(r.updated_at))), r.user_id === me.id ? null : el('button', { class: 'btn', style: 'padding:6px 12px;font-size:13px', onclick: () => { L2.close(); startDm(r.user_id); } }, '💬 Написать')); mk = window.L.marker([r.lat, r.lon], { icon: pin(p, r.user_id === me.id) }).addTo(map).bindPopup(pop); markers.set(r.user_id, mk); }
       else mk.setLatLng([r.lat, r.lon]);
       pts.push([r.lat, r.lon]);
     }
+    const mine = (data || []).find(r => r.user_id === me.id);
+    flist.innerHTML = '';
+    (data || []).filter(r => r.user_id !== me.id).forEach(r => { const pr = profiles.get(r.user_id) || {}; const km = mine ? geoKm(mine.lat, mine.lon, r.lat, r.lon) : null;
+      flist.append(el('div', { class: 'fl', onclick: () => { map.setView([r.lat, r.lon], 16); markers.get(r.user_id)?.openPopup(); } }, avatar(pr.display_name, pr.avatar_url, 32), el('div', {}, el('b', {}, (pr.display_name || '').split(' ')[0]), el('small', {}, (km != null ? (km < 1 ? Math.round(km * 1000) + ' м' : km.toFixed(km < 10 ? 1 : 0) + ' км') + ' · ' : '') + agoShort(r.updated_at))))); });
+    for (const [uid, mk] of markers) { if (uid !== me.id && !(data || []).some(r => r.user_id === uid)) { map.removeLayer(mk); markers.delete(uid); } }
     const f = focusId && (data || []).find(r => r.user_id === focusId);
     if (f) map.setView([f.lat, f.lon], 15); else if (pts.length) map.fitBounds(pts, { padding: [60, 60], maxZoom: 15 });
     else toast('Пока никто не делится местом');
@@ -5336,6 +5385,7 @@ async function e2eInit() {
   if (!crypto.subtle) return;
   try {
     let pub = localStorage.getItem('viks-e2e-pub'), priv = localStorage.getItem('viks-e2e-priv');
+    if ((!pub || !priv) && me.pubkey) { try { const { data: kb } = await sb.from('key_backups').select('user_id').maybeSingle(); if (kb) { setTimeout(() => keyRestoreAsk(true), 1500); return; } } catch {} }
     if (!pub || !priv) { const kp = await crypto.subtle.generateKey({ name: 'ECDH', namedCurve: 'P-256' }, true, ['deriveKey']); pub = JSON.stringify(await crypto.subtle.exportKey('jwk', kp.publicKey)); priv = JSON.stringify(await crypto.subtle.exportKey('jwk', kp.privateKey)); localStorage.setItem('viks-e2e-pub', pub); localStorage.setItem('viks-e2e-priv', priv); }
     if (me.pubkey !== pub) { const { data } = await sb.from('profiles').update({ pubkey: pub }).eq('id', me.id).select().single(); if (data) { me = data; profiles.set(me.id, me); } }
   } catch (e) { console.warn('e2e', e); }
@@ -6547,6 +6597,8 @@ function homeHub() {
     el('div', { class: 'hh' }, '🎂 Днюхи'), el('div', { class: 'hb' }, el('div', { class: 'stack' }, soon.slice(0, 4).map(x => avatar(x.p.display_name, x.p.avatar_url, 40))),
       el('div', { class: 'sub', style: 'font-size:14px;font-weight:700;opacity:1;margin-top:8px' }, soon[0].p.display_name.split(' ')[0] + ' — ' + (soon[0].days === 0 ? 'сегодня! 🎉' : soon[0].days === 1 ? 'завтра' : 'через ' + soon[0].days + ' дн.')))));
   const mo = hubMoment, mp = mo && profiles.get(mo.user_id);
+  hub.append(el('div', { class: 'hc map', onclick: () => openFriendMap() }, el('div', { class: 'glow', style: 'background:#06b6d4' }), el('div', { class: 'hh' }, '🗺 Карта'), el('div', { class: 'hb' }, el('div', { class: 'big', id: 'hubMapN' }, '…'), el('div', { class: 'sub' }, shareAlways() ? 'ты на карте 🛰' : 'кто где сейчас'))));
+  hubMapCount();
   hub.append(el('div', { class: 'hc feed', onclick: () => switchTab('Feed') }, mo && mo.media_url && mo.kind !== 'video' ? el('img', { src: mo.media_url, alt: '', loading: 'lazy' }) : el('div', { class: 'ph' }),
     el('div', { class: 'hh' }, '✨ Лента', el('small', {}, 'открыть ›')), el('div', { class: 'hb' }, mo ? [el('div', { style: 'font-weight:800;font-size:13px' }, mp?.display_name || ''), el('div', { class: 'sub' }, mo.text || (mo.kind === 'video' ? '🎬 видео' : '📷 фото'))] : [el('div', { style: 'font-weight:800;font-size:13px' }, 'Поделись моментом')])));
   return hub;
@@ -6816,7 +6868,7 @@ function liveCompositor(lv) {
   comp.timer = setInterval(draw, 40); draw();
   comp.stream = new MediaStream([...c.captureStream(25).getVideoTracks(), ...dest.stream.getAudioTracks()]);
   comp.addAudio = st => { try { if (AC.state === 'suspended') AC.resume(); const src = AC.createMediaStreamSource(st); src.connect(dest); return src; } catch { return null; } };
-  comp.stop = () => { comp.alive = false; clearInterval(comp.timer); comp.stream.getTracks().forEach(t => t.stop()); try { AC.close(); } catch {} };
+  comp.stop = () => { comp.alive = false; clearInterval(comp.timer); comp.stream.getTracks().forEach(t => t.stop()); try { AC.close().catch(() => {}); } catch {} };
   lv.comp = comp; return comp;
 }
 function liveSetOut(lv) {
@@ -6829,6 +6881,152 @@ function liveSetOut(lv) {
   if (lv.ui) { lv.ui.vid.muted = true; lv.ui.vid.srcObject = out; lv.ui.bgv.srcObject = out; lv.ui.vid.play().catch(() => {}); lv.ui.bgv.play().catch(() => {}); if (useComp) { lv.ui.vid.classList.remove('mirror'); lv.ui.bgv.classList.remove('mirror'); } else if (lv.setMirror && lv.pipe) lv.setMirror(lv.pipe.facing); }
   if (!useComp && lv.comp) { const cp = lv.comp; lv.comp = null; setTimeout(() => cp.stop(), 500); }
 }
+
+
+/* ===== 2.15 gifts ===== */
+const GIFTS = [['🌹', 'розу'], ['💖', 'сердце'], ['🍾', 'шампанское'], ['🧸', 'мишку'], ['💎', 'бриллиант', 1], ['🚀', 'ракету', 1], ['👑', 'корону', 1], ['🦄', 'единорога', 1], ['🌟', 'звезду', 1]];
+const G_NAME = k => { const g = GIFTS.find(x => x[0] === k); return g ? g[1] + ' ' + g[0] : k; };
+let lastGift = 0;
+function giftPanel(ui, send) {
+  ui.root.querySelector('.gift-panel')?.remove();
+  const prem = isPremium();
+  const pn = el('div', { class: 'gift-panel' }, el('div', { class: 'gh' }, el('b', {}, '🎁 Подарок ведущему'), el('button', { class: 'icon-btn', html: ICON.close, onclick: () => pn.remove() })),
+    el('div', { class: 'gg' }, GIFTS.map(([k, n, pm]) => el('button', { class: pm && !prem ? 'lk' : '', onclick: () => {
+      if (pm && !prem) { toast('✦ Этот подарок только с Viks Premium'); return; }
+      if (Date.now() - lastGift < 1500) { toast('Не так быстро 😅'); return; } lastGift = Date.now();
+      const g = { k, name: (me.display_name || '').split(' ')[0], uid: me.id }; send(g); ui.showGift(g); hap(15); pn.remove();
+    } }, animEmoji(k), n[0].toUpperCase() + n.slice(1), pm ? el('span', { class: 'pm' }, '✦') : null))));
+  ui.root.append(pn);
+}
+/* ===== 2.15 live recording ===== */
+function liveRecStart(lv) {
+  if (!lv || !window.MediaRecorder || lv.rec) return;
+  try {
+    const c = document.createElement('canvas'); c.width = 540; c.height = 960; const x = c.getContext('2d');
+    const AC = new (window.AudioContext || window.webkitAudioContext)(); const dest = AC.createMediaStreamDestination();
+    try { if (lv.stream.getAudioTracks().length) AC.createMediaStreamSource(new MediaStream(lv.stream.getAudioTracks())).connect(dest); } catch {}
+    const rec = { c, AC, dest, chunks: [], t0: Date.now(), alive: true };
+    rec.addAudio = st => { try { const src = AC.createMediaStreamSource(st); src.connect(dest); return src; } catch { return null; } };
+    rec.timer = setInterval(() => {
+      const v = lv.ui && lv.ui.vid; if (!v || !v.videoWidth) return;
+      const vw = v.videoWidth, vh = v.videoHeight, k = Math.max(c.width / vw, c.height / vh), sw = c.width / k, sh = c.height / k;
+      x.drawImage(v, (vw - sw) / 2, (vh - sh) / 2, sw, sh, 0, 0, c.width, c.height);
+    }, 40);
+    const st = new MediaStream([...c.captureStream(25).getVideoTracks(), ...dest.stream.getAudioTracks()]);
+    const mt = ['video/mp4;codecs=avc1,mp4a', 'video/mp4', 'video/webm;codecs=vp8,opus', 'video/webm'].find(t => { try { return MediaRecorder.isTypeSupported(t); } catch { return false; } });
+    rec.mr = new MediaRecorder(st, { ...(mt ? { mimeType: mt } : {}), videoBitsPerSecond: 650000, audioBitsPerSecond: 64000 });
+    rec.type = rec.mr.mimeType || mt || 'video/webm';
+    rec.mr.ondataavailable = e => { if (e.data && e.data.size) rec.chunks.push(e.data); };
+    rec.mr.start(2000);
+    rec.cap = setTimeout(() => { if (lv.rec === rec && rec.mr.state === 'recording') { rec.mr.stop(); rec.capped = true; lv.ui && lv.ui.addCm('⏺', ' Запись остановлена: максимум 8 минут'); lv.ui?.top.querySelector('.rec-dot')?.remove(); } }, 8 * 60000);
+    lv.rec = rec;
+    lv.ui && lv.ui.eye.before(el('span', { class: 'rec-dot', title: 'Эфир записывается' }, 'REC'));
+  } catch (e) { console.warn('rec', e); }
+}
+function liveRecStop(lv) {
+  const rec = lv && lv.rec; if (!rec) return Promise.resolve(null);
+  lv.rec = null; clearInterval(rec.timer); clearTimeout(rec.cap);
+  return new Promise(ok => {
+    let done = false; const fin = () => { if (done) return; done = true; try { rec.AC.close().catch(() => {}); } catch {} ok(rec.chunks.length ? new Blob(rec.chunks, { type: rec.type.split(';')[0] }) : null); };
+    if (rec.mr.state === 'inactive') return fin();
+    rec.mr.onstop = fin; try { rec.mr.stop(); } catch { fin(); }
+    setTimeout(fin, 3000);
+  });
+}
+function liveSaveAsk(blob, lv) {
+  const mb = blob.size / 1048576, dur = Math.round((Date.now() - new Date(lv.row.started_at || Date.now())) / 1000);
+  const url = URL.createObjectURL(blob);
+  sheet((s, close) => s.append(el('h3', {}, '⏺ Сохранить эфир в историю?'),
+    el('div', { class: 'hint', style: 'margin:-6px 0 10px' }, 'Кто пропустил, посмотрит запись 24 часа' + (lv.gifts ? ' · 🎁 подарков: ' + lv.gifts : '')),
+    el('video', { src: url, controls: '', playsinline: '', style: 'width:100%;max-height:44vh;border-radius:16px;background:#000;margin-bottom:12px' }),
+    mb > 49 ? el('div', { class: 'hint', style: 'color:#ff8a94' }, 'Запись слишком большая (' + mb.toFixed(0) + ' МБ). Максимум 50 МБ') :
+    el('button', { class: 'btn', onclick: async ev => {
+      const b = ev.currentTarget; b.disabled = true; b.textContent = 'Загружаю… ' + mb.toFixed(1) + ' МБ';
+      try {
+        const ext = /mp4/.test(blob.type) ? 'mp4' : 'webm';
+        const mu = await upload('media', blob, ext, blob.type || 'video/webm');
+        const { error } = await sb.from('stories').insert({ media_url: mu, kind: 'video', caption: '🔴 Запись эфира', duration: Math.min(dur, 600), audience: 'all' });
+        if (error) throw error;
+        close(); toast('Эфир в истории 🔥'); loadStories().then(renderStories);
+      } catch (e) { b.disabled = false; b.textContent = 'Попробовать ещё раз'; toast('Не загрузилось: ' + errText(e)); }
+    } }, '📤 В историю на 24 часа'),
+    el('div', { style: 'height:8px' }), el('button', { class: 'btn ghost', onclick: close }, 'Не сохранять')), () => URL.revokeObjectURL(url));
+}
+/* ===== 2.15 map card ===== */
+async function hubMapCount() {
+  try { const { data } = await sb.from('locations').select('user_id').gt('until', new Date().toISOString()); const n = (data || []).filter(r => r.user_id !== me.id).length; const e = $('#hubMapN'); if (e) e.textContent = String(n); } catch {}
+}
+/* ===== 2.15 invites ===== */
+function invQr(url) { try { return qrCanvas(url); } catch { return null; } }
+async function joinPreview(code) {
+  const { data: g, error } = await sb.rpc('group_preview', { code });
+  if (error || !g) { toast('Ссылка недействительна или устарела'); return; }
+  if (g.member) { await loadChats(); openChat(g.id); return; }
+  sheet((s, close) => s.append(el('div', { class: 'join-pv' }, avatar(g.title, g.avatar_url, 84),
+    el('h2', {}, g.title || 'Группа'), el('div', { class: 'mm' }, (g.is_channel ? '📢 Канал · ' : '👥 Группа · ') + g.members + ' ' + plural(g.members, 'участник', 'участника', 'участников')),
+    g.description ? el('p', {}, g.description) : null,
+    el('button', { class: 'btn', onclick: async () => { const { data, error: e2 } = await sb.rpc('join_by_code', { code }); if (e2) { toast(errText(e2)); return; } close(); await loadChats(); openChat(data); toast((g.is_channel ? 'Ты подписан' : 'Ты в группе') + ' 🔥'); } }, g.is_channel ? '📢 Подписаться' : '🚀 Вступить'),
+    el('div', { style: 'height:8px' }), el('button', { class: 'btn ghost', onclick: close }, 'Не сейчас'))));
+  try { history.replaceState(null, '', location.pathname); } catch {}
+}
+/* ===== 2.15 key backup ===== */
+async function kbDerive(pass, salt) {
+  const base = await crypto.subtle.importKey('raw', new TextEncoder().encode(pass), 'PBKDF2', false, ['deriveKey']);
+  return crypto.subtle.deriveKey({ name: 'PBKDF2', salt, iterations: 250000, hash: 'SHA-256' }, base, { name: 'AES-GCM', length: 256 }, false, ['encrypt', 'decrypt']);
+}
+const kbB64 = u8 => btoa(String.fromCharCode(...new Uint8Array(u8)));
+const kbU8 = b => Uint8Array.from(atob(b), c => c.charCodeAt(0));
+async function keyBackupSave(pass) {
+  const secrets = {}; try { for (let i = 0; i < localStorage.length; i++) { const k = localStorage.key(i); if (/^viks-secret-/.test(k)) secrets[k] = localStorage.getItem(k); } } catch {}
+  const payload = JSON.stringify({ pub: localStorage.getItem('viks-e2e-pub'), priv: localStorage.getItem('viks-e2e-priv'), secrets });
+  const salt = crypto.getRandomValues(new Uint8Array(16)), iv = crypto.getRandomValues(new Uint8Array(12));
+  const ct = await crypto.subtle.encrypt({ name: 'AES-GCM', iv }, await kbDerive(pass, salt), new TextEncoder().encode(payload));
+  const { error } = await sb.from('key_backups').upsert({ user_id: me.id, data: JSON.stringify({ v: 1, salt: kbB64(salt), iv: kbB64(iv), ct: kbB64(ct) }), updated_at: new Date().toISOString() }, { onConflict: 'user_id' });
+  if (error) throw error;
+}
+async function keyBackupRestore(pass) {
+  const { data, error } = await sb.from('key_backups').select('data').maybeSingle();
+  if (error || !data) throw new Error('Копии нет');
+  const b = JSON.parse(data.data);
+  let txt; try { txt = new TextDecoder().decode(await crypto.subtle.decrypt({ name: 'AES-GCM', iv: kbU8(b.iv) }, await kbDerive(pass, kbU8(b.salt)), kbU8(b.ct))); } catch { throw new Error('Неверный пароль'); }
+  const d = JSON.parse(txt);
+  localStorage.setItem('viks-e2e-pub', d.pub); localStorage.setItem('viks-e2e-priv', d.priv);
+  for (const [k, v] of Object.entries(d.secrets || {})) try { localStorage.setItem(k, v); } catch {}
+  e2eKeys.clear(); await e2eInit();
+}
+function passSheet(title, hint, btn, onGo, twice) {
+  sheet((s, close) => {
+    const p1 = el('input', { type: 'password', placeholder: 'Пароль для копии (от 6 символов)', autocomplete: 'new-password' });
+    const p2 = twice ? el('input', { type: 'password', placeholder: 'Повтори пароль', autocomplete: 'new-password' }) : null;
+    const go = el('button', { class: 'btn', onclick: async () => {
+      const a = p1.value; if (a.length < 6) { toast('Минимум 6 символов'); return; }
+      if (p2 && a !== p2.value) { toast('Пароли не совпадают'); return; }
+      go.disabled = true; go.textContent = 'Секунду…';
+      try { await onGo(a); close(); } catch (e) { toast(e.message || 'Не вышло'); go.disabled = false; go.textContent = btn; }
+    } }, btn);
+    s.append(el('h3', {}, title), el('div', { class: 'hint', style: 'margin:-6px 0 12px' }, hint), el('div', { class: 'field' }, p1), p2 ? el('div', { class: 'field' }, p2) : null, go);
+    setTimeout(() => p1.focus(), 120);
+  });
+}
+async function keyBackupPage() {
+  let has = false; try { const { data } = await sb.from('key_backups').select('updated_at').maybeSingle(); has = !!data; var upd = data && data.updated_at; } catch {}
+  sheet((s, close) => s.append(el('h3', {}, '🗝 Копия ключей шифрования'),
+    el('div', { class: 'hint', style: 'margin:-6px 0 12px' }, 'Ключи секретных чатов 🔐 хранятся только на этом телефоне. Сделай копию под паролем — на новом телефоне введёшь пароль, и старые секретные переписки откроются. Пароль знаешь только ты: мы его не видим и восстановить не сможем.'),
+    el('div', { class: 'hint', style: 'margin:0 0 12px;font-weight:700' }, has ? '✅ Копия есть · ' + new Date(upd).toLocaleDateString('ru-RU') : '⚠️ Копии пока нет'),
+    el('button', { class: 'btn', onclick: () => { close(); setTimeout(() => passSheet('🗝 Пароль для копии', 'Запомни его! Без пароля копию не открыть', 'Сохранить копию', async a => { await keyBackupSave(a); toast('Копия ключей сохранена 🔐'); }, true), 30); } }, has ? 'Обновить копию' : 'Сделать копию'),
+    has ? el('div', { style: 'height:8px' }) : null,
+    has ? el('button', { class: 'btn ghost', onclick: () => { close(); setTimeout(() => keyRestoreAsk(false), 30); } }, 'Восстановить из копии') : null));
+}
+function keyRestoreAsk(auto) {
+  if (auto) {
+    sheet((s, close) => s.append(el('h3', {}, '🗝 Нашли копию твоих ключей'), el('div', { class: 'hint', style: 'margin:-6px 0 12px' }, 'Восстанови их, чтобы открылись старые секретные чаты 🔐. Если пароль не помнишь — создай новые ключи (старые секретные сообщения не откроются).'),
+      el('button', { class: 'btn', onclick: () => { close(); setTimeout(() => keyRestoreAsk(false), 30); } }, 'Ввести пароль'), el('div', { style: 'height:8px' }),
+      el('button', { class: 'btn ghost', onclick: async () => { close(); try { localStorage.setItem('viks-kb-skip-' + me.id, '1'); } catch {} await e2eInitFresh(); toast('Созданы новые ключи'); } }, 'Создать новые ключи')));
+    return;
+  }
+  passSheet('🔑 Восстановить ключи', 'Введи пароль, который ставил при создании копии', 'Восстановить', async a => { await keyBackupRestore(a); toast('Ключи восстановлены 🔐'); if (current) renderMsgs(false); });
+}
+async function e2eInitFresh() { try { localStorage.removeItem('viks-e2e-pub'); localStorage.removeItem('viks-e2e-priv'); } catch {} const pk = me.pubkey; me.pubkey = null; await e2eInit(); if (!me.pubkey) me.pubkey = pk; }
 
 /* ================= BOOT ================= */
 (async () => {
