@@ -1252,6 +1252,15 @@ html.light .ab-card{background:#fff;border-color:#0000000d}
 .hc.fire .fr:nth-child(n+3){display:none}
 .hc.feed .hh,.hc.feed .hb{padding:10px 11px}.hc.feed .hb{padding-top:0}
 .hc .glow{width:100px;height:100px}
+/* 2.13.2 card alignment */
+.hc .hb{min-width:0}
+.hc.ai .ask{max-width:100%;box-sizing:border-box;min-width:0;justify-content:space-between}
+.hc.ai .ask span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+.hc.on .hh small{display:none}
+.hc.on .hb{display:grid;grid-template-columns:auto 1fr;grid-template-areas:"big st" "sub sub";align-items:center;column-gap:10px}
+.hc.on .hb .big{grid-area:big;margin:0!important}.hc.on .hb .stack{grid-area:st;justify-self:start}.hc.on .hb .sub{grid-area:sub}
+.hc.fire .hb,.hc.bd .hb{justify-content:flex-end}
+
 
 .pins{display:flex;gap:14px;overflow-x:auto;padding:4px 16px 12px;scrollbar-width:none}.pins::-webkit-scrollbar{display:none}
 .pin-t{flex:none;width:64px;text-align:center;cursor:pointer;position:relative}
@@ -2383,7 +2392,7 @@ async function openGroupInfo(c) {
 
 
 /* ================= SETTINGS & UPDATES ================= */
-const APP_VERSION = '2.13.1';
+const APP_VERSION = '2.13.2';
 const APP_THEMES = {
   neon: { name: 'Неон', a: '#00e5ff', a2: '#7df3ff', a3: '#ff2bd6', mine: '#7a1fd6', bg: '#07060f', panel: '#0f0d1d', panel2: '#171433', line: '#251f48', theirs: '#16132c', wall: 'neon' },
   br: { name: 'Рубин', a: '#ff2d3d', a2: '#ff7a85', a3: '#ff8a00', mine: '#b3101c', bg: '#0b0a0b', panel: '#141214', panel2: '#1d1a1c', line: '#2b2629', theirs: '#1c1a1b', wall: 'rain' },
@@ -6392,7 +6401,7 @@ function homeHub() {
   const SUG = ['🎨 Нарисуй', 'Придумай подпись к фото', 'Переведи на английский', 'Расскажи шутку'];
   hub.append(el('div', { class: 'hc ai', onclick: () => openAiDm('') }, el('div', { class: 'glow', style: 'background:#8b5cf6' }),
     el('div', { class: 'hh' }, el('img', { src: bot?.avatar_url || 'ai-avatar.png', alt: '' }), 'Викс ИИ', el('small', {}, 'текст и картинки')),
-    el('div', { class: 'hb' }, el('div', { class: 'ask' }, 'Спроси или «нарисуй…»', el('i', {}, '↑')),
+    el('div', { class: 'hb' }, el('div', { class: 'ask' }, el('span', {}, 'Спроси или «нарисуй…»'), el('i', {}, '↑')),
       el('div', { class: 'sug' }, SUG.map(t => el('span', { onclick: e => { e.stopPropagation(); openAiDm(t.startsWith('🎨') ? 'Нарисуй ' : t + ': '); } }, t))))));
   const peers = [...new Set(chats.filter(c => !c.is_group && c.peer_id && !isBotId(c.peer_id)).map(c => c.peer_id))].map(id => profiles.get(id)).filter(Boolean);
   const on = peers.filter(isOnline);
