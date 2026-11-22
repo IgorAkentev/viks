@@ -1510,6 +1510,36 @@ html.light #msgs .day:not(.sys){background:#ffffffcc;color:#4a4566;border-color:
 .hc.map{background:radial-gradient(ellipse at 100% 0%,#06b6d455,transparent 60%),linear-gradient(160deg,#0b2230,#0a1218)}
 .inv-qr{display:flex;justify-content:center;margin:0 0 12px}.inv-qr canvas{width:180px;height:180px;border-radius:18px;background:#fff;padding:10px}
 .join-pv{text-align:center}.join-pv .av{margin:0 auto 10px}.join-pv h2{margin:0 0 4px;font-size:22px}.join-pv .mm{color:var(--muted);font-size:13.5px;margin-bottom:8px}.join-pv p{font-size:14px;opacity:.85;margin:0 0 14px}
+
+/* ===== 2.16 premium ===== */
+.ng{background-size:220% auto!important;-webkit-background-clip:text!important;background-clip:text!important;color:transparent!important;-webkit-text-fill-color:transparent;animation:ngMove 5s linear infinite;filter:drop-shadow(0 0 7px var(--ngg,#ec489966))}
+@keyframes ngMove{to{background-position:220% center}}
+.ng-aurora{background-image:linear-gradient(90deg,#34d399,#22d3ee,#a78bfa,#34d399);--ngg:#22d3ee66}
+.ng-gold{background-image:linear-gradient(90deg,#fde68a,#f59e0b,#fff7d6,#f59e0b,#fde68a);--ngg:#f59e0b66}
+.ng-fire{background-image:linear-gradient(90deg,#ff2d55,#ff9f0a,#ffd60a,#ff2d55);--ngg:#ff5a3c66}
+.ng-candy{background-image:linear-gradient(90deg,#ff7eb6,#c084fc,#7dd3fc,#ff7eb6);--ngg:#ec489966}
+.ng-ocean{background-image:linear-gradient(90deg,#38bdf8,#6366f1,#22d3ee,#38bdf8);--ngg:#3b82f666}
+.ng-neon{background-image:linear-gradient(90deg,#00e5ff,#ff2bd6,#7c5cff,#00e5ff);--ngg:#ff2bd666}
+.estat .ae{width:1.3em;height:1.3em;vertical-align:-.28em;display:inline-block}
+.cover .cvv{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:inherit}
+.react-bar.prem{margin-top:-6px}.react-bar.prem button{position:relative}.react-bar.prem img{width:34px;height:34px}
+.react-bar.prem.lock img{filter:saturate(.4) brightness(.7)}.react-bar.prem.lock button::after{content:'🔒';position:absolute;right:-2px;bottom:-2px;font-size:11px}
+.stt-t{margin-top:6px;font-size:13.5px;line-height:1.4;padding:7px 10px;border-radius:12px;background:#0003;white-space:pre-wrap}
+.stt-b{display:inline-flex;align-items:center;gap:4px;margin-top:4px;font-size:12px;font-weight:800;padding:3px 9px;border-radius:10px;background:#ffffff1c}
+.atc .pm{position:absolute;top:6px;right:6px;font-size:10px;font-weight:900;padding:1px 6px;border-radius:8px;background:linear-gradient(135deg,#f59e0b,#ec4899,#8b5cf6);color:#fff;z-index:2}
+.atc{position:relative}.atc.lk .pv{filter:saturate(.5) brightness(.75)}
+.prem-page .plans{display:flex;gap:8px;margin:14px 0 6px}
+.prem-page .plan{flex:1;padding:12px 6px;border-radius:18px;background:#ffffff0a;border:1px solid #ffffff16}
+.prem-page .plan b{display:block;font-size:14px}.prem-page .plan .pr{font-size:17px;font-weight:900;margin:4px 0 2px}.prem-page .plan small{color:var(--muted);font-size:11.5px}
+.prem-page .plan.best{border-color:#ec4899;background:linear-gradient(160deg,#ec489922,#8b5cf622)}
+.prem-page .pset{text-align:left;margin-top:16px}
+.prem-page .pset h4{margin:0 0 8px;font-size:13px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.ngp{display:flex;flex-wrap:wrap;gap:8px}.ngp button{padding:8px 12px;border-radius:14px;background:#ffffff0d;border:1px solid #ffffff16;font-weight:900;font-size:15px}.ngp button.on{border-color:var(--accent);background:#ffffff1a}
+.snd{display:flex;flex-wrap:wrap;gap:6px}.snd button{padding:7px 12px;border-radius:12px;background:#ffffff0d;font-weight:700;font-size:13px}.snd button.on{background:var(--accent);color:#fff}
+.gift-card{display:flex;flex-direction:column;align-items:center;gap:6px;padding:14px 18px;border-radius:20px;background:linear-gradient(135deg,#f59e0b,#ec4899,#8b5cf6);color:#fff;text-align:center;min-width:200px;box-shadow:0 10px 30px #ec489955}
+.gift-card .ae{width:72px;height:72px}.gift-card b{font-size:16px}.gift-card small{opacity:.9;font-size:12.5px}
+.bub.giftb{background:transparent!important;border:0!important;box-shadow:none!important;padding:0!important}
+video.ae{object-fit:contain;border-radius:14px}
 </style>
 </head>
 <body>
@@ -1622,11 +1652,11 @@ function avatar(name, url, size = 48, online = false) {
   return el('div', { class: 'av-wrap' }, a, el('span', { class: 'online-dot' }));
 }
 function toast(t) { const x = el('div', { class: 'toast' }, t); document.body.append(x); setTimeout(() => x.remove(), 2600); }
-const isOnline = p => p && p.last_seen && (Date.now() - new Date(p.last_seen)) < 150000;
+const isOnline = p => !!p && !(p.ghost && p.id !== (me && me.id) && isPremium(p)) && p.last_seen && (Date.now() - new Date(p.last_seen)) < 150000;
 function lastSeenText(p) {
   if (!p) return '';
   if (isOnline(p)) return 'в сети';
-  if (p.hide_seen) return 'был(а) недавно';
+  if (p.hide_seen || (p.ghost && isPremium(p))) return 'был(а) недавно';
   if (!p.last_seen) return 'был(а) давно';
   const d = new Date(p.last_seen), diff = (Date.now() - d) / 60000;
   if (diff < 60) return `был(а) ${Math.max(1, Math.round(diff))} мин назад`;
@@ -1822,7 +1852,7 @@ function renderChats() {
     const rowEl = longPress(el('div', { class: 'row' + (current?.chat_id === c.chat_id ? ' active' : '') + (Number(c.unread || 0) && !c.muted ? ' unr' : '') + (/^🤖/.test(c.title || '') || (!c.is_group && isBotId(c.peer_id)) ? ' airow' : ''), style: '--i:' + (ri++), onclick: () => openChat(c.chat_id) },
       c.saved ? savedAv(52) : avatar(c.title, c.avatar_url, 52, !c.is_group && isOnline(peer)),
       el('div', { class: 'meta' },
-        el('div', { class: 'l1' }, el('div', { class: 'name' }, (c.is_channel ? '📢 ' : c.is_group ? '👥 ' : '') + (c.title || 'Без названия'), !c.is_group ? decor(peer) : null, !c.is_group && isBday(peer) ? el('span', { class: 'bday-ic' }, '🎂') : null, streakEl(c), c.muted ? el('span', { class: 'mute-ic' }, '🔕') : null, c.pinned ? el('span', { class: 'pin-ic' }, '📌') : null, c.ttl_seconds ? el('span', { class: 'pin-ic' }, '⏱') : null), el('div', { class: 'time' }, shortTime(c.last_at))),
+        el('div', { class: 'l1' }, el('div', { class: 'name' }, !c.is_group ? ngn(peer, c.title || 'Без названия') : (c.is_channel ? '📢 ' : '👥 ') + (c.title || 'Без названия'), !c.is_group ? decor(peer) : null, !c.is_group && isBday(peer) ? el('span', { class: 'bday-ic' }, '🎂') : null, streakEl(c), c.muted ? el('span', { class: 'mute-ic' }, '🔕') : null, c.pinned ? el('span', { class: 'pin-ic' }, '📌') : null, c.ttl_seconds ? el('span', { class: 'pin-ic' }, '⏱') : null), el('div', { class: 'time' }, shortTime(c.last_at))),
         el('div', { class: 'l2' }, el('div', { class: 'prev' }, tp && tp.until > Date.now() && c.chat_id !== current?.chat_id ? el('span', { class: 'typing-prev' }, (c.is_group ? tp.name + ' ' : '') + 'печатает…') : dr ? [el('span', { class: 'draft' }, 'Черновик: '), dr] : prev), c.unread > 0 ? el('div', { class: 'badge' + (c.muted ? ' muted' : '') }, c.unread > 99 ? '99+' : String(c.unread)) : null)
       ), c.last_image && lastImg.get(c.chat_id) ? el('img', { class: 'thumb', src: lastImg.get(c.chat_id), alt: '', loading: 'lazy' }) : null), () => chatMenu(c));
     box.append(swipeWrap(rowEl, c));
@@ -1967,7 +1997,7 @@ async function openChat(chatId) {
   const head = el('div', { class: 'top ctop' + (peer && isOnline(peer) ? ' onl' : '') },
     el('button', { class: 'icon-btn', html: ICON.back, onclick: () => innerWidth < 820 ? history.back() : closeChatView(), title: 'Назад' }),
     el('div', { class: 'chat-head', onclick: e => c.saved ? mediaGallery(c.chat_id, 'Избранное') : c.is_group ? openGroupInfo(c) : openProfile(c.peer_id, e.currentTarget.querySelector('.av')) },
-      c.saved ? savedAv(42) : avatar(c.title, c.avatar_url, 42), el('div', { style: 'min-width:0' }, el('div', { class: 't' }, c.title || '', !c.is_group ? decor(profiles.get(c.peer_id)) : null), sub, headChips(c, peer))),
+      c.saved ? savedAv(42) : avatar(c.title, c.avatar_url, 42), el('div', { style: 'min-width:0' }, el('div', { class: 't' }, !c.is_group ? ngn(profiles.get(c.peer_id), c.title || '') : (c.title || ''), !c.is_group ? decor(profiles.get(c.peer_id)) : null), sub, headChips(c, peer))),
     !c.is_group && !c.saved ? el('button', { class: 'icon-btn', html: ICON.video, title: 'Видеозвонок', onclick: () => startCall(c.peer_id, true) }) : null,
     !c.is_group && !c.saved ? el('button', { class: 'icon-btn', html: ICON.phone, title: 'Позвонить', onclick: () => startCall(c.peer_id) }) : null,
     c.is_group && !c.is_channel ? el('button', { class: 'icon-btn', html: ICON.phone, title: 'Групповой звонок', onclick: () => joinGroupCall(c) }) : null,
@@ -2075,7 +2105,8 @@ function renderMsgs(scroll) {
   const list = $('#msgs'); if (!list || !current) return;
   list.innerHTML = ''; list.classList.toggle('selmode', selMode);
   if (!msgs.length) { list.append(el('div', { class: 'empty' }, 'Сообщений пока нет. Напиши первым 🤙')); return; }
-  const otherRead = [...membersRead.values()].reduce((mx, t) => (t && t > mx ? t : mx), '');
+  const ghostPeer = current && !current.is_group && current.peer_id && (() => { const gp = profiles.get(current.peer_id); return gp && gp.ghost && isPremium(gp); })();
+  const otherRead = ghostPeer ? '' : [...membersRead.values()].reduce((mx, t) => (t && t > mx ? t : mx), '');
   let lastDay = '';
   msgs.forEach((m, i) => {
     const d = new Date(m.created_at);
@@ -2090,7 +2121,7 @@ function renderMsgs(scroll) {
     const sender = profiles.get(m.sender_id);
     const isCirc = !m.deleted && m.kind === 'circle';
     const bub = el('div', { class: 'bub' + (m.deleted ? ' del' : '') + (isCirc ? ' circ' : '') });
-    if (current.is_group && !current.is_channel && !mine && firstOfRun) bub.append(el('div', { class: 'who', style: 'color:' + (sender?.name_color || nameColor(m.sender_id)) }, sender?.display_name || '…', decor(sender)));
+    if (current.is_group && !current.is_channel && !mine && firstOfRun) bub.append(el('div', { class: 'who', style: 'color:' + (sender?.name_color || nameColor(m.sender_id)) }, ngn(sender, sender?.display_name || '…'), decor(sender)));
     if (!m.deleted && m.fwd_from) bub.append(el('div', { class: 'fwd' }, '↪️ Переслано от ' + (profiles.get(m.fwd_from)?.display_name || '…')));
     if (!m.deleted && m.reply_to) bub.append(quoteEl(m.reply_to));
     if (m.deleted) bub.append('Сообщение удалено');
@@ -2104,12 +2135,13 @@ function renderMsgs(scroll) {
       if (isAlb) { bub.classList.add('albub'); bub.append(albumEl(grp)); }
       else if (m.kind === 'video' && m.media_url) bub.append(mediaNode(m, mm => el('video', { class: 'vid', src: mm.media_url + (mm.pending ? '' : '#t=0.1'), controls: '', playsinline: '', preload: 'metadata' })));
       if (m.kind === 'file' && m.media_url) bub.append(fileCard(m));
-      if (m.kind === 'voice' && m.media_url) bub.append(mediaNode(m, voiceEl));
+      if (m.kind === 'voice' && m.media_url) { bub.append(mediaNode(m, voiceEl)); if (!m.pending) bub.append(sttEl(m)); }
       else if (m.kind === 'circle' && m.media_url) bub.append(mediaNode(m, circleEl));
       if (m.image_url && !isAlb) bub.append(el('img', { class: 'pic', src: m.image_url, alt: '', onclick: ev => { ev.stopPropagation(); viewImage(m.image_url); } }));
       if (m.kind === 'sticker' && /^premium:/.test(m.media_url || '')) { bub.classList.add('stk', 'prem'); bub.append(el('span', { class: 'prem-tag' }, '✦'), animEmoji(m.body)); bub.addEventListener('click', ev => { ev.stopPropagation(); premFx(m.body, true); }); }
       else if (m.kind === 'sticker') { bub.classList.add('stk'); const im = animEmoji(m.body, m.media_url); if (m.media_url && !/notoemoji/.test(m.media_url)) im.classList.add('own'); bub.append(im); }
       else if (m.body && !m.image_url && (m.kind || 'text') === 'text' && !m.reply_to && !m.fwd_from && isJumbo(m.body)) { bub.classList.add('jumbo'); const ems = graphemes(m.body.trim()).filter(g => g.trim()); bub.append(ems.length === 1 ? animEmoji(ems[0]) : el('span', { class: 'jt' }, m.body.trim())); }
+      else if (m.body && (m.kind || 'text') === 'text' && /^✦gift:\d+$/.test(m.body)) { bub.classList.add('giftb'); const dd = +m.body.split(':')[1]; bub.append(el('div', { class: 'gift-card', onclick: ev => { ev.stopPropagation(); premFx('👑', true); } }, animEmoji('🎁'), el('b', {}, 'Viks Premium в подарок!'), el('small', {}, 'на ' + dd + ' ' + plural(dd, 'день', 'дня', 'дней') + ' ✦'))); }
       else if (m.body && (m.kind || 'text') === 'text' && GEO_RE.test(m.body)) bub.append(locEl(m.body));
       else if (m.body && (m.kind || 'text') === 'text' && /^🛰 live:/.test(m.body)) bub.append(liveLocEl(m));
       else if (m.body && (m.kind || 'text') === 'text' && /^📺 watch:/.test(m.body)) bub.append(watchCard(m));
@@ -2213,6 +2245,7 @@ function msgMenu(m) {
   const mine = m.sender_id === me.id, myR = (reacts.get(m.id) || []).find(r => r.user_id === me.id);
   sheet((s, close) => s.append(
     el('div', { class: 'react-bar' }, REACTS.map(e => el('button', { class: myR && myR.emoji === e ? 'on' : '', onclick: () => { close(); toggleReact(m, e); } }, e))),
+    el('div', { class: 'react-bar prem' + (isPremium() ? '' : ' lock') }, PREM_REACTS.map(e => el('button', { class: myR && myR.emoji === e ? 'on' : '', onclick: () => { if (!isPremium()) { premFx(e, true); setTimeout(() => toast('✦ Премиум-реакции — в Viks Premium'), 500); return; } close(); toggleReact(m, e); } }, animEmoji(e)))),
     el('div', { class: 'menu' },
     el('button', { onclick: () => { close(); setReply(m); } }, '↩️ Ответить'),
     el('button', { onclick: () => { close(); setTimeout(() => forwardPicker(m), 30); } }, '↪️ Переслать'),
@@ -2242,10 +2275,10 @@ async function openProfile(uid, fromEl, view) {
   if (!p) return; profiles.set(p.id, p);
   sheet((s, close) => {
     const dc = dmChat(uid);
-    s.append(el('div', { class: 'cover', style: p.cover_url ? `background-image:url(${p.cover_url})` : `background:linear-gradient(135deg,${p.name_color || 'var(--accent)'},var(--accent3))` }),
+    s.append(coverVid(p, el('div', { class: 'cover', style: p.cover_url ? `background-image:url(${p.cover_url})` : `background:linear-gradient(135deg,${p.name_color || 'var(--accent)'},var(--accent3))` })),
       el('div', { class: 'prof-head' },
       el('div', { style: 'cursor:zoom-in', onclick: () => p.avatar_url && viewImage(p.avatar_url) }, avatar(p.display_name, p.avatar_url, 110)),
-      el('div', { class: 'nm', style: p.name_color ? 'color:' + p.name_color : '' }, p.display_name, decor(p)), aliases.has(p.id) ? el('div', { class: 'real-name' }, 'на самом деле: ' + p._real) : null, el('div', { class: 'un' }, '@' + p.username + ' · ' + lastSeenText(p)),
+      el('div', { class: 'nm', style: p.name_color ? 'color:' + p.name_color : '' }, ngn(p, p.display_name), decor(p)), aliases.has(p.id) ? el('div', { class: 'real-name' }, 'на самом деле: ' + p._real) : null, el('div', { class: 'un' }, '@' + p.username + ' · ' + lastSeenText(p)),
       p.status ? el('div', { class: 'pstatus' }, p.status) : null,
       p.bday ? el('div', { class: 'pstatus' }, (isBday(p) ? '🎉 Сегодня день рождения!' : '🎂 ' + bdayText(p.bday))) : null,
       p.bio ? el('div', { class: 'bio' }, p.bio) : null),
@@ -2291,7 +2324,7 @@ function openMyProfile(nudge = false) {
       if (!avatarUrl) { toast('Сначала поставь обычную аватарку, она будет обложкой видео'); return; }
       const fs = await pickFiles('video/*', false), f = fs && fs[0]; if (!f) return;
       if (f.size > 8 * 1024 * 1024) { toast('Видео больше 8 МБ, выбери покороче'); return; }
-      const d = await videoDuration(f); if (d > 6.5) { toast('Нужно видео до 6 секунд'); return; }
+      const d = await videoDuration(f), lim = isPremium() ? 15.5 : 6.5; if (d > lim) { toast('Нужно видео до ' + Math.floor(lim) + ' секунд' + (isPremium() ? '' : ' · с ✦ Premium до 15')); return; }
       try { toast('Загружаю…'); avVideo = await upload('media', f, EXT[f.type] || 'mp4', f.type || 'video/mp4'); vidBtn.replaceChildren(...peRow('🎞', '#f59e0b26', 'Живая аватарка', 'убрать ✕')); toast('Готово, жми «Сохранить»'); } catch (e) { toast('Не загрузилось: ' + errText(e)); }
     } }, ...(avVideo ? peRow('🎞', '#f59e0b26', 'Живая аватарка', 'убрать ✕') : peRow('🎞', '#f59e0b26', 'Живая аватарка', 'до 6 сек')));
     let musicUrl = me.music_url || null, musicTitle = me.music_title || '';
@@ -2436,7 +2469,7 @@ async function openGroupInfo(c) {
 
 
 /* ================= SETTINGS & UPDATES ================= */
-const APP_VERSION = '2.15.0';
+const APP_VERSION = '2.16.0';
 const APP_THEMES = {
   neon: { name: 'Неон', a: '#00e5ff', a2: '#7df3ff', a3: '#ff2bd6', mine: '#7a1fd6', bg: '#07060f', panel: '#0f0d1d', panel2: '#171433', line: '#251f48', theirs: '#16132c', wall: 'neon' },
   br: { name: 'Рубин', a: '#ff2d3d', a2: '#ff7a85', a3: '#ff8a00', mine: '#b3101c', bg: '#0b0a0b', panel: '#141214', panel2: '#1d1a1c', line: '#2b2629', theirs: '#1c1a1b', wall: 'rain' },
@@ -2446,6 +2479,9 @@ const APP_THEMES = {
   aurora: { name: 'Северное', a: '#34d399', a2: '#a7f3d0', a3: '#818cf8', mine: '#0f766e', bg: '#040a14', panel: '#0a1324', panel2: '#0f1b30', line: '#1a2945', theirs: '#0f1a2c', wall: 'aurora' },
   space: { name: 'Космос', a: '#8b5cf6', a2: '#c4b5fd', a3: '#38bdf8', mine: '#5b32d6', bg: '#05040d', panel: '#0e0c1c', panel2: '#151229', line: '#221d40', theirs: '#14112a', wall: 'stars' },
   winter: { name: 'Зима', a: '#7dd3fc', a2: '#e0f2fe', a3: '#a5b4fc', mine: '#2b6cb0', bg: '#081120', panel: '#0e1a2e', panel2: '#14223a', line: '#20304f', theirs: '#13203a', wall: 'snow' },
+  gold: { name: 'Золото', prem: 1, a: '#f5b301', a2: '#ffe08a', a3: '#ff9f0a', mine: '#a86b00', bg: '#0c0904', panel: '#16110a', panel2: '#1f180d', line: '#3a2c14', theirs: '#1c160c', wall: 'fireflies' },
+  galaxy: { name: 'Галактика', prem: 1, a: '#e879f9', a2: '#f5d0fe', a3: '#818cf8', mine: '#9d23b5', bg: '#07030f', panel: '#120a20', panel2: '#1a0f2e', line: '#2e1b4d', theirs: '#170d29', wall: 'stars' },
+  emerald: { name: 'Изумруд', prem: 1, a: '#10f0a0', a2: '#9dfbd6', a3: '#22d3ee', mine: '#06845a', bg: '#03100b', panel: '#081a13', panel2: '#0c241b', line: '#14392b', theirs: '#0b2018', wall: 'aurora' },
 };
 const THEMES = {
   violet:  { name: 'Фиолетовая', a: '#7c5cff', a2: '#9b84ff', a3: '#5b8cff', mine: '#5b3fe0' },
@@ -2680,7 +2716,7 @@ $('#setBtn').onclick = () => switchTab('Settings');
 let rec = null, playing = null, storiesT = null;
 const mediaNodes = new Map();
 const fmtDur = s => { s = Math.max(0, Math.round(s || 0)); return Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0'); };
-const msgLabel = m => (m.kind || 'text') === 'text' && /^🎵 listen:/.test(m.body || '') ? '🎵 ' + (m.body.split('|')[1] || 'Трек') : (m.kind || 'text') === 'text' && /^📺 watch:/.test(m.body || '') ? '📺 Совместный просмотр' : m.kind === 'sea' ? '🚢 Морской бой' : m.kind === 'rps' ? '✊ Камень-ножницы-бумага' : (m.kind || 'text') === 'text' && m.body && /^e2e:/.test(m.body) ? '🔐 Зашифрованное сообщение' : (m.kind || 'text') === 'text' && m.body && /^🛰 live:/.test(m.body) ? '🛰 Делится местом' : (m.kind || 'text') === 'text' && m.body && /^📍 geo:/.test(m.body) ? '📍 Геолокация' : m.kind === 'voice' ? '🎤 Голосовое' : m.kind === 'circle' ? '⭕ Кружок' : m.kind === 'video' ? '🎬 ' + (m.body || 'Видео') : m.kind === 'file' ? '📎 ' + (m.file_name || 'Файл') : m.kind === 'sticker' ? (m.body || 'Стикер') : m.kind === 'call' ? '📞 ' + (m.body || 'Звонок') : m.kind === 'poll' ? '📊 ' + (m.body || 'Опрос') : m.kind === 'game' ? (m.body || '🎲') + ' Игра' : m.kind === 'ttt' ? '❌⭕ Крестики-нолики' : m.kind === 'system' ? '⏱ ' + (m.body || '') : m.image_url ? '📷 ' + (m.body || 'Фото') : (m.body || '');
+const msgLabel = m => (m.kind || 'text') === 'text' && /^✦gift:\d+$/.test(m.body || '') ? '🎁 Viks Premium в подарок' : (m.kind || 'text') === 'text' && /^🎵 listen:/.test(m.body || '') ? '🎵 ' + (m.body.split('|')[1] || 'Трек') : (m.kind || 'text') === 'text' && /^📺 watch:/.test(m.body || '') ? '📺 Совместный просмотр' : m.kind === 'sea' ? '🚢 Морской бой' : m.kind === 'rps' ? '✊ Камень-ножницы-бумага' : (m.kind || 'text') === 'text' && m.body && /^e2e:/.test(m.body) ? '🔐 Зашифрованное сообщение' : (m.kind || 'text') === 'text' && m.body && /^🛰 live:/.test(m.body) ? '🛰 Делится местом' : (m.kind || 'text') === 'text' && m.body && /^📍 geo:/.test(m.body) ? '📍 Геолокация' : m.kind === 'voice' ? '🎤 Голосовое' : m.kind === 'circle' ? '⭕ Кружок' : m.kind === 'video' ? '🎬 ' + (m.body || 'Видео') : m.kind === 'file' ? '📎 ' + (m.file_name || 'Файл') : m.kind === 'sticker' ? (m.body || 'Стикер') : m.kind === 'call' ? '📞 ' + (m.body || 'Звонок') : m.kind === 'poll' ? '📊 ' + (m.body || 'Опрос') : m.kind === 'game' ? (m.body || '🎲') + ' Игра' : m.kind === 'ttt' ? '❌⭕ Крестики-нолики' : m.kind === 'system' ? '⏱ ' + (m.body || '') : m.image_url ? '📷 ' + (m.body || 'Фото') : (m.body || '');
 const EXT = { 'audio/webm': 'webm', 'audio/mp4': 'm4a', 'audio/ogg': 'ogg', 'audio/mpeg': 'mp3', 'video/webm': 'webm', 'video/mp4': 'mp4', 'video/quicktime': 'mov', 'image/jpeg': 'jpg' };
 function nameColor(id) { let h = 0; for (const ch of String(id)) h = (h * 31 + ch.charCodeAt(0)) >>> 0; return ['#ff8a80', '#ffb74d', '#ffd54f', '#81c784', '#4dd0e1', '#82a8ff', '#b39dff', '#f48fb1'][h % 8]; }
 function syncComposer() {
@@ -3065,6 +3101,7 @@ async function loadReacts(ids) {
 }
 async function onReact(r) {
   if (!r || !current || r.chat_id !== current.chat_id) return;
+  if (r.emoji && PREM_REACTS.includes(r.emoji) && r.user_id !== me.id && !document.hidden) setTimeout(() => premFx(r.emoji, true), 200);
   await loadReacts([r.message_id]);
   if (current && r.chat_id === current.chat_id) renderMsgs(false);
 }
@@ -3084,13 +3121,13 @@ async function toggleReact(m, emoji) {
   const remove = had && had.emoji === emoji;
   if (!remove) list.push({ message_id: m.id, user_id: me.id, emoji });
   reacts.set(m.id, list); renderMsgs(false);
-  if (!remove) { requestAnimationFrame(() => burstAt(m.id, emoji)); fullBurst(emoji); hap([10, 30, 10]); }
+  if (!remove) { requestAnimationFrame(() => burstAt(m.id, emoji)); if (PREM_REACTS.includes(emoji)) premFx(emoji, true); else fullBurst(emoji); hap([10, 30, 10]); }
   if (settings.vibro) try { navigator.vibrate && navigator.vibrate(12); } catch {}
   const q = remove
     ? sb.from('message_reactions').delete().eq('message_id', m.id).eq('user_id', me.id)
     : sb.from('message_reactions').upsert({ message_id: m.id, chat_id: m.chat_id, user_id: me.id, emoji }, { onConflict: 'message_id,user_id' });
   const { error } = await q;
-  if (error) { toast('Реакция не встала'); await loadReacts([m.id]); renderMsgs(false); }
+  if (error) { toast(/premium_only/.test(error.message || '') ? '✦ Только для Viks Premium' : 'Реакция не встала'); await loadReacts([m.id]); renderMsgs(false); }
 }
 function quickHeart(m, bub) {
   if (typeof m.id !== 'number') return;
@@ -3447,6 +3484,7 @@ function isJumbo(t) {
 }
 const emojiCode = e => [...e].map(c => c.codePointAt(0).toString(16)).join('_');
 function animEmoji(e, url) {
+  if (url && /\.(mp4|webm|mov)(\?|#|$)/i.test(url)) { const v = el('video', { class: 'ae own', src: url, autoplay: '', loop: '', muted: '', playsinline: '' }); v.muted = true; v.playsInline = true; return v; }
   const code = emojiCode(e || ''), alt = code.replace(/_fe0f/g, '');
   const img = el('img', { class: 'ae', alt: e || '', loading: 'lazy', src: url || `https://fonts.gstatic.com/s/e/notoemoji/latest/${code}/512.gif` });
   let tried = false;
@@ -3475,7 +3513,8 @@ function openStickers() {
       if (tab === 'emoji') { for (const e of STICKERS) g.append(el('button', { title: e, onclick: () => { close(); sendSticker(e); } }, animEmoji(e))); return; }
       g.append(el('button', { class: 'stk-add', title: 'Сделать стикер из фото', onclick: async () => { const b = await makeSticker(); if (b) { try { const url = await upload('media', b, 'png', 'image/png'); const { error } = await sb.from('user_stickers').insert({ url }); if (error) throw error; toast('Стикер готов 🔥'); draw(); } catch (e) { toast('Не вышло: ' + errText(e)); } } } }, '+'));
       const { data } = await sb.from('user_stickers').select('*').order('created_at', { ascending: false });
-      for (const st of data || []) g.append(longPress(el('button', { onclick: () => { close(); sendSticker('🖼', st.url); } }, el('img', { src: st.url, class: 'own', alt: '' })), () => {
+      g.append(el('button', { class: 'stk-add', title: 'Видео-стикер ✦', onclick: async () => { if (!isPremium()) { toast('✦ Видео-стикеры — в Viks Premium'); close(); setTimeout(premiumPage, 30); return; } const f = await pickFile('video/*'); if (!f) return; const d = await videoDuration(f); if (d > 4.5) { toast('Нужно видео до 4 секунд'); return; } if (f.size > 8e6) { toast('Видео больше 8 МБ'); return; } try { toast('Загружаю…'); const url = await upload('media', f, /webm/.test(f.type) ? 'webm' : 'mp4', f.type || 'video/mp4'); const { error } = await sb.from('user_stickers').insert({ url }); if (error) throw error; toast('Видео-стикер готов 🔥'); draw(); } catch (e) { toast('Не вышло: ' + errText(e)); } } }, '🎞'));
+      for (const st of data || []) g.append(longPress(el('button', { onclick: () => { close(); sendSticker('🖼', st.url); } }, /\.(mp4|webm|mov)(\?|$)/i.test(st.url) ? animEmoji('🖼', st.url) : el('img', { src: st.url, class: 'own', alt: '' })), () => {
         sheet((s2, c2) => s2.append(el('h3', {}, 'Стикер'), el('img', { src: st.url, style: 'width:140px;border-radius:18px;display:block;margin:0 auto 14px' }),
           el('button', { class: 'btn danger', onclick: async () => { await sb.from('user_stickers').delete().eq('id', st.id); c2(); draw(); toast('Стикер удалён'); } }, 'Удалить из моих')));
       }));
@@ -3870,7 +3909,7 @@ async function startLive() {
   .on('presence', { event: 'sync' }, () => { const n = Object.keys(ch.presenceState()).filter(k => k !== me.id).length; ui.eye.textContent = '👁 ' + n; })
   .subscribe(st => { if (st === 'SUBSCRIBED') ch.track({ host: true }); });
   liveRecStart(myLive);
-  const sendCm = () => { const t = ui.inp.value.trim(); if (!t) return; ui.inp.value = ''; const msg = { name: me.display_name, text: t, color: me.name_color }; ch.send({ type: 'broadcast', event: 'cm', payload: msg }); ui.addCm(msg.name, msg.text, msg.color); };
+  const sendCm = () => { const t = ui.inp.value.trim(); if (!t) return; ui.inp.value = ''; const msg = { name: me.display_name + (isPremium() ? ' ✦' : ''), text: t, color: me.name_color }; ch.send({ type: 'broadcast', event: 'cm', payload: msg }); ui.addCm(msg.name, msg.text, msg.color); };
   ui.inp.onkeydown = e => { if (e.key === 'Enter') sendCm(); };
   ui.heartBtn.onclick = () => { ui.addHeart(); ch.send({ type: 'broadcast', event: 'ht', payload: {} }); };
   myLive.ping = setInterval(() => sb.from('lives').update({ last_ping: new Date().toISOString() }).eq('id', row.id).then(() => {}), 25000);
@@ -3962,7 +4001,7 @@ async function watchLive(lv) {
   .on('presence', { event: 'sync' }, () => { const n = Object.keys(ch.presenceState()).filter(k => k !== lv.user_id).length; ui.eye.textContent = '👁 ' + n; })
   .subscribe(st => { if (st === 'SUBSCRIBED') { ch.track({ viewer: true }); sendHost({ t: 'join' }); } });
   setTimeout(() => { if (watching && watching.lv.id === lv.id && !ui.vid.srcObject) ui.center.textContent = 'Не получается подключиться. Возможно, эфир уже закончился'; }, 15000);
-  const sendCm = () => { const t = ui.inp.value.trim(); if (!t) return; ui.inp.value = ''; const msg = { name: me.display_name, text: t, color: me.name_color }; ch.send({ type: 'broadcast', event: 'cm', payload: msg }); ui.addCm(msg.name, msg.text, msg.color); };
+  const sendCm = () => { const t = ui.inp.value.trim(); if (!t) return; ui.inp.value = ''; const msg = { name: me.display_name + (isPremium() ? ' ✦' : ''), text: t, color: me.name_color }; ch.send({ type: 'broadcast', event: 'cm', payload: msg }); ui.addCm(msg.name, msg.text, msg.color); };
   ui.inp.onkeydown = e => { if (e.key === 'Enter') sendCm(); };
   ui.heartBtn.onclick = () => { ui.addHeart(); ch.send({ type: 'broadcast', event: 'ht', payload: {} }); };
   if (ui.giftBtn) ui.giftBtn.onclick = () => giftPanel(ui, g => ch.send({ type: 'broadcast', event: 'gift', payload: g }));
@@ -4017,7 +4056,7 @@ async function drawContacts(q = '') {
   const mine = ids.map(id => profiles.get(id)).filter(p => p && match(p) && !myBlocks.has(p.id) && !isBotId(p.id))
     .sort((a, b) => (a.display_name || '').localeCompare(b.display_name || '', 'ru'));
   const row = p => el('div', { class: 'row', onclick: () => openProfile(p.id) }, avatar(p.display_name, p.avatar_url, 48, isOnline(p)),
-    el('div', { class: 'meta' }, el('div', { class: 'name', style: p.name_color ? 'color:' + p.name_color : '' }, p.display_name, decor(p)), el('div', { class: 'sub' }, p.status || ('@' + p.username + ' · ' + lastSeenText(p)))),
+    el('div', { class: 'meta' }, el('div', { class: 'name', style: p.name_color ? 'color:' + p.name_color : '' }, ngn(p, p.display_name), decor(p)), el('div', { class: 'sub' }, p.status || ('@' + p.username + ' · ' + lastSeenText(p)))),
     el('button', { class: 'icon-btn', html: ICON.phone, title: 'Позвонить', onclick: e => { e.stopPropagation(); startCall(p.id); } }));
   res.innerHTML = ''; $('.az')?.remove();
   const on = mine.filter(isOnline);
@@ -4599,12 +4638,12 @@ function presetSheet() {
 function decor(p) {
   if (!p) return null;
   const f = document.createDocumentFragment();
-  if (p.emoji_status) f.append(el('span', { class: 'estat' }, p.emoji_status));
+  if (p.emoji_status) f.append(el('span', { class: 'estat' }, isPremium(p) ? animEmoji(p.emoji_status) : p.emoji_status));
   const b = p.badges || [];
   if (b.includes('verified')) f.append(el('span', { class: 'badge-v', title: 'Подтверждён', onclick: e => { e.stopPropagation(); toast('✅ Подтверждённый аккаунт'); } }, '✓'));
   if (b.includes('bot')) f.append(el('span', { class: 'badge-bot', title: 'ИИ-бот' }, 'ИИ'));
   if (b.includes('founder')) f.append(el('span', { class: 'badge-f', title: 'Основатель Viks', onclick: e => { e.stopPropagation(); toast('⭐ Основатель Viks'); } }, '⭐'));
-  else if (b.includes('premium')) f.append(el('span', { class: 'badge-p', title: 'Viks Premium', onclick: e => { e.stopPropagation(); premiumPage(); } }, '✦'));
+  else if (isPremium(p)) f.append(el('span', { class: 'badge-p', title: 'Viks Premium', onclick: e => { e.stopPropagation(); premiumPage(); } }, '✦'));
   return f.childNodes.length ? f : null;
 }
 function flyAvatar(fromEl, sheetEl) {
@@ -4743,7 +4782,7 @@ function renderSettingsRoot() {
   box.style.position = 'relative';
   box.append(el('div', { class: 'sp-hero', onclick: () => openMyProfile() },
       avatar(me.display_name, me.avatar_url, 104),
-      el('div', { class: 'nm', style: me.name_color ? 'color:' + me.name_color : '' }, me.display_name, decor(me)),
+      el('div', { class: 'nm', style: me.name_color ? 'color:' + me.name_color : '' }, ngn(me, me.display_name), decor(me)),
       el('div', { class: 'un' }, '@' + me.username),
       st ? el('div', { class: 'st' }, st) : null),
     el('div', { class: 'set-group' }, catRow('<span style="font-size:17px;color:#fff">✦</span>', 'linear-gradient(135deg,#f59e0b,#ec4899,#8b5cf6)', 'Viks Premium', isPremium() ? 'Активен ✅ · стикеры с эффектами' : 'Премиум-стикеры и фишки · скоро', premiumPage)),
@@ -5139,7 +5178,7 @@ function meQuick() {
       if (error) { toast('Не вышло'); return; } me = data; profiles.set(me.id, me); close(); renderMe(); toast(e ? 'Статус ' + e : 'Статус убран');
     } }, e || '✕')));
     s.classList.add('me-sheet');
-    s.append(el('div', { class: 'prof-head' }, avatar(me.display_name, me.avatar_url, 80), el('div', { class: 'nm' }, me.display_name, decor(me)), el('div', { class: 'un' }, greeting())),
+    s.append(el('div', { class: 'prof-head' }, avatar(me.display_name, me.avatar_url, 80), el('div', { class: 'nm' }, ngn(me, me.display_name), decor(me)), el('div', { class: 'un' }, greeting())),
       el('div', { class: 'set-title', style: 'text-align:center' }, 'Эмодзи-статус'), g,
       el('div', { class: 'menu' }, el('button', { onclick: () => { close(); setTimeout(() => openMyProfile(), 30); } }, '👤 Мой профиль'), el('button', { onclick: () => { close(); openSaved(); } }, '⭐ Избранное'), el('button', { onclick: () => { close(); switchTab('Settings'); } }, '⚙️ Настройки')));
   });
@@ -5263,7 +5302,7 @@ function postEl(pp) {
   const rxBar = reactBar(pp, () => card);
   const media = pp.media_url ? el('div', { class: 'media' }, pp.kind === 'video' ? el('video', { src: pp.media_url, controls: '', playsinline: '', preload: 'metadata' }) : el('img', { src: pp.media_url, alt: '', loading: 'lazy' })) : null;
   let lastTap = 0;
-  if (media) media.addEventListener('click', e => { const t = Date.now(); if (t - lastTap < 300) { media.append(el('div', { class: 'bigheart' }, '❤️')); setTimeout(() => media.querySelector('.bigheart')?.remove(), 900); if (!(feedRx.get(pp.id) || []).some(r => r.user_id === me.id && r.emoji === '❤️')) toggleReact(pp, '❤️', card); } lastTap = t; });
+  if (media) media.addEventListener('click', e => { const t = Date.now(); if (t - lastTap < 300) { media.append(el('div', { class: 'bigheart' }, '❤️')); setTimeout(() => media.querySelector('.bigheart')?.remove(), 900); if (!(feedRx.get(pp.id) || []).some(r => r.user_id === me.id && r.emoji === '❤️')) toggleFeedReact(pp, '❤️', card); } lastTap = t; });
   const card = el('div', { class: 'post' },
     el('div', { class: 'ph' }, el('div', { style: 'cursor:pointer', onclick: () => openProfile(pp.user_id) }, avatar(u.display_name, u.avatar_url, 40)), el('div', { class: 'tx' }, el('b', {}, u.display_name || '…', decor(u)), el('small', {}, ago(pp.created_at).replace(' назад', '') === 'только что' ? 'только что' : shortTime(pp.created_at))),
       pp.user_id === me.id ? el('button', { class: 'icon-btn', onclick: () => sheet((s, close) => s.append(el('div', { class: 'menu' }, el('button', { onclick: async () => { close(); const { error } = await sb.from('moments').update({ pinned: !pp.pinned }).eq('id', pp.id); if (error) { toast('Не вышло'); return; } pp.pinned = !pp.pinned; toast(pp.pinned ? '📌 Закреплено в профиле' : 'Откреплено'); } }, pp.pinned ? '📌 Открепить из профиля' : '📌 Закрепить в профиле'), el('button', { class: 'red', onclick: async () => { close(); await sb.from('moments').delete().eq('id', pp.id); card.remove(); toast('Пост удалён'); } }, '🗑 Удалить пост')))) }, '⋯') : null),
@@ -6236,13 +6275,15 @@ async function openWatch(id, m) {
 function appThemeRow(sw) {
   const row = el('div', { class: 'atrow' });
   for (const [k, t] of Object.entries(APP_THEMES)) {
-    const card = el('div', { class: 'atc' + (settings.appTheme === k ? ' on' : ''), onclick: () => {
+    const card = el('div', { class: 'atc' + (settings.appTheme === k ? ' on' : '') + (t.prem && !isPremium() ? ' lk' : ''), onclick: () => {
+      if (t.prem && !isPremium()) { toast('✦ Тема для Viks Premium'); premiumPage(); return; }
       settings.appTheme = k; settings.wall = t.wall; saveSettings(); askTilt();
       row.querySelectorAll('.atc').forEach(x => x.classList.toggle('on', x === card)); sw && sw.querySelectorAll('.swatch').forEach(x => x.classList.remove('on'));
       if (current) { applyChatTheme(current.chat_id); startLiveWall(); }
       toast('✨ Тема «' + t.name + '»');
     } }, el('div', { class: 'pv', style: `background:radial-gradient(ellipse at 20% 0%,${t.a}55,transparent 60%),radial-gradient(ellipse at 100% 100%,${t.a3}44,transparent 55%),${t.bg}` },
       el('i', { style: `top:22px;background:${t.theirs};border:1px solid ${t.line}` }), el('i', { class: 'm', style: `top:46px;background:linear-gradient(135deg,${t.a},${t.mine})` }), el('i', { style: `top:70px;width:40%;background:${t.theirs};border:1px solid ${t.line}` }), el('i', { class: 'm', style: `top:94px;width:52%;background:linear-gradient(135deg,${t.a},${t.mine})` })), t.name);
+    if (t.prem) card.append(el('span', { class: 'pm' }, '✦'));
     row.append(card);
   }
   return row;
@@ -6670,6 +6711,7 @@ function wheelDate(cur) {
 function hap(p) { if (settings.haptics === false) return; try { navigator.vibrate && navigator.vibrate(p); } catch {} }
 let uiCtx = null;
 function uiSound(kind) {
+  if (kind === 'recv' && isPremium() && settings.recvSound && settings.recvSound !== 'classic') { playRecvSound(settings.recvSound); return; }
   if (settings.uiSounds === false) return;
   try {
     uiCtx = uiCtx || new (window.AudioContext || window.webkitAudioContext)(); if (uiCtx.state === 'suspended') uiCtx.resume();
@@ -6781,7 +6823,7 @@ function iconPicker() {
 
 /* ===== 2.13 premium ===== */
 const PREMIUM = [['🤩', ['✨', '⭐', '🌟', '💫']], ['👑', ['💎', '✨', '⭐', '👑']], ['🔥', ['🔥', '💥', '✨']], ['💖', ['💖', '💕', '💗', '💘']], ['🦄', ['🌈', '✨', '💜', '🦄']], ['🐉', ['🔥', '✨', '🐉']], ['🎉', ['🎊', '🎉', '🥳']], ['💸', ['💸', '💵', '🤑']], ['🌈', ['🌈', '☁️', '✨']], ['💥', ['💥', '⚡', '✨']], ['🍾', ['🫧', '🥂', '✨']], ['🌹', ['🌹', '🥀', '💋']], ['😈', ['🔥', '😈', '💀']], ['🥶', ['❄️', '🧊', '💨']], ['🚀', ['⭐', '🌟', '💫']], ['💎', ['💎', '✨', '💠']], ['🍀', ['🍀', '✨', '🌿']], ['🥳', ['🎊', '🎈', '🎉']], ['😍', ['😍', '💕', '✨']], ['💀', ['💀', '👻', '⚡']]];
-function isPremium(p) { p = p || (me && (profiles.get(me.id) || me)); return !!(p && (p.badges || []).includes('premium')); }
+function isPremium(p) { p = p || (me && (profiles.get(me.id) || me)); return !!(p && ((p.badges || []).includes('premium') || (p.premium_until && new Date(p.premium_until) > new Date()))); }
 let lastPremFx = 0;
 function premFx(e, force) {
   if (Date.now() - lastPremFx < (force ? 400 : 1200) || (!force && matchMedia('(prefers-reduced-motion: reduce)').matches)) return; lastPremFx = Date.now();
@@ -6793,15 +6835,99 @@ function premFx(e, force) {
   for (let k = 0; k < 34; k++) { const a = Math.random() * Math.PI * 2, R = 140 + Math.random() * Math.max(innerWidth, innerHeight) * .5; const i = el('i', {}, P[k % P.length]); i.style.setProperty('--x', Math.cos(a) * R + 'px'); i.style.setProperty('--y', Math.sin(a) * R + 'px'); i.style.setProperty('--r', (Math.random() * 300 - 150) + 'deg'); i.style.setProperty('--s', (22 + Math.random() * 30) + 'px'); i.style.setProperty('--d', (120 + Math.random() * 500) + 'ms'); box.append(i); }
   document.body.append(box); hap([15, 40, 25]); setTimeout(() => box.remove(), 3000);
 }
+const PREM_REACTS = ['👑', '💎', '🚀', '🦄', '🤩'];
+const NG = [['aurora', 'Сияние'], ['gold', 'Золото'], ['fire', 'Огонь'], ['candy', 'Конфета'], ['ocean', 'Океан'], ['neon', 'Неон']];
+function ngn(p, txt) { return p && p.name_grad && isPremium(p) ? el('span', { class: 'ng ng-' + p.name_grad }, txt) : txt; }
+function coverVid(p, cov) { if (p && p.cover_video && isPremium(p)) { const v = el('video', { class: 'cvv', src: p.cover_video, autoplay: '', loop: '', muted: '', playsinline: '' }); v.muted = true; v.playsInline = true; cov.append(v); } return cov; }
+const RECV_SOUNDS = [['classic', 'Обычный'], ['drop', '💧 Капля'], ['bell', '🔔 Колокол'], ['chord', '🎹 Аккорд'], ['space', '🛸 Космос'], ['custom', '🎵 Свой']];
+function playRecvSound(k) {
+  try {
+    if (k === 'custom') { const d = localStorage.getItem('viks-recv-custom'); if (d) { const a = new Audio(d); a.volume = .8; a.play().catch(() => {}); } return; }
+    uiCtx = uiCtx || new (window.AudioContext || window.webkitAudioContext)(); if (uiCtx.state === 'suspended') uiCtx.resume();
+    const t = uiCtx.currentTime, tone = (f, st, dur, type = 'sine', vol = .07, f2) => { const o = uiCtx.createOscillator(), g = uiCtx.createGain(); o.type = type; o.frequency.setValueAtTime(f, t + st); if (f2) o.frequency.exponentialRampToValueAtTime(f2, t + st + dur); g.gain.setValueAtTime(.0001, t + st); g.gain.exponentialRampToValueAtTime(vol, t + st + .015); g.gain.exponentialRampToValueAtTime(.0001, t + st + dur); o.connect(g); g.connect(uiCtx.destination); o.start(t + st); o.stop(t + st + dur + .02); };
+    if (k === 'drop') { tone(1400, 0, .12, 'sine', .08, 500); tone(900, .1, .1, 'sine', .04, 400); }
+    else if (k === 'bell') { tone(1318, 0, .6, 'triangle', .06); tone(1760, 0, .45, 'sine', .03); }
+    else if (k === 'chord') { [523, 659, 784].forEach((f, i) => tone(f, i * .06, .4, 'triangle', .045)); }
+    else if (k === 'space') { tone(300, 0, .35, 'sawtooth', .025, 1200); tone(1200, .25, .25, 'sine', .04, 600); }
+  } catch {}
+}
+async function refreshMe() { const { data } = await sb.from('profiles').select('*').eq('id', me.id).single(); if (data) { me = data; profiles.set(me.id, me); } }
 function premiumPage() {
-  const on = isPremium();
-  sheet((s, close) => s.append(el('div', { class: 'prem-page' },
-    el('div', { class: 'hero' }, '✦'), el('h2', {}, 'Viks Premium'),
-    el('div', { class: 'stt ' + (on ? 'on' : 'off') }, on ? '✅ У тебя Premium' : 'Пока не активен'),
-    el('div', { class: 'demo' }, PREMIUM.slice(0, 5).map(([e]) => el('button', { onclick: () => premFx(e, true) }, animEmoji(e)))),
-    el('div', { class: 'hint', style: 'margin:0 0 8px' }, 'Тапни стикер — посмотри эффект 👆'),
-    [['✦', 'Премиум-стикеры', '20 живых стикеров с эффектом на весь экран у собеседника'], ['💎', 'Значок ✦ у имени', 'Все видят, что ты с Premium'], ['🚀', 'Новые фишки первым', 'Всё новое сначала у Premium'], ['💜', 'Поддержка Viks', 'Помогаешь проекту расти']].map(([e, t, d]) => el('div', { class: 'perk' }, el('div', { class: 'e' }, e), el('div', {}, el('b', {}, t), el('small', {}, d)))),
-    on ? el('button', { class: 'btn prem-buy', onclick: close }, '💜 Спасибо, что с нами') : el('button', { class: 'btn prem-buy', onclick: () => toast('Покупка Premium скоро появится 🔜') }, '✦ Купить Premium — скоро'))));
+  const on = isPremium(), until = me.premium_until && new Date(me.premium_until) > new Date() ? new Date(me.premium_until) : null, forever = (me.badges || []).includes('premium');
+  const founder = (me.badges || []).includes('founder');
+  sheet((s, close) => {
+    const body = el('div', { class: 'prem-page' },
+      el('div', { class: 'hero' }, '✦'), el('h2', {}, 'Viks Premium'),
+      el('div', { class: 'stt ' + (on ? 'on' : 'off') }, on ? (forever ? '✅ У тебя Premium навсегда' : '✅ Premium до ' + until.toLocaleDateString('ru-RU', { day: 'numeric', month: 'long' })) : 'Пока не активен'),
+      el('div', { class: 'demo' }, PREMIUM.slice(0, 5).map(([e]) => el('button', { onclick: () => premFx(e, true) }, animEmoji(e)))),
+      el('div', { class: 'hint', style: 'margin:0 0 8px' }, 'Тапни стикер — посмотри эффект 👆'),
+      [['✦', 'Премиум-стикеры и реакции', '20 стикеров и 👑 💎 🚀 🦄 🤩 реакции с салютом на весь экран'],
+       ['🌈', 'Переливающееся имя', '6 градиентов со свечением — видно во всех чатах'],
+       ['😎', 'Живой эмодзи-статус', 'Статус рядом с именем анимирован'],
+       ['🎞', 'Живая ава до 15 сек и видео-обложка', 'Обложка профиля из видео, ава длиннее'],
+       ['🎨', 'Эксклюзивные темы', 'Золото, Галактика, Изумруд'],
+       ['🎞', 'Видео-стикеры', 'Делай стикеры из коротких видео'],
+       ['🤖', 'Викс ИИ без тормозов', '100 вопросов в час и 50 картинок в день'],
+       ['🅰️', 'Голосовые в текст', 'Кнопка «Аа» под голосовым — ИИ расшифрует'],
+       ['🔔', 'Свой звук сообщений', '5 мелодий или свой файл (пока Viks открыт)'],
+       ['👻', 'Невидимка', 'Без «в сети» и без галочек «прочитано»'],
+       ['🎁', 'Премиум-подарки в эфирах', '💎 🚀 👑 🦄 🌟']].map(([e, t, d]) => el('div', { class: 'perk' }, el('div', { class: 'e' }, e), el('div', {}, el('b', {}, t), el('small', {}, d)))));
+    if (!on) {
+      body.append(el('div', { class: 'plans' }, [['1 месяц', '—', 'скоро'], ['3 месяца', '—', 'скоро'], ['Год', '—', 'выгоднее всего', 1]].map(([t, pr, sub, best]) => el('div', { class: 'plan' + (best ? ' best' : '') }, el('b', {}, t), el('div', { class: 'pr' }, pr), el('small', {}, sub)))));
+      if (!me.trial_used) body.append(el('button', { class: 'btn prem-buy', onclick: async ev => { const b = ev.currentTarget; b.disabled = true; const { error } = await sb.rpc('start_trial'); if (error) { toast(/trial_used/.test(error.message) ? 'Пробный период уже был' : 'Не вышло'); b.disabled = false; return; } await refreshMe(); close(); premFx('👑', true); toast('✦ Premium на 7 дней включён!'); setTimeout(premiumPage, 1600); renderMe?.(); } }, '✦ Попробовать 7 дней бесплатно'));
+      else body.append(el('button', { class: 'btn prem-buy', onclick: () => toast('Покупка Premium скоро появится 🔜') }, '✦ Купить Premium — скоро'));
+    } else {
+      const set = el('div', { class: 'pset' });
+      const ngRow = el('div', { class: 'ngp' });
+      const drawNg = () => { ngRow.innerHTML = ''; [[null, 'Без'], ...NG].forEach(([k, n]) => ngRow.append(el('button', { class: (me.name_grad || null) === k ? 'on' : '', onclick: async () => { const { data, error } = await sb.from('profiles').update({ name_grad: k }).eq('id', me.id).select().single(); if (error) { toast('Не вышло'); return; } me = data; profiles.set(me.id, me); drawNg(); hap(8); renderMe?.(); } }, k ? el('span', { class: 'ng ng-' + k }, n) : n))); };
+      drawNg();
+      const sndRow = el('div', { class: 'snd' });
+      const drawSnd = () => { sndRow.innerHTML = ''; RECV_SOUNDS.forEach(([k, n]) => sndRow.append(el('button', { class: (settings.recvSound || 'classic') === k ? 'on' : '', onclick: async () => {
+        if (k === 'custom') { const f = await pickFile('audio/*'); if (!f) return; if (f.size > 400000) { toast('Нужен файл до 400 КБ (1–3 сек)'); return; } const d = await new Promise(r => { const fr = new FileReader(); fr.onload = () => r(fr.result); fr.readAsDataURL(f); }); try { localStorage.setItem('viks-recv-custom', d); } catch { toast('Файл слишком большой'); return; } }
+        settings.recvSound = k; saveSettings(); drawSnd(); playRecvSound(k);
+      } }, n))); };
+      drawSnd();
+      const ghost = el('button', { class: 'btn ghost', style: 'margin-top:6px', onclick: async () => { const { data, error } = await sb.from('profiles').update({ ghost: !me.ghost }).eq('id', me.id).select().single(); if (error) { toast('Не вышло'); return; } me = data; profiles.set(me.id, me); ghost.textContent = me.ghost ? '👻 Невидимка: ВКЛ' : '👻 Невидимка: выкл'; toast(me.ghost ? 'Тебя не видно в сети, галочки «прочитано» скрыты' : 'Невидимка выключена'); } }, me.ghost ? '👻 Невидимка: ВКЛ' : '👻 Невидимка: выкл');
+      const cov = el('button', { class: 'btn ghost', style: 'margin-top:6px', onclick: async () => {
+        if (me.cover_video) { const { data } = await sb.from('profiles').update({ cover_video: null }).eq('id', me.id).select().single(); if (data) { me = data; profiles.set(me.id, me); } cov.textContent = '🎞 Видео-обложка профиля'; toast('Видео-обложка убрана'); return; }
+        const f = await pickFile('video/*'); if (!f) return; const d = await videoDuration(f); if (d > 15.5) { toast('Нужно видео до 15 секунд'); return; } if (f.size > 20e6) { toast('Видео больше 20 МБ'); return; }
+        try { toast('Загружаю…'); const url = await upload('media', f, /webm/.test(f.type) ? 'webm' : 'mp4', f.type || 'video/mp4'); const { data, error } = await sb.from('profiles').update({ cover_video: url }).eq('id', me.id).select().single(); if (error) throw error; me = data; profiles.set(me.id, me); cov.textContent = '🎞 Убрать видео-обложку'; toast('Видео-обложка стоит 🔥'); } catch (e) { toast('Не вышло: ' + errText(e)); }
+      } }, me.cover_video ? '🎞 Убрать видео-обложку' : '🎞 Видео-обложка профиля');
+      set.append(el('h4', {}, 'Твоё имя'), ngRow, el('h4', { style: 'margin-top:14px' }, 'Звук новых сообщений'), sndRow, el('h4', { style: 'margin-top:14px' }, 'Ещё'), ghost, cov);
+      body.append(set);
+    }
+    body.append(el('button', { class: 'btn ghost', style: 'margin-top:10px', onclick: () => { if (!founder) { toast('Подарки Premium скоро появятся 🎁'); return; } close(); setTimeout(giftPremium, 30); } }, '🎁 Подарить Premium другу'));
+    s.append(body);
+  });
+}
+function giftPremium() {
+  const peers = [...new Set(chats.filter(c => !c.is_group && c.peer_id && !isBotId(c.peer_id)).map(c => c.peer_id))].map(id => profiles.get(id)).filter(Boolean);
+  let days = 30;
+  sheet((s, close) => {
+    const seg = el('div', { class: 'snd', style: 'justify-content:center;margin:0 0 10px' });
+    const drawSeg = () => { seg.innerHTML = ''; [[7, '7 дней'], [30, 'Месяц'], [365, 'Год']].forEach(([d, l]) => seg.append(el('button', { class: days === d ? 'on' : '', onclick: () => { days = d; drawSeg(); } }, l))); };
+    drawSeg();
+    s.append(el('h3', {}, '🎁 Подарить Premium'), seg, el('div', { class: 'plist', style: 'max-height:55vh;overflow:auto' }, peers.map(pr => el('div', { class: 'prow' }, avatar(pr.display_name, pr.avatar_url, 42), el('div', { class: 'tx' }, el('b', {}, pr.display_name), el('small', {}, isPremium(pr) ? '✦ уже Premium — продлится' : '@' + pr.username)),
+      el('button', { class: 'add', onclick: async ev => {
+        ev.currentTarget.disabled = true;
+        const { error } = await sb.rpc('gift_premium', { target: pr.id, days }); if (error) { toast('Не вышло: ' + errText(error)); ev.currentTarget.disabled = false; return; }
+        try { const { data: cid } = await sb.rpc('get_or_create_dm', { other: pr.id }); if (cid) await sb.from('messages').insert({ chat_id: cid, sender_id: me.id, body: '✦gift:' + days }); } catch {}
+        close(); premFx('🎁', true); toast('🎁 Подарил ' + pr.display_name.split(' ')[0] + ' Premium на ' + days + ' дн.');
+      } }, 'Подарить')))));
+  });
+}
+function sttEl(m) {
+  const box = el('div', {});
+  const show = t => { box.innerHTML = ''; box.append(el('div', { class: 'stt-t' }, t || '…')); };
+  if (m.transcript) { show(m.transcript); return box; }
+  box.append(el('button', { class: 'stt-b', onclick: async ev => {
+    ev.stopPropagation();
+    if (!isPremium()) { toast('✦ Расшифровка голосовых — в Viks Premium'); premiumPage(); return; }
+    const b = ev.currentTarget; b.textContent = '⏳ Расшифровываю…'; b.disabled = true;
+    try { const { data, error } = await sb.functions.invoke('stt', { body: { message_id: m.id } }); if (error || !data || data.error) throw new Error(data && data.error || 'err'); m.transcript = data.text; show(data.text || '(тишина)'); }
+    catch (e) { b.disabled = false; b.textContent = 'Аа'; toast(/premium/.test(e.message) ? '✦ Только для Premium' : 'Не получилось расшифровать'); }
+  } }, 'Аа'));
+  return box;
 }
 /* ===== 2.13 feed reactions ===== */
 const RX = ['❤️', '🔥', '😂', '😍', '👏', '😮', '😢', '💯'];
@@ -6810,22 +6936,22 @@ function reactBar(pp, getCard) {
   rxs.forEach(r => cnt[r.emoji] = (cnt[r.emoji] || 0) + 1);
   const bar = el('div', { style: 'display:flex;gap:6px;flex-wrap:wrap;align-items:center' });
   const ord = Object.entries(cnt).sort((a, b) => b[1] - a[1]);
-  if (!ord.length) bar.append(el('button', { class: 'rx', onclick: () => toggleReact(pp, '❤️', getCard()) }, el('span', {}, '🤍')));
-  ord.forEach(([e, n]) => bar.append(el('button', { class: 'rx' + (mine.has(e) ? ' on' : ''), onclick: () => toggleReact(pp, e, getCard()) }, el('span', {}, e), String(n))));
+  if (!ord.length) bar.append(el('button', { class: 'rx', onclick: () => toggleFeedReact(pp, '❤️', getCard()) }, el('span', {}, '🤍')));
+  ord.forEach(([e, n]) => bar.append(el('button', { class: 'rx' + (mine.has(e) ? ' on' : ''), onclick: () => toggleFeedReact(pp, e, getCard()) }, el('span', {}, e), String(n))));
   bar.append(el('button', { class: 'rx-add', title: 'Реакция', onclick: ev => rxPicker(ev.currentTarget, pp, getCard) }, '😊'));
   return bar;
 }
 function rxPicker(anchor, pp, getCard) {
   document.querySelector('.rx-pick')?.remove();
   const mine = new Set((feedRx.get(pp.id) || []).filter(r => r.user_id === me.id).map(r => r.emoji));
-  const box = el('div', { class: 'rx-pick' }, el('small', {}, 'до 3 реакций · ' + mine.size + '/3'), RX.map(e => el('button', { class: mine.has(e) ? 'on' : '', onclick: () => { box.remove(); toggleReact(pp, e, getCard()); } }, e)));
+  const box = el('div', { class: 'rx-pick' }, el('small', {}, 'до 3 реакций · ' + mine.size + '/3'), RX.map(e => el('button', { class: mine.has(e) ? 'on' : '', onclick: () => { box.remove(); toggleFeedReact(pp, e, getCard()); } }, e)));
   document.body.append(box);
   const r = anchor.getBoundingClientRect(), w = box.offsetWidth;
   box.style.left = Math.max(8, Math.min(innerWidth - w - 8, r.left + r.width / 2 - w / 2)) + 'px';
   box.style.top = Math.max(30, r.top - box.offsetHeight - 10) + 'px';
   setTimeout(() => document.addEventListener('pointerdown', function h(ev) { if (!box.contains(ev.target)) { box.remove(); document.removeEventListener('pointerdown', h, true); } }, true), 0);
 }
-async function toggleReact(pp, e, card) {
+async function toggleFeedReact(pp, e, card) {
   const arr = feedRx.get(pp.id) || []; feedRx.set(pp.id, arr);
   const i = arr.findIndex(r => r.user_id === me.id && r.emoji === e), on = i < 0;
   if (on && arr.filter(r => r.user_id === me.id).length >= 3) { toast('Можно до 3 реакций на один пост'); hap(30); return; }
