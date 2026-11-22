@@ -1882,6 +1882,23 @@ body:has(.mfs) .sheet-bg{z-index:75}
 .gcard{display:flex;align-items:center;gap:12px;min-width:220px;cursor:pointer}.gcard .ic{width:54px;height:54px;border-radius:16px;background:linear-gradient(135deg,#f59e0b,#ec4899);display:grid;place-items:center;font-size:28px;flex:none}
 .gcard b{display:block;font-size:14.5px}.gcard small{opacity:.8;font-size:12.5px}
 .wall .lk{position:absolute;top:4px;right:4px;font-size:12px}
+
+/* ===== 2.26 premium+ ===== */
+.shop .x2{display:flex;align-items:center;gap:8px;padding:9px 12px;border-radius:14px;background:linear-gradient(135deg,#f59e0b26,#8b5cf626);font-size:13px;font-weight:800;margin-bottom:12px}
+.acc-pal{display:grid;grid-template-columns:repeat(8,1fr);gap:8px;margin:8px 0}
+.acc-pal button{aspect-ratio:1;border-radius:50%;border:3px solid transparent}.acc-pal button.on{border-color:#fff}
+.ai-out{white-space:pre-wrap;line-height:1.5;font-size:14.5px;background:#ffffff0b;border-radius:16px;padding:14px;margin-bottom:12px}
+.ai-sug{display:block;width:100%;text-align:left;padding:12px 14px;border-radius:16px;background:#ffffff0d;margin-bottom:8px;font-size:14.5px;line-height:1.4}
+.tr-t{margin-top:6px;padding-top:6px;border-top:1px solid #ffffff22;font-size:.95em;opacity:.92}.tr-t small{display:block;opacity:.6;font-size:11px;margin-bottom:2px}
+.pst{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:6px 0 12px}.pst div{background:#ffffff0d;border-radius:16px;padding:12px;text-align:center}.pst b{display:block;font-size:24px;font-weight:900}.pst small{color:var(--muted);font-size:12px}
+.pchart{display:flex;align-items:flex-end;gap:8px;height:110px;padding:8px 4px 0;margin-bottom:12px}.pchart div{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;height:100%;justify-content:flex-end}.pchart i{width:100%;border-radius:8px 8px 4px 4px;background:linear-gradient(var(--accent2),var(--accent));min-height:3px}.pchart small{font-size:10.5px;color:var(--muted)}
+.pg-ov{position:fixed;inset:0;z-index:96;background:radial-gradient(circle at 50% 45%,#4c1d95ee,#05030cf5 70%);display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;text-align:center;padding:24px;animation:fade .3s}
+.pg-ov .bx{font-size:120px;cursor:pointer;animation:chShake .14s linear infinite}
+.pg-ov .bx.open{animation:pgOpen .7s cubic-bezier(.2,1.6,.4,1) forwards}
+@keyframes pgOpen{0%{transform:scale(1)}40%{transform:scale(1.5) rotate(-10deg)}100%{transform:scale(1.15)}}
+.pg-ov h2{font-size:26px;margin:16px 0 6px}.pg-ov p{opacity:.8;margin:0 0 20px}
+.es-grid button.lk{opacity:.45}
+.sheet .opts{display:flex;flex-wrap:wrap;gap:6px}.sheet .opts button{padding:8px 12px;border-radius:12px;background:#ffffff10;font-weight:700;font-size:13px}.sheet .opts button.on{background:var(--accent);color:#fff}
 </style>
 </head>
 <body>
@@ -2392,6 +2409,7 @@ async function openChat(chatId) {
     !c.is_group && !c.saved ? el('button', { class: 'icon-btn', html: ICON.video, title: 'Видеозвонок', onclick: () => startCall(c.peer_id, true) }) : null,
     !c.is_group && !c.saved ? el('button', { class: 'icon-btn', html: ICON.phone, title: 'Позвонить', onclick: () => startCall(c.peer_id) }) : null,
     c.is_group && !c.is_channel ? el('button', { class: 'icon-btn', html: ICON.phone, title: 'Групповой звонок', onclick: () => joinGroupCall(c) }) : null,
+    !c.saved && !isSecret(c) ? el('button', { class: 'icon-btn', title: 'ИИ', style: 'font-size:17px', onclick: () => aiChatMenu(c) }, '✨') : null,
     el('button', { class: 'icon-btn', html: ICON.search, title: 'Поиск', onclick: () => openSearch() })));
   applyChatTheme(chatId); setTimeout(startLiveWall, 0); setTimeout(() => decorHead(c), 0);
   if (!chatThemes[chatId] && settings.autoTint !== false) tintFromAvatar(c);
@@ -2459,6 +2477,7 @@ async function openChat(chatId) {
 let typingSentAt = 0;
 function sendTyping() {
   if (!typingCh || Date.now() - typingSentAt < 2000) return;
+  if (isPremium() && settings.ghostTyping) return;
   typingSentAt = Date.now();
   typingCh.send({ type: 'broadcast', event: 'typing', payload: { uid: me.id, name: me.display_name } });
   if (current && !current.saved) { const to = current.is_group ? curMembers.filter(id => id !== me.id).slice(0, 12) : [current.peer_id]; to.forEach(id => id && sendSig(id, { t: 'typing', chat: current.chat_id, name: me.display_name })); }
@@ -2538,7 +2557,7 @@ function renderMsgs(scroll) {
       else if (m.body && (m.kind || 'text') === 'text' && /^♫au:/.test(m.body)) bub.append(muCard(m.body, m));
       else if (m.body && (m.kind || 'text') === 'text' && /^♫pl:/.test(m.body)) bub.append(plCard(m.body));
       else if (m.body && (m.kind || 'text') === 'text' && /^(🛍gift:|🪙send:)/.test(m.body)) bub.append(vixCard(m));
-      else if (m.body && (m.kind || 'text') === 'text' && /^✦gift:\d+$/.test(m.body)) { bub.classList.add('giftb'); const dd = +m.body.split(':')[1]; bub.append(el('div', { class: 'gift-card', onclick: ev => { ev.stopPropagation(); premFx('👑', true); } }, animEmoji('🎁'), el('b', {}, 'Viks Premium в подарок!'), el('small', {}, 'на ' + dd + ' ' + plural(dd, 'день', 'дня', 'дней') + ' ✦'))); }
+      else if (m.body && (m.kind || 'text') === 'text' && /^✦gift:\d+$/.test(m.body)) { bub.classList.add('giftb'); const dd = +m.body.split(':')[1]; bub.append(el('div', { class: 'gift-card', onclick: ev => { ev.stopPropagation(); if (!mine) premGiftShow(dd); else premFx('👑', true); } }, animEmoji('🎁'), el('b', {}, 'Viks Premium в подарок!'), el('small', {}, 'на ' + dd + ' ' + plural(dd, 'день', 'дня', 'дней') + ' ✦'))); if (!mine && typeof m.id === 'number' && Date.now() - new Date(m.created_at) < 3 * 864e5) { try { if (!localStorage.getItem('viks-pg-' + m.id)) { localStorage.setItem('viks-pg-' + m.id, 1); setTimeout(() => premGiftShow(dd), 600); } } catch {} } }
       else if (m.body && (m.kind || 'text') === 'text' && GEO_RE.test(m.body)) bub.append(locEl(m.body));
       else if (m.body && (m.kind || 'text') === 'text' && /^🛰 live:/.test(m.body)) bub.append(liveLocEl(m));
       else if (m.body && (m.kind || 'text') === 'text' && /^📺 watch:/.test(m.body)) bub.append(watchCard(m));
@@ -2591,6 +2610,7 @@ async function markRead() {
 async function sendText(opt) {
   const effect = typeof opt === 'string' ? opt : null;
   const ta = $('#ta'); const body = ta.value.trim(); if (!body || !current) return;
+  { const lim = isPremium() ? 10000 : 4000; if (body.length > lim) { toast('Слишком длинно: ' + body.length + ' из ' + lim + ' символов' + (isPremium() ? '' : '. С ✦ Premium — до 10 000')); return; } }
   if (editingId) {
     const id = editingId, wasE = msgs.find(x => x.id === id)?.e2e; cancelEdit(); ta.value = ''; syncComposer();
     const { error } = await sb.from('messages').update({ body: wasE ? await e2eEnc(current.peer_id, body) || body : body, edited_at: new Date().toISOString() }).eq('id', id);
@@ -2652,6 +2672,7 @@ function msgMenu(m) {
     canPin() ? el('button', { onclick: () => { close(); pinMsg(current.pinned_message_id === m.id ? null : m.id); } }, current.pinned_message_id === m.id ? '📌 Открепить' : '📌 Закрепить') : null,
     m.body && (m.kind || 'text') === 'text' && !GEO_RE.test(m.body) ? el('button', { onclick: () => { close(); translateMsg(m); } }, translations.has(m.id) ? '🌐 Скрыть перевод' : '🌐 Перевести') : null,
     m.body ? el('button', { onclick: () => { close(); copy(m.body); } }, '📋 Копировать') : null,
+    m.body && !/^(e2e:|♫|🛍gift:|🪙send:|✦gift:)/.test(m.body) ? el('button', { onclick: () => { close(); aiTranslate(m); } }, '🌐 Перевести ✦') : null,
     mine && m.body && m.kind === 'text' && !m.image_url ? el('button', { onclick: () => { close(); startEdit(m); } }, '✏️ Редактировать') : null,
     !mine && typeof m.id === 'number' ? el('button', { onclick: () => { close(); setTimeout(() => reportSheet({ target_user: m.sender_id, message_id: m.id, chat_id: m.chat_id }), 30); } }, '🚩 Пожаловаться') : null,
     mine ? el('button', { class: 'red', onclick: async () => { close(); const { error } = await sb.from('messages').update({ deleted: true }).eq('id', m.id); if (error) toast('Не удалилось'); } }, '🗑 Удалить у всех') : null,
@@ -2665,6 +2686,7 @@ function viewImage(src) { const v = el('div', { class: 'viewer' }, el('img', { s
 
 /* ================= PROFILES ================= */
 async function openProfile(uid, fromEl, view) {
+  if (uid && me && uid !== me.id && typeof uid === 'string') sb.rpc('log_profile_view', { owner: uid }).then(() => {});
   if (!uid) return;
   if (uid === me.id && !view) return openMyProfile();
   const self = uid === me.id;
@@ -2869,7 +2891,7 @@ async function openGroupInfo(c) {
 
 
 /* ================= SETTINGS & UPDATES ================= */
-const APP_VERSION = '2.25.0';
+const APP_VERSION = '2.26.0';
 const TK1 = (() => { const t = document.createElement('template'); t.innerHTML = '<svg viewBox="0 0 16 11" width="15" height="11"><path d="M1.5 6l3 3 6.5-7.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>'; return t.content; })();
 const TK2 = (() => { const t = document.createElement('template'); t.innerHTML = '<svg viewBox="0 0 20 11" width="18" height="11"><path d="M1.5 6l3 3 6.5-7.5M8 8.5l.8.6 6.7-7.6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>'; return t.content; })();
 const APP_THEMES = {
@@ -2932,7 +2954,7 @@ const FONTS = {
   mono: { name: 'Моно', css: "'JetBrains Mono'", url: 'https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;800&display=swap' },
   hand: { name: 'Рукописный', css: "'Caveat'", url: 'https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&display=swap' },
 };
-const DEFAULTS = { showListening: true, xfade: true, eq: 'flat', chatPattern: true, uiSounds: true, haptics: true, bigFx: true, autoTint: true, mode: 'dark', wall: 'glow', bubble: 'round', theirs: 'glass', font: 'manrope', compact: false, sndIn: 'ding', sndOut: 'pop', theme: 'violet', size: 'm', sound: true, vibro: true, enterSend: false, notify: false };
+const DEFAULTS = { autoStt: true, ghostStories: false, ghostTyping: false, showListening: true, xfade: true, eq: 'flat', chatPattern: true, uiSounds: true, haptics: true, bigFx: true, autoTint: true, mode: 'dark', wall: 'glow', bubble: 'round', theirs: 'glass', font: 'manrope', compact: false, sndIn: 'ding', sndOut: 'pop', theme: 'violet', size: 'm', sound: true, vibro: true, enterSend: false, notify: false };
 let settings = { ...DEFAULTS };
 try { settings = { ...DEFAULTS, ...JSON.parse(localStorage.getItem('viks-settings') || '{}') }; } catch {}
 function saveSettings() { try { localStorage.setItem('viks-settings', JSON.stringify(settings)); } catch {} applySettings(); }
@@ -2946,6 +2968,7 @@ function applySettings() {
   ['--bg', '--panel', '--panel2', '--line', '--theirs'].forEach(k => r.removeProperty(k));
   const AT = APP_THEMES[settings.appTheme];
   if (AT) { r.setProperty('--accent', AT.a); r.setProperty('--accent2', AT.a2); r.setProperty('--accent3', AT.a3); r.setProperty('--mine', AT.mine); if (!light && settings.mode !== 'amoled') { r.setProperty('--bg', AT.bg); r.setProperty('--panel', AT.panel); r.setProperty('--panel2', AT.panel2); r.setProperty('--line', AT.line); r.setProperty('--theirs', AT.theirs); } }
+  if (settings.accentHex && me && isPremium()) { const hh = hexHue(settings.accentHex); r.setProperty('--accent', settings.accentHex); r.setProperty('--accent2', hsl(hh, .85, .75)); r.setProperty('--accent3', hsl(hh + 35, .75, .55)); r.setProperty('--mine', hsl(hh, .6, .42)); }
   document.querySelector('meta[name=theme-color]')?.setAttribute('content', light ? '#efedf8' : '#0b0a14');
   let wall = wallCss(settings.wall);
   if (settings.wall === 'photo') { try { const img = localStorage.getItem('viks-wall-img'); if (img) wall = `linear-gradient(#0b0a1466,#0b0a1499),url(${img}) center/cover`; } catch {} }
@@ -3456,6 +3479,7 @@ function openStoryViewer(groups, gi) {
       inp.onfocus = () => setPause(true); inp.onblur = () => setPause(false);
       inp.onkeydown = e => { if (e.key === 'Enter') go(); };
       bottom.append(el('div', { class: 'sv-quick' }, ['🔥', '😂', '❤️', '😍', '👏'].map(e => el('button', { onclick: async () => { const { data: cid } = await sb.rpc('get_or_create_dm', { other: g.uid }); if (!cid) return; await sb.from('messages').insert({ chat_id: cid, sender_id: me.id, body: e + ' на твою историю', image_url: s.kind === 'image' ? s.media_url : null }); toast(e + ' отправлено'); burstFrom(e); } }, e))), el('div', { class: 'sv-reply' }, inp, el('button', { class: 'send', html: ICON.send, onclick: go })));
+      if (!seenStories.has(s.id) && isPremium() && settings.ghostStories) seenStories.add(s.id);
       if (!seenStories.has(s.id)) { seenStories.add(s.id); sb.from('story_views').upsert({ story_id: s.id, viewer_id: me.id }, { onConflict: 'story_id,viewer_id', ignoreDuplicates: true }).then(() => {}); }
     }
   }
@@ -4596,6 +4620,9 @@ function drawFolderChips() {
   const on = box.querySelector('.fchip.on'); if (on) box.scrollTo({ left: on.offsetLeft - box.clientWidth / 2 + on.clientWidth / 2, behavior: 'smooth' });
 }
 async function memberUpd(c, patch, msg) {
+  const P = isPremium();
+  if (patch.pinned === true && !c.pinned && chats.filter(x => x.pinned).length >= (P ? 20 : 5)) { toast(P ? 'Максимум 20 закреплённых' : '📌 Без Premium можно закрепить 5 чатов. С ✦ Premium — 20'); if (!P) premiumPage(); return; }
+  if (patch.folder && !chats.some(x => x.folder === patch.folder) && new Set(chats.map(x => x.folder).filter(Boolean)).size >= (P ? 20 : 3)) { toast(P ? 'Максимум 20 папок' : '📁 Без Premium — 3 папки. С ✦ Premium — 20'); if (!P) premiumPage(); return; }
   const { error } = await sb.from('chat_members').update(patch).eq('chat_id', c.chat_id).eq('user_id', me.id);
   if (error) { toast('Не вышло'); return; }
   Object.assign(c, patch); await loadChats(); if (msg) toast(msg);
@@ -4648,7 +4675,7 @@ async function loadSched() {
 function schedListSheet() {
   sheet((s, close) => {
     s.append(el('h3', {}, '🕓 Запланированные'));
-    for (const m of schedList) s.append(el('div', { class: 'sres' }, el('small', {}, dayLabel(new Date(m.send_at)) + ' в ' + hm(new Date(m.send_at))), el('div', {}, m.body),
+    for (const m of schedList) s.append(el('div', { class: 'sres' }, el('small', {}, (m.repeat ? (m.repeat === 'daily' ? '🔁 каждый день · ' : '🔁 каждую неделю · ') : '') + dayLabel(new Date(m.send_at)) + ' в ' + hm(new Date(m.send_at))), el('div', {}, m.body),
       el('button', { style: 'color:var(--danger);font-weight:700;font-size:13px;margin-top:4px', onclick: async () => { await sb.from('scheduled_messages').delete().eq('id', m.id); close(); await loadSched(); toast('Отменено'); } }, '✕ Отменить')));
   });
 }
@@ -4657,16 +4684,18 @@ function scheduleSheet() {
   if (!body) { toast('Сначала напиши текст, потом зажми отправку'); return; }
   const pad = n => String(n).padStart(2, '0'), loc = d => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
   const at = (h, m, addDay) => { const d = new Date(); if (addDay) d.setDate(d.getDate() + 1); d.setHours(h, m, 0, 0); return d; };
+  let rep = null;
   const go = async d => {
     if (!d || d <= new Date(Date.now() + 30000)) { toast('Выбери время в будущем'); return; }
-    const { error } = await sb.from('scheduled_messages').insert({ chat_id: current.chat_id, body, send_at: d.toISOString() });
+    const { error } = await sb.from('scheduled_messages').insert({ chat_id: current.chat_id, body, send_at: d.toISOString(), ...(rep ? { repeat: rep } : {}) });
     if (error) { toast('Не вышло: ' + errText(error)); return; }
-    ta.value = ''; syncComposer(); loadSched(); toast('Уйдёт ' + dayLabel(d).toLowerCase() + ' в ' + hm(d) + ' 🕓');
+    ta.value = ''; syncComposer(); loadSched(); toast((rep ? '🔁 ' + (rep === 'daily' ? 'Каждый день' : 'Каждую неделю') + ', начиная ' : 'Уйдёт ') + dayLabel(d).toLowerCase() + ' в ' + hm(d) + ' 🕓');
   };
   sheet((s, close) => {
     const dt = el('input', { type: 'datetime-local', value: loc(new Date(Date.now() + 3600000)) });
     const tonight = at(21, 0);
-    s.append(el('h3', {}, '🕓 Отправить позже'), el('div', { class: 'menu' },
+    const rr = el('div', { class: 'opts', style: 'margin:0 0 10px' }); const drawR = () => { rr.innerHTML = ''; [[null, 'Один раз'], ['daily', '🔁 Каждый день'], ['weekly', '🔁 Каждую неделю']].forEach(([k, l]) => rr.append(el('button', { class: rep === k ? 'on' : '', onclick: () => { if (k && !isPremium()) { toast('🔁 Повтор — в ✦ Premium'); return; } rep = k; drawR(); } }, l + (k && !isPremium() ? ' ✦' : '')))); }; drawR();
+    s.append(el('h3', {}, '🕓 Отправить позже'), rr, el('div', { class: 'menu' },
       el('button', { onclick: () => { close(); go(new Date(Date.now() + 3600000)); } }, 'Через час'),
       tonight > new Date() ? el('button', { onclick: () => { close(); go(tonight); } }, 'Сегодня в 21:00') : null,
       el('button', { onclick: () => { close(); go(at(9, 0, true)); } }, 'Завтра в 9:00')),
@@ -5628,10 +5657,12 @@ function swipeWrap(row, c) {
 function meQuick() {
   sheet((s, close) => {
     const g = el('div', { class: 'es-grid' });
-    [null, '🎮', '🔥', '💤', '😎', '❤️', '💼', '🎧', '🚗', '⚡', '👑', '🌙', '☕', '🏀', '🎉', '🤫', '🤒', '✈️', '💜', '🍀'].forEach(e => g.append(el('button', { class: (me.emoji_status || null) === e ? 'on' : '', onclick: async () => {
+    [null, '🎮', '🔥', '💤', '😎', '❤️', '💼', '🎧', '🚗', '⚡', '👑', '🌙', '☕', '🏀', '🎉', '🤫', '🤒', '✈️', '💜', '🍀', ...PREM_ST].forEach(e => g.append(el('button', { class: ((me.emoji_status || null) === e ? 'on' : '') + (PREM_ST.includes(e) && !isPremium() ? ' lk' : ''), onclick: async () => {
+      if (PREM_ST.includes(e) && !isPremium()) { toast('✦ Этот статус — для Premium'); close(); premiumPage(); return; }
       const { data, error } = await sb.from('profiles').update({ emoji_status: e }).eq('id', me.id).select().single();
       if (error) { toast('Не вышло'); return; } me = data; profiles.set(me.id, me); close(); renderMe(); toast(e ? 'Статус ' + e : 'Статус убран');
     } }, e || '✕')));
+    if (isPremium()) { const ci = el('input', { placeholder: '✦ Или вставь любой свой эмодзи', maxlength: 8, style: 'width:100%;box-sizing:border-box;margin-top:10px;text-align:center;font-size:18px' }); ci.onchange = async () => { const e = [...(ci.value.trim().match(/\p{Extended_Pictographic}[\u{FE0F}\u{200D}\p{Extended_Pictographic}\u{1F3FB}-\u{1F3FF}]*/u) || [])][0]; if (!e) { toast('Нужен эмодзи'); return; } const { data, error } = await sb.from('profiles').update({ emoji_status: e }).eq('id', me.id).select().single(); if (error) { toast('Не вышло'); return; } me = data; profiles.set(me.id, me); close(); renderMe(); toast('Статус ' + e); }; g.after(ci); }
     s.classList.add('me-sheet');
     s.append(el('div', { class: 'prof-head' }, avatar(me.display_name, me.avatar_url, 80), el('div', { class: 'nm' }, ngn(me, me.display_name), decor(me)), el('div', { class: 'un' }, greeting())),
       el('div', { class: 'set-title', style: 'text-align:center' }, 'Эмодзи-статус'), g,
@@ -7331,11 +7362,20 @@ function premiumPage() {
        ['🅰️', 'Голосовые в текст', 'Кнопка «Аа» под голосовым — ИИ расшифрует'],
        ['🔔', 'Свой звук сообщений', '5 мелодий или свой файл (пока Viks открыт)'],
        ['👻', 'Невидимка', 'Без «в сети» и без галочек «прочитано»'],
-       ['🎁', 'Премиум-подарки в эфирах', '💎 🚀 👑 🦄 🌟']].map(([e, t, d]) => el('div', { class: 'perk' }, el('div', { class: 'e' }, e), el('div', {}, el('b', {}, t), el('small', {}, d)))));
+       ['🎁', 'Премиум-подарки в эфирах', '💎 🚀 👑 🦄 🌟'],
+       ['🪙', 'Виксы ×2', 'Бонус дня, общение, колесо и задания — в 2 раза больше, + второй спин'],
+       ['🎨', 'Свой цвет интерфейса', 'Любой акцент с палитры — весь Viks в твоём цвете'],
+       ['🧠', 'ИИ в каждом чате', 'Пересказ переписки, перевод сообщений и «подскажи ответ»'],
+       ['🕵️', 'Расширенный призрак', 'Смотри истории незаметно, без «печатает…», не попадай в гости профиля'],
+       ['📊', 'Статистика профиля', 'Кто заходил, просмотры историй, реакции и график активности'],
+       ['🔁', 'Повторяющиеся сообщения', 'Каждый день или каждую неделю в нужное время'],
+       ['📌', 'Больше закрепов и папок', 'До 20 вместо 5 закрепов и 3 папок'],
+       ['📝', 'Длинные сообщения', 'До 10 000 символов вместо 4 000'],
+       ['😎', '+30 эмодзи-статусов', 'Эксклюзивные статусы или любой свой эмодзи']].map(([e, t, d]) => el('div', { class: 'perk' }, el('div', { class: 'e' }, e), el('div', {}, el('b', {}, t), el('small', {}, d)))));
     if (!on) {
       body.append(el('div', { class: 'plans' }, [['1 месяц', '—', 'скоро'], ['3 месяца', '—', 'скоро'], ['Год', '—', 'выгоднее всего', 1]].map(([t, pr, sub, best]) => el('div', { class: 'plan' + (best ? ' best' : '') }, el('b', {}, t), el('div', { class: 'pr' }, pr), el('small', {}, sub)))));
       if (!me.trial_used) body.append(el('button', { class: 'btn prem-buy', onclick: async ev => { const b = ev.currentTarget; b.disabled = true; const { error } = await sb.rpc('start_trial'); if (error) { toast(/trial_used/.test(error.message) ? 'Пробный период уже был' : 'Не вышло'); b.disabled = false; return; } await refreshMe(); close(); premFx('👑', true); toast('✦ Premium на 7 дней включён!'); setTimeout(premiumPage, 1600); renderMe?.(); } }, '✦ Попробовать 7 дней бесплатно'));
-      else body.append(el('button', { class: 'btn prem-buy', onclick: () => toast('Покупка Premium скоро появится 🔜') }, '✦ Купить Premium — скоро'));
+      else body.append(el('button', { class: 'btn prem-buy', onclick: () => { close(); setTimeout(() => shopPage('premium'), 30); } }, '🪙 Купить Premium за виксы'));
     } else {
       const set = el('div', { class: 'pset' });
       const ngRow = el('div', { class: 'ngp' });
@@ -7353,11 +7393,17 @@ function premiumPage() {
         const f = await pickFile('video/*'); if (!f) return; const d = await videoDuration(f); if (d > 15.5) { toast('Нужно видео до 15 секунд'); return; } if (f.size > 20e6) { toast('Видео больше 20 МБ'); return; }
         try { toast('Загружаю…'); const url = await upload('media', f, /webm/.test(f.type) ? 'webm' : 'mp4', f.type || 'video/mp4'); const { data, error } = await sb.from('profiles').update({ cover_video: url }).eq('id', me.id).select().single(); if (error) throw error; me = data; profiles.set(me.id, me); cov.textContent = '🎞 Убрать видео-обложку'; toast('Видео-обложка стоит 🔥'); } catch (e) { toast('Не вышло: ' + errText(e)); }
       } }, me.cover_video ? '🎞 Убрать видео-обложку' : '🎞 Видео-обложка профиля');
-      set.append(el('h4', {}, 'Твоё имя'), ngRow, el('h4', { style: 'margin-top:14px' }, 'Звук новых сообщений'), sndRow, el('h4', { style: 'margin-top:14px' }, 'Ещё'), ghost, cov);
+      const accRow = el('div', { class: 'acc-pal' });
+      const drawAcc = () => { accRow.innerHTML = ''; [null, ...ACC_PAL].forEach(c => accRow.append(el('button', { class: (settings.accentHex || null) === c ? 'on' : '', style: c ? 'background:' + c : 'background:conic-gradient(#f43f5e,#f59e0b,#22c55e,#3b82f6,#a855f7,#f43f5e);font-size:12px', title: c || 'Как в теме', onclick: () => { settings.accentHex = c; saveSettings(); drawAcc(); } }, c ? '' : '✕'))); const ci = el('input', { type: 'color', value: settings.accentHex || '#7c5cff', style: 'width:100%;height:40px;border:none;background:none', oninput: e => { settings.accentHex = e.target.value; saveSettings(); } }); accRow.append(el('div', { style: 'grid-column:1/-1' }, ci)); };
+      drawAcc();
+      const tg = (k, t) => { const b = el('button', { class: 'btn ghost', style: 'margin-top:6px', onclick: () => { settings[k] = !settings[k]; saveSettings(); b.textContent = (settings[k] ? '✅ ' : '⬜ ') + t; } }, (settings[k] ? '✅ ' : '⬜ ') + t); return b; };
+      set.append(el('h4', {}, 'Твоё имя'), ngRow, el('h4', { style: 'margin-top:14px' }, '🎨 Свой цвет интерфейса'), accRow, el('h4', { style: 'margin-top:14px' }, 'Звук новых сообщений'), sndRow,
+        el('h4', { style: 'margin-top:14px' }, '🕵️ Призрак'), ghost, tg('ghostStories', 'Смотреть истории незаметно'), tg('ghostTyping', 'Не показывать «печатает…»'), tg('autoStt', 'Сразу расшифровывать голосовые в текст'),
+        el('h4', { style: 'margin-top:14px' }, 'Ещё'), el('button', { class: 'btn ghost', style: 'margin-top:6px', onclick: () => { close(); setTimeout(statsSheet, 30); } }, '📊 Статистика профиля'), cov);
       body.append(set);
     }
     body.append(el('button', { class: 'btn ghost', style: 'margin-top:10px', onclick: () => { close(); setTimeout(promoSheet, 30); } }, '🎟 Ввести промокод'));
-    body.append(el('button', { class: 'btn ghost', style: 'margin-top:10px', onclick: () => { if (!founder) { toast('Подарки Premium скоро появятся 🎁'); return; } close(); setTimeout(giftPremium, 30); } }, '🎁 Подарить Premium другу'));
+    body.append(el('button', { class: 'btn ghost', style: 'margin-top:10px', onclick: () => { if (!founder) { close(); setTimeout(() => shopPage('premium'), 30); toast('Нажми 🎁 на нужном сроке Premium'); return; } close(); setTimeout(giftPremium, 30); } }, '🎁 Подарить Premium другу'));
     s.append(body);
   });
 }
@@ -7377,10 +7423,12 @@ function giftPremium() {
       } }, 'Подарить')))));
   });
 }
+const sttAuto = new Set(); let sttQ = Promise.resolve();
 function sttEl(m) {
   const box = el('div', {});
   const show = t => { box.innerHTML = ''; box.append(el('div', { class: 'stt-t' }, t || '…')); };
   if (m.transcript) { show(m.transcript); return box; }
+  if (isPremium() && settings.autoStt !== false && typeof m.id === 'number' && !sttAuto.has(m.id) && Date.now() - new Date(m.created_at) < 7 * 864e5) { sttAuto.add(m.id); sttQ = sttQ.then(async () => { try { const { data } = await sb.functions.invoke('stt', { body: { message_id: m.id } }); if (data && data.text != null) { m.transcript = data.text; if (box.isConnected) show(data.text || '(тишина)'); } } catch {} }); box.append(el('div', { class: 'stt-t', style: 'opacity:.6' }, '⏳ расшифровываю…')); return box; }
   box.append(el('button', { class: 'stt-b', onclick: async ev => {
     ev.stopPropagation();
     if (!isPremium()) { toast('✦ Расшифровка голосовых — в Viks Premium'); premiumPage(); return; }
@@ -8524,7 +8572,7 @@ const vix = { bal: null, items: new Set(), st: null };
 const owns = k => vix.items.has(k);
 const VX = () => el('span', { class: 'vx-c' }, 'V');
 function frm(p, a) { if (p && p.frame && a) a.classList.add('fr', 'fr-' + p.frame); return a; }
-async function vixLoad() { try { const { data, error } = await sb.rpc('vix_state'); if (error || !data) return null; vix.st = data; vix.bal = data.balance; vix.items = new Set(data.items || []); return data; } catch { return null; } }
+async function vixLoad() { if (settings.accentHex) applySettings(); try { const { data, error } = await sb.rpc('vix_state'); if (error || !data) return null; vix.st = data; vix.bal = data.balance; vix.items = new Set(data.items || []); return data; } catch { return null; } }
 const SHOP_TABS = [['frame', '🖼 Рамки'], ['bubble', '💬 Пузыри'], ['fx', '✨ Эффекты'], ['nick', '🔤 Ник'], ['wall', '🌌 Обои'], ['theme', '🎨 Темы'], ['sticker', '✦ Стикеры'], ['premium', '👑 Premium'], ['mine', '🎒 Моё']];
 let shopItems = [];
 const tabOf = it => it.kind === 'font' || it.kind === 'perk' ? 'nick' : it.kind;
@@ -8538,11 +8586,11 @@ async function shopPage(tab0) {
     const draw = () => {
       clearInterval(dealT);
       const S = vix.st; box.innerHTML = '';
-      const actEarn = Math.min(Math.floor(S.msgs / 5), 20) - S.act_claimed, refEarn = (S.refs - S.ref_claimed) * 100;
+      const M = S.prem ? 2 : 1, actEarn = Math.min(Math.floor(S.msgs / 5), 20) * M - S.act_claimed, refEarn = (S.refs - S.ref_claimed) * 100;
       const claim = async (fn, okMsg) => { const { data, error } = await sb.rpc(fn); if (error) { toast(error.message); return; } vix.bal = data.balance; hap([10, 30, 10]); fullBurst('🪙'); toast(okMsg(data)); await vixLoad(); draw(); };
-      box.append(el('div', { class: 'bal' }, el('div', { class: 'n' }, VX(), String(vix.bal)), el('small', {}, 'виксы — валюта Viks. Копи и трать на крутые штуки')),
+      box.append(S.prem ? el('div', { class: 'x2' }, '✦ Premium: бонус дня, общение, колесо и задания — ×2, и второй бесплатный спин') : el('div', { class: 'x2', style: 'cursor:pointer', onclick: () => { tab = 'premium'; draw(); } }, '✦ С Premium все награды ×2 — глянь вкладку 👑'), el('div', { class: 'bal' }, el('div', { class: 'n' }, VX(), String(vix.bal)), el('small', {}, 'виксы — валюта Viks. Копи и трать на крутые штуки')),
         el('div', { class: 'earn' },
-          el('button', { class: S.can_daily ? 'go' : '', onclick: () => S.can_daily ? claim('vix_daily', d => '🎁 +' + d.got + ' виксов · день ' + d.streak + ' подряд') : toast('Завтра будет ещё! Серия: ' + S.streak + ' дн.') }, el('i', {}, '🎁'), 'Бонус дня', el('small', {}, S.can_daily ? 'забрать +' + (10 + Math.min(S.streak, 6) * 5) : '✅ серия ' + S.streak + ' дн.')),
+          el('button', { class: S.can_daily ? 'go' : '', onclick: () => S.can_daily ? claim('vix_daily', d => '🎁 +' + d.got + ' виксов · день ' + d.streak + ' подряд') : toast('Завтра будет ещё! Серия: ' + S.streak + ' дн.') }, el('i', {}, '🎁'), 'Бонус дня', el('small', {}, S.can_daily ? 'забрать +' + (10 + Math.min(S.streak, 6) * 5) * M : '✅ серия ' + S.streak + ' дн.')),
           el('button', { class: actEarn > 0 ? 'go' : '', onclick: () => actEarn > 0 ? claim('vix_activity', d => '💬 +' + d.got + ' за активность') : toast('1 викс за каждые 5 сообщений, до 20 в день') }, el('i', {}, '💬'), 'Общение', el('small', {}, actEarn > 0 ? 'забрать +' + actEarn : Math.min(S.msgs, 100) + '/100 сообщ.')),
           el('button', { class: refEarn > 0 ? 'go' : '', onclick: () => refEarn > 0 ? claim('vix_ref', d => '👥 +' + d.got + ' за друзей') : (close(), setTimeout(inviteFriends, 30)) }, el('i', {}, '👥'), 'Друзья', el('small', {}, refEarn > 0 ? 'забрать +' + refEarn : '+100 за друга'))),
         el('div', { class: 'feat' },
@@ -8601,7 +8649,7 @@ function shopCard(it, redraw) {
     if (error) { toast(errText(error)); btn.disabled = false; return; }
     vix.bal = data.balance; if (it.kind !== 'premium') vix.items.add(it.id); hap([15, 40, 15]); fullBurst(it.kind === 'premium' ? '👑' : '🛍');
     if (it.kind === 'premium' || it.kind === 'perk') { const { data: pr } = await sb.from('profiles').select('*').eq('id', me.id).single(); if (pr) { me = pr; profiles.set(me.id, me); } }
-    if (it.kind === 'premium') toast('👑 Premium продлён на 7 дней!');
+    if (it.kind === 'premium') { toast('👑 ' + it.title + ' — активирован!'); premGiftShow(it.id === 'prem_90' ? 90 : it.id === 'prem_30' ? 30 : 7, true); }
     else if (eq) { await sb.rpc('vix_equip', { kind: it.kind, item: it.id }); me[eq] = it.id; profiles.set(me.id, me); toast('🛍 Куплено и надето!'); if (current) renderMsgs(false); loadChats(); }
     else if (it.kind === 'perk') { toast('🌈 Куплено! Выбери цвет ника'); setTimeout(ngPick, 400); }
     else if (it.kind === 'fx') { toast('✨ Куплено! Ищи в меню «Отправить…»'); playEffect(k); }
@@ -8655,6 +8703,7 @@ function wheelSheet(redraw) {
     let rot = 0, busy = false;
     const res = el('div', { class: 'hint', style: 'text-align:center;min-height:20px;font-weight:700' });
     const btn = el('button', { class: 'btn prem-buy' }, vix.st.spin_free ? '🎡 Крутить бесплатно' : '🎡 Крутить за 30 виксов');
+    const after = async () => { await vixLoad(); btn.textContent = vix.st.spin_free ? '🎡 Ещё раз бесплатно (✦)' : '🎡 Ещё раз за 30 виксов'; };
     btn.onclick = async () => {
       if (busy) return; busy = true; btn.disabled = true; res.textContent = '';
       const { data, error } = await sb.rpc('vix_spin');
@@ -8663,9 +8712,10 @@ function wheelSheet(redraw) {
       rot = rot - (rot % 360) + 360 * 6 + target; wh.style.transform = 'rotate(' + rot + 'deg)'; hap(15);
       setTimeout(async () => {
         vix.bal = data.balance; await vixLoad();
+        if (data.x2 && data.got) toast('✦ Premium ×2');
         if (data.item) { fullBurst('🍀'); res.textContent = '🍀 ДЖЕКПОТ! Редкая рамка «Клевер» — уже в «🎒 Моё»'; vix.items.add(data.item); }
         else { fullBurst('🪙'); res.textContent = '🎉 +' + data.got + ' виксов!'; }
-        hap([20, 50, 20]); busy = false; btn.disabled = false; btn.textContent = '🎡 Ещё раз за 30 виксов'; redraw && redraw();
+        hap([20, 50, 20]); busy = false; btn.disabled = false; await after(); redraw && redraw();
       }, 4300);
     };
     s.append(el('h3', { style: 'text-align:center' }, '🎡 Колесо удачи'), el('div', { class: 'hint', style: 'text-align:center;margin:-6px 0 6px' }, 'Раз в день бесплатно. Может выпасть редкая рамка 🍀'), el('div', { class: 'wheel-wrap' }, el('div', { class: 'ptr' }, '▼'), wh, el('div', { class: 'hub' }, 'V')), res, btn);
@@ -8726,6 +8776,73 @@ LW2.galaxy = (x, P, W, H, t, px, py, dpr, acc, acc3) => { const cx = W / 2 + px,
 async function vixHistory() {
   const { data } = await sb.from('vix_log').select('*').order('created_at', { ascending: false }).limit(60);
   sheet((s, close) => s.append(el('h3', {}, '📜 История виксов'), el('div', { class: 'shop' }, el('div', { class: 'log' }, (data || []).length ? (data || []).map(r => el('div', {}, el('span', {}, r.reason, el('br'), el('small', { style: 'color:var(--muted)' }, new Date(r.created_at).toLocaleString('ru-RU', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }))), el('span', { class: r.delta > 0 ? 'p' : 'm' }, (r.delta > 0 ? '+' : '') + r.delta))) : el('div', { class: 'empty' }, 'Пока пусто'))), el('button', { class: 'btn', style: 'margin-top:12px', onclick: close }, 'Закрыть')));
+}
+
+
+/* ===== 2.26 premium+ ===== */
+const ACC_PAL = ['#f43f5e', '#ef4444', '#f97316', '#f59e0b', '#eab308', '#84cc16', '#22c55e', '#10b981', '#14b8a6', '#06b6d4', '#0ea5e9', '#3b82f6', '#6366f1', '#8b5cf6', '#a855f7', '#d946ef', '#ec4899'];
+function hexHue(h) { const n = parseInt(h.slice(1), 16), r = (n >> 16 & 255) / 255, g = (n >> 8 & 255) / 255, b = (n & 255) / 255, mx = Math.max(r, g, b), mn = Math.min(r, g, b), d = mx - mn; if (!d) return 0; let hh = mx === r ? ((g - b) / d) % 6 : mx === g ? (b - r) / d + 2 : (r - g) / d + 4; hh *= 60; return hh < 0 ? hh + 360 : hh; }
+const PREM_ST = ['🦄', '💎', '🚀', '🌈', '🪐', '🐉', '🦋', '🌸', '🍓', '🧿', '🎸', '🎨', '📸', '🏆', '🥷', '👽', '🤖', '👻', '💀', '🧠', '🫶', '🥂', '🍕', '🌊', '❄️', '🌋', '🧊', '🪩', '🛸', '⭐'];
+async function aiCall(body) {
+  if (!isPremium()) { toast('✦ ИИ-помощник — в Viks Premium'); premiumPage(); return null; }
+  const { data, error } = await sb.functions.invoke('assist', { body });
+  if (error || !data || data.error) { const e = (data && data.error) || ''; toast(e === 'limit' ? 'Лимит на сегодня, попробуй завтра' : e === 'empty' ? 'Нечего обрабатывать' : 'ИИ сейчас не ответил, попробуй ещё'); return null; }
+  return data.result;
+}
+function aiChatMenu(c) {
+  sheet((s, close) => s.append(el('h3', {}, '✨ ИИ-помощник'), el('div', { class: 'menu' },
+    el('button', { onclick: () => { close(); aiSummary(c); } }, '🧠 Пересказать переписку'),
+    el('button', { onclick: () => { close(); aiReply(c); } }, '💡 Подсказать ответ'),
+    el('button', { onclick: close }, 'Отмена')), !isPremium() ? el('div', { class: 'hint', style: 'text-align:center' }, '✦ Доступно в Viks Premium') : null));
+}
+async function aiSummary(c) {
+  if (!isPremium()) { premiumPage(); return; }
+  sheet(async (s, close) => {
+    const out = el('div', { class: 'ai-out' }, '⏳ Читаю переписку…');
+    s.append(el('h3', {}, '🧠 О чём был чат'), out, el('button', { class: 'btn', onclick: close }, 'Понятно'));
+    const r = await aiCall({ action: 'summary', chat_id: c.chat_id }); out.textContent = r || 'Не получилось 😕';
+  });
+}
+async function aiReply(c) {
+  if (!isPremium()) { premiumPage(); return; }
+  sheet(async (s, close) => {
+    const box = el('div', {}, el('div', { class: 'ai-out' }, '⏳ Думаю над ответом…'));
+    s.append(el('h3', {}, '💡 Варианты ответа'), box, el('div', { class: 'hint', style: 'text-align:center' }, 'Тапни — вставлю в поле, отредактируешь и отправишь'));
+    const r = await aiCall({ action: 'reply', chat_id: c.chat_id });
+    box.innerHTML = '';
+    (Array.isArray(r) ? r : []).forEach(t => box.append(el('button', { class: 'ai-sug', onclick: () => { close(); const ta = $('#ta'); if (ta) { ta.value = t; syncComposer(); ta.focus(); } } }, t)));
+    if (!box.children.length) box.append(el('div', { class: 'ai-out' }, 'Не получилось 😕'));
+  });
+}
+async function aiTranslate(m) {
+  const cyr = /[а-яё]/i.test(m.body);
+  const row = $(`#msgs .m[data-id="${m.id}"] .bub`);
+  const pick = lang => (async () => { toast('🌐 Перевожу…'); const r = await aiCall({ action: 'translate', text: m.body, lang }); if (!r) return; if (row) { row.querySelector('.tr-t')?.remove(); const ft = row.querySelector('.ft'); const t = el('div', { class: 'tr-t' }, el('small', {}, '🌐 ' + lang), r); ft ? ft.before(t) : row.append(t); } else sheet((s, close) => s.append(el('h3', {}, '🌐 Перевод'), el('div', { class: 'ai-out' }, r), el('button', { class: 'btn', onclick: close }, 'Ок'))); })();
+  if (!isPremium()) { toast('✦ Перевод — в Viks Premium'); premiumPage(); return; }
+  if (!cyr) { pick('русский'); return; }
+  sheet((s, close) => s.append(el('h3', {}, '🌐 На какой язык?'), el('div', { class: 'menu' }, [['английский', '🇬🇧 Английский'], ['корейский', '🇰🇷 Корейский'], ['японский', '🇯🇵 Японский'], ['китайский', '🇨🇳 Китайский'], ['немецкий', '🇩🇪 Немецкий'], ['испанский', '🇪🇸 Испанский'], ['украинский', '🇺🇦 Украинский']].map(([k, l]) => el('button', { onclick: () => { close(); pick(k); } }, l)))));
+}
+async function statsSheet() {
+  if (!isPremium()) { toast('✦ Статистика — в Viks Premium'); premiumPage(); return; }
+  const { data: st, error } = await sb.rpc('my_stats');
+  if (error || !st) { toast('Не загрузилось'); return; }
+  const mx = Math.max(1, ...(st.days || []).map(d => d.n));
+  sheet((s, close) => s.append(el('h3', {}, '📊 Статистика за 7 дней'),
+    el('div', { class: 'pst' }, el('div', {}, el('b', {}, String(st.views)), el('small', {}, '👀 заходов в профиль')), el('div', {}, el('b', {}, String(st.story_views)), el('small', {}, '📸 просмотров историй (' + st.stories + ')')), el('div', {}, el('b', {}, String(st.likes)), el('small', {}, '❤️ реакций на посты')), el('div', {}, el('b', {}, String(st.reacts)), el('small', {}, '🔥 реакций на сообщения'))),
+    el('div', { class: 'mu-sec', style: 'padding-left:2px' }, '💬 Твои сообщения по дням'),
+    el('div', { class: 'pchart' }, (st.days || []).map(d => el('div', {}, el('small', {}, String(d.n)), el('i', { style: 'height:' + Math.round(d.n / mx * 80) + '%' }), el('small', {}, new Date(d.d).toLocaleDateString('ru-RU', { weekday: 'short' }))))),
+    el('div', { class: 'mu-sec', style: 'padding-left:2px' }, '👀 Кто заходил в профиль'),
+    (st.viewers || []).length ? el('div', {}, st.viewers.map(v => el('div', { class: 'toprow', onclick: () => { close(); openProfile(v.id); } }, avatar(v.display_name, v.avatar_url, 36), el('b', {}, v.display_name || '…'), el('small', { style: 'color:var(--muted)' }, agoShort(v.at))))) : el('div', { class: 'empty' }, 'Пока никто. Выложи историю — придут 😉'),
+    el('button', { class: 'btn', style: 'margin-top:12px', onclick: close }, 'Закрыть')));
+}
+function premGiftShow(days, self) {
+  if (document.querySelector('.pg-ov')) return;
+  const bx = el('div', { class: 'bx' }, '🎁'), h = el('h2', {}, self ? 'Premium активирован!' : 'Тебе подарили Premium!'), p = el('p', {}, 'Тапни по подарку');
+  const ov = el('div', { class: 'pg-ov' }, bx, h, p);
+  let opened = false;
+  const open = () => { if (opened) return; opened = true; bx.classList.add('open'); bx.textContent = '👑'; hap([30, 60, 30, 60, 100]); premFx('👑', true); setTimeout(() => fullBurst('✦'), 300); p.textContent = days + ' ' + plural(days, 'день', 'дня', 'дней') + ' Viks Premium ✦ Все фишки уже включены'; ov.append(el('button', { class: 'btn prem-buy', style: 'max-width:280px', onclick: () => { ov.remove(); refreshMe?.().then?.(() => premiumPage()); } }, '✦ Посмотреть, что открылось'), el('button', { class: 'btn ghost', style: 'max-width:280px;margin-top:8px', onclick: () => ov.remove() }, 'Круто')); };
+  bx.onclick = open; ov.onclick = e => { if (e.target === ov && opened) ov.remove(); };
+  document.body.append(ov); setTimeout(open, 2200);
 }
 
 /* ref capture */
