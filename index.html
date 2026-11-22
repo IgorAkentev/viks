@@ -990,7 +990,7 @@ html.light .stats div{background:#0000000a;border-color:#0000000d}
 .pair-warn{background:#ef444422;border:1px solid #ef444455;border-radius:14px;padding:10px 12px;font-size:13.5px;line-height:1.4;margin-bottom:12px}
 
 /* ================= 2.7 ================= */
-#chatList{will-change:transform;overflow-x:hidden!important;overscroll-behavior-x:none}
+#chatList{overflow-x:hidden!important;overscroll-behavior-x:none}
 #chatList>*{max-width:100%}
 .hub{width:100%;max-width:100%;box-sizing:border-box;overscroll-behavior-x:contain;scroll-snap-type:x proximity!important;touch-action:pan-x pan-y}
 .hc .sug{overflow:hidden}
@@ -1618,6 +1618,8 @@ html.light #msgs .m:not(.mine) .bub:not(.circ):not(.jumbo):not(.stk):not(.giftb)
 .composer .send{background:linear-gradient(135deg,var(--accent2),var(--accent) 55%,var(--accent3))!important;box-shadow:0 6px 18px color-mix(in srgb,var(--accent) 55%,transparent),inset 0 1px 0 #ffffff40!important}
 .composer .icon-btn{color:#ffffffb0}
 .rc{backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+#chatList .swrap{content-visibility:auto;contain-intrinsic-size:auto 78px}
+#tabChats .stories,.big-title{will-change:max-height,opacity}
 </style>
 </head>
 <body>
@@ -1931,7 +1933,7 @@ function renderChats() {
     const rowEl = longPress(el('div', { class: 'row' + (current?.chat_id === c.chat_id ? ' active' : '') + (Number(c.unread || 0) && !c.muted ? ' unr' : '') + (/^🤖/.test(c.title || '') || (!c.is_group && isBotId(c.peer_id)) ? ' airow' : ''), style: '--i:' + (ri++), onclick: () => openChat(c.chat_id) },
       c.saved ? savedAv(52) : avatar(c.title, c.avatar_url, 52, !c.is_group && isOnline(peer)),
       el('div', { class: 'meta' },
-        el('div', { class: 'l1' }, el('div', { class: 'name' }, !c.is_group ? ngn(peer, c.title || 'Без названия') : (c.is_channel ? '📢 ' : '👥 ') + (c.title || 'Без названия'), !c.is_group ? decor(peer) : null, !c.is_group && isBday(peer) ? el('span', { class: 'bday-ic' }, '🎂') : null, streakEl(c), c.muted ? el('span', { class: 'mute-ic' }, '🔕') : null, c.pinned ? el('span', { class: 'pin-ic' }, '📌') : null, c.ttl_seconds ? el('span', { class: 'pin-ic' }, '⏱') : null), el('div', { class: 'time' }, shortTime(c.last_at))),
+        el('div', { class: 'l1' }, el('div', { class: 'name' }, !c.is_group ? ngn(peer, c.title || 'Без названия') : (/^\p{Extended_Pictographic}/u.test(c.title || '') ? '' : c.is_channel ? '📢 ' : '👥 ') + (c.title || 'Без названия'), !c.is_group ? decor(peer) : null, !c.is_group && isBday(peer) ? el('span', { class: 'bday-ic' }, '🎂') : null, streakEl(c), c.muted ? el('span', { class: 'mute-ic' }, '🔕') : null, c.pinned ? el('span', { class: 'pin-ic' }, '📌') : null, c.ttl_seconds ? el('span', { class: 'pin-ic' }, '⏱') : null), el('div', { class: 'time' }, shortTime(c.last_at))),
         el('div', { class: 'l2' }, el('div', { class: 'prev' }, tp && tp.until > Date.now() && c.chat_id !== current?.chat_id ? el('span', { class: 'typing-prev' }, (c.is_group ? tp.name + ' ' : '') + 'печатает…') : dr ? [el('span', { class: 'draft' }, 'Черновик: '), dr] : prev), c.unread > 0 ? el('div', { class: 'badge' + (c.muted ? ' muted' : '') }, c.unread > 99 ? '99+' : String(c.unread)) : null)
       ), c.last_image && lastImg.get(c.chat_id) ? el('img', { class: 'thumb', src: lastImg.get(c.chat_id), alt: '', loading: 'lazy' }) : null), () => chatMenu(c));
     box.append(swipeWrap(rowEl, c));
@@ -2552,7 +2554,7 @@ async function openGroupInfo(c) {
 
 
 /* ================= SETTINGS & UPDATES ================= */
-const APP_VERSION = '2.19.0';
+const APP_VERSION = '2.19.1';
 const TK1 = (() => { const t = document.createElement('template'); t.innerHTML = '<svg viewBox="0 0 16 11" width="15" height="11"><path d="M1.5 6l3 3 6.5-7.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>'; return t.content; })();
 const TK2 = (() => { const t = document.createElement('template'); t.innerHTML = '<svg viewBox="0 0 20 11" width="18" height="11"><path d="M1.5 6l3 3 6.5-7.5M8 8.5l.8.6 6.7-7.6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>'; return t.content; })();
 const APP_THEMES = {
@@ -5282,7 +5284,8 @@ function fanMenu() {
 }
 (() => {
   const list = $('#chatList'), tab = $('#tabChats'); if (!list) return;
-  list.addEventListener('scroll', () => { tab.classList.toggle('scrolled', list.scrollTop > 24); }, { passive: true });
+  let scr = false, rq = 0;
+  list.addEventListener('scroll', () => { if (rq) return; rq = requestAnimationFrame(() => { rq = 0; const y = list.scrollTop; const nv = scr ? y > 4 : y > 70; if (nv !== scr) { scr = nv; tab.classList.toggle('scrolled', nv); } }); }, { passive: true });
   let y0 = null, pull = 0;
   list.addEventListener('touchstart', e => { y0 = list.scrollTop <= 0 ? e.touches[0].clientY : null; pull = 0; }, { passive: true });
   list.addEventListener('touchmove', e => { if (y0 == null) return; pull = Math.max(0, Math.min(110, (e.touches[0].clientY - y0) * .55)); const p = $('#ptr'); if (p) { p.style.transition = 'none'; p.style.height = pull + 'px'; p.querySelector('.lm').style.transform = `rotate(${pull * 3}deg) scale(${Math.min(1, pull / 60)})`; } }, { passive: true });
