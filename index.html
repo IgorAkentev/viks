@@ -1466,6 +1466,25 @@ html.light #msgs .day:not(.sys){background:#ffffffcc;color:#4a4566;border-color:
 .rx-pick small{position:absolute;left:0;right:0;top:-22px;text-align:center;font-size:11.5px;color:#fffc;font-weight:700}
 .move-note{display:flex;gap:10px;align-items:flex-start;text-align:left;font-size:13px;line-height:1.4;padding:10px 12px;margin:0 0 12px;border-radius:14px;background:linear-gradient(135deg,#10b98122,#06b6d422);border:1px solid #10b98144;color:#d1fae5}
 .move-note b{color:#fff}
+
+/* ===== 2.14 co-live ===== */
+.live video.co-pip{inset:auto;right:12px;top:calc(76px + var(--safe-t));width:104px;height:150px;border-radius:18px;object-fit:cover;z-index:4;border:2px solid #ffffff40;box-shadow:0 10px 30px #000a}
+.live .co-btn{position:relative}
+.live .co-btn b{position:absolute;top:-3px;right:-3px;min-width:16px;height:16px;border-radius:8px;background:#22c55e;font-size:10px;display:grid;place-items:center;padding:0 3px}
+.co-panel{position:absolute;left:0;right:0;bottom:0;z-index:8;background:rgba(20,17,38,.97);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-radius:24px 24px 0 0;padding:16px 16px calc(16px + var(--safe-b));max-height:62vh;overflow:auto;animation:sheetUp .3s cubic-bezier(.2,1,.3,1);color:#fff}
+.co-panel .co-h{display:flex;align-items:center;justify-content:space-between;font-size:17px;margin-bottom:4px}
+.co-panel .hint{font-size:12.5px;opacity:.7;margin-bottom:10px}
+.co-panel .prow{display:flex;align-items:center;gap:10px;padding:8px 2px}.co-panel .prow .tx{flex:1;min-width:0}.co-panel .prow b{display:block;font-size:15px}.co-panel .prow small{opacity:.65;font-size:12.5px}
+.co-panel .co-i,.co-panel .co-k{padding:8px 14px;border-radius:12px;font-weight:800;font-size:13px;background:var(--accent);color:#fff}
+.co-panel .co-k{background:#ff3b4e}.co-panel .co-i[disabled]{opacity:.6}
+.co-panel .empty{opacity:.7;text-align:center;padding:14px 0;font-size:14px}
+.co-inv{position:absolute;left:18px;right:18px;top:38%;z-index:8;background:rgba(26,22,48,.95);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid #ffffff22;border-radius:24px;padding:20px 18px;text-align:center;animation:popIn .25s ease;color:#fff;box-shadow:0 20px 60px #000c}
+.co-inv .av{margin:0 auto 10px}
+.co-inv h3{margin:0 0 6px;font-size:18px}.co-inv p{margin:0 0 14px;font-size:13.5px;opacity:.75}
+.co-inv .r{display:flex;gap:8px}.co-inv .r .btn{flex:1}
+.live .co-leave{background:#ff3b4e;padding:8px 12px;border-radius:12px;font-weight:800;font-size:12.5px}
+.live .lv-top .nm,.live .lv-top .sub{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.live .co-badge{display:inline-block;background:#22c55e;font-size:11px;font-weight:800;padding:2px 7px;border-radius:7px;margin-left:6px;vertical-align:1px}
 </style>
 </head>
 <body>
@@ -2392,7 +2411,7 @@ async function openGroupInfo(c) {
 
 
 /* ================= SETTINGS & UPDATES ================= */
-const APP_VERSION = '2.13.2';
+const APP_VERSION = '2.14.0';
 const APP_THEMES = {
   neon: { name: 'Неон', a: '#00e5ff', a2: '#7df3ff', a3: '#ff2bd6', mine: '#7a1fd6', bg: '#07060f', panel: '#0f0d1d', panel2: '#171433', line: '#251f48', theirs: '#16132c', wall: 'neon' },
   br: { name: 'Рубин', a: '#ff2d3d', a2: '#ff7a85', a3: '#ff8a00', mine: '#b3101c', bg: '#0b0a0b', panel: '#141214', panel2: '#1d1a1c', line: '#2b2629', theirs: '#1c1a1b', wall: 'rain' },
@@ -3610,6 +3629,15 @@ async function startCall(peerId, video = false) {
 }
 async function onSignal(m) {
   if (!m || !m.t) return;
+  if (m.t === 'liveinv') {
+    if (myBlocks.has(m.from) || myLive || watching || call || document.hidden) return;
+    await fetchProfiles([m.from]); const pr = profiles.get(m.from) || {};
+    sheet((s, close) => s.append(el('div', { style: 'text-align:center' }, el('div', { style: 'display:flex;justify-content:center;margin-bottom:10px' }, avatar(pr.display_name, pr.avatar_url, 72)),
+      el('h3', {}, '🔴 ' + (pr.display_name || m.name || 'Друг') + ' зовёт тебя в эфир'), el('div', { class: 'hint', style: 'margin:-4px 0 14px' }, 'Залетай смотреть — ведущий может позвать тебя в кадр'),
+      el('button', { class: 'btn', onclick: async () => { close(); const { data } = await sb.from('lives').select('*').eq('id', m.live).maybeSingle(); if (data && !data.ended_at) watchLive(data); else toast('Эфир уже закончился'); } }, '👀 Смотреть эфир'),
+      el('div', { style: 'height:8px' }), el('button', { class: 'btn ghost', onclick: close }, 'Не сейчас'))));
+    return;
+  }
   if (m.t === 'throw') { if (!myBlocks.has(m.from) && !document.hidden) { await fetchProfiles([m.from]); showThrow(m.item, profiles.get(m.from)?.display_name || 'Кто-то'); } return; }
   if (m.t === 'typing') { typingMap.set(m.chat, { name: (profiles.get(m.from)?.display_name || m.name || '').split(' ')[0], until: Date.now() + 3500 }); renderChats(); clearTimeout(typingRT); typingRT = setTimeout(renderChats, 3600); return; }
   if (m.t === 'offer') {
@@ -3727,13 +3755,47 @@ async function startLive() {
     busy = false;
   } }, '🔄');
   const fxw = el('div', { class: 'fxwrap' }, fxBar(pipe)); ui.root.append(fxw);
-  ui.top.append(flip, el('button', { class: 'end-btn', onclick: () => ui.L.close() }, 'Завершить'));
+  myLive.guests = new Map(); myLive.setMirror = setMirror;
+  const coBtn = el('button', { class: 'icon-btn co-btn', title: 'Совместный эфир', onclick: () => coPanel() }, '👥');
+  ui.top.append(coBtn, flip, el('button', { class: 'end-btn', onclick: () => ui.L.close() }, 'Завершить'));
   myLive.ui = ui;
+  const coBadge = () => { coBtn.querySelector('b')?.remove(); if (myLive && myLive.guests.size) coBtn.append(el('b', {}, String(myLive.guests.size))); };
+  const removeGuest = uid => {
+    const lv = myLive; if (!lv) return; const g = lv.guests.get(uid); if (!g) return;
+    lv.guests.delete(uid); try { g.pc.close(); } catch {} try { g.a && (g.a.pause(), g.a.srcObject = null); } catch {} try { g.src && g.src.disconnect(); } catch {}
+    liveSetOut(lv); coBadge();
+    const msg = { name: '🎙', text: ' ' + (g.name || 'Гость') + ' вышел из эфира' }; ui.addCm(msg.name, msg.text); ch.send({ type: 'broadcast', event: 'cm', payload: msg });
+  };
+  const coPanel = () => {
+    ui.root.querySelector('.co-panel')?.remove();
+    const pn = el('div', { class: 'co-panel' }); ui.root.append(pn);
+    const draw = async () => {
+      const ids = Object.keys(ch.presenceState()).filter(k => k !== me.id);
+      await fetchProfiles(ids);
+      pn.innerHTML = '';
+      pn.append(el('div', { class: 'co-h' }, el('b', {}, '🎙 Совместный эфир'), el('button', { class: 'icon-btn', html: ICON.close, onclick: () => pn.remove() })),
+        el('div', { class: 'hint' }, 'Позови зрителя — он появится в эфире рядом с тобой, экран поделится. До 3 гостей'));
+      if (!ids.length) pn.append(el('div', { class: 'empty' }, 'Пока никто не смотрит. Позови друзей 👇'));
+      ids.forEach(id => {
+        const pr = profiles.get(id) || {}, g = myLive && myLive.guests.has(id);
+        pn.append(el('div', { class: 'prow' }, avatar(pr.display_name, pr.avatar_url, 40), el('div', { class: 'tx' }, el('b', {}, pr.display_name || '…'), el('small', {}, g ? '🎙 в эфире' : '👁 смотрит')),
+          g ? el('button', { class: 'co-k', onclick: () => { sendTo(id, { t: 'cokick' }); removeGuest(id); draw(); } }, 'Убрать')
+            : el('button', { class: 'co-i', onclick: ev => { if (myLive.guests.size >= 3) { toast('Максимум 3 гостя'); return; } sendTo(id, { t: 'invite', name: me.display_name }); ev.currentTarget.textContent = 'Позвали ✓'; ev.currentTarget.disabled = true; hap(10); } }, 'Позвать')));
+      });
+      pn.append(el('button', { class: 'btn', style: 'margin-top:12px', onclick: async ev => {
+        const b = ev.currentTarget; b.disabled = true; b.textContent = 'Зову…';
+        const fr = [...new Set(chats.filter(c => !c.is_group && c.peer_id && !isBotId(c.peer_id)).map(c => c.peer_id))].filter(id => isOnline(profiles.get(id)) && !ids.includes(id));
+        for (const id of fr) try { await sendSig(id, { t: 'liveinv', live: row.id, name: me.display_name }); } catch {}
+        b.textContent = fr.length ? '📣 Позвали: ' + fr.length : 'Сейчас никого из друзей нет в сети';
+      } }, '📣 Позвать друзей, кто в сети'));
+    };
+    draw();
+  };
   const sendTo = (to, payload) => ch.send({ type: 'broadcast', event: 'sig', payload: { ...payload, to, from: me.id } });
   const connect = async viewer => {
     if (peers.has(viewer)) { try { peers.get(viewer).close(); } catch {} }
     const pc = new RTCPeerConnection(ICE); peers.set(viewer, pc);
-    stream.getTracks().forEach(t => pc.addTrack(t, stream));
+    const outS = (myLive && myLive.out) || stream; outS.getTracks().forEach(t => pc.addTrack(t, outS));
     pc.onicecandidate = e => { if (e.candidate) sendTo(viewer, { t: 'ice', c: e.candidate.toJSON() }); };
     pc.onconnectionstatechange = () => { if (['failed', 'closed'].includes(pc.connectionState)) peers.delete(viewer); };
     const off = await pc.createOffer(); await pc.setLocalDescription(off);
@@ -3744,7 +3806,32 @@ async function startLive() {
     if (m.t === 'join') { await fetchProfiles([m.from]); connect(m.from); const p = profiles.get(m.from); if (p) ui.addCm('👋', ' ' + p.display_name + ' зашёл'); }
     else if (m.t === 'answer') { const pc = peers.get(m.from); if (pc) await pc.setRemoteDescription({ type: 'answer', sdp: m.sdp }); }
     else if (m.t === 'ice') { const pc = peers.get(m.from); if (pc) try { await pc.addIceCandidate(m.c); } catch {} }
-    else if (m.t === 'leave') { const pc = peers.get(m.from); if (pc) { pc.close(); peers.delete(m.from); } }
+    else if (m.t === 'leave') { const pc = peers.get(m.from); if (pc) { pc.close(); peers.delete(m.from); } if (myLive && myLive.guests.has(m.from)) removeGuest(m.from); }
+    else if (m.t === 'codecline') { await fetchProfiles([m.from]); ui.addCm('🙅', ' ' + (profiles.get(m.from)?.display_name || 'Зритель') + ' не может присоединиться'); }
+    else if (m.t === 'cooffer') {
+      const lv = myLive; if (!lv) return;
+      if (lv.guests.size >= 3 && !lv.guests.has(m.from)) { sendTo(m.from, { t: 'cofull' }); return; }
+      if (lv.guests.has(m.from)) removeGuest(m.from);
+      await fetchProfiles([m.from]);
+      const g = { pc: new RTCPeerConnection(ICE), name: (profiles.get(m.from)?.display_name || m.name || 'Гость').split(' ')[0], ice: [] };
+      lv.guests.set(m.from, g); coBadge();
+      lv.stream.getTracks().forEach(t => g.pc.addTrack(t, lv.stream));
+      g.pc.onicecandidate = e => { if (e.candidate) sendTo(m.from, { t: 'coice', c: e.candidate.toJSON() }); };
+      g.pc.onconnectionstatechange = () => { if (['failed', 'closed'].includes(g.pc.connectionState) && myLive && myLive.guests.get(m.from) === g) removeGuest(m.from); };
+      g.pc.ontrack = e => {
+        const st = e.streams[0]; if (!st) return; g.stream = st;
+        if (!g.v) { g.v = document.createElement('video'); g.v.muted = true; g.v.playsInline = true; g.v.autoplay = true; g.v.srcObject = st; g.v.play().catch(() => {}); }
+        if (e.track.kind === 'audio' && !g.a) { g.a = new Audio(); g.a.autoplay = true; g.a.srcObject = st; g.a.play().catch(() => {}); const comp = liveCompositor(lv); g.src = comp.addAudio(st); }
+        liveSetOut(lv);
+      };
+      await g.pc.setRemoteDescription({ type: 'offer', sdp: m.sdp });
+      for (const c of g.ice.splice(0)) try { await g.pc.addIceCandidate(c); } catch {}
+      const ans = await g.pc.createAnswer(); await g.pc.setLocalDescription(ans);
+      sendTo(m.from, { t: 'coanswer', sdp: ans.sdp });
+      const msg = { name: '🎙', text: ' ' + g.name + ' теперь в эфире вместе с ' + me.display_name.split(' ')[0] }; ui.addCm(msg.name, msg.text); ch.send({ type: 'broadcast', event: 'cm', payload: msg }); hap([10, 30, 10]);
+    }
+    else if (m.t === 'coice') { const g = myLive && myLive.guests.get(m.from); if (g) { if (g.pc.remoteDescription) { try { await g.pc.addIceCandidate(m.c); } catch {} } else g.ice.push(m.c); } }
+    else if (m.t === 'coleave') removeGuest(m.from);
   })
   .on('broadcast', { event: 'cm' }, ({ payload: m }) => ui.addCm(m.name, m.text, m.color))
   .on('broadcast', { event: 'ht' }, () => ui.addHeart())
@@ -3761,6 +3848,8 @@ async function endLive() {
   clearInterval(lv.ping);
   try { await lv.ch.send({ type: 'broadcast', event: 'ended', payload: {} }); } catch {}
   for (const pc of lv.peers.values()) try { pc.close(); } catch {}
+  if (lv.guests) for (const g of lv.guests.values()) { try { g.pc.close(); } catch {} try { g.a && g.a.pause(); } catch {} }
+  if (lv.comp) try { lv.comp.stop(); } catch {}
   if (lv.pipe) lv.pipe.stop(); else lv.stream.getTracks().forEach(t => t.stop());
   sb.removeChannel(lv.ch);
   await sb.from('lives').update({ ended_at: new Date().toISOString() }).eq('id', lv.row.id);
@@ -3777,9 +3866,48 @@ async function watchLive(lv) {
   ui.top.append(el('button', { class: 'icon-btn', html: ICON.close, onclick: () => ui.L.close() }));
   watching = { lv, ch, ui };
   const sendHost = payload => ch.send({ type: 'broadcast', event: 'sig', payload: { ...payload, to: lv.user_id, from: me.id } });
-  const leave = () => { if (!watching) return; watching = null; try { sendHost({ t: 'leave' }); } catch {} try { pc && pc.close(); } catch {} setTimeout(() => sb.removeChannel(ch), 300); };
+  let co = null;
+  const coStop = () => { if (!co) return; try { co.pc.close(); } catch {} try { co.pipe.stop(); } catch {} co.pip?.remove(); co.bar?.remove(); const sb2 = ui.top.querySelector('.sub'); if (sb2 && co.oldSub != null) sb2.textContent = co.oldSub; co = null; };
+  const leaveCo = kicked => {
+    if (!co) return; if (!kicked) sendHost({ t: 'coleave' }); coStop();
+    ui.vid.srcObject = null; ui.bgv.srcObject = null; ui.center.textContent = kicked ? 'Ведущий завершил твоё участие. Возвращаю к просмотру…' : 'Возвращаю к просмотру…';
+    setTimeout(() => { if (watching && watching.lv.id === lv.id) sendHost({ t: 'join' }); }, 400);
+  };
+  const goCo = async () => {
+    if (co) return;
+    let pipe; try { pipe = await camPipe({ square: false, maxSide: 640, facing: 'user' }); } catch { toast('Разреши доступ к камере и микрофону'); sendHost({ t: 'codecline' }); return; }
+    const cpc = new RTCPeerConnection(ICE); co = { pc: cpc, pipe, ice: [] };
+    pipe.stream.getTracks().forEach(t => cpc.addTrack(t, pipe.stream));
+    cpc.ontrack = e => { const st = e.streams[0]; if (!st) return; ui.vid.srcObject = st; ui.bgv.srcObject = st; ui.vid.muted = false; ui.vid.play().catch(() => { ui.vid.muted = true; ui.vid.play().catch(() => {}); }); ui.bgv.play().catch(() => {}); ui.center.textContent = ''; };
+    cpc.onicecandidate = e => { if (e.candidate) sendHost({ t: 'coice', c: e.candidate.toJSON() }); };
+    cpc.onconnectionstatechange = () => { if (co && co.pc === cpc && cpc.connectionState === 'failed') { toast('Связь с ведущим оборвалась'); leaveCo(false); } };
+    try { pc && pc.close(); } catch {} pc = null;
+    ui.center.textContent = 'Подключаю тебя к эфиру…';
+    co.pip = el('video', { class: 'co-pip mirror', autoplay: '', playsinline: '' }); co.pip.muted = true; co.pip.playsInline = true; co.pip.srcObject = pipe.stream; co.pip.play().catch(() => {}); ui.root.append(co.pip);
+    pipe.onFacing = f => co && co.pip.classList.toggle('mirror', f === 'user');
+    co.bar = el('div', { class: 'host-tools' },
+      el('button', { class: 'icon-btn', title: 'Камера', onclick: async () => { try { await pipe.setFacing(pipe.facing === 'user' ? 'environment' : 'user'); } catch { toast('Вторая камера недоступна'); } } }, '🔄'),
+      el('button', { class: 'co-leave', onclick: () => leaveCo(false) }, 'Выйти'));
+    ui.top.append(co.bar);
+    const sb2 = ui.top.querySelector('.sub'); if (sb2) { co.oldSub = sb2.textContent; sb2.textContent = ''; sb2.append(el('span', { class: 'co-badge', style: 'margin:0' }, '🎙 ты в эфире')); }
+    const off = await cpc.createOffer(); await cpc.setLocalDescription(off);
+    sendHost({ t: 'cooffer', sdp: off.sdp, name: me.display_name });
+  };
+  const inviteCard = name => {
+    ui.root.querySelector('.co-inv')?.remove(); hap([15, 40, 15]);
+    const card = el('div', { class: 'co-inv' }, avatar(host.display_name, host.avatar_url, 64), el('h3', {}, '🎙 ' + (name || host.display_name || 'Ведущий') + ' зовёт тебя в эфир'), el('p', {}, 'Тебя увидят и услышат все зрители. Экран поделится на двоих'),
+      el('div', { class: 'r' }, el('button', { class: 'btn ghost', onclick: () => { card.remove(); sendHost({ t: 'codecline' }); } }, 'Не сейчас'), el('button', { class: 'btn', onclick: () => { card.remove(); goCo(); } }, 'Присоединиться')));
+    ui.root.append(card);
+  };
+  const leave = () => { if (!watching) return; watching = null; if (co) { try { sendHost({ t: 'coleave' }); } catch {} coStop(); } try { sendHost({ t: 'leave' }); } catch {} try { pc && pc.close(); } catch {} setTimeout(() => sb.removeChannel(ch), 300); };
   ch.on('broadcast', { event: 'sig' }, async ({ payload: m }) => {
     if (!m || m.to !== me.id || m.from !== lv.user_id) return;
+    if (m.t === 'invite') { if (!co) inviteCard(m.name); return; }
+    if (m.t === 'coanswer') { if (co) { await co.pc.setRemoteDescription({ type: 'answer', sdp: m.sdp }); for (const c of co.ice.splice(0)) try { await co.pc.addIceCandidate(c); } catch {} } return; }
+    if (m.t === 'coice') { if (co) { if (co.pc.remoteDescription) { try { await co.pc.addIceCandidate(m.c); } catch {} } else co.ice.push(m.c); } return; }
+    if (m.t === 'cokick') { if (co) { toast('Ведущий убрал тебя из эфира'); leaveCo(true); } return; }
+    if (m.t === 'cofull') { if (co) { toast('В эфире уже максимум гостей'); coStop(); sendHost({ t: 'join' }); } return; }
+    if (m.t === 'offer' && co) return;
     if (m.t === 'offer') {
       try { pc && pc.close(); } catch {}
       pc = new RTCPeerConnection(ICE);
@@ -6658,6 +6786,48 @@ async function toggleReact(pp, e, card) {
     const j = arr.findIndex(r => r.user_id === me.id && r.emoji === e); on ? (j >= 0 && arr.splice(j, 1)) : arr.push({ user_id: me.id, emoji: e });
     feedLikes.set(pp.id, new Set(arr.map(r => r.user_id))); const c2 = postEl(pp); nc.replaceWith(c2);
   }
+}
+
+
+/* ===== 2.14 co-live compositor ===== */
+function liveCompositor(lv) {
+  if (lv.comp) return lv.comp;
+  const c = document.createElement('canvas'); c.width = 720; c.height = 1280; const x = c.getContext('2d');
+  const hostV = document.createElement('video'); hostV.muted = true; hostV.playsInline = true; hostV.autoplay = true; hostV.srcObject = lv.stream; hostV.play().catch(() => {});
+  const AC = new (window.AudioContext || window.webkitAudioContext)(); const dest = AC.createMediaStreamDestination();
+  try { if (lv.stream.getAudioTracks().length) AC.createMediaStreamSource(new MediaStream(lv.stream.getAudioTracks())).connect(dest); } catch {}
+  const comp = { alive: true };
+  const cover = (v, X, Y, W, H) => {
+    const vw = v.videoWidth, vh = v.videoHeight;
+    if (!vw || !vh) { x.fillStyle = '#15122a'; x.fillRect(X, Y, W, H); x.fillStyle = '#ffffff88'; x.font = '600 28px system-ui,sans-serif'; x.textAlign = 'center'; x.fillText('Подключается…', X + W / 2, Y + H / 2); x.textAlign = 'start'; return; }
+    const k = Math.max(W / vw, H / vh), sw = W / k, sh = H / k;
+    x.drawImage(v, (vw - sw) / 2, (vh - sh) / 2, sw, sh, X, Y, W, H);
+  };
+  const label = (t, X, Y) => { if (!t) return; x.font = '700 26px system-ui,sans-serif'; const w = x.measureText(t).width + 28; x.fillStyle = '#0009'; x.beginPath(); if (x.roundRect) x.roundRect(X + 16, Y + 16, w, 42, 14); else x.rect(X + 16, Y + 16, w, 42); x.fill(); x.fillStyle = '#fff'; x.fillText(t, X + 30, Y + 46); };
+  const draw = () => {
+    if (!comp.alive) return;
+    const W = c.width, H = c.height;
+    const tiles = [{ v: hostV, n: (me.display_name || '').split(' ')[0] }, ...[...lv.guests.values()].filter(g => g.v).map(g => ({ v: g.v, n: g.name }))].slice(0, 4);
+    x.fillStyle = '#000'; x.fillRect(0, 0, W, H);
+    const R = tiles.length === 1 ? [[0, 0, W, H]] : tiles.length === 2 ? [[0, 0, W, H / 2], [0, H / 2, W, H / 2]] : tiles.length === 3 ? [[0, 0, W, H / 2], [0, H / 2, W / 2, H / 2], [W / 2, H / 2, W / 2, H / 2]] : [[0, 0, W / 2, H / 2], [W / 2, 0, W / 2, H / 2], [0, H / 2, W / 2, H / 2], [W / 2, H / 2, W / 2, H / 2]];
+    tiles.forEach((t, i) => { const [X, Y, w, h] = R[i]; cover(t.v, X, Y, w, h); if (tiles.length > 1) label(t.n, X, Y); });
+    if (tiles.length > 1) { x.fillStyle = '#000'; x.fillRect(0, H / 2 - 3, W, 6); if (tiles.length === 3) x.fillRect(W / 2 - 3, H / 2, 6, H / 2); if (tiles.length === 4) x.fillRect(W / 2 - 3, 0, 6, H); }
+  };
+  comp.timer = setInterval(draw, 40); draw();
+  comp.stream = new MediaStream([...c.captureStream(25).getVideoTracks(), ...dest.stream.getAudioTracks()]);
+  comp.addAudio = st => { try { if (AC.state === 'suspended') AC.resume(); const src = AC.createMediaStreamSource(st); src.connect(dest); return src; } catch { return null; } };
+  comp.stop = () => { comp.alive = false; clearInterval(comp.timer); comp.stream.getTracks().forEach(t => t.stop()); try { AC.close(); } catch {} };
+  lv.comp = comp; return comp;
+}
+function liveSetOut(lv) {
+  if (!lv) return;
+  const useComp = lv.guests && [...lv.guests.values()].some(g => g.v);
+  const out = useComp ? liveCompositor(lv).stream : lv.stream;
+  if (lv.out === out) return;
+  lv.out = out;
+  for (const pc of lv.peers.values()) pc.getSenders().forEach(sd => { if (!sd.track) return; const nt = out.getTracks().find(t => t.kind === sd.track.kind); if (nt && nt !== sd.track) sd.replaceTrack(nt).catch(() => {}); });
+  if (lv.ui) { lv.ui.vid.muted = true; lv.ui.vid.srcObject = out; lv.ui.bgv.srcObject = out; lv.ui.vid.play().catch(() => {}); lv.ui.bgv.play().catch(() => {}); if (useComp) { lv.ui.vid.classList.remove('mirror'); lv.ui.bgv.classList.remove('mirror'); } else if (lv.setMirror && lv.pipe) lv.setMirror(lv.pipe.facing); }
+  if (!useComp && lv.comp) { const cp = lv.comp; lv.comp = null; setTimeout(() => cp.stop(), 500); }
 }
 
 /* ================= BOOT ================= */
