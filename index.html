@@ -1769,6 +1769,33 @@ body:has(.mfs) .sheet-bg{z-index:75}
 .avc-top button{font-size:16px;font-weight:700;padding:8px 6px;color:#fff}.avc-top button.ok{color:var(--accent2,#8b7bff)}
 .avc-mid{flex:1;display:grid;place-items:center;overflow:hidden}
 .avc-bot{padding:14px 20px calc(18px + var(--safe-b))}
+
+/* ===== 2.23 lives ===== */
+.live .lv-info{position:absolute;left:12px;right:12px;top:calc(66px + var(--safe-t));z-index:3;display:flex;flex-direction:column;gap:6px;align-items:flex-start;pointer-events:none}
+.live .lv-info>*{pointer-events:auto}
+.live .lv-goal{width:100%;max-width:320px;background:#0008;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-radius:14px;padding:7px 10px;font-size:12.5px;font-weight:800}
+.live .lv-goal .t{display:flex;justify-content:space-between;gap:8px;margin-bottom:5px}.live .lv-goal .t span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.live .lv-goal .b{height:7px;border-radius:5px;background:#ffffff26;overflow:hidden}.live .lv-goal .b i{display:block;height:100%;border-radius:5px;background:linear-gradient(90deg,#f59e0b,#ec4899,#8b5cf6);transition:width .5s}
+.live .lv-goal.done{background:linear-gradient(135deg,#f59e0bcc,#ec4899cc)}
+.live .lv-topd{display:inline-flex;align-items:center;gap:6px;background:#0008;padding:4px 10px 4px 4px;border-radius:14px;font-size:12px;font-weight:800;cursor:pointer}
+.live .lv-topd .av{box-shadow:0 0 0 2px #f59e0b}
+.live .fxwrap{top:calc(150px + var(--safe-t))}
+.live .fxwrap .mkbar,.live .fxwrap .maskbar{margin-top:6px}
+.live .cm b{cursor:pointer}
+.live .rx-btn{width:46px;height:46px;border-radius:50%;background:#ffffff1f;font-size:21px;display:grid;place-items:center;flex:none}
+.live .rx-row{position:absolute;right:12px;bottom:calc(76px + var(--safe-b));z-index:4;display:flex;gap:6px;background:#000a;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);padding:6px;border-radius:22px;animation:sheetUp .2s}
+.live .rx-row button{font-size:26px;width:42px;height:42px;border-radius:50%}
+.rx-fly{position:fixed;z-index:58;font-size:46px;pointer-events:none;bottom:-60px;animation:rxUp 2.6s cubic-bezier(.2,.7,.4,1) forwards}
+@keyframes rxUp{0%{transform:translate(0,0) scale(.6) rotate(0);opacity:0}10%{opacity:1}100%{transform:translate(var(--dx),-110vh) scale(1.5) rotate(var(--r));opacity:.9}}
+.live .lv-top .icon-btn{width:34px;height:34px}.live .lv-top{gap:6px}.live .lv-top .end-btn{padding-left:12px;padding-right:12px;flex:none}.live .lv-top .eye,.live .lv-top .gift-cnt{flex:none}
+.live .rec-dot{width:auto;height:auto;margin-left:0}
+.sheet .prow{display:flex!important;flex-direction:row!important;align-items:center;gap:10px}.sheet .prow .tx{flex:1;min-width:0}.sheet .prow b{display:block;font-size:15px}.sheet .prow small{opacity:.65;font-size:12.5px}.sheet .prow .co-k{padding:8px 14px;border-radius:12px;font-weight:800;font-size:13px;background:#ffffff14;color:var(--text)}
+.lv-tools button small{display:block;text-align:left;color:var(--muted);font-size:12px;font-weight:500}
+.lv-stats{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:6px 0 12px}
+.lv-stats div{background:#ffffff0d;border-radius:16px;padding:12px;text-align:center}.lv-stats b{display:block;font-size:24px;font-weight:900}.lv-stats small{color:var(--muted);font-size:12px}
+.lv-kind{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:4px 0 6px}
+.lv-kind button{padding:18px 10px;border-radius:20px;background:#ffffff0d;display:flex;flex-direction:column;align-items:center;gap:6px;font-weight:800}.lv-kind button i{font-style:normal;font-size:34px}.lv-kind button small{font-weight:500;color:var(--muted);font-size:12px}
+.lv-don{display:flex;align-items:center;gap:10px;padding:8px 4px}.lv-don .n{width:26px;text-align:center;font-weight:900}.lv-don b{flex:1}.lv-don span{font-weight:800;color:#fbbf24}
 </style>
 </head>
 <body>
@@ -2754,7 +2781,7 @@ async function openGroupInfo(c) {
 
 
 /* ================= SETTINGS & UPDATES ================= */
-const APP_VERSION = '2.22.0';
+const APP_VERSION = '2.23.0';
 const TK1 = (() => { const t = document.createElement('template'); t.innerHTML = '<svg viewBox="0 0 16 11" width="15" height="11"><path d="M1.5 6l3 3 6.5-7.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>'; return t.content; })();
 const TK2 = (() => { const t = document.createElement('template'); t.innerHTML = '<svg viewBox="0 0 20 11" width="18" height="11"><path d="M1.5 6l3 3 6.5-7.5M8 8.5l.8.6 6.7-7.6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>'; return t.content; })();
 const APP_THEMES = {
@@ -3191,7 +3218,7 @@ function renderStories() {
   const box = $('#stories'); if (!box || !me) return;
   box.innerHTML = '';
   const { mine, others } = storyGroups();
-  box.append(el('div', { class: 'st st-go', onclick: () => myLive ? null : startLive() }, el('div', { class: 'st-ring' }, el('div', { class: 'gi' }, '🔴')), el('div', { class: 'st-name' }, 'Эфир')));
+  box.append(el('div', { class: 'st st-go', onclick: () => myLive ? null : liveKindAsk() }, el('div', { class: 'st-ring' }, el('div', { class: 'gi' }, '🔴')), el('div', { class: 'st-name' }, 'Эфир')));
   for (const lv of lives.filter(l => l.user_id !== me.id && !myBlocks.has(l.user_id))) {
     const p = profiles.get(lv.user_id) || {};
     box.append(el('div', { class: 'st', onclick: () => watchLive(lv) }, el('div', { class: 'st-ring onair', style: 'position:relative' }, avatar(p.display_name, p.avatar_url, 58), el('span', { class: 'st-live' }, 'LIVE')), el('div', { class: 'st-name new' }, (p.display_name || '').split(' ')[0])));
@@ -4088,44 +4115,60 @@ function liveShell({ title, sub, isHost, onClose }) {
   const inp = el('input', { placeholder: isHost ? 'Написать зрителям…' : 'Комментарий…', maxlength: 200 });
   const heartBtn = el('button', { class: 'heart-btn' }, '❤️');
   const giftBtn = isHost ? null : el('button', { class: 'gift-btn', title: 'Подарок' }, '🎁');
+  const self = {};
+  const info = el('div', { class: 'lv-info' });
+  const rxBtn = el('button', { class: 'rx-btn', title: 'Реакция на весь экран' }, '🎉');
   const top = el('div', { class: 'lv-top' }, el('span', { class: 'badge-live' }, 'LIVE'), el('div', { style: 'flex:1;min-width:0' }, el('div', { class: 'nm' }, title), el('div', { class: 'sub' }, sub || '')), eye);
-  const root = el('div', { class: 'live' }, bgv, vid, center, top, hearts, el('div', { class: 'lv-bottom' }, cms, el('div', { class: 'row2' }, inp, giftBtn, heartBtn)));
+  const root = el('div', { class: 'live' }, bgv, vid, center, top, info, hearts, el('div', { class: 'lv-bottom' }, cms, el('div', { class: 'row2' }, inp, giftBtn, rxBtn, heartBtn)));
   document.body.append(root);
   const L = pushLayer(() => { root.remove(); onClose(); });
-  const addCm = (name, text, color) => { cms.append(el('div', { class: 'cm' }, el('div', {}, el('b', { style: color ? 'color:' + color : '' }, name), text))); while (cms.children.length > 30) cms.firstChild.remove(); };
+  const addCm = (name, text, color, uid) => {
+    const r = self.room || {};
+    if (uid && (r.muted || []).includes(uid)) return;
+    if (r.filter !== false) text = matFilter(text);
+    const crown = uid && r.top && r.top[0] && r.top[0].uid === uid ? '👑 ' : '';
+    const mod = uid && ((r.mods || []).includes(uid) || uid === r.host) ? (uid === r.host ? ' 🎙' : ' 🛡') : '';
+    const nb = el('b', { style: color ? 'color:' + color : '', onclick: uid && self.onName ? e => { e.stopPropagation(); self.onName(uid, name); } : null }, crown + name + mod);
+    cms.append(el('div', { class: 'cm' }, el('div', {}, nb, text))); while (cms.children.length > 30) cms.firstChild.remove();
+  };
   const addHeart = () => { const h = el('span', { style: `--dx:${Math.round(Math.random() * 60 - 30)}px` }, ['❤️', '💜', '💙', '🔥', '😍'][Math.floor(Math.random() * 5)]); hearts.append(h); setTimeout(() => h.remove(), 2300); };
   let giftQ = Promise.resolve();
   const showGift = g => { giftQ = giftQ.then(() => new Promise(ok => { const G = GIFTS.find(x => x[0] === g.k); if (!G) return ok(); const f = el('div', { class: 'gift-fly' }, animEmoji(G[0]), el('span', {}, (g.name || 'Кто-то') + ' дарит ' + G[1])); root.append(f); if (G[2]) fullBurst(G[0]); setTimeout(() => f.remove(), 3000); setTimeout(ok, 1300); })); addCm('🎁', ' ' + (g.name || 'Кто-то') + ' подарил(а) ' + G_NAME(g.k)); };
-  return { root, vid, bgv, setSrc, eye, cms, center, inp, heartBtn, giftBtn, top, L, addCm, addHeart, showGift };
+  rxBtn.onclick = () => { const ex = root.querySelector('.rx-row'); if (ex) { ex.remove(); return; } const row = el('div', { class: 'rx-row' }, LV_RX.map(e => el('button', { onclick: () => { row.remove(); if (self.sendRx) self.sendRx(e); } }, e))); root.append(row); };
+  return Object.assign(self, { root, vid, bgv, setSrc, eye, cms, center, inp, heartBtn, giftBtn, rxBtn, top, info, L, addCm, addHeart, showGift });
 }
-async function startLive() {
+async function startLive(kind = 'video') {
   if (myLive || watching || call) return;
   if (!window.RTCPeerConnection || !navigator.mediaDevices) { toast('Браузер не умеет эфиры'); return; }
   let pipe;
-  try { pipe = await camPipe({ square: false, maxSide: 960, facing: 'user' }); }
-  catch { toast('Разреши доступ к камере и микрофону'); return; }
+  try { pipe = kind === 'audio' ? await audioPipe() : await camPipe({ square: false, maxSide: 960, facing: 'user' }); }
+  catch { toast(kind === 'audio' ? 'Разреши доступ к микрофону' : 'Разреши доступ к камере и микрофону'); return; }
   const stream = pipe.stream;
   const { data: row, error } = await sb.from('lives').insert({ title: null }).select().single();
   if (error) { pipe.stop(); toast('Эфир не запустился: ' + errText(error)); return; }
   const peers = new Map();
   const ch = sb.channel('live-' + row.id, { config: { broadcast: { self: false }, presence: { key: me.id } } });
-  myLive = { row, stream, peers, ch, pipe };
-  const ui = liveShell({ title: 'Твой эфир', sub: 'Тебя видят твои люди из чатов', isHost: true, onClose: () => endLive() });
+  myLive = { row, stream, peers, ch, pipe, kind, room: { host: me.id, muted: [], mods: [], banned: [], filter: true, goal: null, top: [] }, st: { t0: Date.now(), peak: 0, uniq: new Set(), hearts: 0, gifts: 0, pts: 0, cms: 0, rx: 0 }, donors: new Map() };
+  const ui = liveShell({ title: kind === 'audio' ? 'Твой аудио-эфир' : 'Твой эфир', sub: kind === 'audio' ? '🎙 только голос' : 'Тебя видят твои люди из чатов', isHost: true, onClose: () => endLive() });
+  ui.room = myLive.room;
   ui.vid.muted = true; ui.setSrc(stream);
   const setMirror = f => { ui.vid.classList.toggle('mirror', f === 'user'); ui.bgv.classList.toggle('mirror', f === 'user'); };
-  setMirror('user'); pipe.onFacing = setMirror;
+  setMirror(kind === 'audio' ? 'environment' : 'user'); pipe.onFacing = setMirror;
   let busy = false;
   const flip = el('button', { class: 'icon-btn', title: 'Камера', onclick: async () => {
     if (busy) return; busy = true;
     try { await pipe.setFacing(pipe.facing === 'user' ? 'environment' : 'user'); } catch { toast('Вторая камера недоступна'); try { await pipe.setFacing('user'); } catch {} }
     busy = false;
   } }, '🔄');
-  const fxw = el('div', { class: 'fxwrap' }, fxBar(pipe)); ui.root.append(fxw);
+  const fxw = el('div', { class: 'fxwrap hidden' }, fxBar(pipe), kind === 'audio' ? null : maskBar(pipe)); ui.root.append(fxw);
   myLive.guests = new Map(); myLive.setMirror = setMirror;
   const coBtn = el('button', { class: 'icon-btn co-btn', title: 'Совместный эфир', onclick: () => coPanel() }, '👥');
   const musBtn = el('button', { class: 'icon-btn', title: 'Музыка в эфир', onclick: () => liveMusicPick(myLive, ch, ui) }, '🎵');
-  ui.top.append(coBtn, musBtn, flip, el('button', { class: 'end-btn', onclick: () => ui.L.close() }, 'Завершить'));
-  myLive.ui = ui;
+  const toolsBtn = el('button', { class: 'icon-btn', title: 'Инструменты', onclick: () => liveTools(myLive) }, '⚙️');
+  ui.top.append(...[coBtn, kind === 'audio' ? null : flip, toolsBtn, el('button', { class: 'end-btn', onclick: () => ui.L.close() }, 'Стоп')].filter(Boolean)); myLive.musBtn = musBtn;
+  myLive.ui = ui; myLive.fxw = fxw; myLive.flip = flip;
+  ui.onName = (uid, name) => liveModSheet(myLive, uid, name, null);
+  ui.sendRx = e => { liveRxShow(e); myLive.st.rx++; ch.send({ type: 'broadcast', event: 'rx', payload: { e, uid: me.id } }); };
   const coBadge = () => { coBtn.querySelector('b')?.remove(); if (myLive && myLive.guests.size) coBtn.append(el('b', {}, String(myLive.guests.size))); };
   const removeGuest = uid => {
     const lv = myLive; if (!lv) return; const g = lv.guests.get(uid); if (!g) return;
@@ -4170,7 +4213,8 @@ async function startLive() {
   };
   ch.on('broadcast', { event: 'sig' }, async ({ payload: m }) => {
     if (!m || m.to !== me.id) return;
-    if (m.t === 'join') { await fetchProfiles([m.from]); connect(m.from); const p = profiles.get(m.from); if (p) ui.addCm('👋', ' ' + p.display_name + ' зашёл'); }
+    if (m.t === 'join') { if (myLive && myLive.room.banned.includes(m.from)) { sendTo(m.from, { t: 'kick' }); return; } await fetchProfiles([m.from]); connect(m.from); if (myLive) { myLive.st.uniq.add(m.from); liveRoomSend(myLive, true); } const p = profiles.get(m.from); if (p) ui.addCm('👋', ' ' + p.display_name + ' зашёл'); }
+    else if (m.t === 'modreq') { const lv = myLive; if (!lv || !lv.room.mods.includes(m.from)) return; liveModDo(lv, m.act, m.uid, m.name, profiles.get(m.from)?.display_name); }
     else if (m.t === 'answer') { const pc = peers.get(m.from); if (pc) await pc.setRemoteDescription({ type: 'answer', sdp: m.sdp }); }
     else if (m.t === 'ice') { const pc = peers.get(m.from); if (pc) try { await pc.addIceCandidate(m.c); } catch {} }
     else if (m.t === 'leave') { const pc = peers.get(m.from); if (pc) { pc.close(); peers.delete(m.from); } if (myLive && myLive.guests.has(m.from)) removeGuest(m.from); }
@@ -4200,22 +4244,25 @@ async function startLive() {
     else if (m.t === 'coice') { const g = myLive && myLive.guests.get(m.from); if (g) { if (g.pc.remoteDescription) { try { await g.pc.addIceCandidate(m.c); } catch {} } else g.ice.push(m.c); } }
     else if (m.t === 'coleave') removeGuest(m.from);
   })
-  .on('broadcast', { event: 'cm' }, ({ payload: m }) => ui.addCm(m.name, m.text, m.color))
-  .on('broadcast', { event: 'ht' }, () => ui.addHeart())
-  .on('broadcast', { event: 'gift' }, ({ payload: g }) => { if (!g) return; ui.showGift(g); if (myLive) { myLive.gifts = (myLive.gifts || 0) + 1; let gc = ui.top.querySelector('.gift-cnt'); if (!gc) { gc = el('span', { class: 'gift-cnt' }); ui.eye.after(gc); } gc.textContent = '🎁 ' + myLive.gifts; hap([10, 30, 10]); } })
-  .on('presence', { event: 'sync' }, () => { const n = Object.keys(ch.presenceState()).filter(k => k !== me.id).length; ui.eye.textContent = '👁 ' + n; })
+  .on('broadcast', { event: 'cm' }, ({ payload: m }) => { ui.addCm(m.name, m.text, m.color, m.uid); if (myLive) myLive.st.cms++; })
+  .on('broadcast', { event: 'ht' }, () => { ui.addHeart(); if (myLive) { myLive.st.hearts++; liveRoomSend(myLive); } })
+  .on('broadcast', { event: 'rx' }, ({ payload: r }) => { if (r && LV_RX.includes(r.e)) { liveRxShow(r.e); if (myLive) myLive.st.rx++; } })
+  .on('broadcast', { event: 'gift' }, ({ payload: g }) => { if (!g) return; ui.showGift(g); if (myLive) { myLive.gifts = (myLive.gifts || 0) + 1; liveGiftCount(myLive, g); let gc = ui.top.querySelector('.gift-cnt'); if (!gc) { gc = el('span', { class: 'gift-cnt' }); ui.eye.after(gc); } gc.textContent = '🎁 ' + myLive.gifts; hap([10, 30, 10]); } })
+  .on('presence', { event: 'sync' }, () => { const n = Object.keys(ch.presenceState()).filter(k => k !== me.id).length; ui.eye.textContent = '👁 ' + n; if (myLive) myLive.st.peak = Math.max(myLive.st.peak, n); })
   .subscribe(st => { if (st === 'SUBSCRIBED') ch.track({ host: true }); });
   liveRecStart(myLive);
-  const sendCm = () => { const t = ui.inp.value.trim(); if (!t) return; ui.inp.value = ''; const msg = { name: me.display_name + (isPremium() ? ' ✦' : ''), text: t, color: me.name_color }; ch.send({ type: 'broadcast', event: 'cm', payload: msg }); ui.addCm(msg.name, msg.text, msg.color); };
+  const sendCm = () => { const t = ui.inp.value.trim(); if (!t) return; ui.inp.value = ''; const msg = { name: me.display_name + (isPremium() ? ' ✦' : ''), text: t, color: me.name_color, uid: me.id }; ch.send({ type: 'broadcast', event: 'cm', payload: msg }); ui.addCm(msg.name, msg.text, msg.color, msg.uid); };
   ui.inp.onkeydown = e => { if (e.key === 'Enter') sendCm(); };
-  ui.heartBtn.onclick = () => { ui.addHeart(); ch.send({ type: 'broadcast', event: 'ht', payload: {} }); };
+  ui.heartBtn.onclick = () => { ui.addHeart(); myLive.st.hearts++; liveRoomSend(myLive); ch.send({ type: 'broadcast', event: 'ht', payload: {} }); };
+  liveInfoDraw(ui, myLive.room, true);
   myLive.ping = setInterval(() => sb.from('lives').update({ last_ping: new Date().toISOString() }).eq('id', row.id).then(() => {}), 25000);
   toast('Ты в эфире 🔴');
 }
 async function endLive() {
   try { if (myLive && myLive.mus) { myLive.mus.a.pause(); clearInterval(myLive.mus.iv); } } catch {}
   const lv = myLive; if (!lv) return; myLive = null;
-  clearInterval(lv.ping);
+  clearInterval(lv.ping); clearTimeout(lv.roomT); lv.st.t1 = Date.now();
+  try { if (lv.scr) lv.scr.getTracks().forEach(t => t.stop()); } catch {}
   try { await lv.ch.send({ type: 'broadcast', event: 'ended', payload: {} }); } catch {}
   for (const pc of lv.peers.values()) try { pc.close(); } catch {}
   if (lv.guests) for (const g of lv.guests.values()) { try { g.pc.close(); } catch {} try { g.a && g.a.pause(); } catch {} }
@@ -4226,7 +4273,7 @@ async function endLive() {
   await sb.from('lives').update({ ended_at: new Date().toISOString() }).eq('id', lv.row.id);
   if (lv.ui && lv.ui.L.open) lv.ui.L.close();
   toast('Эфир завершён'); loadLives().then(renderStories);
-  if (recBlob && recBlob.size > 20000) liveSaveAsk(recBlob, lv);
+  liveStatsSheet(lv, () => { if (recBlob && recBlob.size > 20000) liveSaveAsk(recBlob, lv); });
 }
 async function watchLive(lv) {
   if (watching || myLive) return;
@@ -4236,7 +4283,9 @@ async function watchLive(lv) {
   let pc = null, ice = [];
   const ui = liveShell({ title: host.display_name || 'Эфир', sub: 'в эфире с ' + hm(new Date(lv.started_at)), isHost: false, onClose: () => leave() });
   ui.top.append(el('button', { class: 'icon-btn', html: ICON.close, onclick: () => ui.L.close() }));
-  watching = { lv, ch, ui };
+  watching = { lv, ch, ui }; ui.room = { host: lv.user_id };
+  ui.onName = (uid, name) => { const r = ui.room || {}; if (!(r.mods || []).includes(me.id) || uid === me.id || uid === lv.user_id) return; liveModSheet(null, uid, name, (act) => sendHost({ t: 'modreq', act, uid, name })); };
+  ui.sendRx = e => { if (Date.now() - (ui._rxT || 0) < 1200) { toast('Не так быстро 😅'); return; } ui._rxT = Date.now(); liveRxShow(e); ch.send({ type: 'broadcast', event: 'rx', payload: { e, uid: me.id } }); };
   const sendHost = payload => ch.send({ type: 'broadcast', event: 'sig', payload: { ...payload, to: lv.user_id, from: me.id } });
   let co = null;
   const coStop = () => { if (!co) return; try { co.pc.close(); } catch {} try { co.pipe.stop(); } catch {} co.pip?.remove(); co.bar?.remove(); const sb2 = ui.top.querySelector('.sub'); if (sb2 && co.oldSub != null) sb2.textContent = co.oldSub; co = null; };
@@ -4278,6 +4327,7 @@ async function watchLive(lv) {
     if (m.t === 'coanswer') { if (co) { await co.pc.setRemoteDescription({ type: 'answer', sdp: m.sdp }); for (const c of co.ice.splice(0)) try { await co.pc.addIceCandidate(c); } catch {} } return; }
     if (m.t === 'coice') { if (co) { if (co.pc.remoteDescription) { try { await co.pc.addIceCandidate(m.c); } catch {} } else co.ice.push(m.c); } return; }
     if (m.t === 'cokick') { if (co) { toast('Ведущий убрал тебя из эфира'); leaveCo(true); } return; }
+    if (m.t === 'kick') { toast('🚫 Тебя убрали из этого эфира'); ui.center.textContent = 'Тебя убрали из эфира'; setTimeout(() => ui.L.open && ui.L.close(), 1200); return; }
     if (m.t === 'cofull') { if (co) { toast('В эфире уже максимум гостей'); coStop(); sendHost({ t: 'join' }); } return; }
     if (m.t === 'offer' && co) return;
     if (m.t === 'offer') {
@@ -4292,15 +4342,17 @@ async function watchLive(lv) {
       sendHost({ t: 'answer', sdp: ans.sdp });
     } else if (m.t === 'ice') { if (pc && pc.remoteDescription) { try { await pc.addIceCandidate(m.c); } catch {} } else ice.push(m.c); }
   })
-  .on('broadcast', { event: 'cm' }, ({ payload: m }) => ui.addCm(m.name, m.text, m.color))
+  .on('broadcast', { event: 'cm' }, ({ payload: m }) => ui.addCm(m.name, m.text, m.color, m.uid))
   .on('broadcast', { event: 'ht' }, () => ui.addHeart())
+  .on('broadcast', { event: 'rx' }, ({ payload: r }) => r && LV_RX.includes(r.e) && liveRxShow(r.e))
+  .on('broadcast', { event: 'room' }, ({ payload: r }) => { if (!r) return; const wasMuted = (ui.room.muted || []).includes(me.id), wasMod = (ui.room.mods || []).includes(me.id), wasDone = ui.room.goal && ui.room.goal.done; ui.room = r; liveInfoDraw(ui, r, false); const mu = (r.muted || []).includes(me.id); if (mu !== wasMuted) { ui.inp.disabled = mu; ui.inp.placeholder = mu ? '🔇 Ведущий выключил тебе чат' : 'Комментарий…'; } const md = (r.mods || []).includes(me.id); if (md && !wasMod) toast('🛡 Ты теперь модератор этого эфира — тапай по имени в чате'); if (r.goal && r.goal.done && !wasDone) fullBurst('🎉'); })
   .on('broadcast', { event: 'gift' }, ({ payload: g }) => g && ui.showGift(g))
   .on('broadcast', { event: 'mus' }, ({ payload: d }) => liveMusicRecv(ui, d))
   .on('broadcast', { event: 'ended' }, () => { ui.center.textContent = 'Эфир закончился'; ui.vid.srcObject = null; setTimeout(() => ui.L.open && ui.L.close(), 1800); })
   .on('presence', { event: 'sync' }, () => { const n = Object.keys(ch.presenceState()).filter(k => k !== lv.user_id).length; ui.eye.textContent = '👁 ' + n; })
   .subscribe(st => { if (st === 'SUBSCRIBED') { ch.track({ viewer: true }); sendHost({ t: 'join' }); } });
   setTimeout(() => { if (watching && watching.lv.id === lv.id && !ui.vid.srcObject) ui.center.textContent = 'Не получается подключиться. Возможно, эфир уже закончился'; }, 15000);
-  const sendCm = () => { const t = ui.inp.value.trim(); if (!t) return; ui.inp.value = ''; const msg = { name: me.display_name + (isPremium() ? ' ✦' : ''), text: t, color: me.name_color }; ch.send({ type: 'broadcast', event: 'cm', payload: msg }); ui.addCm(msg.name, msg.text, msg.color); };
+  const sendCm = () => { const t = ui.inp.value.trim(); if (!t || ui.inp.disabled) return; if (Date.now() - (ui._cmT || 0) < 1500) { toast('Не так быстро 😅'); return; } ui._cmT = Date.now(); ui.inp.value = ''; const msg = { name: me.display_name + (isPremium() ? ' ✦' : ''), text: t.slice(0, 200), color: me.name_color, uid: me.id }; ch.send({ type: 'broadcast', event: 'cm', payload: msg }); ui.addCm(msg.name, msg.text, msg.color, msg.uid); };
   ui.inp.onkeydown = e => { if (e.key === 'Enter') sendCm(); };
   ui.heartBtn.onclick = () => { ui.addHeart(); ch.send({ type: 'broadcast', event: 'ht', payload: {} }); };
   if (ui.giftBtn) ui.giftBtn.onclick = () => giftPanel(ui, g => ch.send({ type: 'broadcast', event: 'gift', payload: g }));
@@ -4850,8 +4902,8 @@ function leaveGroupCall() {
 
 
 /* ================= 1.9.1: camera pipeline with effects ================= */
-const FX = [['none', 'Без'], ['smooth', 'Кожа ✨'], ['bright', 'Свет'], ['warm', 'Тёплый'], ['cold', 'Холодный'], ['vivid', 'Ярко'], ['bw', 'Ч/Б'], ['retro', 'Ретро']];
-const FXF = { bright: 'brightness(1.18) contrast(1.04) saturate(1.08)', warm: 'sepia(.25) saturate(1.3) brightness(1.05)', cold: 'saturate(1.1) hue-rotate(-14deg) brightness(1.05)', vivid: 'saturate(1.6) contrast(1.08)', bw: 'grayscale(1) contrast(1.12)', retro: 'sepia(.6) contrast(1.1) brightness(.96)' };
+const FX = [['none', 'Без'], ['smooth', 'Кожа ✨'], ['bright', 'Свет'], ['warm', 'Тёплый'], ['cold', 'Холодный'], ['vivid', 'Ярко'], ['bw', 'Ч/Б'], ['retro', 'Ретро'], ['neon', 'Неон'], ['dream', 'Мечта'], ['noir', 'Нуар'], ['pink', 'Розовый']];
+const FXF = { neon: 'saturate(2.2) contrast(1.25) hue-rotate(25deg) brightness(1.05)', dream: 'brightness(1.12) saturate(1.25) contrast(.92) blur(.4px)', noir: 'grayscale(1) contrast(1.6) brightness(.9)', pink: 'sepia(.3) hue-rotate(-40deg) saturate(1.5) brightness(1.06)', bright: 'brightness(1.18) contrast(1.04) saturate(1.08)', warm: 'sepia(.25) saturate(1.3) brightness(1.05)', cold: 'saturate(1.1) hue-rotate(-14deg) brightness(1.05)', vivid: 'saturate(1.6) contrast(1.08)', bw: 'grayscale(1) contrast(1.12)', retro: 'sepia(.6) contrast(1.1) brightness(.96)' };
 const canFx = (() => { try { const c = document.createElement('canvas'); c.width = c.height = 2; const x = c.getContext('2d', { willReadFrequently: true }); x.filter = 'grayscale(1)'; if (x.filter !== 'grayscale(1)') return false; x.fillStyle = '#f00'; x.fillRect(0, 0, 2, 2); const d = x.getImageData(0, 0, 1, 1).data; return Math.abs(d[0] - d[1]) < 40; } catch { return false; } })();
 async function camStream(facing, w, h) {
   const base = { width: { ideal: w }, height: { ideal: h } };
@@ -4879,6 +4931,14 @@ async function camPipe({ square = false, maxSide = 960, facing = 'user', audio =
   if (audio) P.mic = await navigator.mediaDevices.getUserMedia({ audio: { echoCancellation: true, noiseSuppression: true, autoGainControl: true } });
   const draw = () => {
     if (!P.alive) return;
+    if (P.scr && P.scr.videoWidth) {
+      const sv = P.scr, k0 = Math.min(1, 1280 / Math.max(sv.videoWidth, sv.videoHeight)), W = Math.round(sv.videoWidth * k0), H = Math.round(sv.videoHeight * k0);
+      if (c.width !== W || c.height !== H) { c.width = W; c.height = H; }
+      x.drawImage(sv, 0, 0, W, H);
+      const cw = v.videoWidth, chh = v.videoHeight;
+      if (cw && chh && P.scrCam !== false) { const Rr = Math.round(Math.min(W, H) * .15), cx = W - Rr - 18, cy = H - Rr - 18, m = Math.min(cw, chh); x.save(); x.beginPath(); x.arc(cx, cy, Rr, 0, Math.PI * 2); x.clip(); x.drawImage(v, (cw - m) / 2, (chh - m) / 2, m, m, cx - Rr, cy - Rr, Rr * 2, Rr * 2); x.restore(); x.strokeStyle = '#fff'; x.lineWidth = 4; x.beginPath(); x.arc(cx, cy, Rr, 0, Math.PI * 2); x.stroke(); }
+      P.raf = requestAnimationFrame(draw); return;
+    }
     const vw = v.videoWidth, vh = v.videoHeight;
     if (vw && vh && v.readyState >= 2) {
       let sx = 0, sy = 0, sw = vw, sh = vh;
@@ -8197,6 +8257,163 @@ function liveMusicRecv(ui, d) {
   const target = d.pos + (d.playing ? (Date.now() - d.at) / 1000 : 0);
   if (Math.abs((st.a.currentTime || 0) - target) > 1.5) { try { st.a.currentTime = target; } catch {} }
   if (d.playing && st.a.paused && !st.muted) st.a.play().catch(() => {}); if (!d.playing) st.a.pause();
+}
+
+
+/* ===== 2.23 lives: moderation, donors, goal, screen, audio, stats, reactions ===== */
+const LV_RX = ['🔥', '😂', '😍', '👏', '😮', '💯', '🎉', '💀'];
+const MAT_RE = /(?:^|[^а-яё])((?:на|по|за|вы|от|раз|при|до|у|о|об|пере|недо|ни)?(?:х[уy][йеёияю]|п[иі]зд|[её]б[аулнт]|бл[яd]|сук[аи]|муд[аи]|пид[оа]р|гандон|шлюх|залуп|дроч)[а-яё]*)/gi;
+function matFilter(t) { return String(t || '').replace(MAT_RE, (m, w) => m.slice(0, m.length - w.length) + w[0] + '*'.repeat(Math.max(2, w.length - 1))); }
+function liveRxShow(e) {
+  for (let i = 0; i < 7; i++) setTimeout(() => { const f = el('span', { class: 'rx-fly', style: `left:${8 + Math.random() * 80}%;--dx:${Math.round(Math.random() * 120 - 60)}px;--r:${Math.round(Math.random() * 60 - 30)}deg;font-size:${36 + Math.random() * 30}px` }, e); document.body.append(f); setTimeout(() => f.remove(), 2700); }, i * 90);
+}
+const GIFT_PTS = k => { const g = GIFTS.find(x => x[0] === k); return g && g[2] ? 5 : 1; };
+function liveGiftCount(lv, g) {
+  const pts = GIFT_PTS(g.k); lv.st.gifts++; lv.st.pts += pts;
+  if (g.uid) { const d = lv.donors.get(g.uid) || { uid: g.uid, name: g.name || 'Кто-то', pts: 0 }; d.pts += pts; d.name = g.name || d.name; lv.donors.set(g.uid, d); }
+  liveRoomSend(lv, true);
+}
+function liveRoomSend(lv, now) {
+  if (!lv) return;
+  const r = lv.room;
+  r.top = [...lv.donors.values()].sort((a, b) => b.pts - a.pts).slice(0, 10).map(d => ({ uid: d.uid, name: d.name, pts: d.pts }));
+  if (r.goal) { const g = r.goal; g.cur = (g.type === 'hearts' ? lv.st.hearts : lv.st.pts) - g.base; if (!g.done && g.cur >= g.n) { g.done = true; fullBurst('🎉'); const msg = { name: '🎯', text: ' Цель достигнута: ' + g.text + '!' }; lv.ui.addCm(msg.name, msg.text); lv.ch.send({ type: 'broadcast', event: 'cm', payload: msg }); hap([20, 40, 20]); } }
+  liveInfoDraw(lv.ui, r, true);
+  const send = () => { lv.roomT = null; lv.ch.send({ type: 'broadcast', event: 'room', payload: r }); };
+  if (now) { clearTimeout(lv.roomT); send(); } else if (!lv.roomT) lv.roomT = setTimeout(send, 1200);
+}
+function liveInfoDraw(ui, r, isHost) {
+  if (!ui || !ui.info) return; ui.info.innerHTML = '';
+  if (r.goal) { const g = r.goal, cur = Math.max(0, Math.min(g.n, g.cur || 0)); ui.info.append(el('div', { class: 'lv-goal' + (g.done ? ' done' : ''), onclick: isHost ? () => liveGoalSheet(myLive) : null }, el('div', { class: 't' }, el('span', {}, (g.done ? '✅ ' : '🎯 ') + g.text), el('b', {}, cur + '/' + g.n + (g.type === 'hearts' ? ' ❤️' : ' 🎁'))), el('div', { class: 'b' }, el('i', { style: 'width:' + Math.round(cur / g.n * 100) + '%' })))); }
+  const t = r.top && r.top[0]; if (t) { const p = profiles.get(t.uid) || {}; ui.info.append(el('span', { class: 'lv-topd', onclick: () => liveTopSheet(r) }, avatar(p.display_name || t.name, p.avatar_url, 24), '👑 ' + t.name + ' · ' + t.pts)); }
+}
+function liveTopSheet(r) {
+  const top = r.top || [];
+  sheet((s, close) => s.append(el('h3', {}, '🏆 Топ дарителей эфира'), top.length ? el('div', {}, top.map((d, i) => { const p = profiles.get(d.uid) || {}; return el('div', { class: 'lv-don' }, el('span', { class: 'n' }, ['👑', '🥈', '🥉'][i] || String(i + 1)), avatar(p.display_name || d.name, p.avatar_url, 36), el('b', {}, p.display_name || d.name), el('span', {}, d.pts + ' ✦')); })) : el('div', { class: 'empty' }, 'Пока никто ничего не дарил. Будь первым 🎁'), el('div', { class: 'hint' }, 'Обычный подарок — 1 очко, премиум ✦ — 5 очков'), el('button', { class: 'btn', onclick: close }, 'Закрыть')));
+}
+function liveGoalSheet(lv) {
+  if (!lv) return; const r = lv.room;
+  let type = r.goal ? r.goal.type : 'hearts';
+  const txt = el('input', { placeholder: 'Что будет? Например: включаю челлендж', maxlength: 60, value: r.goal ? r.goal.text : '' });
+  const num = el('input', { type: 'number', min: 1, max: 100000, value: r.goal ? r.goal.n : 100 });
+  sheet((s, close) => {
+    const tb = el('div', { class: 'lv-kind' });
+    const draw = () => { tb.innerHTML = ''; [['hearts', '❤️', 'Сердечки'], ['gifts', '🎁', 'Подарки (очки)']].forEach(([k, i, l]) => tb.append(el('button', { style: type === k ? 'background:var(--accent);color:#fff' : '', onclick: () => { type = k; num.value = k === 'hearts' ? 100 : 20; draw(); } }, el('i', {}, i), l))); };
+    draw();
+    s.append(el('h3', {}, '🎯 Цель эфира'), el('div', { class: 'hint', style: 'margin:-6px 0 10px' }, 'Шкала висит сверху и заполняется у всех на глазах'), tb,
+      el('div', { class: 'field' }, el('label', {}, 'Сколько нужно'), num), el('div', { class: 'field' }, el('label', {}, 'Что будет, когда наберётся'), txt),
+      el('button', { class: 'btn', onclick: () => { const n = Math.max(1, Math.min(100000, parseInt(num.value) || 0)); const t = txt.value.trim() || (type === 'hearts' ? 'Сюрприз от ведущего' : 'Сюрприз от ведущего'); r.goal = { type, n, text: t, base: type === 'hearts' ? lv.st.hearts : lv.st.pts, cur: 0, done: false }; close(); liveRoomSend(lv, true); const msg = { name: '🎯', text: ' Новая цель: ' + n + (type === 'hearts' ? ' ❤️' : ' очков 🎁') + ' — ' + t }; lv.ui.addCm(msg.name, msg.text); lv.ch.send({ type: 'broadcast', event: 'cm', payload: msg }); } }, r.goal ? 'Обновить цель' : 'Поставить цель'),
+      r.goal ? el('button', { class: 'btn ghost', style: 'margin-top:8px', onclick: () => { r.goal = null; close(); liveRoomSend(lv, true); } }, 'Убрать цель') : null);
+  });
+}
+function liveModDo(lv, act, uid, name, by) {
+  const r = lv.room, ui = lv.ui, nm = (name || profiles.get(uid)?.display_name || 'Зритель');
+  const say = t => { const msg = { name: '🛡', text: ' ' + t }; ui.addCm(msg.name, msg.text); lv.ch.send({ type: 'broadcast', event: 'cm', payload: msg }); };
+  if (act === 'mute' && !r.muted.includes(uid)) { r.muted.push(uid); say(nm + ' в муте' + (by ? ' (модер ' + by.split(' ')[0] + ')' : '')); }
+  else if (act === 'unmute') { r.muted = r.muted.filter(x => x !== uid); say(nm + ' снова может писать'); }
+  else if (act === 'kick') { if (!r.banned.includes(uid)) r.banned.push(uid); lv.ch.send({ type: 'broadcast', event: 'sig', payload: { t: 'kick', to: uid, from: me.id } }); const pc = lv.peers.get(uid); if (pc) { try { pc.close(); } catch {} lv.peers.delete(uid); } say(nm + ' удалён из эфира' + (by ? ' (модер ' + by.split(' ')[0] + ')' : '')); }
+  else if (act === 'unban') { r.banned = r.banned.filter(x => x !== uid); say(nm + ' может вернуться'); }
+  else if (act === 'mod' && !r.mods.includes(uid)) { r.mods.push(uid); say(nm + ' теперь модератор 🛡'); }
+  else if (act === 'unmod') { r.mods = r.mods.filter(x => x !== uid); }
+  liveRoomSend(lv, true); hap(10);
+}
+function liveModSheet(lv, uid, name, viaMod) {
+  if (uid === me.id) return;
+  const r = lv ? lv.room : (watching && watching.ui.room) || {};
+  const muted = (r.muted || []).includes(uid), isMod = (r.mods || []).includes(uid);
+  const act = a => lv ? liveModDo(lv, a, uid, name) : viaMod(a);
+  sheet((s, close) => s.append(el('h3', {}, '🛡 ' + name), el('div', { class: 'menu' },
+    el('button', { onclick: () => { close(); act(muted ? 'unmute' : 'mute'); } }, muted ? '🔊 Вернуть чат' : '🔇 Заглушить (не сможет писать)'),
+    el('button', { class: 'red', onclick: () => { close(); act('kick'); } }, '🚫 Выгнать из эфира'),
+    lv ? el('button', { onclick: () => { close(); act(isMod ? 'unmod' : 'mod'); } }, isMod ? '➖ Снять модератора' : '🛡 Сделать модератором') : null,
+    el('button', { onclick: () => { close(); openProfile(uid); } }, '👤 Профиль'),
+    el('button', { onclick: close }, 'Отмена'))));
+}
+function liveModPanel(lv) {
+  const r = lv.room; const ids = [...new Set([...r.mods, ...r.muted, ...r.banned])];
+  fetchProfiles(ids).then(() => sheet((s, close) => {
+    const row = (uid, tag, act, lbl) => { const p = profiles.get(uid) || {}; return el('div', { class: 'prow' }, avatar(p.display_name, p.avatar_url, 36), el('div', { class: 'tx' }, el('b', {}, p.display_name || '…'), el('small', {}, tag)), el('button', { class: 'co-k', onclick: () => { liveModDo(lv, act, uid, p.display_name); close(); setTimeout(() => liveModPanel(lv), 300); } }, lbl)); };
+    s.append(el('h3', {}, '🛡 Модерация эфира'),
+      el('div', { class: 'menu' }, el('button', { onclick: () => { r.filter = !r.filter; liveRoomSend(lv, true); close(); toast(r.filter ? '🤬→*** Фильтр мата включён' : 'Фильтр мата выключен'); } }, (r.filter ? '✅' : '⬜') + ' Фильтр мата в чате')),
+      el('div', { class: 'hint' }, 'Тапни по имени в чате эфира — заглушить, выгнать или сделать модератором. Модеры тоже могут глушить и выгонять'),
+      r.mods.length ? el('div', { class: 'mu-sec' }, '🛡 Модераторы') : null, ...r.mods.map(u => row(u, 'модератор', 'unmod', 'Снять')),
+      r.muted.length ? el('div', { class: 'mu-sec' }, '🔇 В муте') : null, ...r.muted.map(u => row(u, 'не может писать', 'unmute', 'Вернуть')),
+      r.banned.length ? el('div', { class: 'mu-sec' }, '🚫 Выгнаны') : null, ...r.banned.map(u => row(u, 'не может зайти', 'unban', 'Пустить')),
+      el('button', { class: 'btn', style: 'margin-top:10px', onclick: close }, 'Готово'));
+  }));
+}
+function liveTools(lv) {
+  if (!lv) return;
+  const canScreen = !!(navigator.mediaDevices && navigator.mediaDevices.getDisplayMedia) && lv.kind !== 'audio';
+  sheet((s, close) => s.append(el('h3', {}, '⚙️ Эфир'), el('div', { class: 'menu lv-tools' },
+    el('button', { onclick: () => { close(); setTimeout(() => liveGoalSheet(lv), 30); } }, '🎯 Цель эфира', el('small', {}, lv.room.goal ? lv.room.goal.text : 'шкала сердечек или подарков')),
+    el('button', { onclick: () => { close(); setTimeout(() => liveTopSheet(lv.room), 30); } }, '🏆 Топ дарителей', el('small', {}, lv.room.top.length ? '👑 ' + lv.room.top[0].name : 'пока пусто')),
+    el('button', { onclick: () => { close(); setTimeout(() => liveModPanel(lv), 30); } }, '🛡 Модерация', el('small', {}, 'мут, бан, модеры, фильтр мата')),
+    el('button', { onclick: () => { close(); setTimeout(() => liveMusicPick(lv, lv.ch, lv.ui), 30); } }, '🎵 Музыка в эфир', el('small', {}, lv.mus ? 'играет: ' + lv.mus.t.title : 'фоновый трек для всех зрителей')),
+    lv.kind !== 'audio' ? el('button', { onclick: () => { close(); lv.fxw.classList.toggle('hidden'); } }, '✨ Фильтры и маски', el('small', {}, lv.fxw.classList.contains('hidden') ? 'показать панель' : 'спрятать панель')) : null,
+    lv.kind !== 'audio' ? el('button', { onclick: () => { close(); lv.scr ? liveScreenStop(lv) : liveScreenStart(lv, canScreen); } }, lv.scr ? '⏹ Остановить показ экрана' : '🖥 Показать экран', el('small', {}, canScreen ? 'зрители увидят твой экран, ты — в кружке' : 'работает с компьютера')) : null,
+    el('button', { onclick: close }, 'Закрыть'))));
+}
+async function liveScreenStart(lv, can) {
+  if (!can) { toast('На телефоне браузер не даёт показывать экран. Запусти эфир с компьютера'); return; }
+  try {
+    const st = await navigator.mediaDevices.getDisplayMedia({ video: { frameRate: 25 }, audio: false });
+    const v = document.createElement('video'); v.muted = true; v.playsInline = true; v.srcObject = st; await v.play().catch(() => {});
+    lv.scr = st; lv.pipe.scr = v; if (lv.setMirror) lv.setMirror('environment');
+    st.getVideoTracks()[0].onended = () => liveScreenStop(lv);
+    const msg = { name: '🖥', text: ' Ведущий показывает экран' }; lv.ui.addCm(msg.name, msg.text); lv.ch.send({ type: 'broadcast', event: 'cm', payload: msg });
+  } catch { toast('Показ экрана отменён'); }
+}
+function liveScreenStop(lv) { if (!lv.scr) return; try { lv.scr.getTracks().forEach(t => t.stop()); } catch {} lv.scr = null; lv.pipe.scr = null; if (lv.setMirror && lv.pipe) lv.setMirror(lv.pipe.facing); }
+async function audioPipe() {
+  const mic = await navigator.mediaDevices.getUserMedia({ audio: { echoCancellation: true, noiseSuppression: true, autoGainControl: true } });
+  const P = { facing: 'environment', fx: 'none', mic, alive: true, audioOnly: true };
+  const c = document.createElement('canvas'); c.width = 720; c.height = 1080; const x = c.getContext('2d');
+  const AC = new (window.AudioContext || window.webkitAudioContext)(); const an = AC.createAnalyser(); an.fftSize = 256; AC.createMediaStreamSource(mic).connect(an); const buf = new Uint8Array(an.frequencyBinCount);
+  let img = null; if (me.avatar_url) { const i = new Image(); i.crossOrigin = 'anonymous'; i.onload = () => img = i; i.src = me.avatar_url; }
+  const nm = me.display_name || '', ini = nm.split(' ').map(w => w[0] || '').join('').slice(0, 2).toUpperCase();
+  let lvl = 0, t = 0;
+  const draw = () => {
+    if (!P.alive) return; t += .016;
+    an.getByteFrequencyData(buf); let s2 = 0; for (let i = 2; i < 40; i++) s2 += buf[i]; lvl = lvl * .7 + (s2 / 38 / 255) * .3;
+    const W = c.width, H = c.height, g = x.createLinearGradient(0, 0, W, H); g.addColorStop(0, '#1e1b4b'); g.addColorStop(.5, '#4c1d95'); g.addColorStop(1, '#831843'); x.fillStyle = g; x.fillRect(0, 0, W, H);
+    for (let k = 0; k < 3; k++) { x.beginPath(); x.fillStyle = ['#ec489922', '#8b5cf622', '#f59e0b18'][k]; x.arc(W / 2 + Math.cos(t * .4 + k * 2) * 160, H / 2 + Math.sin(t * .3 + k) * 220, 260, 0, Math.PI * 2); x.fill(); }
+    const cx = W / 2, cy = H * .44, R = 150;
+    for (let k = 3; k >= 1; k--) { x.beginPath(); x.fillStyle = 'rgba(255,255,255,' + (.05 + lvl * .12) + ')'; x.arc(cx, cy, R + k * (22 + lvl * 70), 0, Math.PI * 2); x.fill(); }
+    x.save(); x.beginPath(); x.arc(cx, cy, R, 0, Math.PI * 2); x.clip();
+    if (img) { const m = Math.min(img.width, img.height); x.drawImage(img, (img.width - m) / 2, (img.height - m) / 2, m, m, cx - R, cy - R, R * 2, R * 2); } else { const gg = x.createLinearGradient(cx - R, cy - R, cx + R, cy + R); gg.addColorStop(0, '#8b5cf6'); gg.addColorStop(1, '#ec4899'); x.fillStyle = gg; x.fillRect(cx - R, cy - R, R * 2, R * 2); x.fillStyle = '#fff'; x.font = '800 110px system-ui,sans-serif'; x.textAlign = 'center'; x.textBaseline = 'middle'; x.fillText(ini, cx, cy + 6); }
+    x.restore();
+    x.textAlign = 'center'; x.textBaseline = 'alphabetic'; x.fillStyle = '#fff'; x.font = '800 52px system-ui,sans-serif'; x.fillText(nm.slice(0, 22), cx, cy + R + 120);
+    x.fillStyle = '#ffffffb0'; x.font = '700 32px system-ui,sans-serif'; x.fillText('🎙 АУДИО-ЭФИР', cx, cy + R + 175);
+    const bars = 32, bw = 12, gap = 8, tw = bars * (bw + gap); for (let i = 0; i < bars; i++) { const v = buf[2 + i * 2] / 255, h = 8 + v * 120; x.fillStyle = 'rgba(255,255,255,' + (.35 + v * .6) + ')'; x.fillRect(cx - tw / 2 + i * (bw + gap), H * .86 - h / 2, bw, h); }
+    P.raf = requestAnimationFrame(draw);
+  };
+  draw();
+  P.stream = new MediaStream([...c.captureStream(20).getVideoTracks(), ...mic.getAudioTracks()]); P.canvas = c;
+  P.setFacing = async () => { throw new Error('no cam'); };
+  P.stop = () => { P.alive = false; cancelAnimationFrame(P.raf); [P.mic, P.stream].forEach(st => st && st.getTracks().forEach(t2 => t2.stop())); try { AC.close().catch(() => {}); } catch {} };
+  return P;
+}
+function liveKindAsk() {
+  sheet((s, close) => s.append(el('h3', { style: 'text-align:center' }, '🔴 Начать эфир'), el('div', { class: 'lv-kind' },
+    el('button', { onclick: () => { close(); startLive('video'); } }, el('i', {}, '📹'), 'Видео', el('small', {}, 'камера + звук')),
+    el('button', { onclick: () => { close(); startLive('audio'); } }, el('i', {}, '🎙'), 'Только голос', el('small', {}, 'как радио или подкаст'))),
+    el('div', { class: 'hint', style: 'text-align:center' }, 'В эфире: ⚙️ — цель, модерация, топ дарителей, фильтры и показ экрана')));
+}
+function liveStatsSheet(lv, after) {
+  const st = lv.st, dur = Math.max(1, Math.round(((st.t1 || Date.now()) - st.t0) / 1000)), mm = Math.floor(dur / 60), ss = dur % 60;
+  const top = lv.room.top && lv.room.top[0];
+  sheet((s, close) => s.append(el('h3', { style: 'text-align:center' }, '📈 Итоги эфира'),
+    el('div', { class: 'lv-stats' },
+      el('div', {}, el('b', {}, (mm ? mm + 'м ' : '') + ss + 'с'), el('small', {}, '⏱ длительность')),
+      el('div', {}, el('b', {}, String(st.peak)), el('small', {}, '👁 пик зрителей')),
+      el('div', {}, el('b', {}, String(st.uniq.size)), el('small', {}, '👥 всего заходило')),
+      el('div', {}, el('b', {}, String(st.hearts)), el('small', {}, '❤️ сердечек')),
+      el('div', {}, el('b', {}, String(st.gifts)), el('small', {}, '🎁 подарков · ' + st.pts + ' очк.')),
+      el('div', {}, el('b', {}, String(st.cms + st.rx)), el('small', {}, '💬 сообщений и реакций'))),
+    top ? el('div', { class: 'lv-don', style: 'background:#f59e0b1a;border-radius:16px;padding:10px 12px;margin-bottom:10px' }, el('span', { class: 'n' }, '👑'), el('b', {}, 'Лучший даритель: ' + top.name), el('span', {}, top.pts + ' ✦')) : null,
+    lv.room.goal ? el('div', { class: 'hint', style: 'text-align:center' }, (lv.room.goal.done ? '✅ Цель выполнена: ' : '🎯 Цель не добита: ') + lv.room.goal.text) : null,
+    el('button', { class: 'btn', onclick: close }, 'Круто')), () => setTimeout(after, 250));
 }
 
 /* ref capture */
