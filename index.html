@@ -1717,6 +1717,17 @@ body.has-mp .tabpane .list,body.has-mp #muList{padding-bottom:200px!important}
 .mfs .bot button i{width:46px;height:46px;border-radius:50%;background:#ffffff16;display:grid;place-items:center;font-style:normal;font-size:19px}
 .mfs .q{position:absolute;inset:auto 0 0 0;max-height:70%;overflow:auto;background:rgba(12,10,24,.94);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-radius:24px 24px 0 0;padding:14px 8px calc(16px + var(--safe-b));z-index:3;animation:sheetUp .3s cubic-bezier(.2,1,.3,1)}
 .mfs .q h4{margin:0 10px 8px;font-size:16px}
+
+/* ===== 2.21 all music ===== */
+.mu-row .pv{font-size:10px;font-weight:900;padding:1px 6px;border-radius:7px;background:#ffffff1c;margin-left:4px;vertical-align:1px}
+.mu-row .my{background:linear-gradient(135deg,#10b981,#06b6d4);color:#fff}
+.mu-up{margin:4px 14px 10px;display:flex;gap:8px}
+.mu-up button{flex:1}
+.mfs .full{margin:4px 0 0;padding:12px;border-radius:18px;background:#ffffff14;text-align:center}
+.mfs .full small{display:block;font-size:12px;opacity:.75;margin-bottom:8px}
+.mfs .full .svc{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+.mfs .full .svc a{padding:8px 12px;border-radius:12px;font-weight:800;font-size:13px;color:#fff;text-decoration:none}
+.mu-tag{display:inline-block;font-size:10.5px;font-weight:900;padding:2px 7px;border-radius:8px;margin-left:6px;background:#ffffff1c;text-transform:none;letter-spacing:0}
 </style>
 </head>
 <body>
@@ -2654,7 +2665,7 @@ async function openGroupInfo(c) {
 
 
 /* ================= SETTINGS & UPDATES ================= */
-const APP_VERSION = '2.20.1';
+const APP_VERSION = '2.21.0';
 const TK1 = (() => { const t = document.createElement('template'); t.innerHTML = '<svg viewBox="0 0 16 11" width="15" height="11"><path d="M1.5 6l3 3 6.5-7.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>'; return t.content; })();
 const TK2 = (() => { const t = document.createElement('template'); t.innerHTML = '<svg viewBox="0 0 20 11" width="18" height="11"><path d="M1.5 6l3 3 6.5-7.5M8 8.5l.8.6 6.7-7.6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>'; return t.content; })();
 const APP_THEMES = {
@@ -7593,16 +7604,18 @@ const mus = { a: new Audio(), q: [], i: -1, shuffle: false, repeat: false, genre
 mus.a.preload = 'auto';
 const muArt = t => (t && t.artwork && (t.artwork['480x480'] || t.artwork['150x150'])) || '';
 const muArtS = t => (t && t.artwork && (t.artwork['150x150'] || t.artwork['480x480'])) || '';
-const muStream = t => AUD + '/tracks/' + t.id + '/stream?' + APPN;
+const muStream = t => t.src === 'dz' ? (t.preview || '') : t.src === 'my' ? t.url : AUD + '/tracks/' + t.id + '/stream?' + APPN;
 const muArtist = t => (t && t.user && t.user.name) || '';
 const muDur = s => { s = Math.round(s || 0); return Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0'); };
-const muMini = t => ({ id: t.id, title: t.title, duration: t.duration, permalink: t.permalink, user: { name: muArtist(t) }, artwork: t.artwork ? { '150x150': muArtS(t), '480x480': muArt(t) } : null });
+const muMini = t => ({ id: t.id, src: t.src, dz: t.dz, url: t.url, preview: t.preview, title: t.title, duration: t.duration, permalink: t.permalink, user: { name: muArtist(t), id: t.user && t.user.id }, artwork: t.artwork ? { '150x150': muArtS(t), '480x480': muArt(t) } : null });
 async function muGet(path) { const r = await fetch(AUD + path + (path.includes('?') ? '&' : '?') + APPN); if (!r.ok) throw new Error('audius ' + r.status); const j = await r.json(); return j.data; }
 const muFavs = () => { try { return JSON.parse(localStorage.getItem('viks-mfav') || '[]'); } catch { return []; } };
 const muIsFav = t => muFavs().some(x => x.id === t.id);
 function muToggleFav(t) { let f = muFavs(); if (f.some(x => x.id === t.id)) f = f.filter(x => x.id !== t.id); else { f.unshift(muMini(t)); hap(10); } try { localStorage.setItem('viks-mfav', JSON.stringify(f.slice(0, 200))); } catch {} muUi(); if (curTab === 'Music') renderMusic(true); }
-function muPlay(list, i) {
+async function muPlay(list, i) {
   mus.q = list; mus.i = i; const t = list[i]; if (!t) return;
+  if (t.src === 'dz' && (!t.preview || !t._fresh || Date.now() - t._fresh > 36e5)) { try { const j = await dzGet('/track/' + t.dz); if (j && j.preview) { t.preview = j.preview; t._fresh = Date.now(); } } catch {} if (mus.q !== list || mus.i !== i) return; }
+  if (!muStream(t)) { toast('Этот трек недоступен для прослушивания'); return; }
   mus.a.src = muStream(t); mus.a.play().catch(() => toast('Нажми ▶️ ещё раз'));
   if ('mediaSession' in navigator) { try { navigator.mediaSession.metadata = new MediaMetadata({ title: t.title, artist: muArtist(t), album: 'Viks · Audius', artwork: muArt(t) ? [{ src: muArt(t), sizes: '480x480', type: 'image/jpeg' }] : [] }); } catch {} }
   muUi();
@@ -7649,15 +7662,39 @@ function muUi() {
 }
 function muRow(t, list, i) {
   return el('div', { class: 'mu-row', 'data-id': String(t.id), onclick: () => muPlay(list, i) }, el('span', { class: 'n' }, String(i + 1)), el('img', { src: muArtS(t), loading: 'lazy', alt: '' }),
-    el('div', { class: 'tx' }, el('b', {}, t.title), el('small', {}, el('span', { class: 'ar', onclick: e => { if (!t.user || !t.user.id) return; e.stopPropagation(); muArtistPage(t.user); } }, muArtist(t)), ' · ' + muDur(t.duration))),
+    el('div', { class: 'tx' }, el('b', {}, t.title, t.src === 'dz' ? el('span', { class: 'pv' }, '30с') : t.src === 'my' ? el('span', { class: 'pv my' }, 'моё') : null), el('small', {}, el('span', { class: 'ar', onclick: e => { if (!t.user || !t.user.id || t.src) return; e.stopPropagation(); muArtistPage(t.user); } }, muArtist(t)), t.src === 'dz' ? '' : ' · ' + muDur(t.duration))),
+    t.src === 'my' ? el('button', { class: 'lk', title: 'Удалить', onclick: async e => { e.stopPropagation(); if (!confirm('Удалить «' + t.title + '» из своей музыки?')) return; await sb.from('user_music').delete().eq('id', t.myId); delete muCache['my:']; renderMusic(true); } }, '🗑') :
     el('button', { class: 'lk', onclick: e => { e.stopPropagation(); muToggleFav(t); e.currentTarget.textContent = muIsFav(t) ? '❤️' : '🤍'; } }, muIsFav(t) ? '❤️' : '🤍'));
 }
-const MU_MODES = [['week', '🔥 Неделя'], ['month', '📅 Месяц'], ['allTime', '🏆 Хиты всех времён'], ['under', '🌱 Новые таланты'], ['pl', '💿 Плейлисты']];
-let muCache = {}, muSeq = 0; mus.mode = 'week';
+const MU_MODES = [['ru', '🇷🇺 Русский топ'], ['world', '🌍 Мировой топ'], ['my', '📁 Моя музыка'], ['week', '🔥 Неделя'], ['month', '📅 Месяц'], ['allTime', '🏆 Хиты всех времён'], ['under', '🌱 Новые таланты'], ['pl', '💿 Плейлисты']];
+let muCache = {}, muSeq = 0; mus.mode = 'ru';
 const muClean = d => (d || []).filter(t => t && t.id && t.is_streamable !== false && !(t.access && t.access.stream === false));
+const dzNorm = r => ({ id: 'dz' + r.id, dz: r.id, src: 'dz', title: r.title_short || r.title, duration: 30, full: r.duration, preview: r.preview, _fresh: Date.now(), user: { name: (r.artist && r.artist.name) || '' }, artwork: r.album ? { '150x150': r.album.cover_medium, '480x480': r.album.cover_big || r.album.cover_medium } : null, link: r.link });
+let dzN = 0;
+function dzGet(path) {
+  return new Promise((ok, bad) => {
+    const cb = '__dz' + (++dzN) + '_' + Date.now(), sc = document.createElement('script');
+    const done = () => { try { delete window[cb]; } catch { window[cb] = undefined; } sc.remove(); clearTimeout(to); };
+    const to = setTimeout(() => { done(); bad(new Error('timeout')); }, 12000);
+    window[cb] = j => { done(); if (!j || j.error) bad(new Error('dz')); else ok(j); };
+    sc.onerror = () => { done(); bad(new Error('net')); };
+    sc.src = 'https://api.deezer.com' + path + (path.includes('?') ? '&' : '?') + 'output=jsonp&callback=' + cb;
+    document.head.append(sc);
+  });
+}
+let dzRuId = null;
 async function muFetch(off) {
   const g = mus.genre ? '&genre=' + encodeURIComponent(mus.genre) : '';
-  if (mus.query) return muClean(await muGet('/tracks/search?query=' + encodeURIComponent(mus.query) + '&limit=50&offset=' + off));
+  if (mus.query) {
+    const [dz, au] = await Promise.all([dzGet('/search?q=' + encodeURIComponent(mus.query) + '&limit=25&index=' + Math.floor(off / 2)).then(j => (j.data || []).filter(x => x.readable !== false && x.preview).map(dzNorm)).catch(() => []), muGet('/tracks/search?query=' + encodeURIComponent(mus.query) + '&limit=25&offset=' + Math.floor(off / 2)).then(muClean).catch(() => [])]);
+    const out = [...dz, ...au]; out._n = 50; return out;
+  }
+  if (mus.mode === 'my') { if (off) return []; const { data } = await sb.from('user_music').select('*').eq('user_id', me.id).order('created_at', { ascending: false }).limit(500); return (data || []).map(r => ({ id: 'my' + r.id, myId: r.id, src: 'my', url: r.url, title: r.title, duration: r.duration || 0, user: { name: r.artist || '' }, artwork: r.cover ? { '150x150': r.cover, '480x480': r.cover } : null })); }
+  if (mus.mode === 'world') { const j = await dzGet('/playlist/3155776842/tracks?limit=50&index=' + off); const d = (j.data || []).filter(x => x.preview).map(dzNorm); d._n = (j.data || []).length; return d; }
+  if (mus.mode === 'ru') {
+    if (!dzRuId) { try { const y = new Date().getFullYear(); const j = await dzGet('/search/playlist?q=' + encodeURIComponent('russian top ' + y) + '&limit=10'); const pl = (j.data || []).filter(x => x.nb_tracks >= 40).sort((a, b) => b.nb_tracks - a.nb_tracks)[0]; dzRuId = pl ? pl.id : 13640699121; } catch { dzRuId = 13640699121; } }
+    const j = await dzGet('/playlist/' + dzRuId + '/tracks?limit=50&index=' + off); const d = (j.data || []).filter(x => x.preview).map(dzNorm); d._n = (j.data || []).length; return d;
+  }
   if (mus.mode === 'under') return muClean(await muGet('/tracks/trending/underground?limit=50&offset=' + off));
   if (mus.mode === 'pl') return (await muGet('/playlists/trending?limit=30&offset=' + off + (mus.genre ? '' : ''))) || [];
   return muClean(await muGet('/tracks/trending?time=' + mus.mode + '&limit=50&offset=' + off + g));
@@ -7671,30 +7708,32 @@ async function renderMusic(soft) {
     let qt = 0; inp.oninput = () => { clearTimeout(qt); qt = setTimeout(() => { mus.query = inp.value.trim(); renderMusic(true); }, 450); };
     const md = el('div', { class: 'mu-modes' }), gb = el('div', { class: 'mu-g' });
     const drawM = () => { md.innerHTML = ''; MU_MODES.forEach(([k, l]) => md.append(el('button', { class: mus.mode === k && !mus.query ? 'on' : '', onclick: () => { mus.mode = k; mus.query = ''; inp.value = ''; drawM(); drawG(); renderMusic(true); } }, l))); };
-    const drawG = () => { gb.innerHTML = ''; gb.style.display = mus.mode === 'under' || mus.mode === 'pl' ? 'none' : ''; MU_GENRES.forEach(([k, l]) => gb.append(el('button', { class: mus.genre === k ? 'on' : '', onclick: () => { mus.genre = k; mus.query = ''; inp.value = ''; drawM(); drawG(); renderMusic(true); } }, l))); };
+    const drawG = () => { gb.innerHTML = ''; gb.style.display = ['under', 'pl', 'ru', 'world', 'my'].includes(mus.mode) ? 'none' : ''; MU_GENRES.forEach(([k, l]) => gb.append(el('button', { class: mus.genre === k ? 'on' : '', onclick: () => { mus.genre = k; mus.query = ''; inp.value = ''; drawM(); drawG(); renderMusic(true); } }, l))); };
     drawM(); drawG();
-    box.append(el('div', { class: 'mu-h' }, el('h1', {}, 'Музыка'), el('small', {}, 'миллион+ треков · Audius')), el('div', { class: 'mu-s' }, inp), md, gb, el('div', { id: 'muBody' }));
+    box.append(el('div', { class: 'mu-h' }, el('h1', {}, 'Музыка'), el('small', {}, 'все артисты мира')), el('div', { class: 'mu-s' }, inp), md, gb, el('div', { id: 'muBody' }));
     if (!box._inf) { box._inf = true; box.addEventListener('scroll', () => { if (box.scrollTop + box.clientHeight > box.scrollHeight - 700) muLoadMore(); }, { passive: true }); }
   }
   const body = $('#muBody'); if (!body) return;
   const favs = muFavs();
-  const key = mus.query ? 'q:' + mus.query : mus.mode + ':' + (mus.mode === 'under' || mus.mode === 'pl' ? '' : mus.genre);
+  const key = mus.query ? 'q:' + mus.query : mus.mode + ':' + (['under', 'pl', 'ru', 'world', 'my'].includes(mus.mode) ? '' : mus.genre);
   body.innerHTML = '';
   if (favs.length && !mus.query && mus.mode !== 'pl') body.append(el('div', { class: 'mu-sec' }, '❤️ Любимое · ' + favs.length, el('span', { style: 'text-transform:none;letter-spacing:0;font-size:12px;color:var(--accent2);cursor:pointer', onclick: () => muPlay(favs, 0) }, '▶ Слушать всё')), el('div', { class: 'mu-favs' }, favs.slice(0, 20).map((t, i) => el('div', { class: 'mu-tile', onclick: () => muPlay(favs, i) }, el('img', { src: muArt(t), loading: 'lazy', alt: '' }), el('b', {}, t.title), el('small', {}, muArtist(t))))));
   const mname = (MU_MODES.find(m => m[0] === mus.mode) || [, ''])[1];
-  body.append(el('div', { class: 'mu-sec' }, mus.query ? '🔎 «' + mus.query + '»' : mname + (mus.genre && mus.mode !== 'under' && mus.mode !== 'pl' ? ' · ' + MU_GENRES.find(g => g[0] === mus.genre)[1] : '')));
+  body.append(el('div', { class: 'mu-sec' }, mus.query ? '🔎 «' + mus.query + '»' : mname + (mus.genre && !['under', 'pl', 'ru', 'world', 'my'].includes(mus.mode) ? ' · ' + MU_GENRES.find(g => g[0] === mus.genre)[1] : '')));
+  if (mus.mode === 'my' && !mus.query) body.append(el('div', { class: 'mu-up' }, el('button', { class: 'btn', onclick: muUpload }, '➕ Загрузить треки')), el('div', { class: 'hint', style: 'margin:-4px 16px 8px;font-size:12px' }, 'mp3/m4a с телефона, до 50 МБ. Играют целиком, видишь только ты (пока не скинешь в чат)'));
+  if ((mus.mode === 'ru' || mus.mode === 'world') && !mus.query) body.append(el('div', { class: 'hint', style: 'margin:-2px 16px 8px;font-size:12px' }, '▶ 30-секундный отрывок · полностью — в ВК, Яндекс, Spotify или Apple Music (кнопка в плеере)'));
   const lst = el('div', { id: 'muLst', class: mus.mode === 'pl' && !mus.query ? 'mu-pls' : '' }); body.append(lst);
   let c = muCache[key];
   if (!c) {
     lst.append(skelRows(6));
-    try { const d = await muFetch(0); c = muCache[key] = { items: d, off: d.length, end: d.length < 20, busy: false }; }
+    try { const d = await muFetch(0); const n = d._n != null ? d._n : d.length; c = muCache[key] = { items: d, off: n, end: n < 20 || mus.mode === 'my' && !mus.query, busy: false }; }
     catch { if (seq !== muSeq) return; lst.innerHTML = ''; lst.append(el('div', { class: 'empty' }, 'Музыка не загрузилась. Проверь интернет'), el('button', { class: 'btn ghost', style: 'max-width:220px;margin:0 auto;display:block', onclick: () => renderMusic(true) }, '🔄 Ещё раз')); return; }
   }
   if (seq !== muSeq) return;
   lst.innerHTML = ''; mus.cur = { key, lst };
-  if (!c.items.length) { lst.append(el('div', { class: 'empty' }, 'Ничего не нашлось 🤷')); return; }
+  if (!c.items.length) { lst.append(el('div', { class: 'empty' }, mus.mode === 'my' && !mus.query ? 'Пока пусто. Загрузи свои треки ⬆' : 'Ничего не нашлось 🤷')); return; }
   muDrawItems(c, 0);
-  body.append(el('div', { class: 'mu-more', id: 'muMore' }, c.end ? 'Это всё 🎧 · музыка от артистов Audius' : 'Листай дальше — подгружу ещё ⬇'));
+  body.append(el('div', { class: 'mu-more', id: 'muMore' }, c.end ? 'Это всё 🎧' : 'Листай дальше — подгружу ещё ⬇'));
   muUi();
 }
 function muDrawItems(c, from) {
@@ -7705,7 +7744,7 @@ function muDrawItems(c, from) {
 async function muLoadMore() {
   if (!mus.cur || curTab !== 'Music') return; const c = muCache[mus.cur.key]; if (!c || c.end || c.busy) return;
   c.busy = true; const mm = $('#muMore'); if (mm) mm.textContent = '⏳ Гружу ещё…';
-  try { const d = await muFetch(c.off); const seen = new Set(c.items.map(x => x.id)); const nd = d.filter(x => !seen.has(x.id)); const from = c.items.length; c.items.push(...nd); c.off += d.length; if (d.length < 20 || c.off > 2000) c.end = true; muDrawItems(c, from); muUi(); }
+  try { const d = await muFetch(c.off); const n = d._n != null ? d._n : d.length; const seen = new Set(c.items.map(x => x.id)); const nd = d.filter(x => !seen.has(x.id)); const from = c.items.length; c.items.push(...nd); c.off += n; if (n < 20 || c.off > 2000) c.end = true; muDrawItems(c, from); muUi(); }
   catch {} c.busy = false; const m2 = $('#muMore'); if (m2) m2.textContent = c.end ? 'Это всё 🎧 · музыка от артистов Audius' : 'Листай дальше — подгружу ещё ⬇';
 }
 async function muListSheet(title, sub, art, loader) {
@@ -7741,16 +7780,17 @@ function muFull() {
     shb = el('button', { class: 'sm' + (mus.shuffle ? ' on' : ''), html: MI.shuf, onclick: () => { mus.shuffle = !mus.shuffle; shb.classList.toggle('on', mus.shuffle); hap(6); } });
     rpb = el('button', { class: 'sm' + (mus.repeat ? ' on' : ''), html: MI.rep, onclick: () => { mus.repeat = !mus.repeat; rpb.classList.toggle('on', mus.repeat); hap(6); } });
     ov.append(el('div', { class: 'bg', style: 'background-image:url(' + muArt(t) + ')' }), el('div', { class: 'shade' }),
-      el('div', { class: 'top2' }, el('button', { html: MI.down, onclick: () => ov._close() }), el('div', { class: 'lbl' }, 'Сейчас играет', el('b', {}, mus.q.length > 1 ? (mus.i + 1) + ' из ' + mus.q.length : 'Viks · Audius')), el('button', { html: MI.list, onclick: () => queue() })),
+      el('div', { class: 'top2' }, el('button', { html: MI.down, onclick: () => ov._close() }), el('div', { class: 'lbl' }, t.src === 'dz' ? 'Отрывок 30 сек' : t.src === 'my' ? 'Моя музыка' : 'Сейчас играет', el('b', {}, mus.q.length > 1 ? (mus.i + 1) + ' из ' + mus.q.length : 'Viks')), el('button', { html: MI.list, onclick: () => queue() })),
       el('div', { class: 'mid' }, art,
-        el('div', { class: 'info' }, el('div', { class: 'tx' }, el('h2', {}, t.title), el('div', { class: 'ar', onclick: () => t.user && t.user.id && muArtistPage(t.user) }, muArtist(t) + (t.user && t.user.id ? ' ›' : ''))), lk),
+        el('div', { class: 'info' }, el('div', { class: 'tx' }, el('h2', {}, t.title), el('div', { class: 'ar', onclick: () => !t.src && t.user && t.user.id && muArtistPage(t.user) }, muArtist(t) + (!t.src && t.user && t.user.id ? ' ›' : ''))), lk),
         prog, el('div', { class: 'tm2' }, tcur, tdur),
+        t.src === 'dz' ? el('div', { class: 'full' }, el('small', {}, '▶ Это отрывок 30 сек. Полностью:'), el('div', { class: 'svc' }, [['ВК Музыка', '#0077ff', 'https://vk.com/audio?q='], ['Яндекс', '#fc3f1d', 'https://music.yandex.ru/search?text='], ['Spotify', '#1db954', 'https://open.spotify.com/search/'], ['Apple', '#fa2d48', 'https://music.apple.com/search?term=']].map(([n, c, u]) => el('a', { href: u + encodeURIComponent(muArtist(t) + ' ' + t.title), target: '_blank', rel: 'noopener', style: 'background:' + c }, n)))) : null,
         el('div', { class: 'ctl2' }, shb, el('button', { html: MI.prev, onclick: muPrev }), ppb, el('button', { html: MI.next, onclick: () => muNext() }), rpb)),
       el('div', { class: 'bot' },
         el('button', { onclick: () => { ov._close(); setTimeout(() => muShare(t), 320); } }, el('i', {}, '📤'), 'В чат'),
-        el('button', { onclick: async () => { const { error } = await sb.from('profiles').update({ music_url: muStream(t), music_title: (t.title + ' — ' + muArtist(t)).slice(0, 120) }).eq('id', me.id); if (error) { toast('Не вышло'); return; } me.music_url = muStream(t); me.music_title = t.title + ' — ' + muArtist(t); toast('🎵 Трек стоит в профиле'); } }, el('i', {}, '👤'), 'В профиль'),
-        el('button', { onclick: () => t.user && t.user.id ? muArtistPage(t.user) : null }, el('i', {}, '🎤'), 'Артист'),
-        el('button', { onclick: () => t.permalink && window.open('https://audius.co' + t.permalink, '_blank') }, el('i', {}, '↗'), 'Audius')));
+        el('button', { onclick: async () => { if (t.src === 'dz') { toast('Отрывки нельзя ставить в профиль — загрузи трек в «Мою музыку»'); return; } const { error } = await sb.from('profiles').update({ music_url: muStream(t), music_title: (t.title + ' — ' + muArtist(t)).slice(0, 120) }).eq('id', me.id); if (error) { toast('Не вышло'); return; } me.music_url = muStream(t); me.music_title = t.title + ' — ' + muArtist(t); toast('🎵 Трек стоит в профиле'); } }, el('i', {}, '👤'), 'В профиль'),
+        !t.src ? el('button', { onclick: () => t.user && t.user.id ? muArtistPage(t.user) : null }, el('i', {}, '🎤'), 'Артист') : null,
+        !t.src ? el('button', { onclick: () => t.permalink && window.open('https://audius.co' + t.permalink, '_blank') }, el('i', {}, '↗'), 'Audius') : t.src === 'dz' && t.link ? el('button', { onclick: () => window.open(t.link, '_blank') }, el('i', {}, '↗'), 'Deezer') : null));
     sync();
   };
   const queue = () => {
@@ -7776,18 +7816,60 @@ mus.a.addEventListener('timeupdate', () => { const f = document.querySelector('.
 function muShare(t) {
   const list = chats.filter(c => !c.is_channel || c.role === 'owner').slice(0, 60);
   sheet((s, close) => s.append(el('h3', {}, '📤 Отправить трек'), el('div', { class: 'plist', style: 'max-height:60vh;overflow:auto' }, list.map(c => el('div', { class: 'prow', style: 'cursor:pointer', onclick: async () => {
-    close(); const body = '♫au:' + [t.id, t.title, muArtist(t), muArtS(t)].map(x => encodeURIComponent(x || '')).join('|');
+    close(); const body = '♫au:' + [t.id, t.title, muArtist(t), muArtS(t), t.src === 'my' ? t.url : ''].map(x => encodeURIComponent(x || '')).join('|');
     const { error } = await sb.from('messages').insert({ chat_id: c.chat_id, sender_id: me.id, body }); toast(error ? 'Не отправилось' : '🎵 Отправлено: ' + (c.title || ''));
   } }, c.saved ? savedAv(40) : avatar(c.title, c.avatar_url, 40), el('div', { class: 'tx' }, el('b', {}, c.title || 'Чат')))))));
 }
-function muParse(body) { const [id, title, artist, art] = body.slice(4).split('|').map(x => { try { return decodeURIComponent(x || ''); } catch { return x || ''; } }); return { id, title, artist, art }; }
+function muParse(body) { const [id, title, artist, art, url] = body.slice(4).split('|').map(x => { try { return decodeURIComponent(x || ''); } catch { return x || ''; } }); return { id, title, artist, art, url }; }
 function muCard(body) {
   const d = muParse(body);
   return el('div', { class: 'mcard', onclick: async ev => {
     ev.stopPropagation();
     if (mus.q[mus.i] && String(mus.q[mus.i].id) === d.id) { muToggle(); return; }
+    const base = { title: d.title, user: { name: d.artist }, artwork: d.art ? { '150x150': d.art, '480x480': d.art } : null };
+    if (/^dz/.test(d.id)) { muPlay([{ ...base, id: d.id, src: 'dz', dz: d.id.slice(2), duration: 30 }], 0); return; }
+    if (/^my/.test(d.id) && d.url) { muPlay([{ ...base, id: d.id, src: 'my', url: d.url }], 0); return; }
     try { const t = await muGet('/tracks/' + encodeURIComponent(d.id)); if (t) muPlay([t], 0); } catch { muPlay([{ id: d.id, title: d.title, user: { name: d.artist }, artwork: d.art ? { '150x150': d.art, '480x480': d.art } : null }], 0); }
   } }, el('img', { src: d.art, alt: '' }), el('div', { class: 'tx' }, el('b', {}, d.title || 'Трек'), el('small', {}, '🎵 ' + (d.artist || ''))), el('span', { class: 'pl' }, '▶'));
+}
+
+
+/* ===== 2.21 my music upload ===== */
+function id3Parse(buf) {
+  const u = new Uint8Array(buf), out = {};
+  if (u[0] !== 0x49 || u[1] !== 0x44 || u[2] !== 0x33) return out;
+  const ver = u[3], size = (u[6] & 127) << 21 | (u[7] & 127) << 14 | (u[8] & 127) << 7 | (u[9] & 127);
+  let p = 10; const end = Math.min(u.length, 10 + size);
+  const txt = (a, b) => { const enc = u[a]; const sl = u.slice(a + 1, b); try { if (enc === 1 || enc === 2) return new TextDecoder(enc === 1 ? 'utf-16' : 'utf-16be').decode(sl).replace(/\0/g, '').trim(); return new TextDecoder(enc === 3 ? 'utf-8' : 'windows-1251').decode(sl).replace(/\0/g, '').trim(); } catch { return ''; } };
+  while (p + 10 < end) {
+    const id = String.fromCharCode(u[p], u[p + 1], u[p + 2], u[p + 3]); if (!/^[A-Z0-9]{4}$/.test(id)) break;
+    const fs = ver === 4 ? ((u[p + 4] & 127) << 21 | (u[p + 5] & 127) << 14 | (u[p + 6] & 127) << 7 | (u[p + 7] & 127)) : (u[p + 4] << 24 | u[p + 5] << 16 | u[p + 6] << 8 | u[p + 7]) >>> 0;
+    const a = p + 10, b = a + fs; if (fs <= 0 || b > end) break;
+    if (id === 'TIT2') out.title = txt(a, b); else if (id === 'TPE1') out.artist = txt(a, b);
+    else if (id === 'APIC' && !out.cover) { const enc = u[a]; let q = a + 1; while (q < b && u[q]) q++; const mime = new TextDecoder().decode(u.slice(a + 1, q)) || 'image/jpeg'; q += 2; if (enc === 1 || enc === 2) { while (q + 1 < b && !(u[q] === 0 && u[q + 1] === 0)) q += 2; q += 2; } else { while (q < b && u[q]) q++; q++; } out.cover = new Blob([u.slice(q, b)], { type: /png/.test(mime) ? 'image/png' : 'image/jpeg' }); }
+    p = b;
+  }
+  return out;
+}
+async function muUpload() {
+  const files = await pickFiles('audio/*,.mp3,.m4a', true); if (!files || !files.length) return;
+  let ok = 0;
+  for (const f of files.slice(0, 20)) {
+    if (f.size > 50e6) { toast(f.name + ': больше 50 МБ'); continue; }
+    toast('⬆ Загружаю ' + f.name.slice(0, 30) + '…');
+    try {
+      const head = await f.slice(0, Math.min(f.size, 3e6)).arrayBuffer(); const tg = id3Parse(head);
+      let title = tg.title, artist = tg.artist;
+      if (!title) { const nm = f.name.replace(/\.[^.]+$/, '').replace(/_/g, ' '); const m = nm.split(/\s+[-–—]\s+/); if (m.length > 1) { artist = artist || m[0]; title = m.slice(1).join(' - '); } else title = nm; }
+      const dur = await new Promise(r => { const a = new Audio(); a.preload = 'metadata'; a.onloadedmetadata = () => { r(isFinite(a.duration) ? Math.round(a.duration) : 0); URL.revokeObjectURL(a.src); }; a.onerror = () => r(0); a.src = URL.createObjectURL(f); });
+      const ext = (f.name.match(/\.([a-z0-9]+)$/i) || [, 'mp3'])[1].toLowerCase();
+      const url = await upload('media', f, ext, f.type || (ext === 'm4a' ? 'audio/mp4' : 'audio/mpeg'));
+      let cover = null; if (tg.cover && tg.cover.size < 1.8e6) { try { cover = await upload('media', tg.cover, /png/.test(tg.cover.type) ? 'png' : 'jpg', tg.cover.type); } catch {} }
+      const { error } = await sb.from('user_music').insert({ title: (title || 'Без названия').slice(0, 120), artist: (artist || '').slice(0, 80), url, cover, duration: dur });
+      if (error) throw error; ok++;
+    } catch (e) { toast('Не загрузилось: ' + errText(e)); }
+  }
+  if (ok) { toast('🎵 Загружено треков: ' + ok); delete muCache['my:']; mus.mode = 'my'; mus.query = ''; renderMusic(); }
 }
 
 /* ref capture */
