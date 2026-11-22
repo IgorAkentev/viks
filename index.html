@@ -1620,6 +1620,54 @@ html.light #msgs .m:not(.mine) .bub:not(.circ):not(.jumbo):not(.stk):not(.giftb)
 .rc{backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
 #chatList .swrap{content-visibility:auto;contain-intrinsic-size:auto 78px}
 #tabChats .stories,.big-title{will-change:max-height,opacity}
+
+/* ===== 2.20 music ===== */
+.tabbar .ind{width:calc((100% - 12px)/6)!important}
+.tabbar button{font-size:9.8px;letter-spacing:-.1px}
+.mu-h{display:flex;align-items:flex-end;justify-content:space-between;padding:calc(10px + var(--safe-t)) 16px 6px}
+.mu-h h1{margin:0;font-size:32px;font-weight:900;letter-spacing:-.8px}.mu-h small{color:var(--muted);font-size:11.5px;font-weight:700}
+.mu-s{margin:4px 14px 8px}.mu-s input{width:100%;box-sizing:border-box;border-radius:16px;padding:12px 16px;background:#ffffff0c;border:1px solid #ffffff14;color:inherit;font:inherit;outline:none}
+.mu-g{display:flex;gap:6px;overflow-x:auto;padding:2px 14px 10px;scrollbar-width:none}.mu-g::-webkit-scrollbar{display:none}
+.mu-g button{flex:none;padding:7px 13px;border-radius:14px;background:#ffffff10;font-weight:700;font-size:13px}.mu-g button.on{background:var(--accent);color:#fff}
+.mu-sec{display:flex;align-items:center;justify-content:space-between;padding:8px 18px 6px;font-weight:900;font-size:13px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+.mu-favs{display:flex;gap:12px;overflow-x:auto;padding:0 16px 8px;scrollbar-width:none}.mu-favs::-webkit-scrollbar{display:none}
+.mu-tile{flex:none;width:120px;cursor:pointer}.mu-tile img{width:120px;height:120px;border-radius:18px;object-fit:cover;display:block;box-shadow:0 8px 20px #0006;background:#ffffff10}
+.mu-tile b{display:block;font-size:13px;margin-top:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.mu-tile small{display:block;font-size:11.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mu-row{display:flex;align-items:center;gap:12px;padding:7px 14px;margin:0 6px;border-radius:16px;cursor:pointer;content-visibility:auto;contain-intrinsic-size:auto 66px}
+.mu-row:active{background:#ffffff0a}.mu-row.on{background:color-mix(in srgb,var(--accent) 16%,transparent)}
+.mu-row .n{width:18px;text-align:center;font-weight:800;font-size:12.5px;color:var(--muted);flex:none}
+.mu-row img{width:52px;height:52px;border-radius:12px;object-fit:cover;flex:none;background:#ffffff10}
+.mu-row .tx{flex:1;min-width:0}.mu-row .tx b{display:block;font-size:14.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.mu-row .tx small{display:block;font-size:12.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mu-row .lk{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font-size:16px;flex:none;opacity:.8}
+.eq{display:inline-flex;gap:2px;align-items:flex-end;height:12px;margin-right:5px;vertical-align:-1px}.eq i{width:3px;background:var(--accent2);border-radius:2px;animation:eqb .9s ease-in-out infinite}.eq i:nth-child(2){animation-delay:.2s}.eq i:nth-child(3){animation-delay:.4s}
+.eq.paused i{animation-play-state:paused}
+@keyframes eqb{0%,100%{height:3px}50%{height:12px}}
+#mplayer{position:fixed;left:14px;right:14px;bottom:calc(88px + var(--safe-b));z-index:7;display:flex;align-items:center;gap:10px;padding:7px 8px 7px 7px;border-radius:20px;background:rgba(26,22,48,.82);backdrop-filter:blur(22px) saturate(180%);-webkit-backdrop-filter:blur(22px) saturate(180%);border:1px solid #ffffff17;box-shadow:0 12px 30px #0008;overflow:hidden;animation:popIn .25s ease}
+#mplayer img{width:44px;height:44px;border-radius:12px;object-fit:cover;flex:none}
+#mplayer .tx{flex:1;min-width:0;cursor:pointer}#mplayer b{display:block;font-size:13.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}#mplayer small{display:block;font-size:11.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#mplayer button{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;font-size:18px;flex:none}
+#mplayer .pp{background:#fff;color:#111}
+#mplayer .bar{position:absolute;left:0;bottom:0;height:2.5px;background:linear-gradient(90deg,var(--accent2),var(--accent));width:0}
+@media(max-width:819px){body:has(#main.open) #mplayer{display:none}}
+body.has-mp .tabpane .list,body.has-mp #muList{padding-bottom:200px!important}
+.mfull{text-align:center;position:relative}
+.mfull .bgart{position:absolute;inset:-20px -20px auto;height:300px;background-size:cover;background-position:center;filter:blur(40px) saturate(160%);opacity:.45;z-index:0;pointer-events:none}
+.mfull>*:not(.bgart){position:relative;z-index:1}
+.mfull .art{width:min(72vw,300px);height:min(72vw,300px);border-radius:26px;object-fit:cover;box-shadow:0 24px 60px #000a;margin:6px auto 16px;display:block;transition:transform .4s cubic-bezier(.2,1.4,.35,1)}
+.mfull .art.pz{transform:scale(.9)}
+.mfull h2{margin:0;font-size:21px;font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.mfull .ar{color:var(--muted);font-weight:700;margin:3px 0 12px}
+.mfull input[type=range]{width:100%;accent-color:var(--accent2)}
+.mfull .tm{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-top:-2px}
+.mfull .ctl{display:flex;align-items:center;justify-content:center;gap:16px;margin:10px 0 12px}
+.mfull .ctl button{width:50px;height:50px;border-radius:50%;font-size:22px;display:grid;place-items:center}
+.mfull .ctl .pp{width:72px;height:72px;font-size:30px;background:#fff;color:#111;box-shadow:0 10px 30px #0007}
+.mfull .ctl .tg{font-size:18px;opacity:.5}.mfull .ctl .tg.on{opacity:1;color:var(--accent2)}
+.mfull .acts{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}.mfull .acts button{padding:9px 14px;border-radius:14px;background:#ffffff12;font-weight:700;font-size:13px}
+.mfull .cred{font-size:11px;color:var(--muted);margin-top:12px}
+.mcard{display:flex;align-items:center;gap:10px;min-width:220px;max-width:280px;cursor:pointer}
+.mcard img{width:56px;height:56px;border-radius:12px;object-fit:cover;flex:none;background:#0003}
+.mcard .tx{flex:1;min-width:0}.mcard b{display:block;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.mcard small{display:block;font-size:12px;opacity:.75;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mcard .pl{width:38px;height:38px;border-radius:50%;background:#fff;color:#111;display:grid;place-items:center;font-size:15px;flex:none}
 </style>
 </head>
 <body>
@@ -1668,12 +1716,14 @@ html.light #msgs .m:not(.mine) .bub:not(.circ):not(.jumbo):not(.stk):not(.giftb)
     <div class="tabpane hidden" id="tabContacts"><div class="list" id="contactsList"></div></div>
     <div class="tabpane hidden" id="tabCalls"><div class="list" id="callsList"></div></div>
     <div class="tabpane hidden" id="tabFeed"><div class="list" id="feedList"></div></div>
+    <div class="tabpane hidden" id="tabMusic"><div class="list" id="muList"></div></div>
     <div class="tabpane hidden" id="tabSettings"><div class="list"><div class="inner" id="settingsInner"></div></div></div>
     <nav class="tabbar" id="tabbar"><span class="ind"></span>
       <button data-tab="Contacts"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm0 4.2a3.4 3.4 0 1 1 0 6.8 3.4 3.4 0 0 1 0-6.8zm0 13.6a7.9 7.9 0 0 1-5.9-2.7c.8-1.9 3.3-3 5.9-3s5.1 1.1 5.9 3a7.9 7.9 0 0 1-5.9 2.7z"/></svg>Контакты</button>
       <button data-tab="Calls"><span class="tb hidden" id="callsBadge"></span><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z"/></svg>Звонки</button>
       <button data-tab="Chats" class="on"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M9.5 3C5.4 3 2 5.8 2 9.3c0 1.9 1 3.7 2.7 4.8L4 17l3.2-1.7c.7.2 1.5.3 2.3.3.3 0 .5 0 .8-.1A6.6 6.6 0 0 1 10 14c0-3.9 3.6-6.9 8-6.9h.4C17.4 4.7 13.8 3 9.5 3z"/><path d="M18 9c-3.3 0-6 2.2-6 5s2.7 5 6 5c.6 0 1.2-.1 1.8-.2L22 20l-.6-2.4c1-.9 1.6-2.1 1.6-3.6 0-2.8-2.7-5-6-5z" opacity=".85"/></svg>Чаты<span class="tb hidden" id="tabBadge"></span></button>
       <button data-tab="Feed"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4zM13 13h7v7h-7z" opacity=".9"/></svg>Лента</button>
+      <button data-tab="Music"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 17.5a3.5 3.5 0 1 1-2-3.16V5.5a1 1 0 0 1 .76-.97l10-2.5A1 1 0 0 1 19 3v11.5a3.5 3.5 0 1 1-2-3.16V7.28l-8 2V17.5z"/></svg>Музыка</button>
       <button data-tab="Settings"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.4 13a7.6 7.6 0 0 0 0-2l2.1-1.6a.5.5 0 0 0 .1-.6l-2-3.5a.5.5 0 0 0-.6-.2l-2.5 1a7.3 7.3 0 0 0-1.7-1l-.4-2.6a.5.5 0 0 0-.5-.4h-4a.5.5 0 0 0-.5.4l-.4 2.6a7.3 7.3 0 0 0-1.7 1l-2.5-1a.5.5 0 0 0-.6.2l-2 3.5a.5.5 0 0 0 .1.6L4.6 11a7.6 7.6 0 0 0 0 2l-2.1 1.6a.5.5 0 0 0-.1.6l2 3.5c.1.2.4.3.6.2l2.5-1c.5.4 1.1.7 1.7 1l.4 2.6c0 .2.3.4.5.4h4c.2 0 .5-.2.5-.4l.4-2.6c.6-.3 1.2-.6 1.7-1l2.5 1c.2.1.5 0 .6-.2l2-3.5a.5.5 0 0 0-.1-.6zM12 15.5a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7z"/></svg>Настройки<span class="tdot hidden" id="updDot2"></span></button>
     </nav>
     <button class="fab" id="newBtn" title="Новый чат"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"><path d="M4 20l1.3-3.9A8 8 0 1 1 8 19z"/><path d="M12 8v6M9 11h6"/></svg></button>
@@ -2224,6 +2274,7 @@ function renderMsgs(scroll) {
       if (m.kind === 'sticker' && /^premium:/.test(m.media_url || '')) { bub.classList.add('stk', 'prem'); bub.append(el('span', { class: 'prem-tag' }, '✦'), animEmoji(m.body)); bub.addEventListener('click', ev => { ev.stopPropagation(); premFx(m.body, true); }); }
       else if (m.kind === 'sticker') { bub.classList.add('stk'); const im = animEmoji(m.body, m.media_url); if (m.media_url && !/notoemoji/.test(m.media_url)) im.classList.add('own'); bub.append(im); }
       else if (m.body && !m.image_url && (m.kind || 'text') === 'text' && !m.reply_to && !m.fwd_from && isJumbo(m.body)) { bub.classList.add('jumbo'); const ems = graphemes(m.body.trim()).filter(g => g.trim()); bub.append(ems.length === 1 ? animEmoji(ems[0]) : el('span', { class: 'jt' }, m.body.trim())); }
+      else if (m.body && (m.kind || 'text') === 'text' && /^♫au:/.test(m.body)) bub.append(muCard(m.body));
       else if (m.body && (m.kind || 'text') === 'text' && /^✦gift:\d+$/.test(m.body)) { bub.classList.add('giftb'); const dd = +m.body.split(':')[1]; bub.append(el('div', { class: 'gift-card', onclick: ev => { ev.stopPropagation(); premFx('👑', true); } }, animEmoji('🎁'), el('b', {}, 'Viks Premium в подарок!'), el('small', {}, 'на ' + dd + ' ' + plural(dd, 'день', 'дня', 'дней') + ' ✦'))); }
       else if (m.body && (m.kind || 'text') === 'text' && GEO_RE.test(m.body)) bub.append(locEl(m.body));
       else if (m.body && (m.kind || 'text') === 'text' && /^🛰 live:/.test(m.body)) bub.append(liveLocEl(m));
@@ -2554,7 +2605,7 @@ async function openGroupInfo(c) {
 
 
 /* ================= SETTINGS & UPDATES ================= */
-const APP_VERSION = '2.19.1';
+const APP_VERSION = '2.20.0';
 const TK1 = (() => { const t = document.createElement('template'); t.innerHTML = '<svg viewBox="0 0 16 11" width="15" height="11"><path d="M1.5 6l3 3 6.5-7.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>'; return t.content; })();
 const TK2 = (() => { const t = document.createElement('template'); t.innerHTML = '<svg viewBox="0 0 20 11" width="18" height="11"><path d="M1.5 6l3 3 6.5-7.5M8 8.5l.8.6 6.7-7.6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>'; return t.content; })();
 const APP_THEMES = {
@@ -2804,7 +2855,7 @@ $('#setBtn').onclick = () => switchTab('Settings');
 let rec = null, playing = null, storiesT = null;
 const mediaNodes = new Map();
 const fmtDur = s => { s = Math.max(0, Math.round(s || 0)); return Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0'); };
-const msgLabel = m => (m.kind || 'text') === 'text' && /^✦gift:\d+$/.test(m.body || '') ? '🎁 Viks Premium в подарок' : (m.kind || 'text') === 'text' && /^🎵 listen:/.test(m.body || '') ? '🎵 ' + (m.body.split('|')[1] || 'Трек') : (m.kind || 'text') === 'text' && /^📺 watch:/.test(m.body || '') ? '📺 Совместный просмотр' : m.kind === 'sea' ? '🚢 Морской бой' : m.kind === 'rps' ? '✊ Камень-ножницы-бумага' : (m.kind || 'text') === 'text' && m.body && /^e2e:/.test(m.body) ? '🔐 Зашифрованное сообщение' : (m.kind || 'text') === 'text' && m.body && /^🛰 live:/.test(m.body) ? '🛰 Делится местом' : (m.kind || 'text') === 'text' && m.body && /^📍 geo:/.test(m.body) ? '📍 Геолокация' : m.kind === 'voice' ? '🎤 Голосовое' : m.kind === 'circle' ? '⭕ Кружок' : m.kind === 'video' ? '🎬 ' + (m.body || 'Видео') : m.kind === 'file' ? '📎 ' + (m.file_name || 'Файл') : m.kind === 'sticker' ? (m.body || 'Стикер') : m.kind === 'call' ? '📞 ' + (m.body || 'Звонок') : m.kind === 'poll' ? '📊 ' + (m.body || 'Опрос') : m.kind === 'game' ? (m.body || '🎲') + ' Игра' : m.kind === 'ttt' ? '❌⭕ Крестики-нолики' : m.kind === 'system' ? '⏱ ' + (m.body || '') : m.image_url ? '📷 ' + (m.body || 'Фото') : (m.body || '');
+const msgLabel = m => (m.kind || 'text') === 'text' && /^♫au:/.test(m.body || '') ? '🎵 ' + (muParse(m.body).title || 'Трек') : (m.kind || 'text') === 'text' && /^✦gift:\d+$/.test(m.body || '') ? '🎁 Viks Premium в подарок' : (m.kind || 'text') === 'text' && /^🎵 listen:/.test(m.body || '') ? '🎵 ' + (m.body.split('|')[1] || 'Трек') : (m.kind || 'text') === 'text' && /^📺 watch:/.test(m.body || '') ? '📺 Совместный просмотр' : m.kind === 'sea' ? '🚢 Морской бой' : m.kind === 'rps' ? '✊ Камень-ножницы-бумага' : (m.kind || 'text') === 'text' && m.body && /^e2e:/.test(m.body) ? '🔐 Зашифрованное сообщение' : (m.kind || 'text') === 'text' && m.body && /^🛰 live:/.test(m.body) ? '🛰 Делится местом' : (m.kind || 'text') === 'text' && m.body && /^📍 geo:/.test(m.body) ? '📍 Геолокация' : m.kind === 'voice' ? '🎤 Голосовое' : m.kind === 'circle' ? '⭕ Кружок' : m.kind === 'video' ? '🎬 ' + (m.body || 'Видео') : m.kind === 'file' ? '📎 ' + (m.file_name || 'Файл') : m.kind === 'sticker' ? (m.body || 'Стикер') : m.kind === 'call' ? '📞 ' + (m.body || 'Звонок') : m.kind === 'poll' ? '📊 ' + (m.body || 'Опрос') : m.kind === 'game' ? (m.body || '🎲') + ' Игра' : m.kind === 'ttt' ? '❌⭕ Крестики-нолики' : m.kind === 'system' ? '⏱ ' + (m.body || '') : m.image_url ? '📷 ' + (m.body || 'Фото') : (m.body || '');
 const EXT = { 'audio/webm': 'webm', 'audio/mp4': 'm4a', 'audio/ogg': 'ogg', 'audio/mpeg': 'mp3', 'video/webm': 'webm', 'video/mp4': 'mp4', 'video/quicktime': 'mov', 'image/jpeg': 'jpg' };
 function nameColor(id) { let h = 0; for (const ch of String(id)) h = (h * 31 + ch.charCodeAt(0)) >>> 0; return ['#ff8a80', '#ffb74d', '#ffd54f', '#81c784', '#4dd0e1', '#82a8ff', '#b39dff', '#f48fb1'][h % 8]; }
 function syncComposer() {
@@ -4103,7 +4154,8 @@ function switchTab(t) {
   if (t !== curTab) { hap(8); const tb = document.querySelector(`.tabbar button[data-tab=${t}]`); if (tb) { tb.classList.remove('bump'); tb.offsetWidth; tb.classList.add('bump'); setTimeout(() => tb.classList.remove('bump'), 650); } }
   if (t !== 'Settings' && typeof spLayer !== 'undefined' && spLayer && spLayer.open) spLayer.close();
   curTab = t;
-  ['Chats', 'Contacts', 'Calls', 'Feed', 'Settings'].forEach(k => $('#tab' + k)?.classList.toggle('hidden', k !== t));
+  ['Chats', 'Contacts', 'Calls', 'Feed', 'Music', 'Settings'].forEach(k => $('#tab' + k)?.classList.toggle('hidden', k !== t));
+  if (t === 'Music') renderMusic();
   if (t !== 'Contacts') $('.az')?.remove();
   if (t === 'Feed') renderFeed();
   const btns = [...document.querySelectorAll('#tabbar button')], i = btns.findIndex(b => b.dataset.tab === t);
@@ -7484,6 +7536,132 @@ function userActions(u, reload) {
         F && u.id !== me.id && !(u.badges || []).includes('founder') ? el('button', { class: 'red', onclick: async () => { if (!confirm('Удалить аккаунт ' + u.display_name + ' и ВСЕ его сообщения? Это не отменить')) return; if (!confirm('Точно? Сообщения пропадут у всех')) return; const { data, error } = await sb.rpc('admin_wipe', { target: u.id }); if (error) { toast('Не вышло: ' + errText(error)); return; } toast('Удалено. Сообщений: ' + data); close(); reload && reload(); } }, '🗑 Удалить аккаунт и сообщения') : null));
   });
 }
+
+/* ===== 2.20 music (Audius) ===== */
+const AUD = 'https://api.audius.co/v1', APPN = 'app_name=Viks';
+const MU_GENRES = [['', '🔥 Всё'], ['Hip-Hop/Rap', 'Хип-хоп'], ['Electronic', 'Электроника'], ['Trap', 'Трэп'], ['Lo-Fi', 'Lo-Fi'], ['House', 'Хаус'], ['Drum & Bass', 'D&B'], ['Pop', 'Поп'], ['R&B/Soul', 'R&B'], ['Dubstep', 'Дабстеп'], ['Techno', 'Техно'], ['Ambient', 'Эмбиент'], ['Rock', 'Рок'], ['Latin', 'Латино']];
+const mus = { a: new Audio(), q: [], i: -1, shuffle: false, repeat: false, genre: '', query: '' };
+mus.a.preload = 'auto';
+const muArt = t => (t && t.artwork && (t.artwork['480x480'] || t.artwork['150x150'])) || '';
+const muArtS = t => (t && t.artwork && (t.artwork['150x150'] || t.artwork['480x480'])) || '';
+const muStream = t => AUD + '/tracks/' + t.id + '/stream?' + APPN;
+const muArtist = t => (t && t.user && t.user.name) || '';
+const muDur = s => { s = Math.round(s || 0); return Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0'); };
+const muMini = t => ({ id: t.id, title: t.title, duration: t.duration, permalink: t.permalink, user: { name: muArtist(t) }, artwork: t.artwork ? { '150x150': muArtS(t), '480x480': muArt(t) } : null });
+async function muGet(path) { const r = await fetch(AUD + path + (path.includes('?') ? '&' : '?') + APPN); if (!r.ok) throw new Error('audius ' + r.status); const j = await r.json(); return j.data; }
+const muFavs = () => { try { return JSON.parse(localStorage.getItem('viks-mfav') || '[]'); } catch { return []; } };
+const muIsFav = t => muFavs().some(x => x.id === t.id);
+function muToggleFav(t) { let f = muFavs(); if (f.some(x => x.id === t.id)) f = f.filter(x => x.id !== t.id); else { f.unshift(muMini(t)); hap(10); } try { localStorage.setItem('viks-mfav', JSON.stringify(f.slice(0, 200))); } catch {} muUi(); if (curTab === 'Music') renderMusic(true); }
+function muPlay(list, i) {
+  mus.q = list; mus.i = i; const t = list[i]; if (!t) return;
+  mus.a.src = muStream(t); mus.a.play().catch(() => toast('Нажми ▶️ ещё раз'));
+  if ('mediaSession' in navigator) { try { navigator.mediaSession.metadata = new MediaMetadata({ title: t.title, artist: muArtist(t), album: 'Viks · Audius', artwork: muArt(t) ? [{ src: muArt(t), sizes: '480x480', type: 'image/jpeg' }] : [] }); } catch {} }
+  muUi();
+}
+function muNext(auto) {
+  if (!mus.q.length) return;
+  if (auto && mus.repeat) { mus.a.currentTime = 0; mus.a.play().catch(() => {}); return; }
+  let n = mus.shuffle ? Math.floor(Math.random() * mus.q.length) : mus.i + 1;
+  if (n >= mus.q.length) { if (auto) { muUi(); return; } n = 0; }
+  muPlay(mus.q, n);
+}
+function muPrev() { if (mus.a.currentTime > 4) { mus.a.currentTime = 0; return; } muPlay(mus.q, Math.max(0, mus.i - 1)); }
+const muToggle = () => { if (!mus.q.length) return; mus.a.paused ? mus.a.play().catch(() => {}) : mus.a.pause(); };
+mus.a.addEventListener('ended', () => muNext(true));
+mus.a.addEventListener('play', () => muUi()); mus.a.addEventListener('pause', () => muUi());
+mus.a.addEventListener('error', () => { if (mus.q.length) { toast('Трек не грузится, включаю следующий'); setTimeout(() => muNext(true), 800); } });
+mus.a.addEventListener('timeupdate', () => { const b = $('#mplayer .bar'); if (b && mus.a.duration) b.style.width = (mus.a.currentTime / mus.a.duration * 100) + '%'; const r = document.querySelector('.mfull input[type=range]'); if (r && !r._drag && mus.a.duration) { r.value = mus.a.currentTime / mus.a.duration * 1000; const tm = document.querySelector('.mfull .tm'); if (tm) tm.firstChild.textContent = muDur(mus.a.currentTime); } });
+if ('mediaSession' in navigator) { try { navigator.mediaSession.setActionHandler('play', () => mus.a.play()); navigator.mediaSession.setActionHandler('pause', () => mus.a.pause()); navigator.mediaSession.setActionHandler('nexttrack', () => muNext()); navigator.mediaSession.setActionHandler('previoustrack', () => muPrev()); navigator.mediaSession.setActionHandler('seekto', d => { if (d.seekTime != null) mus.a.currentTime = d.seekTime; }); } catch {} }
+function muUi() {
+  const t = mus.q[mus.i]; let mp = $('#mplayer');
+  if (!t) { mp?.remove(); document.body.classList.remove('has-mp'); return; }
+  if (!mp) { mp = el('div', { id: 'mplayer' }); document.body.append(mp); }
+  document.body.classList.add('has-mp');
+  mp.innerHTML = '';
+  mp.append(el('img', { src: muArtS(t), alt: '', onclick: muFull }), el('div', { class: 'tx', onclick: muFull }, el('b', {}, t.title), el('small', {}, muArtist(t))),
+    el('button', { class: 'pp', onclick: muToggle }, mus.a.paused ? '▶' : '❚❚'), el('button', { onclick: () => muNext() }, '⏭'), el('div', { class: 'bar' }));
+  document.querySelectorAll('.mu-row').forEach(r => { const on = r.dataset.id === String(t.id); r.classList.toggle('on', on); const eq = r.querySelector('.eq'); if (on && !eq) r.querySelector('.tx b')?.prepend(el('span', { class: 'eq' + (mus.a.paused ? ' paused' : '') }, el('i'), el('i'), el('i'))); else if (eq) { if (!on) eq.remove(); else eq.classList.toggle('paused', mus.a.paused); } });
+  const f = document.querySelector('.mfull'); if (f && f.dataset.id === String(t.id)) { f.querySelector('.ctl .pp').textContent = mus.a.paused ? '▶' : '❚❚'; f.querySelector('.art').classList.toggle('pz', mus.a.paused); const lk = f.querySelector('.lkb'); if (lk) lk.textContent = muIsFav(t) ? '❤️ В любимом' : '🤍 В любимое'; } else if (f) f.dispatchEvent(new Event('rebuild'));
+}
+function muRow(t, list, i) {
+  return el('div', { class: 'mu-row', 'data-id': String(t.id), onclick: () => muPlay(list, i) }, el('span', { class: 'n' }, String(i + 1)), el('img', { src: muArtS(t), loading: 'lazy', alt: '' }),
+    el('div', { class: 'tx' }, el('b', {}, t.title), el('small', {}, muArtist(t) + ' · ' + muDur(t.duration))),
+    el('button', { class: 'lk', onclick: e => { e.stopPropagation(); muToggleFav(t); e.currentTarget.textContent = muIsFav(t) ? '❤️' : '🤍'; } }, muIsFav(t) ? '❤️' : '🤍'));
+}
+let muCache = {}, muSeq = 0;
+async function renderMusic(soft) {
+  const box = $('#muList'); if (!box) return;
+  const seq = ++muSeq;
+  if (!soft || !box.children.length) {
+    box.innerHTML = '';
+    const inp = el('input', { placeholder: '🔎 Поиск треков и артистов', value: mus.query });
+    let qt = 0; inp.oninput = () => { clearTimeout(qt); qt = setTimeout(() => { mus.query = inp.value.trim(); renderMusic(true); }, 400); };
+    const gb = el('div', { class: 'mu-g' }, MU_GENRES.map(([k, l]) => el('button', { class: mus.genre === k ? 'on' : '', onclick: () => { mus.genre = k; mus.query = ''; inp.value = ''; gb.querySelectorAll('button').forEach(b => b.classList.toggle('on', b.textContent === l)); renderMusic(true); } }, l)));
+    box.append(el('div', { class: 'mu-h' }, el('h1', {}, 'Музыка'), el('small', {}, 'треки от Audius')), el('div', { class: 'mu-s' }, inp), gb, el('div', { id: 'muBody' }));
+  }
+  const body = $('#muBody'); if (!body) return;
+  const favs = muFavs();
+  const key = mus.query ? 'q:' + mus.query : 'g:' + mus.genre;
+  body.innerHTML = '';
+  if (favs.length && !mus.query) body.append(el('div', { class: 'mu-sec' }, '❤️ Любимое · ' + favs.length, el('span', { style: 'text-transform:none;letter-spacing:0;font-size:12px;color:var(--accent2);cursor:pointer', onclick: () => muPlay(favs, 0) }, '▶ Слушать всё')), el('div', { class: 'mu-favs' }, favs.slice(0, 20).map((t, i) => el('div', { class: 'mu-tile', onclick: () => muPlay(favs, i) }, el('img', { src: muArt(t), loading: 'lazy', alt: '' }), el('b', {}, t.title), el('small', {}, muArtist(t))))));
+  body.append(el('div', { class: 'mu-sec' }, mus.query ? '🔎 «' + mus.query + '»' : '📈 В тренде за неделю' + (mus.genre ? ' · ' + MU_GENRES.find(g => g[0] === mus.genre)[1] : '')));
+  const lst = el('div', {}); body.append(lst);
+  let data = muCache[key];
+  if (!data) {
+    lst.append(skelRows(6));
+    try { data = mus.query ? await muGet('/tracks/search?query=' + encodeURIComponent(mus.query) + '&limit=40') : await muGet('/tracks/trending?time=week&limit=50' + (mus.genre ? '&genre=' + encodeURIComponent(mus.genre) : '')); data = (data || []).filter(t => t && t.id && t.is_streamable !== false && !(t.access && t.access.stream === false)); muCache[key] = data; }
+    catch { if (seq !== muSeq) return; lst.innerHTML = ''; lst.append(el('div', { class: 'empty' }, 'Музыка не загрузилась. Проверь интернет и попробуй ещё раз'), el('button', { class: 'btn ghost', style: 'max-width:220px;margin:0 auto;display:block', onclick: () => renderMusic(true) }, '🔄 Ещё раз')); return; }
+  }
+  if (seq !== muSeq) return;
+  lst.innerHTML = '';
+  if (!data.length) { lst.append(el('div', { class: 'empty' }, 'Ничего не нашлось 🤷')); return; }
+  data.forEach((t, i) => lst.append(muRow(t, data, i)));
+  lst.append(el('div', { class: 'hint', style: 'text-align:center;margin:14px 0 0;font-size:11.5px' }, 'Музыка: Audius — открытая платформа артистов. Поддержи любимых на audius.co 💜'));
+  muUi();
+}
+function muFull() {
+  const t0 = mus.q[mus.i]; if (!t0) return;
+  sheet((s, close) => {
+    const box = el('div', { class: 'mfull' });
+    const build = () => {
+      const t = mus.q[mus.i]; if (!t) { close(); return; }
+      box.dataset.id = String(t.id); box.innerHTML = '';
+      const rng = el('input', { type: 'range', min: 0, max: 1000, value: mus.a.duration ? mus.a.currentTime / mus.a.duration * 1000 : 0 });
+      rng.oninput = () => { rng._drag = true; }; rng.onchange = () => { rng._drag = false; if (mus.a.duration) mus.a.currentTime = rng.value / 1000 * mus.a.duration; };
+      box.append(el('div', { class: 'bgart', style: 'background-image:url(' + muArt(t) + ')' }), el('img', { class: 'art' + (mus.a.paused ? ' pz' : ''), src: muArt(t), alt: '' }), el('h2', {}, t.title), el('div', { class: 'ar' }, muArtist(t)), rng,
+        el('div', { class: 'tm' }, el('span', {}, muDur(mus.a.currentTime)), el('span', {}, muDur(t.duration))),
+        el('div', { class: 'ctl' },
+          el('button', { class: 'tg' + (mus.shuffle ? ' on' : ''), title: 'Перемешать', onclick: ev => { mus.shuffle = !mus.shuffle; ev.currentTarget.classList.toggle('on', mus.shuffle); } }, '🔀'),
+          el('button', { onclick: muPrev }, '⏮'), el('button', { class: 'pp', onclick: muToggle }, mus.a.paused ? '▶' : '❚❚'), el('button', { onclick: () => muNext() }, '⏭'),
+          el('button', { class: 'tg' + (mus.repeat ? ' on' : ''), title: 'Повтор', onclick: ev => { mus.repeat = !mus.repeat; ev.currentTarget.classList.toggle('on', mus.repeat); } }, '🔁')),
+        el('div', { class: 'acts' },
+          el('button', { class: 'lkb', onclick: () => muToggleFav(t) }, muIsFav(t) ? '❤️ В любимом' : '🤍 В любимое'),
+          el('button', { onclick: () => { close(); setTimeout(() => muShare(t), 30); } }, '📤 В чат'),
+          el('button', { onclick: async () => { const { error } = await sb.from('profiles').update({ music_url: muStream(t), music_title: (t.title + ' — ' + muArtist(t)).slice(0, 120) }).eq('id', me.id); if (error) { toast('Не вышло'); return; } me.music_url = muStream(t); me.music_title = t.title + ' — ' + muArtist(t); toast('🎵 Трек стоит в профиле'); } }, '👤 В профиль'),
+          t.permalink ? el('button', { onclick: () => window.open('https://audius.co' + t.permalink, '_blank') }, '↗ Audius') : null),
+        el('div', { class: 'cred' }, 'Артист: ' + muArtist(t) + ' · музыка с Audius'));
+    };
+    box.addEventListener('rebuild', build);
+    build(); s.append(box);
+  });
+}
+function muShare(t) {
+  const list = chats.filter(c => !c.is_channel || c.role === 'owner').slice(0, 60);
+  sheet((s, close) => s.append(el('h3', {}, '📤 Отправить трек'), el('div', { class: 'plist', style: 'max-height:60vh;overflow:auto' }, list.map(c => el('div', { class: 'prow', style: 'cursor:pointer', onclick: async () => {
+    close(); const body = '♫au:' + [t.id, t.title, muArtist(t), muArtS(t)].map(x => encodeURIComponent(x || '')).join('|');
+    const { error } = await sb.from('messages').insert({ chat_id: c.chat_id, sender_id: me.id, body }); toast(error ? 'Не отправилось' : '🎵 Отправлено: ' + (c.title || ''));
+  } }, c.saved ? savedAv(40) : avatar(c.title, c.avatar_url, 40), el('div', { class: 'tx' }, el('b', {}, c.title || 'Чат')))))));
+}
+function muParse(body) { const [id, title, artist, art] = body.slice(4).split('|').map(x => { try { return decodeURIComponent(x || ''); } catch { return x || ''; } }); return { id, title, artist, art }; }
+function muCard(body) {
+  const d = muParse(body);
+  return el('div', { class: 'mcard', onclick: async ev => {
+    ev.stopPropagation();
+    if (mus.q[mus.i] && String(mus.q[mus.i].id) === d.id) { muToggle(); return; }
+    try { const t = await muGet('/tracks/' + encodeURIComponent(d.id)); if (t) muPlay([t], 0); } catch { muPlay([{ id: d.id, title: d.title, user: { name: d.artist }, artwork: d.art ? { '150x150': d.art, '480x480': d.art } : null }], 0); }
+  } }, el('img', { src: d.art, alt: '' }), el('div', { class: 'tx' }, el('b', {}, d.title || 'Трек'), el('small', {}, '🎵 ' + (d.artist || ''))), el('span', { class: 'pl' }, '▶'));
+}
+
 /* ref capture */
 (() => { try { const q = new URLSearchParams(location.search), r = q.get('ref') || q.get('u'); if (r && !localStorage.getItem('viks-ref')) localStorage.setItem('viks-ref', r); } catch {} })();
 /* ================= BOOT ================= */
