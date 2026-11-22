@@ -28,5 +28,51 @@
       "type": "image/png",
       "purpose": "maskable"
     }
+  ],
+  "shortcuts": [
+    {
+      "name": "Новое сообщение",
+      "short_name": "Написать",
+      "url": "./?a=new",
+      "icons": [
+        {
+          "src": "icon-gold-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Избранное",
+      "short_name": "Избранное",
+      "url": "./?a=saved",
+      "icons": [
+        {
+          "src": "icon-gold-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Сканировать QR",
+      "short_name": "QR",
+      "url": "./?a=qr",
+      "icons": [
+        {
+          "src": "icon-gold-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Музыка",
+      "short_name": "Музыка",
+      "url": "./?a=music",
+      "icons": [
+        {
+          "src": "icon-gold-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    }
   ]
 }
