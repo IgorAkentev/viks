@@ -1964,6 +1964,80 @@ html.rm *,html.rm *::before,html.rm *::after{animation-duration:.001s!important;
 html.onehand .sheet{max-height:62vh}
 html.onehand #tabChats .chats-top,html.onehand .tab-head{padding-top:18vh!important}
 html.onehand .tabbar button{padding:10px 0 9px}html.onehand .tabbar button svg{width:30px;height:30px}
+
+/* ===== 2.28 design ===== */
+:root{--r-s:12px;--r-m:16px;--r-l:22px;--r-xl:28px;--sh-1:0 2px 10px #0003;--sh-2:0 10px 30px #0005;--ease:cubic-bezier(.2,.9,.3,1)}
+.btn{min-height:50px;border-radius:var(--r-m)!important;font-size:15.5px;letter-spacing:.1px;display:flex;align-items:center;justify-content:center;gap:6px;transition:transform .12s var(--ease),filter .2s}
+.btn:active{transform:scale(.97);filter:brightness(1.1)}
+.btn.ghost{background:#ffffff10!important;box-shadow:inset 0 0 0 1px #ffffff14!important}
+.menu button{border-radius:var(--r-m)!important;padding:14px!important;transition:background .15s}
+.menu button:active{background:#ffffff12}
+.set-group{border-radius:var(--r-l)!important}
+.field input,.field textarea,.sheet input:not([type=range]):not([type=checkbox]):not([type=color]),.sheet textarea{border-radius:var(--r-m)!important}
+.sheet{border-radius:var(--r-xl) var(--r-xl) 0 0}
+.sheet h3{font-size:19px;font-weight:800;letter-spacing:-.2px}
+.icon-btn{border-radius:14px}
+.toast{border-radius:var(--r-m)!important;box-shadow:var(--sh-2)}
+.hint{line-height:1.45}
+/* vdialog */
+.vdlg-bg{position:fixed;inset:0;z-index:99;background:#0009;display:grid;place-items:center;padding:24px;animation:fade .15s}
+.vdlg{width:100%;max-width:340px;background:var(--panel);border:1px solid #ffffff14;border-radius:var(--r-xl);padding:22px 18px 16px;box-shadow:0 30px 80px #000a;animation:dlgPop .28s cubic-bezier(.2,1.3,.4,1);text-align:center}
+@keyframes dlgPop{from{transform:scale(.88);opacity:0}}
+.vdlg .ic{font-size:40px;margin-bottom:6px}
+.vdlg h4{margin:0 0 6px;font-size:18px;font-weight:800}
+.vdlg p{margin:0 0 16px;color:var(--muted);font-size:14.5px;line-height:1.45;white-space:pre-line}
+.vdlg input{width:100%;box-sizing:border-box;margin:0 0 14px;padding:13px 14px;border-radius:var(--r-m);border:1px solid var(--line);background:#ffffff0b;color:var(--text);font-size:16px;outline:none;text-align:center}
+.vdlg input:focus{border-color:var(--accent)}
+.vdlg .bb{display:flex;gap:8px}.vdlg .bb button{flex:1;min-height:48px;border-radius:var(--r-m);font-weight:800;font-size:15px}
+.vdlg .bb .no{background:#ffffff10}.vdlg .bb .ok{background:linear-gradient(135deg,var(--accent),var(--accent3));color:#fff}.vdlg .bb .ok.danger{background:linear-gradient(135deg,#ef4444,#dc2626)}
+/* chat 3.0 */
+#msgs .bub .ft{font-size:10.5px;opacity:.72;letter-spacing:.2px}
+#msgs .m.hl .bub{animation:hlPulse 1.6s ease}
+@keyframes hlPulse{0%,60%{box-shadow:0 0 0 3px color-mix(in srgb,var(--accent2) 80%,transparent),0 0 30px color-mix(in srgb,var(--accent) 50%,transparent)}}
+/* profile 2.0 */
+.sheet .cover{transition:transform .05s linear;will-change:transform}
+.pstats{display:flex;justify-content:center;gap:6px;margin:12px 0 4px}
+.pstats div{flex:1;max-width:110px;text-align:center;padding:10px 4px;border-radius:var(--r-m);background:#ffffff0b}
+.pstats b{display:block;font-size:20px;font-weight:900}.pstats small{color:var(--muted);font-size:11.5px}
+.ptabs{display:flex;gap:4px;padding:4px;border-radius:var(--r-m);background:#ffffff0b;margin:12px 0 10px;position:sticky;top:0;z-index:3;backdrop-filter:blur(12px)}
+.ptabs button{flex:1;padding:9px 4px;border-radius:12px;font-weight:800;font-size:13px;color:var(--muted)}.ptabs button.on{background:var(--accent);color:#fff}
+.pgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;border-radius:var(--r-m);overflow:hidden}
+.pgrid div{aspect-ratio:1;background:#ffffff0b center/cover;display:grid;place-items:center;font-size:11px;padding:6px;text-align:center;overflow:hidden;cursor:pointer;color:var(--muted)}
+.pgrid div.sk{background:linear-gradient(90deg,#ffffff08,#ffffff14,#ffffff08);background-size:200% 100%;animation:skSh 1.2s linear infinite}
+@keyframes skSh{to{background-position:-200% 0}}
+/* light 2.0 */
+html.light{--panel:#ffffff;--panel2:#f6f4fc}
+html.light body{background:linear-gradient(160deg,#f7f5ff,#fdf4fb 55%,#f1f7ff)}
+html.light .set-group,html.light .hc,html.light .mtile,html.light .post{box-shadow:0 1px 2px #1b153008,0 8px 24px #1b15300d}
+html.light .sheet{background:rgba(255,255,255,.94)!important;box-shadow:0 -10px 40px #1b153022}
+html.light .btn.ghost{background:#1b15300a!important;box-shadow:inset 0 0 0 1px #1b153012!important;color:#1d1a28}
+html.light .vdlg{background:#fff}html.light .vdlg .bb .no{background:#1b15300d}
+/* brand & login */
+.brand-mark{width:30px;height:30px;border-radius:10px;display:inline-grid;place-items:center;font-weight:900;font-size:16px;color:#fff;background:linear-gradient(135deg,var(--accent),var(--accent3));box-shadow:0 4px 14px color-mix(in srgb,var(--accent) 50%,transparent);margin-right:8px;vertical-align:-6px;position:relative;overflow:hidden}
+.brand-mark::after,.logo-mark::after{content:'';position:absolute;inset:0;background:linear-gradient(115deg,transparent 30%,#ffffff66 48%,transparent 62%);transform:translateX(-120%);animation:shine 4.5s ease-in-out infinite}
+.logo-mark{position:relative;overflow:hidden;animation:logoFloat 4s ease-in-out infinite}
+@keyframes shine{0%,70%{transform:translateX(-120%)}100%{transform:translateX(120%)}}
+@keyframes logoFloat{50%{transform:translateY(-6px) rotate(-3deg)}}
+.brand-name{background-size:200% 100%!important;animation:brandSh 6s ease-in-out infinite}
+@keyframes brandSh{50%{background-position:100% 0}}
+#auth .auth-card{animation:authIn .6s cubic-bezier(.2,1.2,.3,1)}
+@keyframes authIn{from{transform:translateY(30px) scale(.97);opacity:0}}
+#auth .tagline{background:linear-gradient(90deg,var(--accent2),#f472b6,var(--accent2));background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:brandSh 4s linear infinite}
+/* player 2.0 */
+.mfs{--mc:#7c5cff}
+.mfs .shade{background:linear-gradient(180deg,color-mix(in srgb,var(--mc) 35%,#0008),#000c 75%)!important;transition:background 1s}
+.mviz{display:flex;align-items:flex-end;justify-content:center;gap:3px;height:28px;margin:4px 0 2px;opacity:.85}
+.mviz i{width:4px;border-radius:2px;background:linear-gradient(#fff,color-mix(in srgb,var(--mc) 70%,#fff));height:3px;transition:height .08s linear}
+/* call 2.0 */
+.call .cbg{position:absolute!important;inset:-10%;background:center/cover;filter:blur(40px) saturate(150%) brightness(.55);transform:scale(1.2);z-index:0!important}
+.call.vid .cbg{display:none}
+/* settings search */
+.sp-search{position:relative;margin:6px 0 12px}.sp-search input{width:100%;box-sizing:border-box;padding:12px 14px 12px 40px;border-radius:var(--r-m);border:1px solid #ffffff14;background:#ffffff0b;color:var(--text);font-size:15px;outline:none}
+.sp-search span{position:absolute;left:14px;top:50%;transform:translateY(-50%);opacity:.6}
+.sp-res .set-group{margin-bottom:8px}
+/* feed dbl */
+.mtile .bigheart{position:absolute;inset:0;display:grid;place-items:center;font-size:70px;animation:bh .8s ease forwards;pointer-events:none;z-index:3}
+@keyframes bh{0%{transform:scale(.3);opacity:0}30%{transform:scale(1.15);opacity:1}100%{transform:scale(1);opacity:0}}
 </style>
 </head>
 <body>
@@ -1995,7 +2069,7 @@ html.onehand .tabbar button{padding:10px 0 9px}html.onehand .tabbar button svg{w
   <section id="side" class="pane">
     <div class="top">
       <button class="icon-btn" id="meBtn" title="Профиль" style="padding:0"></button>
-      <div class="brand"><div class="brand-name">Viks</div><div class="brand-sub" id="brandSub">чаты</div></div>
+      <div class="brand"><div class="brand-name"><span class="brand-mark">V</span>Viks</div><div class="brand-sub" id="brandSub">чаты</div></div>
       <button class="icon-btn" id="cmdBtn" title="Быстрый поиск" onclick="cmdPalette()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.2-4.2"/></svg></button>
       <button class="icon-btn" id="groupBtn" title="Новая группа"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.6-3.5 3.3-5.5 6.5-5.5s5.9 2 6.5 5.5"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7M18 14.8c2 .7 3.2 2.5 3.5 5.2"/></svg></button>
       <button class="icon-btn" id="setBtn" title="Настройки" style="position:relative"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg><span class="upd-dot hidden" id="updDot"></span></button>
@@ -2284,6 +2358,7 @@ async function fetchProfiles(ids) {
 
 /* ================= CHAT LIST ================= */
 async function loadChats() {
+  { const cl = $('#chatList'); if (cl && !chats.length && !cl.children.length) cl.append(skelRows(7)); }
   let { data, error } = await sb.rpc('my_chats');
   if (error && isNetErr(error) && cacheGet('chats')) { data = cacheGet('chats'); error = null; (cacheGet('profiles') || []).forEach(pp => { if (!profiles.has(pp.id)) profiles.set(pp.id, pp); }); }
   else if (!error) cacheSet('chats', data);
@@ -2776,6 +2851,7 @@ async function openProfile(uid, fromEl, view) {
         el('button', { class: 'btn ghost', title: 'Кинуть', onclick: () => { close(); setTimeout(() => throwSheet(uid), 30); } }, '🎯')),
       el('div', { style: 'height:8px' }),
       showcaseEl(p, close),
+      profTabs(p, close, dc),
       self ? el('button', { class: 'btn ghost', onclick: () => { close(); setTimeout(() => openMyProfile(), 30); } }, '✏️ Редактировать') : el('div', { class: 'menu' },
         el('button', { onclick: () => { close(); setTimeout(() => renameContact(p), 30); } }, aliases.has(p.id) ? '✏️ Изменить подпись' : '✏️ Подписать по-своему'),
         dc ? el('button', { onclick: () => { close(); setTimeout(() => mediaGallery(dc.chat_id, p.display_name), 30); } }, '🖼 Медиа, файлы и ссылки') : null,
@@ -2858,7 +2934,7 @@ function openMyProfile(nudge = false) {
         if (error) { toast('Не сохранилось: ' + error.message); return; }
         me = data; profiles.set(me.id, me); renderMe(); close(); toast('Сохранено ✨'); loadChats(); if (curTab === 'Settings' && !(spLayer && spLayer.open)) renderSettingsRoot();
       } }, 'Сохранить')),
-      el('button', { class: 'pe-out', onclick: async () => { if (!confirm('Выйти из аккаунта на этом устройстве?')) return; close(); await logout(); } }, 'Выйти из аккаунта'));
+      el('button', { class: 'pe-out', onclick: async () => { if (!await vConfirm('Выйти из аккаунта на этом устройстве?')) return; close(); await logout(); } }, 'Выйти из аккаунта'));
   });
 }
 
@@ -2957,7 +3033,7 @@ async function openGroupInfo(c) {
 
 
 /* ================= SETTINGS & UPDATES ================= */
-const APP_VERSION = '2.27.1';
+const APP_VERSION = '2.28.0';
 const TK1 = (() => { const t = document.createElement('template'); t.innerHTML = '<svg viewBox="0 0 16 11" width="15" height="11"><path d="M1.5 6l3 3 6.5-7.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>'; return t.content; })();
 const TK2 = (() => { const t = document.createElement('template'); t.innerHTML = '<svg viewBox="0 0 20 11" width="18" height="11"><path d="M1.5 6l3 3 6.5-7.5M8 8.5l.8.6 6.7-7.6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>'; return t.content; })();
 const APP_THEMES = {
@@ -4149,7 +4225,7 @@ function callUI(peerId, mode, video) {
   const rv = video ? el('video', { class: 'rv', autoplay: '', playsinline: '' }) : null;
   const lv = video ? el('video', { class: 'lv', autoplay: '', playsinline: '' }) : null;
   if (rv) { rv.playsInline = true; rv.muted = true; } if (lv) { lv.playsInline = true; lv.muted = true; }
-  const ui = el('div', { class: 'call' + (video ? ' vid' : '') }, el('div', { class: 'aurora', 'aria-hidden': 'true' }, el('i'), el('i'), el('i'), el('i')), rv, lv,
+  const ui = el('div', { class: 'call' + (video ? ' vid' : '') }, p.avatar_url ? el('div', { class: 'cbg', style: 'background-image:url(' + p.avatar_url + ')' }) : null, el('div', { class: 'aurora', 'aria-hidden': 'true' }, el('i'), el('i'), el('i'), el('i')), rv, lv,
     el('div', { class: 'who' }, el('div', { class: 'ring' }, avatar(p.display_name, p.avatar_url, 128)), el('div', { class: 'nm' }, p.display_name || 'Звонок'), st),
     btns);
   document.body.append(ui);
@@ -5352,6 +5428,7 @@ function renderSettingsRoot() {
       el('div', { class: 'nm', style: me.name_color ? 'color:' + me.name_color : '' }, ngn(me, me.display_name), decor(me)),
       el('div', { class: 'un' }, '@' + me.username),
       st ? el('div', { class: 'st' }, st) : null),
+    setSearch(box),
     el('div', { class: 'set-group' }, catRow('<span style="font-size:17px">🛍</span>', 'linear-gradient(135deg,#f59e0b,#f97316)', 'Магазин', (vix.bal != null ? vix.bal + ' виксов · ' : '') + 'рамки, пузыри, темы, стикеры', shopPage)),
     el('div', { class: 'set-group' }, catRow('<span style="font-size:17px;color:#fff">✦</span>', 'linear-gradient(135deg,#f59e0b,#ec4899,#8b5cf6)', 'Viks Premium', isPremium() ? 'Активен ✅ · стикеры с эффектами' : 'Премиум-стикеры и фишки · скоро', premiumPage)),
     el('div', { class: 'set-group' },
@@ -6363,8 +6440,8 @@ function editPhoto(file) {
       panel.innerHTML = '';
       if (tool === 'fx') PFX.forEach(([n, ops], k) => panel.append(el('button', { class: 'fp' + (fx === k ? ' on' : ''), onclick: () => { fx = k; applyFx(); drawPanel(); } }, el('img', { src: thumbs, style: 'filter:' + fxCss(ops) }), n)));
       if (tool === 'crop') {
-        panel.append(el('button', { onclick: () => { if (dirty && !confirm('Рисунок и размытие сбросятся. Повернуть?')) return; rot = (rot + 1) % 4; rebuild(); } }, '⟳ Повернуть'));
-        [['orig', 'Оригинал'], ['1:1', '1:1'], ['4:5', '4:5'], ['16:9', '16:9'], ['9:16', '9:16']].forEach(([k, l]) => panel.append(el('button', { class: aspect === k ? 'on' : '', onclick: () => { if (k === aspect) return; if (dirty && !confirm('Рисунок и размытие сбросятся. Обрезать?')) return; aspect = k; rebuild(); drawPanel(); } }, l)));
+        panel.append(el('button', { onclick: async () => { if (dirty && !(await vConfirm('Рисунок и размытие сбросятся. Повернуть?'))) return; rot = (rot + 1) % 4; rebuild(); } }, '⟳ Повернуть'));
+        [['orig', 'Оригинал'], ['1:1', '1:1'], ['4:5', '4:5'], ['16:9', '16:9'], ['9:16', '9:16']].forEach(([k, l]) => panel.append(el('button', { class: aspect === k ? 'on' : '', onclick: async () => { if (k === aspect) return; if (dirty && !await vConfirm('Рисунок и размытие сбросятся. Обрезать?')) return; aspect = k; rebuild(); drawPanel(); } }, l)));
       }
       if (tool === 'draw') { ['#ff3b5c', '#ffd54f', '#3ddc97', '#4dabf7', '#b197fc', '#ffffff', '#000000'].forEach(c => panel.append(el('button', { class: 'dot' + (color === c ? ' on' : ''), style: 'background:' + c, onclick: () => { color = c; drawPanel(); } }))); panel.append(undo); }
       if (tool === 'blur') { [[1, 'Мелкая'], [2, 'Средняя'], [3.5, 'Большая']].forEach(([b, l]) => panel.append(el('button', { class: brush === b ? 'on' : '', onclick: () => { brush = b; drawPanel(); } }, l))); panel.append(undo); panel.prepend(el('span', { style: 'font-size:12px;opacity:.7;flex:none' }, 'Води пальцем:')); }
@@ -6412,7 +6489,7 @@ async function devicesSheet() {
     draw();
     s.append(el('h3', {}, '💻 Устройства'), el('div', { class: 'hint', style: 'margin:-6px 0 6px' }, 'Где сейчас открыт твой Viks'), list, el('div', { style: 'height:14px' }),
       arr.length > 1 ? el('button', { class: 'btn danger', onclick: async () => {
-        if (!confirm('Выйти на всех других устройствах?')) return;
+        if (!await vConfirm('Выйти на всех других устройствах?')) return;
         await sb.from('devices').update({ kicked: true }).eq('user_id', me.id).neq('id', devId);
         const { error } = await sb.auth.signOut({ scope: 'others' }); close();
         toast(error ? 'Частично: они вылетят в течение минуты' : '✅ Все остальные устройства вышли');
@@ -7118,7 +7195,7 @@ function showLock() {
     if (++fails >= 5) { until = Date.now() + 30000; fails = 0; pad.setTitle('5 ошибок. Подожди 30 сек'); } else pad.setTitle('Неверно, ещё раз'); return false;
   }, bio);
   const ov = el('div', { class: 'lockscr' }, avatar(me.display_name, me.avatar_url, 72), ...pad.node,
-    el('button', { class: 'forgot', onclick: async () => { if (confirm('Забыл код? Выйду из аккаунта на этом устройстве, потом зайдёшь заново по логину и паролю. Скрытые чаты вернутся в список.')) { setLock(null); try { localStorage.removeItem(hiddenKey()); } catch {} done(); logout(); } } }, 'Забыл код?'));
+    el('button', { class: 'forgot', onclick: async () => { if (await vConfirm('Забыл код? Выйду из аккаунта на этом устройстве, потом зайдёшь заново по логину и паролю. Скрытые чаты вернутся в список.')) { setLock(null); try { localStorage.removeItem(hiddenKey()); } catch {} done(); logout(); } } }, 'Забыл код?'));
   document.body.append(ov);
   if (lk.cred) setTimeout(async () => { if (lockedNow && await bioOk(lk)) done(); }, 400);
 }
@@ -7158,7 +7235,7 @@ function setupCode() {
       if (c !== first) { first = null; pad.setTitle('Не совпало. Придумай заново'); return false; }
       const salt = b64e(crypto.getRandomValues(new Uint8Array(12)));
       setLock({ h: await sha(salt + c), salt, after: 60, cred: null }); sessionStorage.setItem('viks-unlocked', 1);
-      close(); toast('🔒 Код поставлен'); if (window.PublicKeyCredential) setTimeout(() => { if (confirm('Включить вход по Face ID / отпечатку?')) regBio().then(id => { if (id) { const lk = getLock(); lk.cred = id; setLock(lk); toast('🫣 Готово'); } }); }, 300);
+      close(); toast('🔒 Код поставлен'); if (window.PublicKeyCredential) setTimeout(async () => { if (await vConfirm('Включить вход по Face ID / отпечатку?', { icon: '🔐', ok: 'Включить' })) regBio().then(id => { if (id) { const lk = getLock(); lk.cred = id; setLock(lk); toast('🫣 Готово'); } }); }, 300);
       return true;
     });
     s.append(el('div', { class: 'lockscr', style: 'position:relative;inset:auto;background:none;backdrop-filter:none;padding:10px 0' }, ...pad.node));
@@ -7318,10 +7395,12 @@ function emojiSuggest() {
 function skelRows(n) { return el('div', {}, Array.from({ length: n }, (_, i) => el('div', { class: 'skrow' }, el('div', { class: 'a skc' }), el('div', { class: 'l' }, el('i', { class: 'skc', style: 'width:' + (40 + (i * 13) % 30) + '%' }), el('i', { class: 'skc', style: 'width:' + (60 + (i * 17) % 30) + '%' }))))); }
 function mTile(pp, posts, i) {
   const u = profiles.get(pp.user_id) || {}, rxs = feedRx.get(pp.id) || [], lk = rxs.length, topE = (() => { const c = {}; rxs.forEach(r => c[r.emoji] = (c[r.emoji] || 0) + 1); return Object.entries(c).sort((a, b) => b[1] - a[1]).slice(0, 2).map(x => x[0]).join('') || '❤️'; })();
-  return el('div', { class: 'mtile', style: 'animation-delay:' + Math.min(i, 10) * 40 + 'ms', onclick: () => openFeedViewer(posts, i) },
+  let tT = 0, tTimer = null;
+  const tile = el('div', { class: 'mtile', style: 'animation-delay:' + Math.min(i, 10) * 40 + 'ms', onclick: () => { const n = Date.now(); if (n - tT < 300) { clearTimeout(tTimer); tT = 0; tile.append(el('div', { class: 'bigheart' }, '❤️')); setTimeout(() => tile.querySelector('.bigheart')?.remove(), 850); hap(12); if (!(feedRx.get(pp.id) || []).some(r => r.user_id === me.id && r.emoji === '❤️')) toggleFeedReact(pp, '❤️', null); return; } tT = n; tTimer = setTimeout(() => openFeedViewer(posts, i), 280); } },
     pp.media_url ? (pp.kind === 'video' ? el('video', { src: pp.media_url + '#t=0.1', muted: '', playsinline: '', preload: 'metadata' }) : el('img', { src: pp.media_url, loading: 'lazy', alt: '' })) : el('div', { class: 'tx' }, (pp.text || '').slice(0, 140)),
     pp.kind === 'video' ? el('span', { class: 'pl' }, '▶️') : null,
     el('div', { class: 'ov' }, avatar(u.display_name, u.avatar_url, 22), (u.display_name || '').split(' ')[0], el('span', { class: 'lk' }, topE + ' ' + lk)));
+  return tile;
 }
 function openFeedViewer(posts, i) {
   const ov = el('div', { class: 'fview' }, posts.map(pp => el('div', { class: 'slide' }, postEl(pp))));
@@ -7914,7 +7993,7 @@ function adminPanel() {
             const ta = el('textarea', { placeholder: 'Текст для всех… Например: 🎉 Вышло обновление 2.18! Что нового: …', maxlength: 3500 });
             c1.append(el('div', { class: 'hint', style: 'margin:0 0 8px' }, 'Сообщение уйдёт в канал «Viks Новости» — всем придёт пуш'), ta,
               el('div', { style: 'display:flex;gap:8px;margin-top:8px' },
-                el('button', { class: 'btn', style: 'flex:2', onclick: async ev => { const t = ta.value.trim(); if (!t) { toast('Напиши текст'); return; } if (!confirm('Отправить всем?')) return; const b = ev.currentTarget; b.disabled = true; const { error } = await sb.from('messages').insert({ chat_id: nid, sender_id: me.id, body: t }); b.disabled = false; if (error) { toast('Не отправилось: ' + errText(error)); return; } ta.value = ''; toast('📣 Отправлено всем'); } }, '📣 Отправить всем'),
+                el('button', { class: 'btn', style: 'flex:2', onclick: async ev => { const t = ta.value.trim(); if (!t) { toast('Напиши текст'); return; } if (!await vConfirm('Отправить всем?')) return; const b = ev.currentTarget; b.disabled = true; const { error } = await sb.from('messages').insert({ chat_id: nid, sender_id: me.id, body: t }); b.disabled = false; if (error) { toast('Не отправилось: ' + errText(error)); return; } ta.value = ''; toast('📣 Отправлено всем'); } }, '📣 Отправить всем'),
                 el('button', { class: 'btn ghost', style: 'flex:1', onclick: async () => { close(); await loadChats(); openChat(nid); } }, 'Канал')),
               el('button', { class: 'btn ghost', style: 'margin-top:8px', onclick: async () => { const { error } = await sb.rpc('news_setup'); toast(error ? 'Не вышло' : 'Все снова подписаны ✅'); } }, '🔄 Подписать всех заново'));
           }
@@ -7930,7 +8009,7 @@ function adminPanel() {
           const mt = appCfg.maintenance || {};
           const mtx = el('input', { placeholder: 'Текст (необязательно): Обновляемся, 10 минут…', maxlength: 160, value: mt.text || '', style: 'width:100%;box-sizing:border-box;margin-bottom:8px' });
           const c3 = el('div', { class: 'card2' }, el('h4', {}, '⚙️ Режим техработ ' + (mt.on ? '· 🔴 ВКЛЮЧЁН' : '· выключен')), el('div', { class: 'hint', style: 'margin:0 0 8px' }, 'Все, кроме тебя, увидят экран «Viks обновляется». Включится у людей в течение 1–2 минут'), mtx,
-            el('button', { class: 'btn' + (mt.on ? '' : ' ghost'), onclick: async () => { if (!mt.on && !confirm('Закрыть Viks для всех на техработы?')) return; const { error } = await sb.rpc('admin_config', { k: 'maintenance', v: { on: !mt.on, text: mtx.value.trim() || null } }); if (error) { toast('Не вышло'); return; } await loadAppConfig(); toast(mt.on ? 'Техработы выключены ✅' : 'Техработы включены ⚙️'); go(); } }, mt.on ? '✅ Выключить техработы' : '⚙️ Включить техработы'));
+            el('button', { class: 'btn' + (mt.on ? '' : ' ghost'), onclick: async () => { if (!mt.on && !await vConfirm('Закрыть Viks для всех на техработы?')) return; const { error } = await sb.rpc('admin_config', { k: 'maintenance', v: { on: !mt.on, text: mtx.value.trim() || null } }); if (error) { toast('Не вышло'); return; } await loadAppConfig(); toast(mt.on ? 'Техработы выключены ✅' : 'Техработы включены ⚙️'); go(); } }, mt.on ? '✅ Выключить техработы' : '⚙️ Включить техработы'));
           body.append(c1, c2, c3);
         } else if (tab === 'promo') {
           body.innerHTML = '';
@@ -7940,7 +8019,7 @@ function adminPanel() {
           const d2 = () => { o2.innerHTML = ''; [[1, '1 человек'], [10, '10'], [50, '50'], [500, '500']].forEach(([u, l]) => o2.append(el('button', { class: uses === u ? 'on' : '', onclick: () => { uses = u; d2(); } }, l))); };
           d1(); d2();
           const list = el('div', { style: 'margin-top:14px' });
-          const load = async () => { const { data } = await sb.rpc('list_promos'); list.innerHTML = ''; (data || []).forEach(p => list.append(el('div', { class: 'promo' }, el('div', { class: 'tx' }, el('code', {}, p.code), el('small', {}, (p.vix ? '🪙 ' + p.vix + ' виксов' : p.days + ' дн.') + ' · ' + p.uses + '/' + p.max_uses + ' исп.' + (p.note ? ' · ' + p.note : ''))), el('button', { class: 'icon-btn', title: 'Копировать', onclick: () => copy(p.code) }, '📋'), el('button', { class: 'icon-btn', title: 'Удалить', onclick: async () => { if (!confirm('Удалить код ' + p.code + '?')) return; await sb.rpc('delete_promo', { c: p.code }); load(); } }, '🗑')))); if (!(data || []).length) list.append(el('div', { class: 'empty' }, 'Кодов пока нет')); };
+          const load = async () => { const { data } = await sb.rpc('list_promos'); list.innerHTML = ''; (data || []).forEach(p => list.append(el('div', { class: 'promo' }, el('div', { class: 'tx' }, el('code', {}, p.code), el('small', {}, (p.vix ? '🪙 ' + p.vix + ' виксов' : p.days + ' дн.') + ' · ' + p.uses + '/' + p.max_uses + ' исп.' + (p.note ? ' · ' + p.note : ''))), el('button', { class: 'icon-btn', title: 'Копировать', onclick: () => copy(p.code) }, '📋'), el('button', { class: 'icon-btn', title: 'Удалить', onclick: async () => { if (!await vConfirm('Удалить код ' + p.code + '?')) return; await sb.rpc('delete_promo', { c: p.code }); load(); } }, '🗑')))); if (!(data || []).length) list.append(el('div', { class: 'empty' }, 'Кодов пока нет')); };
           body.append(el('div', { class: 'hint', style: 'margin:0 0 6px;font-weight:700' }, 'Срок Premium'), o1, el('div', { class: 'hint', style: 'margin:0 0 6px;font-weight:700' }, 'Сколько раз можно ввести'), o2, note,
             el('button', { class: 'btn prem-buy', style: 'margin-top:0', onclick: async () => { const { data, error } = await sb.rpc('create_promo', { days, max_uses: uses, note: note.value.trim() || null }); if (error) { toast('Не вышло'); return; } copy(data); toast('Код ' + data + ' скопирован'); note.value = ''; load(); } }, '🎟 Создать код'),
             el('div', { class: 'hint', style: 'margin:16px 0 6px;font-weight:700' }, '🪙 Или код на виксы (сколько раз — выбрано выше)'),
@@ -7980,7 +8059,7 @@ function userActions(u, reload) {
     s.append(el('div', { class: 'adm' }, el('div', { style: 'display:flex;align-items:center;gap:12px;margin-bottom:12px' }, avatar(u.display_name, u.avatar_url, 56), el('div', {}, el('b', { style: 'font-size:17px' }, u.display_name), el('div', { class: 'hint', style: 'margin:0' }, '@' + u.username + ' · с ' + new Date(u.created_at).toLocaleDateString('ru-RU')),
         el('div', { class: 'hint', style: 'margin:2px 0 0' }, (prem ? (u.premium_until ? '✦ Premium до ' + new Date(u.premium_until).toLocaleDateString('ru-RU') : '✦ Premium навсегда') : 'без Premium') + (ban ? ' · ⛔ ' + (u.banned_until && !u.banned ? 'бан до ' + new Date(u.banned_until).toLocaleString('ru-RU', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }) : 'бан навсегда') + (u.ban_reason ? ' (' + u.ban_reason + ')' : '') : '')))), dc),
       el('div', { class: 'menu' },
-        F ? el('button', { onclick: async () => { const n = parseInt(prompt('Сколько виксов выдать? (минус — списать)', '100')); if (!n) return; const { data, error } = await sb.rpc('admin_give_vix', { target: u.id, n }); if (error) { toast('Не вышло: ' + errText(error)); return; } toast('🪙 Готово, у него теперь ' + data); close(); } }, '🪙 Выдать виксы') : null,
+        F ? el('button', { onclick: async () => { const n = parseInt(await vPrompt('Сколько виксов выдать? (минус — списать)', '100')); if (!n) return; const { data, error } = await sb.rpc('admin_give_vix', { target: u.id, n }); if (error) { toast('Не вышло: ' + errText(error)); return; } toast('🪙 Готово, у него теперь ' + data); close(); } }, '🪙 Выдать виксы') : null,
         F ? el('button', { onclick: async () => { if (await act('premium_days', 7, '+7 дней Premium')) close(); } }, '✦ +7 дней Premium') : null,
         F ? el('button', { onclick: async () => { if (await act('premium_days', 30, '+30 дней Premium')) close(); } }, '✦ +30 дней Premium') : null,
         F ? el('button', { onclick: async () => { if (await act('premium_days', 365, '+год Premium')) close(); } }, '✦ +год Premium') : null,
@@ -7989,7 +8068,7 @@ function userActions(u, reload) {
         F && u.id !== me.id ? el('button', { onclick: async () => { if (await act(mod ? 'badge_off' : 'badge_on', 'mod', mod ? 'Больше не модератор' : 'Теперь модератор 🛡')) close(); } }, mod ? '✖ Снять модератора' : '🛡 Сделать модератором') : null,
         el('button', { onclick: () => { close(); setTimeout(() => openProfile(u.id), 30); } }, '👤 Открыть профиль'),
         u.id !== me.id && !(u.badges || []).includes('founder') ? (ban ? el('button', { onclick: async () => { const { error } = await sb.rpc('admin_ban', { target: u.id, hours: 0 }); if (error) { toast('Не вышло'); return; } toast('Разбанен ✅'); close(); reload && reload(); } }, '✅ Разбанить') : el('button', { class: 'red', onclick: () => { close(); setTimeout(() => banSheet(u, reload), 30); } }, '⛔ Забанить…')) : null,
-        F && u.id !== me.id && !(u.badges || []).includes('founder') ? el('button', { class: 'red', onclick: async () => { if (!confirm('Удалить аккаунт ' + u.display_name + ' и ВСЕ его сообщения? Это не отменить')) return; if (!confirm('Точно? Сообщения пропадут у всех')) return; const { data, error } = await sb.rpc('admin_wipe', { target: u.id }); if (error) { toast('Не вышло: ' + errText(error)); return; } toast('Удалено. Сообщений: ' + data); close(); reload && reload(); } }, '🗑 Удалить аккаунт и сообщения') : null));
+        F && u.id !== me.id && !(u.badges || []).includes('founder') ? el('button', { class: 'red', onclick: async () => { if (!await vConfirm('Удалить аккаунт ' + u.display_name + ' и ВСЕ его сообщения? Это не отменить')) return; if (!await vConfirm('Точно? Сообщения пропадут у всех')) return; const { data, error } = await sb.rpc('admin_wipe', { target: u.id }); if (error) { toast('Не вышло: ' + errText(error)); return; } toast('Удалено. Сообщений: ' + data); close(); reload && reload(); } }, '🗑 Удалить аккаунт и сообщения') : null));
   });
 }
 
@@ -8060,7 +8139,7 @@ function muUi() {
 function muRow(t, list, i) {
   return el('div', { class: 'mu-row', 'data-id': String(t.id), onclick: () => muPlay(list, i) }, el('span', { class: 'n' }, String(i + 1)), el('img', { src: muArtS(t), loading: 'lazy', alt: '' }),
     el('div', { class: 'tx' }, el('b', {}, t.title, t.src === 'dz' ? el('span', { class: 'pv' }, '30с') : t.src === 'my' ? el('span', { class: 'pv my' }, 'моё') : null), el('small', {}, el('span', { class: 'ar', onclick: e => { if (!t.user || !t.user.id || t.src) return; e.stopPropagation(); muArtistPage(t.user); } }, muArtist(t)), t.src === 'dz' ? '' : ' · ' + muDur(t.duration))),
-    t.src === 'my' ? el('button', { class: 'lk', title: 'Удалить', onclick: async e => { e.stopPropagation(); if (!confirm('Удалить «' + t.title + '» из своей музыки?')) return; await sb.from('user_music').delete().eq('id', t.myId); delete muCache['my:']; renderMusic(true); } }, '🗑') :
+    t.src === 'my' ? el('button', { class: 'lk', title: 'Удалить', onclick: async e => { e.stopPropagation(); if (!await vConfirm('Удалить «' + t.title + '» из своей музыки?')) return; await sb.from('user_music').delete().eq('id', t.myId); delete muCache['my:']; renderMusic(true); } }, '🗑') :
     el('button', { class: 'lk', onclick: e => { e.stopPropagation(); muToggleFav(t); e.currentTarget.textContent = muIsFav(t) ? '❤️' : '🤍'; } }, muIsFav(t) ? '❤️' : '🤍'));
 }
 const MU_MOODS = { chill: ['😌 Чилл', ['Peaceful', 'Easygoing', 'Cool', 'Tender']], energy: ['🔥 Энергия', ['Energizing', 'Excited', 'Upbeat', 'Empowering']], night: ['🌙 Ночь', ['Sensual', 'Brooding', 'Sophisticated', 'Romantic']], sport: ['🏋️ Спорт', ['Aggressive', 'Fiery', 'Rowdy', 'Defiant']], sad: ['💔 Грусть', ['Melancholy', 'Yearning', 'Sentimental', 'Serious']] };
@@ -8202,7 +8281,7 @@ function muFull() {
       el('div', { class: 'top2' }, el('button', { html: MI.down, onclick: () => ov._close() }), el('div', { class: 'lbl' }, t.src === 'dz' ? 'Отрывок 30 сек' : t.src === 'my' ? 'Моя музыка' : 'Сейчас играет', el('b', {}, mus.q.length > 1 ? (mus.i + 1) + ' из ' + mus.q.length : 'Viks')), el('button', { html: MI.list, onclick: () => queue() })),
       el('div', { class: 'mid' }, art,
         el('div', { class: 'info' }, addb, el('div', { class: 'tx' }, el('h2', {}, t.title), el('div', { class: 'ar', onclick: () => !t.src && t.user && t.user.id && muArtistPage(t.user) }, muArtist(t) + (!t.src && t.user && t.user.id ? ' ›' : ''))), lk),
-        prog, el('div', { class: 'tm2' }, tcur, tdur),
+        el('div', { class: 'mviz' }, Array.from({ length: 28 }, () => el('i'))), prog, el('div', { class: 'tm2' }, tcur, tdur),
         t.src === 'dz' ? el('div', { class: 'full' }, el('small', {}, '▶ Это отрывок 30 сек. Полностью:'), el('div', { class: 'svc' }, [['ВК Музыка', '#0077ff', 'https://vk.com/audio?q='], ['Яндекс', '#fc3f1d', 'https://music.yandex.ru/search?text='], ['Spotify', '#1db954', 'https://open.spotify.com/search/'], ['Apple', '#fa2d48', 'https://music.apple.com/search?term=']].map(([n, c, u]) => el('a', { href: u + encodeURIComponent(muArtist(t) + ' ' + t.title), target: '_blank', rel: 'noopener', style: 'background:' + c }, n)))) : null,
         el('div', { class: 'ctl2' }, shb, el('button', { html: MI.prev, onclick: muPrev }), ppb, el('button', { html: MI.next, onclick: () => muNext() }), rpb)),
       el('div', { class: 'bot' },
@@ -8229,7 +8308,7 @@ function muFull() {
   let sy = null; ov.addEventListener('touchstart', e => { if (e.target.closest('.prog,.q')) { sy = null; return; } sy = e.touches[0].clientY; }, { passive: true });
   ov.addEventListener('touchmove', e => { if (sy == null) return; const dy = e.touches[0].clientY - sy; if (dy > 0) { ov.style.transition = 'none'; ov.style.transform = 'translateY(' + dy + 'px)'; } }, { passive: true });
   ov.addEventListener('touchend', e => { if (sy == null) return; const dy = e.changedTouches[0].clientY - sy; sy = null; if (dy > 120) ov._close(); else { ov.style.transition = 'transform .25s ease'; ov.style.transform = ''; } });
-  build(); document.body.append(ov); muPulse(ov);
+  build(); document.body.append(ov); muPulse(ov); muTint(ov);
 }
 mus.els.forEach(A => A.addEventListener('timeupdate', () => { if (A !== mus.a) return; const f = document.querySelector('.mfs'); if (f && f._tick) f._tick(); const b = $('#mplayer .bar'); if (b && A.duration) b.style.width = (A.currentTime / A.duration * 100) + '%'; }));
 function muShare(t) {
@@ -8337,6 +8416,7 @@ function muPulse(ov) {
     const art = ov.querySelector('.art'), bg = ov.querySelector('.bg');
     if (art && !art.classList.contains('pz')) art.style.transform = 'scale(' + (1 + Math.max(0, b - .45) * .14).toFixed(3) + ')';
     if (bg) bg.style.filter = 'blur(60px) saturate(180%) brightness(' + (.5 + b * .35).toFixed(2) + ')';
+    const vz = ov.querySelectorAll('.mviz i'); if (vz.length) for (let k = 0; k < vz.length; k++) { const v = buf[2 + k * 2] / 255; vz[k].style.height = (3 + v * 25).toFixed(0) + 'px'; }
   };
   loop();
 }
@@ -8427,7 +8507,7 @@ function muToStory(t) {
 }
 /* playlists */
 async function plCreate(withTrack) {
-  const nm = prompt('Название плейлиста', withTrack ? 'Мой плейлист' : ''); if (!nm || !nm.trim()) return null;
+  const nm = await vPrompt('Название плейлиста', withTrack ? 'Мой плейлист' : ''); if (!nm || !nm.trim()) return null;
   const { data, error } = await sb.from('user_playlists').insert({ title: nm.trim().slice(0, 60), tracks: withTrack ? [muMini(withTrack)] : [] }).select().single();
   if (error) { toast('Не вышло'); return null; } toast('📚 Плейлист «' + data.title + '» создан'); if (curTab === 'Music' && mus.mode === 'mypl') renderMusic(true); return data;
 }
@@ -8449,7 +8529,7 @@ async function plOpen(id) {
       el('div', { style: 'display:flex;gap:8px;margin-bottom:8px' }, el('button', { class: 'btn', style: 'flex:2', onclick: () => items.length && muPlay(items, 0) }, '▶ Слушать'), el('button', { class: 'btn ghost', style: 'flex:1', onclick: () => { if (!items.length) return; mus.shuffle = true; muPlay(items, Math.floor(Math.random() * items.length)); } }, '🔀'),
         el('button', { class: 'btn ghost', style: 'flex:1', onclick: () => { close(); setTimeout(() => plShare(pl), 30); } }, '📤')),
       lst,
-      mine ? el('button', { class: 'btn ghost', style: 'margin-top:10px;color:#ff8a94', onclick: async () => { if (!confirm('Удалить плейлист «' + pl.title + '»?')) return; await sb.from('user_playlists').delete().eq('id', pl.id); close(); toast('Плейлист удалён'); if (curTab === 'Music') renderMusic(true); } }, '🗑 Удалить плейлист') : el('button', { class: 'btn ghost', style: 'margin-top:10px', onclick: async () => { const { error } = await sb.from('user_playlists').insert({ title: pl.title, tracks: items }); toast(error ? 'Не вышло' : '📚 Сохранено к тебе'); } }, '📥 Сохранить к себе'));
+      mine ? el('button', { class: 'btn ghost', style: 'margin-top:10px;color:#ff8a94', onclick: async () => { if (!await vConfirm('Удалить плейлист «' + pl.title + '»?')) return; await sb.from('user_playlists').delete().eq('id', pl.id); close(); toast('Плейлист удалён'); if (curTab === 'Music') renderMusic(true); } }, '🗑 Удалить плейлист') : el('button', { class: 'btn ghost', style: 'margin-top:10px', onclick: async () => { const { error } = await sb.from('user_playlists').insert({ title: pl.title, tracks: items }); toast(error ? 'Не вышло' : '📚 Сохранено к тебе'); } }, '📥 Сохранить к себе'));
     draw();
   });
 }
@@ -8728,7 +8808,7 @@ function shopCard(it, redraw) {
     }
     if (!it.active) { toast('Эта вещь выпадает только из сундука 📦'); return; }
     if (vix.bal < price) { toast('🪙 Не хватает ' + (price - vix.bal) + ' виксов. Забирай бонусы и задания 👆'); return; }
-    if (!confirm('Купить «' + it.title + '» за ' + price + ' виксов?')) return;
+    if (!await vConfirm('Купить «' + it.title + '» за ' + price + ' виксов?')) return;
     btn.disabled = true;
     const { data, error } = await sb.rpc('vix_buy', { item: it.id });
     if (error) { toast(errText(error)); btn.disabled = false; return; }
@@ -8758,7 +8838,7 @@ function pickFriend(title, cb) {
 function giftItemSheet(it, redraw) {
   pickFriend('🎁 Кому подарить «' + it.title + '»?', async c => {
     if (vix.bal < it.price) { toast('🪙 Не хватает ' + (it.price - vix.bal) + ' виксов'); return; }
-    if (!confirm('Подарить «' + it.title + '» — ' + c.title + ' за ' + it.price + ' виксов?')) return;
+    if (!await vConfirm('Подарить «' + it.title + '» — ' + c.title + ' за ' + it.price + ' виксов?')) return;
     const { data, error } = await sb.rpc('vix_gift_item', { target: c.peer_id, item: it.id });
     if (error) { toast(errText(error)); return; }
     vix.bal = data.balance; fullBurst('🎁'); hap([15, 40, 15]);
@@ -9046,6 +9126,77 @@ function hubEdit() {
         el('button', { class: hid.has(k) ? '' : 'on', onclick: () => { hid.has(k) ? hid.delete(k) : hid.add(k); settings.hubHidden = [...hid]; saveSettings(); draw(); renderChats(); } }, hid.has(k) ? '🙈' : '👁'))); }); };
     draw(); s.append(el('h3', {}, '🧩 Карточки на главной'), el('div', { class: 'hint', style: 'margin:-6px 0 8px' }, 'Стрелками — порядок, 👁 — показать/спрятать'), box, el('button', { class: 'btn', style: 'margin-top:12px', onclick: close }, 'Готово'));
   });
+}
+
+
+/* ===== 2.28 design ===== */
+function vDialog({ title, text, icon, ok = 'ОК', cancel = 'Отмена', danger, input, value = '', placeholder = '' }) {
+  return new Promise(res => {
+    const inp = input ? el('input', { value: value || '', placeholder }) : null;
+    const done = v => { bg.remove(); res(v); };
+    const okB = el('button', { class: 'ok' + (danger ? ' danger' : ''), onclick: () => done(input ? inp.value : true) }, ok);
+    const box = el('div', { class: 'vdlg' }, icon ? el('div', { class: 'ic' }, icon) : null, title ? el('h4', {}, title) : null, text ? el('p', {}, text) : null, inp, el('div', { class: 'bb' }, el('button', { class: 'no', onclick: () => done(input ? null : false) }, cancel), okB));
+    const bg = el('div', { class: 'vdlg-bg', onclick: e => { if (e.target === bg) done(input ? null : false); } }, box);
+    if (inp) inp.onkeydown = e => { if (e.key === 'Enter') okB.click(); if (e.key === 'Escape') done(null); };
+    document.body.append(bg); hap(6); if (inp) setTimeout(() => { inp.focus(); inp.select(); }, 80);
+  });
+}
+function vConfirm(text, o = {}) {
+  const danger = o.danger != null ? o.danger : /удал|выйти|выйду|закрыть viks|сброс/i.test(text);
+  const icon = o.icon || (/купить|подарить/i.test(text) ? '🛍' : /выйти|выйду/i.test(text) ? '👋' : /удал/i.test(text) ? '🗑' : danger ? '⚠️' : '💬');
+  return vDialog({ text, icon, danger, ok: o.ok || (/купить/i.test(text) ? 'Купить' : /подарить/i.test(text) ? 'Подарить' : /выйти|выйду/i.test(text) ? 'Выйти' : /удал/i.test(text) ? 'Удалить' : 'Да'), cancel: o.cancel || 'Отмена' });
+}
+function vPrompt(text, value) { return vDialog({ title: text, input: true, value, ok: 'Готово', icon: '✏️' }); }
+function profStats(p) {
+  const box = el('div', { class: 'pstats' }, el('div', {}, el('b', {}, '…'), el('small', {}, 'постов')), el('div', {}, el('b', {}, '…'), el('small', {}, 'историй')), el('div', {}, el('b', {}, '…'), el('small', {}, 'плейлистов')));
+  Promise.all([sb.from('moments').select('id', { count: 'exact', head: true }).eq('user_id', p.id), sb.from('stories').select('id', { count: 'exact', head: true }).eq('user_id', p.id).gt('expires_at', new Date().toISOString()), sb.from('user_playlists').select('id', { count: 'exact', head: true }).eq('user_id', p.id)])
+    .then(([a, b, c]) => { const bs = box.querySelectorAll('b'); bs[0].textContent = a.count ?? 0; bs[1].textContent = b.count ?? 0; bs[2].textContent = c.count ?? 0; }).catch(() => {});
+  return box;
+}
+function profTabs(p, close, dc) {
+  let tab = 'media';
+  const body = el('div'), tabs = el('div', { class: 'ptabs' });
+  const sk = () => el('div', { class: 'pgrid' }, Array.from({ length: 6 }, () => el('div', { class: 'sk' })));
+  const draw = async () => {
+    tabs.innerHTML = ''; [['media', '🖼 Общие медиа'], ['music', '🎵 Музыка и плейлисты']].forEach(([k, l]) => tabs.append(el('button', { class: tab === k ? 'on' : '', onclick: () => { tab = k; draw(); } }, l)));
+    body.replaceChildren(sk());
+    if (tab === 'posts') {
+      const { data } = await sb.from('moments').select('*').eq('user_id', p.id).order('created_at', { ascending: false }).limit(30);
+      const L = data || []; if (tab !== 'posts') return;
+      body.replaceChildren(L.length ? el('div', { class: 'pgrid' }, L.map((m, i) => el('div', { style: m.media_url && m.kind !== 'video' ? 'background-image:url(' + m.media_url + ')' : '', onclick: () => { close(); setTimeout(() => openFeedViewer(L, i), 250); } }, m.media_url ? (m.kind === 'video' ? '▶️' : '') : (m.text || '').slice(0, 60)))) : el('div', { class: 'empty' }, 'Пока нет постов'));
+    } else if (tab === 'media') {
+      if (!dc) { body.replaceChildren(el('div', { class: 'empty' }, p.id === me.id ? 'Тут будут медиа из ваших переписок' : 'Напиши человеку — тут появятся общие фото')); return; }
+      const { data } = await sb.from('messages').select('id,image_url,media_url,kind').eq('chat_id', dc.chat_id).or('image_url.not.is.null,kind.eq.video').eq('deleted', false).order('created_at', { ascending: false }).limit(30);
+      const L = (data || []).filter(m => m.image_url || m.media_url); if (tab !== 'media') return;
+      body.replaceChildren(L.length ? el('div', { class: 'pgrid' }, L.map(m => el('div', { style: m.image_url ? 'background-image:url(' + m.image_url + ')' : '', onclick: () => m.image_url ? viewImage(m.image_url) : null }, m.image_url ? '' : '▶️'))) : el('div', { class: 'empty' }, 'Общих фото пока нет'));
+    } else {
+      const { data } = await sb.from('user_playlists').select('*').eq('user_id', p.id).order('updated_at', { ascending: false }).limit(20);
+      const L = data || []; if (tab !== 'music') return;
+      const np = npFresh(p, 180);
+      body.replaceChildren(el('div', {}, np ? el('div', { style: 'text-align:center;margin-bottom:8px' }, npChip(p)) : null, L.length ? el('div', { class: 'pgrid' }, L.map(pl => el('div', { style: pl.tracks && pl.tracks[0] && muArt(pl.tracks[0]) ? 'background-image:linear-gradient(#0000,#000a),url(' + muArt(pl.tracks[0]) + ');align-items:end;color:#fff;font-weight:800' : 'font-weight:800', onclick: () => { close(); setTimeout(() => plOpen(pl.id), 250); } }, '📚 ' + pl.title))) : (np ? null : el('div', { class: 'empty' }, 'Плейлистов пока нет'))));
+    }
+  };
+  draw();
+  setTimeout(() => { const sh = body.closest('.sheet'), cv = sh && sh.querySelector('.cover'); if (sh && cv) sh.addEventListener('scroll', () => { cv.style.transform = 'translateY(' + Math.min(80, sh.scrollTop * .45) + 'px) scale(' + (1 + Math.min(.15, sh.scrollTop / 900)) + ')'; }, { passive: true }); }, 50);
+  return el('div', {}, tabs, body);
+}
+function setSearch(root) {
+  const res = el('div', { class: 'sp-res' });
+  const inp = el('input', { placeholder: 'Поиск по настройкам', oninput: () => {
+    const q = inp.value.trim().toLowerCase(); const rest = [...root.children].filter(c => !c.classList.contains('sp-sw') && !c.classList.contains('sp-hero') && !c.classList.contains('qr-btn') && !c.classList.contains('sp-ver'));
+    rest.forEach(c => c.style.display = q ? 'none' : ''); res.innerHTML = ''; if (!q) return;
+    const tmp = el('div'); buildSettings(tmp, () => {});
+    const rows = [...tmp.querySelectorAll('.set-row')].filter(r => r.textContent.toLowerCase().includes(q)).slice(0, 25);
+    if (rows.length) res.append(el('div', { class: 'set-group' }, rows)); else res.append(el('div', { class: 'empty' }, 'Ничего не нашлось'));
+  } });
+  const wrap = el('div', { class: 'sp-search' }, el('span', {}, '🔍'), inp);
+  return el('div', { class: 'sp-sw' }, wrap, res);
+}
+function muTint(ov) {
+  const im = ov.querySelector('img.art'); if (!im) return;
+  const go = () => { try { const c = document.createElement('canvas'); c.width = c.height = 16; const x = c.getContext('2d'); x.drawImage(im, 0, 0, 16, 16); const d = x.getImageData(0, 0, 16, 16).data; let r = 0, g = 0, b = 0, n = 0; for (let i = 0; i < d.length; i += 4) { const mx = Math.max(d[i], d[i + 1], d[i + 2]), mn = Math.min(d[i], d[i + 1], d[i + 2]); if (mx - mn < 25 || mx < 40) continue; r += d[i]; g += d[i + 1]; b += d[i + 2]; n++; } if (n) ov.style.setProperty('--mc', `rgb(${r / n | 0},${g / n | 0},${b / n | 0})`); } catch {} };
+  if (!im.crossOrigin) { const u = im.src; im.crossOrigin = 'anonymous'; im.src = u; }
+  im.complete && im.naturalWidth ? go() : im.addEventListener('load', go, { once: true });
 }
 
 /* ref capture */
