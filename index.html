@@ -2038,6 +2038,39 @@ html.light .vdlg{background:#fff}html.light .vdlg .bb .no{background:#1b15300d}
 /* feed dbl */
 .mtile .bigheart{position:absolute;inset:0;display:grid;place-items:center;font-size:70px;animation:bh .8s ease forwards;pointer-events:none;z-index:3}
 @keyframes bh{0%{transform:scale(.3);opacity:0}30%{transform:scale(1.15);opacity:1}100%{transform:scale(1);opacity:0}}
+
+/* ===== 2.29 ===== */
+.cover{height:190px!important;margin-bottom:-64px!important}
+@media (min-height:760px){.mfs .art{width:min(86vw,42vh)!important;max-width:min(86vw,42vh)!important}}
+.mfs .art.swap{animation:artSwap .5s cubic-bezier(.2,1.2,.3,1)}
+@keyframes artSwap{from{transform:scale(.82) rotate(-4deg);opacity:.2}}
+.fview{animation:fvIn .38s cubic-bezier(.2,1.1,.3,1);transform-origin:var(--fx,50%) var(--fy,50%)}
+@keyframes fvIn{from{transform:scale(.25);opacity:0;border-radius:30px}}
+.feed-view{display:flex;gap:4px;padding:3px;border-radius:12px;background:#ffffff0d;margin-left:auto}.feed-view button{width:34px;height:30px;border-radius:9px;font-size:15px}.feed-view button.on{background:var(--accent);color:#fff}
+.feed-list .post{margin-bottom:14px}
+.mi{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:9px;margin-right:12px;vertical-align:middle;background:color-mix(in srgb,var(--accent) 16%,transparent);color:var(--accent2);flex:none}
+.mi svg{width:18px;height:18px}
+.menu button.red .mi,.menu button.danger .mi{background:#ef444422;color:#f87171}
+.menu button:has(.mi){display:flex!important;align-items:center}
+/* polls 2 */
+.pc-opt .pc-img{width:44px;height:44px;border-radius:12px;background:#ffffff10 center/cover;flex:none;font-size:18px}
+.popt .pimg{width:38px;height:38px;border-radius:10px;object-fit:cover;flex:none;margin-right:8px;position:relative;z-index:1}
+.popt:has(.pimg){display:flex;align-items:center}
+.poll .ptime{font-size:12px;color:var(--muted);margin-top:4px}.poll.closed .popt{pointer-events:none}
+.poll .pwin{box-shadow:inset 0 0 0 2px #fbbf24}
+/* events */
+.evc{min-width:240px;max-width:300px}
+.evc .eh{display:flex;gap:12px;align-items:center}
+.evc .cal{width:54px;flex:none;border-radius:14px;overflow:hidden;text-align:center;background:#fff;color:#111;box-shadow:0 4px 14px #0005}
+.evc .cal small{display:block;background:#ef4444;color:#fff;font-size:10.5px;font-weight:900;padding:2px 0;text-transform:uppercase}.evc .cal b{display:block;font-size:22px;font-weight:900;padding:2px 0 4px}
+.evc h4{margin:0;font-size:15.5px;font-weight:800}.evc .sub{font-size:12.5px;opacity:.8;margin-top:2px}
+.evc .rs{display:flex;gap:6px;margin-top:10px}.evc .rs button{flex:1;padding:8px 4px;border-radius:12px;background:#ffffff1a;font-weight:800;font-size:12.5px}
+.evc .rs button.on{background:#fff;color:#111}
+.evc .who{display:flex;align-items:center;gap:6px;margin-top:8px;font-size:12px;opacity:.85;cursor:pointer}.evc .who .av{margin-left:-8px;box-shadow:0 0 0 2px var(--panel)}.evc .who .av:first-child{margin-left:0}
+.evc.past{opacity:.7}
+.gc-grid[data-n="2"]{grid-template-columns:1fr;grid-template-rows:1fr 1fr}.gc-grid[data-n="2"] .gc-tile{aspect-ratio:auto}
+.gc-grid[data-n="3"],.gc-grid[data-n="4"]{grid-template-columns:1fr 1fr}
+.gc-grid[data-n="5"],.gc-grid[data-n="6"],.gc-grid[data-n="7"],.gc-grid[data-n="8"]{grid-template-columns:1fr 1fr;gap:6px}.gc-grid[data-n="7"] .gc-tile,.gc-grid[data-n="8"] .gc-tile{aspect-ratio:4/3}
 </style>
 </head>
 <body>
@@ -2443,6 +2476,7 @@ function subscribe() {
     .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'messages' }, ({ new: m }) => onNewMessage(m))
     .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'messages' }, ({ new: m }) => onUpdMessage(m))
     .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'chat_members', filter: `user_id=eq.${me.id}` }, () => loadChats())
+    .on('postgres_changes', { event: '*', schema: 'public', table: 'event_rsvp' }, ({ new: n, old: o }) => { const r = n && n.event_id ? n : o; if (r && evCache.has(r.event_id)) { evCache.delete(r.event_id); if (current && r.chat_id === current.chat_id) renderMsgs(false); } })
     .on('postgres_changes', { event: '*', schema: 'public', table: 'poll_votes' }, ({ new: n, old: o }) => { const r = n && n.message_id ? n : o; if (r && current && r.chat_id === current.chat_id) loadVotes([r.message_id]).then(() => renderMsgs(false)); })
     .on('postgres_changes', { event: '*', schema: 'public', table: 'lives' }, () => { clearTimeout(livesT); livesT = setTimeout(() => loadLives().then(renderStories), 300); })
     .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'chats' }, ({ new: n }) => onChatUpd(n))
@@ -2673,7 +2707,7 @@ function renderMsgs(scroll) {
     const firstOfRun = !prev || prev.sender_id !== m.sender_id || new Date(prev.created_at).toDateString() !== d.toDateString();
     const sender = profiles.get(m.sender_id);
     const isCirc = !m.deleted && m.kind === 'circle';
-    const skn = !m.deleted && (m.kind || 'text') === 'text' && !m.image_url && !m.poll && !m.game && m.body && !/^(♫|🎵 listen:|📺 watch:|✦gift:|🎁|📍|👤 contact:|🛍gift:|🪙send:)/.test(m.body) && sender && sender.bubble ? ' sk sk-' + sender.bubble.slice(3) : '';
+    const skn = !m.deleted && (m.kind || 'text') === 'text' && !m.image_url && !m.poll && !m.game && m.body && !/^(♫|🎵 listen:|📺 watch:|✦gift:|🎁|📍|👤 contact:|🛍gift:|🪙send:|📅ev:)/.test(m.body) && sender && sender.bubble ? ' sk sk-' + sender.bubble.slice(3) : '';
     const bub = el('div', { class: 'bub' + (m.deleted ? ' del' : '') + (isCirc ? ' circ' : '') + skn });
     if (current.is_group && !current.is_channel && !mine && firstOfRun) bub.append(el('div', { class: 'who', style: 'color:' + (sender?.name_color || nameColor(m.sender_id)) }, ngn(sender, sender?.display_name || '…'), decor(sender)));
     if (!m.deleted && m.fwd_from) bub.append(el('div', { class: 'fwd' }, '↪️ Переслано от ' + (profiles.get(m.fwd_from)?.display_name || '…')));
@@ -2698,6 +2732,7 @@ function renderMsgs(scroll) {
       else if (m.body && (m.kind || 'text') === 'text' && /^♫au:/.test(m.body)) bub.append(muCard(m.body, m));
       else if (m.body && (m.kind || 'text') === 'text' && /^♫pl:/.test(m.body)) bub.append(plCard(m.body));
       else if (m.body && (m.kind || 'text') === 'text' && /^(🛍gift:|🪙send:)/.test(m.body)) bub.append(vixCard(m));
+      else if (m.body && (m.kind || 'text') === 'text' && /^📅ev:/.test(m.body)) bub.append(evCard(m));
       else if (m.body && (m.kind || 'text') === 'text' && /^✦gift:\d+$/.test(m.body)) { bub.classList.add('giftb'); const dd = +m.body.split(':')[1]; bub.append(el('div', { class: 'gift-card', onclick: ev => { ev.stopPropagation(); if (!mine) premGiftShow(dd); else premFx('👑', true); } }, animEmoji('🎁'), el('b', {}, 'Viks Premium в подарок!'), el('small', {}, 'на ' + dd + ' ' + plural(dd, 'день', 'дня', 'дней') + ' ✦'))); if (!mine && typeof m.id === 'number' && Date.now() - new Date(m.created_at) < 3 * 864e5) { try { if (!localStorage.getItem('viks-pg-' + m.id)) { localStorage.setItem('viks-pg-' + m.id, 1); setTimeout(() => premGiftShow(dd), 600); } } catch {} } }
       else if (m.body && (m.kind || 'text') === 'text' && GEO_RE.test(m.body)) bub.append(locEl(m.body));
       else if (m.body && (m.kind || 'text') === 'text' && /^🛰 live:/.test(m.body)) bub.append(liveLocEl(m));
@@ -2793,6 +2828,7 @@ function sheet(build, onClose) {
   bg.addEventListener('click', e => { if (e.target === bg) L.close(); });
   s.append(el('button', { class: 'sheet-x', html: ICON.close, title: 'Закрыть', onclick: () => L.close() }));
   build(s, () => L.close());
+  menuIcons(s);
   if (flyFrom) flyAvatar(flyFrom, s);
   const ph = s.querySelector('.prof-head .av'), cov = s.querySelector('.cover');
   if (ph) s.addEventListener('scroll', () => { const y = s.scrollTop, k = Math.max(.55, 1 - y / 260); ph.style.transform = `scale(${k})`; ph.style.transformOrigin = 'center top'; if (cov) cov.style.opacity = Math.max(0, 1 - y / 150); }, { passive: true });
@@ -3033,7 +3069,7 @@ async function openGroupInfo(c) {
 
 
 /* ================= SETTINGS & UPDATES ================= */
-const APP_VERSION = '2.28.0';
+const APP_VERSION = '2.29.0';
 const TK1 = (() => { const t = document.createElement('template'); t.innerHTML = '<svg viewBox="0 0 16 11" width="15" height="11"><path d="M1.5 6l3 3 6.5-7.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>'; return t.content; })();
 const TK2 = (() => { const t = document.createElement('template'); t.innerHTML = '<svg viewBox="0 0 20 11" width="18" height="11"><path d="M1.5 6l3 3 6.5-7.5M8 8.5l.8.6 6.7-7.6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>'; return t.content; })();
 const APP_THEMES = {
@@ -3306,7 +3342,7 @@ $('#setBtn').onclick = () => switchTab('Settings');
 let rec = null, playing = null, storiesT = null;
 const mediaNodes = new Map();
 const fmtDur = s => { s = Math.max(0, Math.round(s || 0)); return Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0'); };
-const msgLabel = m => (m.kind || 'text') === 'text' && /^🛍gift:/.test(m.body || '') ? '🎁 Подарок из магазина' : (m.kind || 'text') === 'text' && /^🪙send:/.test(m.body || '') ? '🪙 Перевод виксов' : (m.kind || 'text') === 'text' && /^♫pl:/.test(m.body || '') ? '📚 Плейлист' : (m.kind || 'text') === 'text' && /^♫au:/.test(m.body || '') ? '🎵 ' + (muParse(m.body).title || 'Трек') : (m.kind || 'text') === 'text' && /^✦gift:\d+$/.test(m.body || '') ? '🎁 Viks Premium в подарок' : (m.kind || 'text') === 'text' && /^🎵 listen:/.test(m.body || '') ? '🎵 ' + (m.body.split('|')[1] || 'Трек') : (m.kind || 'text') === 'text' && /^📺 watch:/.test(m.body || '') ? '📺 Совместный просмотр' : m.kind === 'sea' ? '🚢 Морской бой' : m.kind === 'rps' ? '✊ Камень-ножницы-бумага' : (m.kind || 'text') === 'text' && m.body && /^e2e:/.test(m.body) ? '🔐 Зашифрованное сообщение' : (m.kind || 'text') === 'text' && m.body && /^🛰 live:/.test(m.body) ? '🛰 Делится местом' : (m.kind || 'text') === 'text' && m.body && /^📍 geo:/.test(m.body) ? '📍 Геолокация' : m.kind === 'voice' ? '🎤 Голосовое' : m.kind === 'circle' ? '⭕ Кружок' : m.kind === 'video' ? '🎬 ' + (m.body || 'Видео') : m.kind === 'file' ? '📎 ' + (m.file_name || 'Файл') : m.kind === 'sticker' ? (m.body || 'Стикер') : m.kind === 'call' ? '📞 ' + (m.body || 'Звонок') : m.kind === 'poll' ? '📊 ' + (m.body || 'Опрос') : m.kind === 'game' ? (m.body || '🎲') + ' Игра' : m.kind === 'ttt' ? '❌⭕ Крестики-нолики' : m.kind === 'system' ? '⏱ ' + (m.body || '') : m.image_url ? '📷 ' + (m.body || 'Фото') : (m.body || '');
+const msgLabel = m => (m.kind || 'text') === 'text' && /^📅ev:/.test(m.body || '') ? '📅 Событие' : (m.kind || 'text') === 'text' && /^🛍gift:/.test(m.body || '') ? '🎁 Подарок из магазина' : (m.kind || 'text') === 'text' && /^🪙send:/.test(m.body || '') ? '🪙 Перевод виксов' : (m.kind || 'text') === 'text' && /^♫pl:/.test(m.body || '') ? '📚 Плейлист' : (m.kind || 'text') === 'text' && /^♫au:/.test(m.body || '') ? '🎵 ' + (muParse(m.body).title || 'Трек') : (m.kind || 'text') === 'text' && /^✦gift:\d+$/.test(m.body || '') ? '🎁 Viks Premium в подарок' : (m.kind || 'text') === 'text' && /^🎵 listen:/.test(m.body || '') ? '🎵 ' + (m.body.split('|')[1] || 'Трек') : (m.kind || 'text') === 'text' && /^📺 watch:/.test(m.body || '') ? '📺 Совместный просмотр' : m.kind === 'sea' ? '🚢 Морской бой' : m.kind === 'rps' ? '✊ Камень-ножницы-бумага' : (m.kind || 'text') === 'text' && m.body && /^e2e:/.test(m.body) ? '🔐 Зашифрованное сообщение' : (m.kind || 'text') === 'text' && m.body && /^🛰 live:/.test(m.body) ? '🛰 Делится местом' : (m.kind || 'text') === 'text' && m.body && /^📍 geo:/.test(m.body) ? '📍 Геолокация' : m.kind === 'voice' ? '🎤 Голосовое' : m.kind === 'circle' ? '⭕ Кружок' : m.kind === 'video' ? '🎬 ' + (m.body || 'Видео') : m.kind === 'file' ? '📎 ' + (m.file_name || 'Файл') : m.kind === 'sticker' ? (m.body || 'Стикер') : m.kind === 'call' ? '📞 ' + (m.body || 'Звонок') : m.kind === 'poll' ? '📊 ' + (m.body || 'Опрос') : m.kind === 'game' ? (m.body || '🎲') + ' Игра' : m.kind === 'ttt' ? '❌⭕ Крестики-нолики' : m.kind === 'system' ? '⏱ ' + (m.body || '') : m.image_url ? '📷 ' + (m.body || 'Фото') : (m.body || '');
 const EXT = { 'audio/webm': 'webm', 'audio/mp4': 'm4a', 'audio/ogg': 'ogg', 'audio/mpeg': 'mp3', 'video/webm': 'webm', 'video/mp4': 'mp4', 'video/quicktime': 'mov', 'image/jpeg': 'jpg' };
 function nameColor(id) { let h = 0; for (const ch of String(id)) h = (h * 31 + ch.charCodeAt(0)) >>> 0; return ['#ff8a80', '#ffb74d', '#ffd54f', '#81c784', '#4dd0e1', '#82a8ff', '#b39dff', '#f48fb1'][h % 8]; }
 function syncComposer() {
@@ -3911,6 +3947,7 @@ function attachMenu() {
     el('button', { onclick: async () => { close(); const fs = await pickFiles('image/*,video/*', true); if (fs && fs.length) mediaComposer(fs); } }, '🖼 Фото и видео'),
     el('button', { onclick: async () => { close(); const fs = await pickFiles('*/*', true); sendFiles(fs, false); } }, '📎 Файл'),
     el('button', { onclick: () => { close(); setTimeout(pollCreator, 30); } }, '📊 Опрос'),
+    el('button', { onclick: () => { close(); setTimeout(eventCreator, 30); } }, '📅 Событие'),
     el('button', { onclick: () => { close(); setTimeout(gamesSheet, 30); } }, '🎲 Игры'),
     el('button', { onclick: () => { close(); sendLocation(); } }, '📍 Геолокация'),
     el('button', { onclick: () => { close(); setTimeout(liveLocSheet, 30); } }, '🛰 Делиться местом вживую'),
@@ -4874,18 +4911,22 @@ async function loadVotes(ids) {
 function pollEl(m) {
   const p = m.poll || { options: [] }, vs = pollVotes.get(m.id) || [];
   const voters = new Set(vs.map(v => v.user_id)), total = voters.size, mineOpts = new Set(vs.filter(v => v.user_id === me.id).map(v => v.opt)), voted = mineOpts.size > 0;
-  const box = el('div', { class: 'poll' }, el('div', { class: 'pq' }, m.body || 'Опрос'), el('div', { class: 'pmeta' }, p.quiz ? '🧠 Викторина' + (p.anon ? ' · анонимно' : '') : (p.anon ? 'Анонимный' : 'Открытый') + ' опрос' + (p.multi ? ' · можно несколько' : '')));
+  const closed = p.ends && new Date(p.ends) < new Date();
+  const box = el('div', { class: 'poll' + (closed ? ' closed' : '') }, el('div', { class: 'pq' }, m.body || 'Опрос'), el('div', { class: 'pmeta' }, p.quiz ? '🧠 Викторина' + (p.anon ? ' · анонимно' : '') : (p.anon ? 'Анонимный' : 'Открытый') + ' опрос' + (p.multi ? ' · можно несколько' : '')));
   (p.options || []).forEach((o, i) => {
     const cnt = vs.filter(v => v.opt === i).length, pct = total ? Math.round(cnt / total * 100) : 0;
     box.append(el('button', { class: 'popt' + (mineOpts.has(i) ? ' my' : '') + (p.quiz && voted ? (i === p.correct ? ' ok' : mineOpts.has(i) ? ' bad' : '') : ''), onclick: e => { e.stopPropagation(); vote(m, i); } },
-      el('div', { class: 'pbar', style: `width:${voted ? pct : 0}%` }), el('span', { class: 'pt' }, o), voted ? el('b', {}, pct + '%') : null));
+      el('div', { class: 'pbar', style: `width:${voted || closed ? pct : 0}%` }), p.imgs && p.imgs[i] ? el('img', { class: 'pimg', src: p.imgs[i], onclick: e => { e.stopPropagation(); viewImage(p.imgs[i]); } }) : null, el('span', { class: 'pt' }, o), voted || closed ? el('b', {}, pct + '%') : null));
+    if (closed && total && cnt === Math.max(...(p.options || []).map((_, j) => vs.filter(v => v.opt === j).length))) box.lastChild.classList.add('pwin');
   });
+  if (p.ends) box.append(el('div', { class: 'ptime' }, closed ? '🏁 Опрос завершён' : '⏳ Осталось ' + leftText(p.ends)));
   if (p.quiz && voted) box.append(el('div', { class: 'quiz-res' }, mineOpts.has(p.correct) ? '✅ Верно!' : '❌ Мимо. Правильный: ' + (p.options[p.correct] || '')));
   box.append(el('div', { class: 'pfoot', onclick: e => { e.stopPropagation(); if (!p.anon && total) pollVoters(m); } }, total ? `Проголосовали: ${total}` + (!p.anon ? ' · кто?' : '') : 'Пока никто не голосовал'));
   return box;
 }
 async function vote(m, i) {
   if (typeof m.id !== 'number') return;
+  if (m.poll && m.poll.ends && new Date(m.poll.ends) < new Date()) { toast('🏁 Опрос уже завершён'); return; }
   const p = m.poll || {}, vs = pollVotes.get(m.id) || [], mine = vs.filter(v => v.user_id === me.id), has = mine.some(v => v.opt === i);
   if (p.quiz && mine.length) return;
   if (p.quiz) setTimeout(() => { if (i === p.correct) playEffect('confetti'); else try { navigator.vibrate && navigator.vibrate([80, 50, 80]); } catch {} }, 150);
@@ -4910,18 +4951,19 @@ function pollCreator() {
     const opts = el('div');
     let correct = 0; const quiz = el('div', { class: 'sw' });
     const paintQ = () => [...opts.children].forEach((r, k) => { const qm = r.querySelector('.qmark'); qm.classList.toggle('hidden', !quiz.classList.contains('on')); qm.classList.toggle('on', k === correct); });
-    const addOpt = (v = '') => { if (opts.children.length >= 10) return; const inp = el('input', { placeholder: 'Вариант ' + (opts.children.length + 1), maxlength: 80, value: v }); const row = el('div', { class: 'pc-opt' }, el('button', { class: 'qmark hidden', title: 'Правильный ответ', onclick: () => { correct = [...opts.children].indexOf(row); paintQ(); } }, '✓'), inp, el('button', { class: 'icon-btn', html: ICON.close, onclick: e => { if (opts.children.length > 2) { e.currentTarget.parentNode.remove(); correct = 0; paintQ(); } } })); opts.append(row); paintQ(); };
+    const addOpt = (v = '') => { if (opts.children.length >= 10) return; const inp = el('input', { placeholder: 'Вариант ' + (opts.children.length + 1), maxlength: 80, value: v }); const ib = el('button', { class: 'pc-img', title: 'Картинка', onclick: async () => { const f = await pickFile(); if (!f) return; ib.textContent = '⏳'; try { const u = await upload('media', await resizeImage(f, 600, .82)); row.dataset.img = u; ib.style.backgroundImage = 'url(' + u + ')'; ib.textContent = ''; } catch { ib.textContent = '🖼'; toast('Не загрузилось'); } } }, '🖼'); const row = el('div', { class: 'pc-opt' }, el('button', { class: 'qmark hidden', title: 'Правильный ответ', onclick: () => { correct = [...opts.children].indexOf(row); paintQ(); } }, '✓'), ib, inp, el('button', { class: 'icon-btn', html: ICON.close, onclick: e => { if (opts.children.length > 2) { e.currentTarget.parentNode.remove(); correct = 0; paintQ(); } } })); opts.append(row); paintQ(); };
     addOpt(); addOpt();
     const multi = el('div', { class: 'sw' }), anon = el('div', { class: 'sw' });
+    let ttl = 0; const tmRow = el('div', { class: 'opts', style: 'margin:6px 0 4px' }); const drawT = () => { tmRow.innerHTML = ''; [[0, '♾ Без срока'], [3600, '⏳ 1 час'], [86400, '24 часа'], [259200, '3 дня']].forEach(([v, l]) => tmRow.append(el('button', { class: ttl === v ? 'on' : '', onclick: () => { ttl = v; drawT(); } }, l))); }; drawT();
     const tog = sw => el('div', { onclick: () => sw.classList.toggle('on') }, sw);
     s.append(el('h3', {}, '📊 Новый опрос'), el('div', { class: 'field' }, el('label', {}, 'Вопрос'), q), el('div', { class: 'field' }, el('label', {}, 'Варианты'), opts),
       el('button', { class: 'btn ghost', style: 'margin-bottom:10px', onclick: () => addOpt() }, '+ Добавить вариант'),
-      el('div', { class: 'chk-row' }, '🧠 Викторина (отметь верный ✓)', el('div', { onclick: () => { quiz.classList.toggle('on'); paintQ(); } }, quiz)), el('div', { class: 'chk-row' }, 'Можно выбрать несколько', tog(multi)), el('div', { class: 'chk-row' }, 'Анонимно', tog(anon)),
+      el('div', { class: 'chk-row' }, '🧠 Викторина (отметь верный ✓)', el('div', { onclick: () => { quiz.classList.toggle('on'); paintQ(); } }, quiz)), el('div', { class: 'chk-row' }, 'Можно выбрать несколько', tog(multi)), el('div', { class: 'chk-row' }, 'Анонимно', tog(anon)), tmRow,
       el('button', { class: 'btn', style: 'margin-top:8px', onclick: async () => {
-        const question = q.value.trim(), options = [...opts.querySelectorAll('input')].map(i => i.value.trim()).filter(Boolean);
+        const question = q.value.trim(), pairs = [...opts.children].map(r => [r.querySelector('input').value.trim(), r.dataset.img || null]).filter(x => x[0]), options = pairs.map(x => x[0]), imgs = pairs.map(x => x[1]);
         if (!question || options.length < 2) { toast('Нужен вопрос и минимум 2 варианта'); return; }
         close();
-        const { error } = await sb.from('messages').insert({ chat_id: current.chat_id, sender_id: me.id, kind: 'poll', body: question, poll: quiz.classList.contains('on') ? { options, quiz: true, correct: Math.min(correct, options.length - 1), anon: anon.classList.contains('on') } : { options, multi: multi.classList.contains('on'), anon: anon.classList.contains('on') } });
+        const { error } = await sb.from('messages').insert({ chat_id: current.chat_id, sender_id: me.id, kind: 'poll', body: question, poll: Object.assign(quiz.classList.contains('on') ? { options, quiz: true, correct: Math.min(correct, options.length - 1), anon: anon.classList.contains('on') } : { options, multi: multi.classList.contains('on'), anon: anon.classList.contains('on') }, imgs.some(Boolean) ? { imgs } : {}, ttl ? { ends: new Date(Date.now() + ttl * 1000).toISOString() } : {}) });
         if (error) toast(sendErr(error));
       } }, 'Отправить опрос'));
     setTimeout(() => q.focus(), 100);
@@ -5107,7 +5149,7 @@ function drawGcBar() {
 async function joinGroupCall(c) {
   if (call || gcall) return;
   if (!gcWatch || gcWatch.chatId !== c.chat_id) watchGroupCall(c);
-  if (gcPeople().filter(k => k !== me.id).length >= 6) { toast('В звонке уже 6 человек, больше не влезет'); return; }
+  if (gcPeople().filter(k => k !== me.id).length >= 7) { toast('В звонке уже 8 человек — это максимум'); return; }
   let local;
   try { local = await navigator.mediaDevices.getUserMedia({ audio: { echoCancellation: true, noiseSuppression: true }, video: { facingMode: 'user', width: { ideal: 480 }, height: { ideal: 640 } } }); local.getVideoTracks().forEach(t => t.enabled = false); }
   catch { try { local = await getMic(false); } catch { toast('Разреши доступ к микрофону'); return; } }
@@ -5139,7 +5181,7 @@ function addTile(uid, stream, isMe) {
   if (!t) {
     const v = el('video', { autoplay: '', playsinline: '' }); v.playsInline = true; if (isMe) { v.muted = true; v.classList.add('me'); }
     t = el('div', { class: 'gc-tile' }, avatar(p.display_name, p.avatar_url, 72), v, el('div', { class: 'tn' }, isMe ? 'Ты' : (p.display_name || '…')));
-    gcall.tiles.set(uid, t); gcall.grid.append(t);
+    gcall.tiles.set(uid, t); gcall.grid.append(t); gcall.grid.dataset.n = gcall.tiles.size;
   }
   if (stream) { const v = t.querySelector('video'); v.srcObject = stream; v.play().catch(() => {}); }
   return t;
@@ -5153,7 +5195,7 @@ function gcPeer(uid) {
   pc.onconnectionstatechange = () => { if (['failed', 'closed'].includes(pc.connectionState)) dropPeer(uid); };
   x = { pc, ice: [] }; gcall.peers.set(uid, x); addTile(uid); return x;
 }
-function dropPeer(uid) { if (!gcall) return; const x = gcall.peers.get(uid); if (x) { try { x.pc.close(); } catch {} gcall.peers.delete(uid); } gcall.tiles.get(uid)?.remove(); gcall.tiles.delete(uid); }
+function dropPeer(uid) { if (!gcall) return; const x = gcall.peers.get(uid); if (x) { try { x.pc.close(); } catch {} gcall.peers.delete(uid); } gcall.tiles.get(uid)?.remove(); gcall.tiles.delete(uid); gcall.grid.dataset.n = gcall.tiles.size; }
 async function gcSignal(m) {
   if (!gcall || !m || m.from === me.id || (m.to && m.to !== me.id)) return;
   await fetchProfiles([m.from]);
@@ -5944,7 +5986,9 @@ async function renderFeed() {
     (cm || []).forEach(c => feedCm.set(c.moment_id, (feedCm.get(c.moment_id) || 0) + 1));
   }
   if (!posts.length) box.append(el('div', { class: 'home-empty' }, el('h3', {}, 'Тут будут моменты'), el('p', {}, 'Делись фотками и мыслями со своими людьми. В отличие от историй, посты не исчезают'), el('button', { class: 'btn', onclick: newPost }, '📸 Первый пост')));
-  if (posts.length) { const grid = el('div', { class: 'masonry' }); posts.forEach((pp, i) => grid.append(mTile(pp, posts, i))); box.append(grid); }
+  if (posts.length) { box.append(el('div', { style: 'display:flex;align-items:center;margin:4px 2px 8px' }, el('b', { style: 'font-size:13px;color:var(--muted)' }, settings.feedView === 'list' ? 'Лента' : 'Сетка'), el('div', { class: 'feed-view' }, el('button', { class: settings.feedView !== 'list' ? 'on' : '', onclick: () => { settings.feedView = 'grid'; saveSettings(); renderFeed(); } }, '▦'), el('button', { class: settings.feedView === 'list' ? 'on' : '', onclick: () => { settings.feedView = 'list'; saveSettings(); renderFeed(); } }, '☰'))));
+    if (settings.feedView === 'list') box.append(el('div', { class: 'feed-list' }, posts.map(pp => postEl(pp))));
+    else { const grid = el('div', { class: 'masonry' }); posts.forEach((pp, i) => grid.append(mTile(pp, posts, i))); box.append(grid); } }
 }
 function postEl(pp) {
   const u = profiles.get(pp.user_id) || {}, likes = feedLikes.get(pp.id) || new Set(), liked = likes.has(me.id);
@@ -7403,7 +7447,7 @@ function mTile(pp, posts, i) {
   return tile;
 }
 function openFeedViewer(posts, i) {
-  const ov = el('div', { class: 'fview' }, posts.map(pp => el('div', { class: 'slide' }, postEl(pp))));
+  const ov = el('div', { class: 'fview', style: '--fx:' + lastTap.x + 'px;--fy:' + lastTap.y + 'px' }, posts.map(pp => el('div', { class: 'slide' }, postEl(pp))));
   const close = el('button', { class: 'fclose', onclick: () => L.close() }, '✕');
   document.body.append(ov, close, el('div', { class: 'fview fhint', style: 'inset:auto;background:#0008;overflow:visible' }, '↕ Листай вверх-вниз'));
   const hint = document.body.lastChild;
@@ -8266,7 +8310,7 @@ function muFull() {
     const t = mus.q[mus.i]; if (!t) { ov._close(); return; }
     builtId = t.id; ov.innerHTML = '';
     ppb = el('button', { class: 'big', html: mus.a.paused ? MI.play : MI.pause, onclick: muToggle });
-    art = el('img', { class: 'art' + (mus.a.paused ? ' pz' : ''), src: muArt(t), alt: '' });
+    art = el('img', { class: 'art swap' + (mus.a.paused ? ' pz' : ''), src: muArt(t), alt: '' });
     lk = el('button', { class: 'lk', onclick: () => { muToggleFav(t); lk.textContent = muIsFav(t) ? '❤️' : '🤍'; } }, muIsFav(t) ? '❤️' : '🤍');
     const addb = el('button', { class: 'lk', title: 'В плейлист', onclick: () => plAddSheet(t) }, '➕');
     fl = el('div', { class: 'fl' }); th = el('div', { class: 'th' }); prog = el('div', { class: 'prog' }, el('div', { class: 'tr' }), fl, th);
@@ -9197,6 +9241,92 @@ function muTint(ov) {
   const go = () => { try { const c = document.createElement('canvas'); c.width = c.height = 16; const x = c.getContext('2d'); x.drawImage(im, 0, 0, 16, 16); const d = x.getImageData(0, 0, 16, 16).data; let r = 0, g = 0, b = 0, n = 0; for (let i = 0; i < d.length; i += 4) { const mx = Math.max(d[i], d[i + 1], d[i + 2]), mn = Math.min(d[i], d[i + 1], d[i + 2]); if (mx - mn < 25 || mx < 40) continue; r += d[i]; g += d[i + 1]; b += d[i + 2]; n++; } if (n) ov.style.setProperty('--mc', `rgb(${r / n | 0},${g / n | 0},${b / n | 0})`); } catch {} };
   if (!im.crossOrigin) { const u = im.src; im.crossOrigin = 'anonymous'; im.src = u; }
   im.complete && im.naturalWidth ? go() : im.addEventListener('load', go, { once: true });
+}
+
+
+/* ===== 2.29 ===== */
+function leftText(iso) { const ms = new Date(iso) - Date.now(); if (ms <= 0) return '0 мин'; const h = Math.floor(ms / 36e5), m = Math.max(1, Math.floor(ms % 36e5 / 6e4)); return h >= 24 ? Math.floor(h / 24) + ' дн. ' + (h % 24) + ' ч' : h ? h + ' ч ' + m + ' мин' : m + ' мин'; }
+const MI_P = {
+  pin: '<path d="M12 17v5M9 3h6l-1 7 4 3H6l4-3z"/>', bell: '<path d="M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9M10 21h4"/>', belloff: '<path d="M8.7 3.9A6 6 0 0 1 18 8c0 3 .7 5 1.5 6.5M17 17H3s3-2 3-9M10 21h4M3 3l18 18"/>',
+  trash: '<path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14"/>', edit: '<path d="M4 20h4L19 9l-4-4L4 16zM14 6l4 4"/>', copy: '<rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/>',
+  reply: '<path d="M9 14L4 9l5-5M4 9h11a5 5 0 0 1 5 5v6"/>', fwd: '<path d="M15 14l5-5-5-5M20 9H9a5 5 0 0 0-5 5v6"/>', share: '<path d="M12 3v13M7 8l5-5 5 5M5 14v6h14v-6"/>',
+  flag: '<path d="M4 22V4M4 4h13l-2 4 2 4H4"/>', ban: '<circle cx="12" cy="12" r="9"/><path d="M5.6 5.6l12.8 12.8"/>', user: '<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/>',
+  users: '<circle cx="9" cy="8" r="3.5"/><path d="M2 20a7 7 0 0 1 14 0M16 4.5a3.5 3.5 0 0 1 0 7M22 20a7 7 0 0 0-4-6.3"/>', img: '<rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="9" cy="9" r="2"/><path d="M21 15l-5-5L5 21"/>',
+  palette: '<circle cx="12" cy="12" r="9"/><circle cx="8" cy="10" r="1.2"/><circle cx="12" cy="7.5" r="1.2"/><circle cx="16" cy="10" r="1.2"/><path d="M12 21a2 2 0 0 1 0-4h2a3 3 0 0 0 3-3"/>',
+  timer: '<circle cx="12" cy="13" r="8"/><path d="M12 9v4l2 2M9 2h6"/>', lock: '<rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/>', unlock: '<rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 7.5-2"/>',
+  star: '<path d="M12 3l2.8 5.8 6.2.9-4.5 4.4 1 6.3L12 17.5 6.5 20.4l1-6.3L3 9.7l6.2-.9z"/>', archive: '<rect x="3" y="4" width="18" height="5" rx="1"/><path d="M5 9v11h14V9M10 13h4"/>', folder: '<path d="M3 6a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>',
+  check: '<path d="M4 12l5 5L20 6"/>', globe: '<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/>', search: '<circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/>',
+  msg: '<path d="M4 5h16v11H8l-4 4z"/>', phone: '<path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/>', video: '<rect x="2" y="6" width="14" height="12" rx="2"/><path d="M16 10l6-3v10l-6-3"/>',
+  music: '<path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/>', chart: '<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>', clock: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+  link: '<path d="M10 14a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1M14 10a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/>', ext: '<path d="M14 4h6v6M20 4l-9 9M18 14v6H4V6h6"/>', down: '<path d="M12 4v12M7 11l5 5 5-5M5 20h14"/>',
+  shield: '<path d="M12 3l8 3v6c0 5-4 8-8 9-4-1-8-4-8-9V6z"/>', gift: '<rect x="3" y="8" width="18" height="4" rx="1"/><path d="M5 12v9h14v-9M12 8v13M12 8S10 3 7.5 4.5 9 8 12 8zM12 8s2-5 4.5-3.5S15 8 12 8"/>',
+  moon: '<path d="M20 14A8 8 0 1 1 10 4a6.5 6.5 0 0 0 10 10z"/>', camera: '<path d="M4 8h3l2-3h6l2 3h3v12H4z"/><circle cx="12" cy="13.5" r="3.5"/>', heart: '<path d="M12 20s-8-4.6-8-10.5A4.5 4.5 0 0 1 12 6a4.5 4.5 0 0 1 8 3.5C20 15.4 12 20 12 20z"/>',
+  repeat: '<path d="M17 2l4 4-4 4M3 12V10a4 4 0 0 1 4-4h14M7 22l-4-4 4-4M21 12v2a4 4 0 0 1-4 4H3"/>', eye: '<path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>', out: '<path d="M10 4H5v16h5M15 8l4 4-4 4M19 12H9"/>',
+  cal: '<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/>', mic: '<rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/>', plus: '<path d="M12 5v14M5 12h14"/>',
+  sparkle: '<path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/>', bot: '<rect x="4" y="8" width="16" height="12" rx="3"/><path d="M12 4v4M9 13h.01M15 13h.01"/>', save: '<path d="M6 3h12v18l-6-4-6 4z"/>',
+};
+const MI_MAP = [['📌', 'pin'], ['🔔', 'bell'], ['🔕', 'belloff'], ['🗑', 'trash'], ['✏️', 'edit'], ['✏', 'edit'], ['📋', 'copy'], ['↩️', 'reply'], ['↩', 'reply'], ['➡️', 'fwd'], ['📤', 'share'], ['🚩', 'flag'], ['🚫', 'ban'], ['👤', 'user'], ['👥', 'users'], ['🖼', 'img'], ['🎨', 'palette'], ['⏱', 'timer'], ['🔐', 'lock'], ['🔒', 'lock'], ['🔓', 'unlock'], ['⭐', 'star'], ['🗄', 'archive'], ['📁', 'folder'], ['📂', 'folder'], ['✅', 'check'], ['🌐', 'globe'], ['🔍', 'search'], ['💬', 'msg'], ['📞', 'phone'], ['📹', 'video'], ['🎵', 'music'], ['📊', 'chart'], ['🕓', 'clock'], ['🔗', 'link'], ['↗', 'ext'], ['⬇️', 'down'], ['📥', 'down'], ['🛡', 'shield'], ['🎁', 'gift'], ['😴', 'moon'], ['📸', 'camera'], ['📷', 'camera'], ['❤️', 'heart'], ['🔁', 'repeat'], ['👁', 'eye'], ['🚪', 'out'], ['📅', 'cal'], ['🎙', 'mic'], ['➕', 'plus'], ['✨', 'sparkle'], ['🤖', 'bot'], ['🔖', 'save'], ['✓', 'check'], ['🙈', 'eye'], ['💾', 'save'], ['🎬', 'video'], ['📍', 'globe']];
+function menuIcons(root) {
+  root.querySelectorAll('.menu > button').forEach(b => {
+    if (b.querySelector('.mi')) return; const tn = [...b.childNodes].find(n => n.nodeType === 3 && n.textContent.trim()); if (!tn || b.childNodes[0] !== tn) return;
+    const t = tn.textContent.trimStart(); const hit = MI_MAP.find(([e]) => t.startsWith(e)); if (!hit) return;
+    let rest = t.slice(hit[0].length).replace(/^️/, '').trimStart();
+    tn.textContent = rest; b.prepend(el('span', { class: 'mi', html: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' + MI_P[hit[1]] + '</svg>' }));
+  });
+}
+/* events */
+const evCache = new Map();
+const MONTHS = ['янв', 'фев', 'мар', 'апр', 'мая', 'июн', 'июл', 'авг', 'сен', 'окт', 'ноя', 'дек'];
+function eventCreator() {
+  if (!current) return;
+  const c = current;
+  const pad = n => String(n).padStart(2, '0'), loc = d => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+  const sat = new Date(); sat.setDate(sat.getDate() + ((6 - sat.getDay() + 7) % 7 || 7)); sat.setHours(18, 0, 0, 0);
+  let emo = '📅';
+  sheet((s, close) => {
+    const ti = el('input', { placeholder: 'Сходка, днюха, катка…', maxlength: 120 }), pl = el('input', { placeholder: 'Где? (необязательно)', maxlength: 120 }), dt = el('input', { type: 'datetime-local', value: loc(sat) });
+    const er = el('div', { class: 'opts', style: 'margin-bottom:10px' }); const drawE = () => { er.innerHTML = ''; ['📅', '🎉', '🍕', '🎮', '⚽', '🎂', '🎬', '🏖', '🍻', '💼'].forEach(e => er.append(el('button', { class: emo === e ? 'on' : '', style: 'font-size:18px', onclick: () => { emo = e; drawE(); } }, e))); }; drawE();
+    s.append(el('h3', {}, '📅 Новое событие'), er, el('div', { class: 'field' }, el('label', {}, 'Что'), ti), el('div', { class: 'field' }, el('label', {}, 'Когда'), dt), el('div', { class: 'field' }, el('label', {}, 'Где'), pl),
+      el('div', { class: 'hint' }, '⏰ За час до начала все в чате получат напоминание'),
+      el('button', { class: 'btn', onclick: async ev => {
+        const title = ti.value.trim(), at = new Date(dt.value); if (!title) { toast('Напиши, что за событие'); return; } if (!(at > new Date())) { toast('Выбери время в будущем'); return; }
+        ev.currentTarget.disabled = true;
+        const { data, error } = await sb.from('events').insert({ chat_id: c.chat_id, title, place: pl.value.trim() || null, starts_at: at.toISOString(), emoji: emo }).select().single();
+        if (error) { toast('Не вышло: ' + errText(error)); ev.currentTarget.disabled = false; return; }
+        await sb.from('event_rsvp').insert({ event_id: data.id, chat_id: c.chat_id, status: 'yes' });
+        await sb.from('messages').insert({ chat_id: c.chat_id, sender_id: me.id, body: '📅ev:' + data.id });
+        const rem = new Date(at - 36e5); if (rem > new Date(Date.now() + 5 * 6e4)) await sb.from('scheduled_messages').insert({ chat_id: c.chat_id, body: '⏰ Через час: ' + emo + ' ' + title + (data.place ? ' — ' + data.place : '') + '. Кто идёт — не опаздываем!', send_at: rem.toISOString() });
+        close(); toast('📅 Событие создано'); hap([10, 30, 10]);
+      } }, 'Создать событие'));
+    setTimeout(() => ti.focus(), 100);
+  });
+}
+async function evLoad(id) {
+  if (evCache.has(id)) return evCache.get(id);
+  const pr = (async () => { const [{ data: e }, { data: r }] = await Promise.all([sb.from('events').select('*').eq('id', id).maybeSingle(), sb.from('event_rsvp').select('user_id,status').eq('event_id', id)]); if (r) await fetchProfiles(r.map(x => x.user_id)); return { e, r: r || [] }; })();
+  evCache.set(id, pr); return pr;
+}
+function evCard(m) {
+  const id = m.body.replace(/^📅ev:/, '').trim();
+  const box = el('div', { class: 'evc' }, el('div', { class: 'sub' }, '📅 Событие…'));
+  evLoad(id).then(({ e, r }) => {
+    if (!e) { box.replaceChildren(el('div', { class: 'sub' }, '📅 Событие удалено')); return; }
+    const d = new Date(e.starts_at), past = d < new Date(), mine = r.find(x => x.user_id === me.id)?.status;
+    const yes = r.filter(x => x.status === 'yes'), maybe = r.filter(x => x.status === 'maybe'), no = r.filter(x => x.status === 'no');
+    const set = async st => { if (past) return; const next = mine === st ? null : st; hap(8); if (next) await sb.from('event_rsvp').upsert({ event_id: e.id, chat_id: e.chat_id, user_id: me.id, status: next, updated_at: new Date().toISOString() }); else await sb.from('event_rsvp').delete().eq('event_id', e.id).eq('user_id', me.id); evCache.delete(e.id); renderMsgs(false); };
+    box.className = 'evc' + (past ? ' past' : '');
+    box.replaceChildren(
+      el('div', { class: 'eh' }, el('div', { class: 'cal' }, el('small', {}, MONTHS[d.getMonth()]), el('b', {}, String(d.getDate()))), el('div', { style: 'min-width:0' }, el('h4', {}, (e.emoji || '📅') + ' ' + e.title), el('div', { class: 'sub' }, dayLabel(d) + ' в ' + hm(d) + (e.place ? ' · 📍 ' + e.place : '')), el('div', { class: 'sub' }, past ? '✔️ Уже прошло' : '⏳ через ' + leftText(e.starts_at)))),
+      past ? null : el('div', { class: 'rs' }, [['yes', '✅ Иду', yes.length], ['maybe', '🤔 Может', maybe.length], ['no', '❌ Нет', no.length]].map(([k, l, n]) => el('button', { class: mine === k ? 'on' : '', onclick: ev => { ev.stopPropagation(); set(k); } }, l + (n ? ' ' + n : '')))),
+      yes.length ? el('div', { class: 'who', onclick: ev => { ev.stopPropagation(); evWho(e, r); } }, yes.slice(0, 5).map(x => { const p = profiles.get(x.user_id) || {}; return avatar(p.display_name, p.avatar_url, 22); }), el('span', {}, 'идут: ' + yes.map(x => (profiles.get(x.user_id)?.display_name || '').split(' ')[0]).slice(0, 3).join(', ') + (yes.length > 3 ? ' и ещё ' + (yes.length - 3) : ''))) : null);
+  });
+  return box;
+}
+function evWho(e, r) {
+  sheet((s, close) => { s.append(el('h3', {}, (e.emoji || '📅') + ' ' + e.title));
+    [['yes', '✅ Идут'], ['maybe', '🤔 Может быть'], ['no', '❌ Не идут']].forEach(([k, l]) => { const L = r.filter(x => x.status === k); if (!L.length) return; s.append(el('div', { class: 'set-title' }, l + ' · ' + L.length)); L.forEach(x => { const p = profiles.get(x.user_id) || {}; s.append(el('div', { class: 'row', style: 'margin:0 -6px', onclick: () => { close(); openProfile(x.user_id); } }, avatar(p.display_name, p.avatar_url, 36), el('div', { class: 'meta' }, el('div', { class: 'name' }, p.display_name || '…')))); }); });
+    if (e.creator === me.id) s.append(el('button', { class: 'btn ghost', style: 'margin-top:12px;color:#ff8a94', onclick: async () => { if (!await vConfirm('Удалить событие «' + e.title + '»?')) return; await sb.from('events').delete().eq('id', e.id); evCache.delete(e.id); close(); renderMsgs(false); toast('Событие удалено'); } }, '🗑 Удалить событие'));
+  });
 }
 
 /* ref capture */
