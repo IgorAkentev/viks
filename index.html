@@ -3724,7 +3724,7 @@ async function openGroupInfo(c) {
 
 
 /* ================= SETTINGS & UPDATES ================= */
-const APP_VERSION = '2.40.0';
+const APP_VERSION = '2.40.1';
 const TK1 = (() => { const t = document.createElement('template'); t.innerHTML = '<svg viewBox="0 0 16 11" width="15" height="11"><path d="M1.5 6l3 3 6.5-7.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>'; return t.content; })();
 const TK2 = (() => { const t = document.createElement('template'); t.innerHTML = '<svg viewBox="0 0 20 11" width="18" height="11"><path d="M1.5 6l3 3 6.5-7.5M8 8.5l.8.6 6.7-7.6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>'; return t.content; })();
 const APP_THEMES = {
@@ -10469,7 +10469,23 @@ async function petSheet() {
       el('div', { class: 'ach-h' }, '👗 Гардероб'), tabs, grid,
       el('label', { class: 'pw-tog' }, el('span', {}, '🚶 Гуляет по чату'), (() => { const cb = el('input', { type: 'checkbox' }); cb.checked = settings.petWalk !== false; cb.onchange = () => { settings.petWalk = cb.checked; saveSettings(); petFab(c); }; return cb; })()),
       el('label', { class: 'pw-tog' }, el('span', {}, '🏆 Показывать в рейтинге'), (() => { const cb = el('input', { type: 'checkbox' }); cb.checked = !!pt.data.top; cb.onchange = () => { pt.data.top = cb.checked; petSave(pt, c); toast(cb.checked ? '🏆 Теперь ' + pt.name + ' участвует в рейтинге' : 'Убрал из рейтинга'); }; return cb; })()),
+      st > 0 ? el('button', { class: 'btn ghost', style: 'margin-top:10px', onclick: () => { close(); setTimeout(() => petChangeKind(pt, c), 80); } }, '🔄 Сменить питомца') : null,
       el('button', { class: 'btn ghost', style: 'margin-top:10px', onclick: async () => { const n = await vDialog({ input: true, title: 'Новое имя', value: pt.name }); if (!n || !n.trim()) return; await sb.from('chat_pets').update({ name: n.trim().slice(0, 20) }).eq('chat_id', c.chat_id); close(); toast('✏️ Теперь его зовут ' + n.trim()); petFab(c); } }, '✏️ Переименовать'));
+  });
+}
+/* change kind (once a month) */
+function petChangeKind(pt, c) {
+  const last = pt.data.kc || 0, left = Math.ceil((last + 30 * 864e5 - Date.now()) / 864e5);
+  if (last && left > 0) { toast('🔄 Менять питомца можно раз в месяц — ещё ' + left + ' ' + plural(left, 'день', 'дня', 'дней')); return; }
+  const st = petStage(pt.xp); let kind = pt.kind;
+  sheet((s, close) => {
+    const prev = el('div', { class: 'pet-stage' }), kr = el('div', { class: 'pet-kinds' }), pn = el('div', { class: 'hint', style: 'text-align:center;font-weight:800;margin:-4px 0 8px' });
+    const draw = () => { const sc = pt.outfit.scene || 'room'; prev.innerHTML = petScene(sc, sc === 'room' ? pt.data.house : null) + '<div class="pchar">' + petSvg(kind, st, 'happy', petView(pt), 180) + '</div>'; pn.textContent = PET_NAMES[kind] + (kind === pt.kind ? ' (сейчас)' : '');
+      kr.innerHTML = ''; Object.keys(PET_COL).forEach(k => { const b = el('button', { class: kind === k ? 'on' : '', onclick: () => { kind = k; hap(5); draw(); } }); b.innerHTML = petSvg(k, Math.max(1, st), 'happy', null, 54); kr.append(b); }); };
+    draw();
+    s.append(el('h3', {}, '🔄 Сменить питомца'), el('div', { class: 'hint' }, 'Имя, уровень, XP, одежда, домик, подарки и альбом останутся. Менять можно раз в месяц.'), prev, pn, kr,
+      el('button', { class: 'btn', onclick: async () => { if (kind === pt.kind) { toast('Это и так ' + PET_NAMES[kind]); return; } if (!await vConfirm('Превратить ' + pt.name + ' в «' + PET_NAMES[kind] + '»? Следующая смена — через месяц')) return;
+        pt.kind = kind; pt.data.kc = Date.now(); const ok = await petSave(pt, c, { kind }); if (!ok) { toast('Не вышло'); return; } close(); playEffect('stars'); toast('✨ Теперь ' + pt.name + ' — ' + PET_NAMES[kind] + '!'); petFab(c); setTimeout(petSheet, 400); } }, '✨ Превратить'));
   });
 }
 /* house editor */
