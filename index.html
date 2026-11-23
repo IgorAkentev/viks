@@ -2555,6 +2555,57 @@ html.glass .fchip.card{background:var(--fc)!important;border:0!important}
 .pw-grid button.on{box-shadow:inset 0 0 0 2px var(--accent);background:color-mix(in srgb,var(--accent) 20%,transparent)}
 .pw-grid button.lk{opacity:.4}
 html.rm .psvg *{animation:none!important}
+
+/* pet 3 */
+.pet-stage{height:auto!important;min-height:250px;padding-top:6px}
+.pet-stage.big{min-height:290px;border-radius:0 0 28px 28px;margin:-10px -16px 6px!important}
+.pet-stage .pchar{position:relative;z-index:2;margin-top:auto;cursor:pointer}
+.pet-stage{display:flex!important;flex-direction:column;align-items:center;justify-content:flex-end}
+.pscene{position:absolute;inset:0;z-index:0;overflow:hidden;transition:filter .6s}
+.pscene::after{content:'';position:absolute;left:0;right:0;bottom:0;height:26%}
+.pscene .pd{position:absolute;font-style:normal;filter:drop-shadow(0 3px 6px #0004)}
+.sc-room{background:linear-gradient(180deg,#f6d6e6,#efc6dc 74%,transparent 74%)}.sc-room::after{background:repeating-linear-gradient(90deg,#c79a76 0 38px,#b98a66 38px 40px)}
+.sc-room .pd0{left:10%;top:12%;font-size:46px}.sc-room .pd1{left:6%;bottom:22%;font-size:42px}.sc-room .pd2{right:10%;top:14%;font-size:38px}.sc-room .pd3{right:9%;bottom:8%;font-size:30px}
+.sc-garden{background:linear-gradient(180deg,#8fd3ff,#c8ecff 74%)}.sc-garden::after{background:linear-gradient(#7bd36b,#5bb54b)}
+.sc-garden .pd0{right:8%;top:6%;font-size:44px;animation:scSun 8s linear infinite}.sc-garden .pd1{left:8%;bottom:10%;font-size:30px}.sc-garden .pd2{right:12%;bottom:12%;font-size:28px}.sc-garden .pd3{left:10%;top:12%;font-size:40px;animation:scCloud 14s ease-in-out infinite alternate}.sc-garden .pd4{left:26%;top:38%;font-size:22px;animation:scBfly 5s ease-in-out infinite}
+.sc-beach{background:linear-gradient(180deg,#7ec8f5,#bfe6ff 55%,#3fa9d9 55%,#3fa9d9 74%)}.sc-beach::after{background:linear-gradient(#f3d9a4,#e6c283)}
+.sc-beach .pd0{left:4%;bottom:14%;font-size:62px}.sc-beach .pd1{right:6%;bottom:12%;font-size:44px}.sc-beach .pd2{left:34%;bottom:6%;font-size:20px}.sc-beach .pd3{right:10%;top:6%;font-size:38px}.sc-beach .pd4{left:6%;top:48%;font-size:22px;opacity:.7}
+.sc-winter{background:linear-gradient(180deg,#1e2a5a,#3b4f8f 74%)}.sc-winter::after{background:linear-gradient(#f4f8ff,#dbe6f7)}
+.sc-winter .pd0{left:6%;bottom:12%;font-size:50px}.sc-winter .pd1{right:6%;bottom:12%;font-size:56px}.sc-winter .pd2,.sc-winter .pd3{display:none}.sc-winter .pd4{right:12%;top:8%;font-size:32px}
+.psnow{position:absolute;inset:0;background-image:radial-gradient(3px 3px at 20% 10%,#fff,transparent),radial-gradient(2px 2px at 60% 30%,#fff,transparent),radial-gradient(3px 3px at 80% 5%,#fff,transparent),radial-gradient(2px 2px at 40% 50%,#fff,transparent);background-size:200px 200px;animation:scSnow 6s linear infinite}
+.sc-space{background:radial-gradient(circle at 70% 30%,#4c1d95,#0b0820 70%)}.sc-space::after{background:linear-gradient(#5b5f7a,#3c3f55);border-radius:50% 50% 0 0/30% 30% 0 0}
+.sc-space .pd0{right:8%;top:10%;font-size:52px;animation:scSpin 20s linear infinite}.sc-space .pd1{left:8%;top:8%;font-size:34px}.sc-space .pd2{left:30%;top:30%;font-size:16px;animation:twk 2s infinite alternate}.sc-space .pd3{right:30%;top:42%;font-size:18px}.sc-space .pd4{left:12%;top:40%;font-size:26px;animation:scComet 6s linear infinite}
+.sc-clouds{background:linear-gradient(180deg,#ffb7d5,#d9c2ff 74%)}.sc-clouds::after{background:radial-gradient(ellipse 30% 100% at 20% 100%,#fff,transparent 70%),radial-gradient(ellipse 35% 100% at 70% 100%,#fff,transparent 70%),linear-gradient(transparent 40%,#fff)}
+.sc-clouds .pd0{left:50%;top:4%;transform:translateX(-50%);font-size:70px;opacity:.85}.sc-clouds .pd1{left:4%;top:30%;font-size:44px;animation:scCloud 12s ease-in-out infinite alternate}.sc-clouds .pd2{right:4%;top:20%;font-size:38px;animation:scCloud 16s ease-in-out infinite alternate-reverse}.sc-clouds .pd3{left:24%;top:16%;font-size:18px}.sc-clouds .pd4{right:22%;top:44%;font-size:18px;animation:frHb 1.5s infinite}
+.sc-neon{background:linear-gradient(180deg,#14002b,#2a0b4d 74%)}.sc-neon::after{background:linear-gradient(transparent 0 0),repeating-linear-gradient(90deg,#f0f6 0 2px,transparent 2px 30px),repeating-linear-gradient(0deg,#0ff5 0 2px,transparent 2px 16px),#14002b;box-shadow:0 -2px 18px #f0f}
+.sc-neon .pd0{left:50%;top:6%;transform:translateX(-50%);font-size:60px;opacity:.6}.sc-neon .pd1{left:8%;top:20%;font-size:24px;animation:frHb 1.2s infinite}.sc-neon .pd2{right:10%;top:30%;font-size:20px}.sc-neon .pd3{right:24%;top:10%;font-size:22px;animation:pBreath 1s infinite}
+@keyframes scSun{to{transform:rotate(360deg)}}@keyframes scCloud{to{transform:translateX(40px)}}@keyframes scBfly{50%{transform:translate(30px,-20px) rotate(10deg)}}@keyframes scSnow{to{background-position:0 200px}}@keyframes scSpin{to{transform:rotate(360deg)}}@keyframes scComet{0%{transform:translate(0,0);opacity:0}20%{opacity:1}100%{transform:translate(220px,60px);opacity:0}}
+.pet-stage.dark .pscene{filter:brightness(.35) saturate(.7)}
+.psay{position:absolute;top:14px;left:50%;z-index:3;transform:translateX(-50%) scale(.6);opacity:0;padding:8px 14px;border-radius:18px;background:#fff;color:#2a1f3d;font-size:13.5px;font-weight:800;white-space:nowrap;box-shadow:0 8px 20px #0004;pointer-events:none}
+.psay::after{content:'';position:absolute;left:50%;bottom:-6px;width:12px;height:12px;background:#fff;transform:translateX(-50%) rotate(45deg);border-radius:2px}
+.psay.on{animation:pSay 3.2s cubic-bezier(.2,1.4,.4,1) forwards}
+@keyframes pSay{0%{opacity:0;transform:translateX(-50%) scale(.6)}10%,85%{opacity:1;transform:translateX(-50%) scale(1)}100%{opacity:0;transform:translateX(-50%) scale(.9) translateY(-6px)}}
+.pchar.jump .psvg{animation:pJump .7s cubic-bezier(.3,1.6,.5,1)}
+.pchar.spin .psvg{animation:pSpin .8s cubic-bezier(.3,1.2,.5,1)}@keyframes pSpin{40%{transform:translateY(-30px) rotate(-180deg) scale(1.05)}80%{transform:translateY(0) rotate(-360deg)}100%{transform:rotate(-360deg)}}
+.pchar.nom .psvg{animation:pNom .4s ease 4}@keyframes pNom{50%{transform:scale(1.04,.96)}}
+.pchar.wob .psvg{animation:pEgg .6s ease 2}
+.psvg .pchew{animation:pChew .25s ease-in-out infinite alternate;transform-box:fill-box;transform-origin:50% 50%}@keyframes pChew{to{transform:scaleY(.4)}}
+.psvg .pzz{animation:pZz 2.4s ease-in-out infinite;opacity:0}.psvg .pzz.b{animation-delay:1.2s}@keyframes pZz{0%{opacity:0;transform:translate(0,10px)}30%{opacity:1}100%{opacity:0;transform:translate(14px,-20px)}}
+.psvg.slp .pall{animation-duration:4.5s}.psvg.slp .phead{animation:none;transform:rotate(-8deg) translateY(4px)}
+.psvg .pmane{animation:pMane 3s ease-in-out infinite;transform-box:fill-box;transform-origin:100% 0}@keyframes pMane{50%{transform:rotate(-6deg)}}
+.psvg .pback{opacity:.95}
+.pfood{position:fixed;z-index:99;font-size:38px;pointer-events:none;transform:translate(-50%,-50%);animation:pFood .75s cubic-bezier(.4,0,.6,1) forwards}
+@keyframes pFood{0%{transform:translate(-50%,120px) scale(1.4)}100%{transform:translate(-50%,-10px) scale(.2);opacity:.2}}
+.pball{position:absolute;z-index:3;left:-40px;bottom:30%;font-size:36px;animation:pBall 1.6s cubic-bezier(.3,.6,.5,1) forwards}
+@keyframes pBall{0%{left:-40px;transform:translateY(0) rotate(0)}30%{transform:translateY(-90px) rotate(200deg)}55%{left:46%;transform:translateY(-40px) rotate(380deg)}75%{left:60%;transform:translateY(-110px) rotate(540deg)}100%{left:110%;transform:translateY(10px) rotate(800deg)}}
+.pacts{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:0 0 12px}
+.pacts button{display:flex;flex-direction:column;align-items:center;gap:2px;padding:10px 2px;border-radius:18px;background:linear-gradient(160deg,#ffffff14,#ffffff06);border:1px solid #ffffff14;font-weight:700}
+.pacts button i{font-style:normal;font-size:26px}.pacts button small{font-size:11px;color:var(--muted)}
+.pacts button:active{transform:scale(.93)}
+.psc-p{display:block;width:100%;height:42px;border-radius:12px;position:relative;overflow:hidden}
+.pw-grid button.psc{padding:6px}
+.pet-kinds{grid-template-columns:repeat(6,1fr)!important}
+.pet-kinds button svg{width:50px;height:58px}
 </style>
 </head>
 <body>
@@ -2982,6 +3033,7 @@ function softReloadChats() { clearTimeout(reloadT); reloadT = setTimeout(loadCha
 async function onNewMessage(m) {
   await e2eDec(m);
   if (current && m.chat_id === current.chat_id && !document.hidden) wordFx(m);
+  if (m.kind === 'system' && /оформление чата/.test(m.body || '') && m.sender_id !== me.id) chatThemeFetch(m.chat_id);
   if (current && m.chat_id === current.chat_id && m.sender_id !== me.id && !document.hidden) { uiSound('recv'); hap(8); if (m.kind === 'sticker' && /^premium:/.test(m.media_url || '')) setTimeout(() => premFx(m.body), 250); }
   if (isBotId(m.sender_id)) aiDone(m.chat_id);
   if (current && m.chat_id === current.chat_id) { lwKick();
@@ -3077,7 +3129,7 @@ async function openChat(chatId) {
     c.is_group && !c.is_channel ? el('button', { class: 'icon-btn', html: ICON.phone, title: 'Групповой звонок', onclick: () => joinGroupCall(c) }) : null,
     !c.saved && !isSecret(c) && settings.headV === 'old' ? el('button', { class: 'icon-btn', title: 'ИИ', style: 'font-size:17px', onclick: () => aiChatMenu(c) }, '✨') : null,
     settings.headV === 'old' ? el('button', { class: 'icon-btn', html: ICON.search, title: 'Поиск', onclick: () => openSearch() }) : el('button', { class: 'icon-btn hm', title: 'Ещё', onclick: () => headMore(c) }, '⋯')));
-  applyChatTheme(chatId); setTimeout(startLiveWall, 0); setTimeout(() => chatWx(c), 300); setTimeout(() => petFab(c), 400); setTimeout(() => decorHead(c), 0); setTimeout(flyHead, 0);
+  applyChatTheme(chatId); setTimeout(startLiveWall, 0); chatThemeFetch(chatId); setTimeout(() => chatWx(c), 300); setTimeout(() => petFab(c), 400); setTimeout(() => decorHead(c), 0); setTimeout(flyHead, 0);
   if (!chatThemes[chatId] && settings.autoTint !== false) tintFromAvatar(c);
   const pinbar = el('div', { class: 'pinbar hidden', id: 'pinbar', onclick: () => current?.pinned_message_id && jumpTo(current.pinned_message_id) });
   const list = el('div', { id: 'msgs' }, ...['', 'r', '', 'r', 'r', ''].map((k, i) => el('div', { class: 'sk sk-msg ' + k, style: `width:${30 + (i * 17) % 35}%` })));
@@ -3570,7 +3622,7 @@ async function openGroupInfo(c) {
 
 
 /* ================= SETTINGS & UPDATES ================= */
-const APP_VERSION = '2.37.0';
+const APP_VERSION = '2.38.0';
 const TK1 = (() => { const t = document.createElement('template'); t.innerHTML = '<svg viewBox="0 0 16 11" width="15" height="11"><path d="M1.5 6l3 3 6.5-7.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>'; return t.content; })();
 const TK2 = (() => { const t = document.createElement('template'); t.innerHTML = '<svg viewBox="0 0 20 11" width="18" height="11"><path d="M1.5 6l3 3 6.5-7.5M8 8.5l.8.6 6.7-7.6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>'; return t.content; })();
 const APP_THEMES = {
@@ -4736,16 +4788,30 @@ function applyChatTheme(chatId) {
   if (th) { st.setProperty('--accent', th.a); st.setProperty('--accent2', th.a2); st.setProperty('--accent3', th.a3); st.setProperty('--mine', th.mine); }
   if (t.wall) st.setProperty('--wall', wallCss(t.wall));
 }
+async function chatThemeShare(chatId, t) {
+  const { error } = await sb.rpc('set_chat_theme', { c: chatId, t });
+  if (error) { toast(/admin/.test(error.message) ? 'Тема поменялась только у тебя — в группе её меняют админы' : 'Тема поменялась только у тебя'); return; }
+  sb.from('messages').insert({ chat_id: chatId, sender_id: me.id, kind: 'system', body: t ? 'изменил(а) оформление чата 🎨' : 'сбросил(а) оформление чата' }).then(() => {});
+}
+async function chatThemeFetch(chatId) {
+  const { data } = await sb.from('chats').select('theme').eq('id', chatId).maybeSingle(); if (!data) return;
+  const t = data.theme, cur = JSON.stringify(chatThemes[chatId] || null);
+  if (JSON.stringify(t || null) === cur) return;
+  if (t) chatThemes[chatId] = t; else delete chatThemes[chatId];
+  try { localStorage.setItem('viks-chat-themes', JSON.stringify(chatThemes)); } catch {}
+  if (current?.chat_id === chatId) { applyChatTheme(chatId); paintGrad(); startLiveWall(); }
+}
 function chatThemePicker(chatId) {
   sheet((s, close) => {
     const cur = chatThemes[chatId] || {};
-    const save = () => { try { localStorage.setItem('viks-chat-themes', JSON.stringify(chatThemes)); } catch {} if (current?.chat_id === chatId) { applyChatTheme(chatId); paintGrad(); startLiveWall(); } };
+    const save = () => { try { localStorage.setItem('viks-chat-themes', JSON.stringify(chatThemes)); } catch {} if (current?.chat_id === chatId) { applyChatTheme(chatId); paintGrad(); startLiveWall(); } clearTimeout(shareT); shareT = setTimeout(() => chatThemeShare(chatId, chatThemes[chatId] || null), 900); };
+    let shareT = 0;
     const sw = el('div', { class: 'swatches' });
     const drawSw = () => { sw.innerHTML = ''; for (const [k, t] of Object.entries(THEMES)) sw.append(el('div', { class: 'swatch' + (cur.theme === k ? ' on' : ''), style: `background:linear-gradient(135deg,${t.a},${t.a3})`, onclick: () => { cur.theme = k; chatThemes[chatId] = cur; save(); drawSw(); } })); };
     const walls = el('div', { class: 'walls' });
     const drawW = () => { walls.innerHTML = ''; for (const [k, w] of Object.entries(WALLS)) walls.append(el('div', { class: 'wall' + (cur.wall === k ? ' on' : ''), style: 'background:' + wallCss(k), onclick: () => { if (w.shop && !owns(w.shop)) { shopPage('wall'); return; } cur.wall = k; chatThemes[chatId] = cur; save(); drawW(); } }, w.live ? el('span', { class: 'lvb', style: 'background:none' }, '✨') : null, el('span', {}, w.name))); };
     drawSw(); drawW();
-    s.append(el('h3', {}, '🎨 Тема чата'), el('div', { class: 'hint', style: 'margin:-6px 0 10px' }, 'Только для этого чата и только у тебя на телефоне'),
+    s.append(el('h3', {}, '🎨 Тема чата'), el('div', { class: 'hint', style: 'margin:-6px 0 10px' }, (chats.find(x => x.chat_id === chatId) || {}).is_group ? 'Поменяется у всех в группе (могут менять админы)' : 'Поменяется и у тебя, и у собеседника'),
       el('div', { class: 'set-title' }, 'Цвет'), el('div', { class: 'set-group' }, sw),
       el('div', { class: 'set-title' }, 'Обои'), el('div', { class: 'set-group' }, walls),
       el('button', { class: 'btn ghost', onclick: () => { delete chatThemes[chatId]; save(); close(); toast('Как в общих настройках'); } }, 'Сбросить'));
@@ -10064,37 +10130,66 @@ const PETS = { cat: ['🥚', '🐱', '😺', '🦁'], dog: ['🥚', '🐶', '�
 const PET_LV = [0, 20, 150, 500];
 const petStage = xp => xp >= 500 ? 3 : xp >= 150 ? 2 : xp >= 20 ? 1 : 0;
 async function petGet(chatId) { const { data } = await sb.from('chat_pets').select('*').eq('chat_id', chatId).maybeSingle(); return data; }
-const PET_COL = { cat: ['#f6a75b', '#ffe3c2', '#e07f2f'], dog: ['#d9a066', '#f7e2c4', '#8a5a33'], bunny: ['#f4eef8', '#ffd1e3', '#d8cde3'], chick: ['#ffd54a', '#fff1a8', '#f0a500'], bear: ['#a0714f', '#e9c9a7', '#6d4a32'], dragon: ['#6fcf7f', '#d7f7c8', '#3f9e58'] };
+const PET_COL = { cat: ['#f6a75b', '#ffe3c2', '#e07f2f'], dog: ['#d9a066', '#f7e2c4', '#8a5a33'], bunny: ['#f4eef8', '#ffd1e3', '#d8cde3'], chick: ['#ffd54a', '#fff1a8', '#f0a500'], bear: ['#a0714f', '#e9c9a7', '#6d4a32'], dragon: ['#6fcf7f', '#d7f7c8', '#3f9e58'],
+  fox: ['#f28c38', '#fff4e8', '#c4621a'], panda: ['#f7f7f7', '#ffffff', '#26262b'], penguin: ['#33415c', '#ffffff', '#1d2638'], unicorn: ['#fbf6ff', '#ffe4f3', '#e3d4f5'], frog: ['#7ed957', '#e3ffc9', '#4fa83a'], hamster: ['#f2c38b', '#fff3e2', '#c98f52'] };
+const PET_NAMES = { cat: 'Котик', dog: 'Пёсик', bunny: 'Зайка', chick: 'Цыпа', bear: 'Мишка', dragon: 'Дракоша', fox: 'Лисёнок', panda: 'Панда', penguin: 'Пингвин', unicorn: 'Единорог', frog: 'Лягушонок', hamster: 'Хомяк' };
 const PET_WEAR = {
-  hat: [['🎀', 'Бантик', 1], ['🧢', 'Кепка', 1], ['🌸', 'Цветок', 1], ['🎅', 'Новогодняя', 1], ['🎩', 'Цилиндр', 2], ['🎓', 'Выпускник', 2], ['⛑️', 'Каска', 2], ['👑', 'Корона', 3]],
-  eyes: [['🕶️', 'Очки', 1], ['👓', 'Умник', 2], ['🥽', 'Пилот', 3]],
-  neck: [['🔔', 'Бубенчик', 1], ['🧣', 'Шарф', 1], ['📿', 'Бусы', 2], ['🏅', 'Медаль', 3]],
-  hand: [['🎈', 'Шарик', 1], ['🌹', 'Роза', 1], ['🍭', 'Леденец', 2], ['⭐', 'Звезда', 3]]
+  hat: [['🎀', 'Бантик', 1], ['🧢', 'Кепка', 1], ['🌸', 'Цветок', 1], ['🎅', 'Новогодняя', 1], ['👒', 'Шляпка', 1], ['🎧', 'Наушники', 1], ['🎩', 'Цилиндр', 2], ['🎓', 'Выпускник', 2], ['⛑️', 'Каска', 2], ['🪖', 'Шлем', 2], ['👑', 'Корона', 3]],
+  eyes: [['🕶️', 'Очки', 1], ['👓', 'Умник', 2], ['🥽', 'Пилот', 2], ['💖', 'Влюблён', 1], ['⭐', 'Звёзды', 3]],
+  neck: [['🔔', 'Бубенчик', 1], ['🧣', 'Шарф', 1], ['🎀', 'Бабочка', 1], ['👔', 'Галстук', 2], ['📿', 'Бусы', 2], ['💎', 'Кулон', 3], ['🏅', 'Медаль', 3]],
+  hand: [['🎈', 'Шарик', 1], ['🌹', 'Роза', 1], ['🍦', 'Мороженое', 1], ['🧸', 'Мишка', 1], ['☕', 'Кофе', 1], ['🍭', 'Леденец', 2], ['🎮', 'Геймпад', 2], ['🌻', 'Подсолнух', 2], ['⭐', 'Звезда', 3]],
+  back: [['🎒', 'Рюкзак', 1], ['🦋', 'Крылья', 2], ['🪁', 'Змей', 2], ['🌈', 'Радуга', 3]]
 };
+const PET_SCENES = [['room', '🏠 Комната', 0], ['garden', '🌷 Сад', 0], ['beach', '🏖 Пляж', 1], ['winter', '⛄ Зима', 1], ['space', '🪐 Космос', 2], ['clouds', '☁️ Облака', 2], ['neon', '🌃 Неон', 3]];
+const PET_FOOD = [['🍎', 'Яблоко'], ['🥕', 'Морковка'], ['🍪', 'Печенька'], ['🍣', 'Суши'], ['🍰', 'Тортик'], ['🍉', 'Арбуз']];
+const PET_SAY = { happy: ['Привет! 💕', 'Я вас люблю!', 'Как дела?', 'Погладь меня 🥺', 'Ура, вы тут!', 'Мне нравится мой наряд ✨', 'Напиши ей что-нибудь милое 💌'], sad: ['Мне скучно… 🥺', 'Вы где пропали?', 'Напишите друг другу…', 'Я жду 😿'], sleep: ['Zzz…', 'Хррр… 💤'], egg: ['Тук-тук…', '…', 'Скоро вылуплюсь!'] };
 function petSvg(kind, st, mood, outfit, size) {
-  const [c1, c2, c3] = PET_COL[kind] || PET_COL.cat, o = outfit || {}, sad = mood === 'sad', hap = mood === 'happy';
-  if (st === 0) return `<svg class="psvg egg" viewBox="0 0 200 200" width="${size}" height="${size}"><ellipse class="psh" cx="100" cy="182" rx="44" ry="8" fill="#0005"/><g class="pegg"><path d="M100 30c34 0 56 56 56 96 0 32-25 54-56 54s-56-22-56-54c0-40 22-96 56-96z" fill="#fff8ee"/><path d="M100 30c34 0 56 56 56 96 0 32-25 54-56 54" fill="none" stroke="#0000000f" stroke-width="10"/><circle cx="80" cy="90" r="9" fill="${c1}" opacity=".8"/><circle cx="122" cy="120" r="12" fill="${c1}" opacity=".8"/><circle cx="92" cy="146" r="7" fill="${c1}" opacity=".8"/><path d="M70 104l12 8 10-10 12 10 10-8" fill="none" stroke="#c9b9a6" stroke-width="3" stroke-linecap="round" opacity="${0.2 + 0.8 * Math.random()}"/><ellipse cx="82" cy="70" rx="9" ry="14" fill="#fff" opacity=".7" transform="rotate(-20 82 70)"/></g></svg>`;
-  const sc = st === 1 ? .82 : st === 2 ? .92 : 1;
+  const [c1, c2, c3] = PET_COL[kind] || PET_COL.cat, o = outfit || {}, sad = mood === 'sad', hap = mood === 'happy', slp = mood === 'sleep', eat = mood === 'eat';
+  const VB = '0 -34 200 234';
+  if (st === 0) return `<svg class="psvg egg" viewBox="${VB}" width="${size}" height="${size * 1.17}"><ellipse class="psh" cx="100" cy="184" rx="44" ry="8" fill="#0005"/><g class="pegg"><path d="M100 30c34 0 56 56 56 96 0 32-25 54-56 54s-56-22-56-54c0-40 22-96 56-96z" fill="#fff8ee"/><path d="M100 30c34 0 56 56 56 96 0 32-25 54-56 54" fill="none" stroke="#0000000f" stroke-width="10"/><circle cx="80" cy="90" r="9" fill="${c1}" opacity=".8"/><circle cx="122" cy="120" r="12" fill="${c1}" opacity=".8"/><circle cx="92" cy="146" r="7" fill="${c1}" opacity=".8"/><path d="M70 104l12 8 10-10 12 10 10-8" fill="none" stroke="#c9b9a6" stroke-width="3" stroke-linecap="round"/><ellipse cx="82" cy="70" rx="9" ry="14" fill="#fff" opacity=".7" transform="rotate(-20 82 70)"/></g></svg>`;
+  const sc = st === 1 ? .84 : st === 2 ? .93 : 1, frog = kind === 'frog', ey = frog ? 66 : 92;
   const ears = { cat: `<path class="pea l" d="M62 70 66 26 96 56z" fill="${c1}"/><path class="pea r" d="M138 70 134 26 104 56z" fill="${c1}"/><path d="M68 62 70 38 88 56z" fill="#ffb3c7"/><path d="M132 62 130 38 112 56z" fill="#ffb3c7"/>`,
+    fox: `<path class="pea l" d="M58 74 60 18 98 54z" fill="${c1}"/><path class="pea r" d="M142 74 140 18 102 54z" fill="${c1}"/><path d="M66 64 66 32 88 54z" fill="#3a2a22"/><path d="M134 64 134 32 112 54z" fill="#3a2a22"/>`,
     dog: `<ellipse class="pea l" cx="58" cy="84" rx="15" ry="30" fill="${c3}" transform="rotate(18 58 84)"/><ellipse class="pea r" cx="142" cy="84" rx="15" ry="30" fill="${c3}" transform="rotate(-18 142 84)"/>`,
     bunny: `<g class="pea l"><ellipse cx="78" cy="30" rx="13" ry="38" fill="${c1}" transform="rotate(-10 78 30)"/><ellipse cx="78" cy="32" rx="6" ry="28" fill="${c2}" transform="rotate(-10 78 32)"/></g><g class="pea r"><ellipse cx="122" cy="30" rx="13" ry="38" fill="${c1}" transform="rotate(10 122 30)"/><ellipse cx="122" cy="32" rx="6" ry="28" fill="${c2}" transform="rotate(10 122 32)"/></g>`,
     bear: `<circle class="pea l" cx="64" cy="52" r="16" fill="${c1}"/><circle cx="64" cy="52" r="8" fill="${c2}"/><circle class="pea r" cx="136" cy="52" r="16" fill="${c1}"/><circle cx="136" cy="52" r="8" fill="${c2}"/>`,
+    hamster: `<circle class="pea l" cx="66" cy="56" r="12" fill="${c3}"/><circle cx="66" cy="56" r="6" fill="#ffc2cf"/><circle class="pea r" cx="134" cy="56" r="12" fill="${c3}"/><circle cx="134" cy="56" r="6" fill="#ffc2cf"/>`,
+    panda: `<circle class="pea l" cx="62" cy="52" r="16" fill="${c3}"/><circle class="pea r" cx="138" cy="52" r="16" fill="${c3}"/>`,
     chick: `<path class="pea l" d="M96 46c-4-14 2-22 8-20-6 6 0 12-2 20z" fill="${c3}"/>`,
+    penguin: '',
+    unicorn: `<path class="pea l" d="M66 62 66 34 86 52z" fill="${c1}"/><path class="pea r" d="M134 62 134 34 114 52z" fill="${c1}"/><path class="phorn" d="M92 50 100 6 108 50z" fill="url(#gHorn)"/><path d="M95 40 105 36M96 30 104 26M98 20 102 18" stroke="#fff8" stroke-width="2"/>`,
+    frog: `<circle cx="76" cy="62" r="20" fill="${c1}"/><circle cx="124" cy="62" r="20" fill="${c1}"/><circle cx="76" cy="64" r="13" fill="#fff"/><circle cx="124" cy="64" r="13" fill="#fff"/>`,
     dragon: `<path class="pea l" d="M72 58 64 26 88 50z" fill="#fff3c4"/><path class="pea r" d="M128 58 136 26 112 50z" fill="#fff3c4"/>` }[kind] || '';
-  const tail = { cat: `<path class="ptl" d="M140 160c30 0 36-30 24-44" fill="none" stroke="${c1}" stroke-width="10" stroke-linecap="round"/>`, dog: `<path class="ptl" d="M142 156c16-2 24-14 22-26" fill="none" stroke="${c3}" stroke-width="10" stroke-linecap="round"/>`, bunny: `<circle class="ptl" cx="144" cy="160" r="11" fill="#fff"/>`, bear: `<circle class="ptl" cx="142" cy="162" r="8" fill="${c3}"/>`, chick: '', dragon: `<path class="ptl" d="M138 162c34 6 44-14 40-30l-8 10-4-12-8 10" fill="${c1}" stroke="${c3}" stroke-width="2"/>` }[kind] || '';
-  const nose = kind === 'chick' ? `<path d="M93 104 107 104 100 114z" fill="#ff9f1c"/>` : kind === 'dragon' ? `<circle cx="94" cy="106" r="2" fill="${c3}"/><circle cx="106" cy="106" r="2" fill="${c3}"/>` : `<ellipse cx="100" cy="104" rx="6" ry="4.5" fill="${kind === 'bunny' ? '#ff8fb1' : '#4a2f2a'}"/>`;
-  const eyes = sad ? `<path d="M76 92q8 6 16 0M108 92q8 6 16 0" fill="none" stroke="#2a1a1a" stroke-width="4" stroke-linecap="round"/><ellipse class="ptear" cx="80" cy="102" rx="3" ry="5" fill="#7cc8ff"/>`
-    : hap ? `<path d="M76 94q8-10 16 0M108 94q8-10 16 0" fill="none" stroke="#2a1a1a" stroke-width="4.5" stroke-linecap="round"/>`
-    : `<g class="peye"><ellipse cx="84" cy="92" rx="7" ry="9" fill="#2a1a1a"/><ellipse cx="116" cy="92" rx="7" ry="9" fill="#2a1a1a"/><circle cx="86.5" cy="88" r="2.6" fill="#fff"/><circle cx="118.5" cy="88" r="2.6" fill="#fff"/></g>`;
-  const mouth = sad ? `<path d="M93 118q7-5 14 0" fill="none" stroke="#2a1a1a" stroke-width="3" stroke-linecap="round"/>` : kind === 'chick' ? '' : `<path d="M92 112q4 5 8 0q4 5 8 0" fill="none" stroke="#2a1a1a" stroke-width="3" stroke-linecap="round"/>` + (hap ? `<path d="M96 115q4 8 8 0z" fill="#ff7a90"/>` : '');
-  const wings = kind === 'chick' ? `<ellipse class="parm l" cx="56" cy="142" rx="12" ry="20" fill="${c3}" transform="rotate(20 56 142)"/><ellipse class="parm r" cx="144" cy="142" rx="12" ry="20" fill="${c3}" transform="rotate(-20 144 142)"/>` : kind === 'dragon' ? `<path class="parm l" d="M58 128 26 110 34 136 22 146 56 150z" fill="${c3}"/><path class="parm r" d="M142 128 174 110 166 136 178 146 144 150z" fill="${c3}"/>` : `<ellipse class="parm l" cx="60" cy="146" rx="11" ry="16" fill="${c1}" transform="rotate(25 60 146)"/><ellipse class="parm r" cx="140" cy="146" rx="11" ry="16" fill="${c1}" transform="rotate(-25 140 146)"/>`;
+  const mane = kind === 'unicorn' ? `<g class="pmane"><circle cx="72" cy="56" r="13" fill="#f9a8d4"/><circle cx="62" cy="74" r="12" fill="#c4b5fd"/><circle cx="58" cy="94" r="11" fill="#93c5fd"/><circle cx="84" cy="48" r="10" fill="#fde68a"/></g>` : '';
+  const tail = { cat: `<path class="ptl" d="M140 160c30 0 36-30 24-44" fill="none" stroke="${c1}" stroke-width="10" stroke-linecap="round"/>`, fox: `<g class="ptl"><path d="M138 168c40 6 54-30 30-56-4 26-18 34-34 40z" fill="${c1}"/><path d="M168 112c8 10 8 22 2 30-6-6-8-18-2-30z" fill="#fff"/></g>`, dog: `<path class="ptl" d="M142 156c16-2 24-14 22-26" fill="none" stroke="${c3}" stroke-width="10" stroke-linecap="round"/>`, bunny: `<circle class="ptl" cx="144" cy="160" r="11" fill="#fff"/>`, bear: `<circle class="ptl" cx="142" cy="162" r="8" fill="${c3}"/>`, panda: `<circle class="ptl" cx="142" cy="164" r="8" fill="${c3}"/>`, hamster: '', chick: '', penguin: '', frog: '', unicorn: `<g class="ptl"><path d="M140 158c24-4 34 10 30 30-10-10-20-14-30-12z" fill="#c4b5fd"/><path d="M142 164c18 0 24 10 20 22-8-8-14-10-20-10z" fill="#f9a8d4"/></g>`, dragon: `<path class="ptl" d="M138 162c34 6 44-14 40-30l-8 10-4-12-8 10" fill="${c1}" stroke="${c3}" stroke-width="2"/>` }[kind] || '';
+  const nose = kind === 'chick' || kind === 'penguin' ? `<path d="M92 ${ey + 12} 108 ${ey + 12} 100 ${ey + 23}z" fill="#ff9f1c"/>` : kind === 'dragon' ? `<circle cx="94" cy="106" r="2" fill="${c3}"/><circle cx="106" cy="106" r="2" fill="${c3}"/>` : frog ? '' : `<ellipse cx="100" cy="104" rx="6" ry="4.5" fill="${kind === 'bunny' || kind === 'unicorn' || kind === 'hamster' ? '#ff8fb1' : '#4a2f2a'}"/>`;
+  const exL = frog ? 76 : 84, exR = frog ? 124 : 116;
+  const patches = kind === 'panda' ? `<ellipse cx="82" cy="94" rx="15" ry="18" fill="${c3}" transform="rotate(20 82 94)"/><ellipse cx="118" cy="94" rx="15" ry="18" fill="${c3}" transform="rotate(-20 118 94)"/>` : '';
+  const ec = kind === 'panda' ? '#fff' : '#2a1a1a';
+  const eyes = slp ? `<path d="M${exL - 8} ${ey}q8 6 16 0M${exR - 8} ${ey}q8 6 16 0" fill="none" stroke="${ec}" stroke-width="4" stroke-linecap="round"/>`
+    : sad ? `<path d="M${exL - 8} ${ey}q8 6 16 0M${exR - 8} ${ey}q8 6 16 0" fill="none" stroke="${ec}" stroke-width="4" stroke-linecap="round"/><ellipse class="ptear" cx="${exL - 4}" cy="${ey + 10}" rx="3" ry="5" fill="#7cc8ff"/>`
+    : hap || eat ? `<path d="M${exL - 8} ${ey + 2}q8-10 16 0M${exR - 8} ${ey + 2}q8-10 16 0" fill="none" stroke="${ec}" stroke-width="4.5" stroke-linecap="round"/>`
+    : `<g class="peye" style="transform-origin:100px ${ey}px"><ellipse cx="${exL}" cy="${ey}" rx="7" ry="9" fill="${ec === '#fff' ? '#1a1a1f' : ec}"/><ellipse cx="${exR}" cy="${ey}" rx="7" ry="9" fill="${ec === '#fff' ? '#1a1a1f' : ec}"/><circle cx="${exL + 2.5}" cy="${ey - 4}" r="2.6" fill="#fff"/><circle cx="${exR + 2.5}" cy="${ey - 4}" r="2.6" fill="#fff"/><circle cx="${exL - 2}" cy="${ey + 3}" r="1.2" fill="#fff" opacity=".8"/><circle cx="${exR - 2}" cy="${ey + 3}" r="1.2" fill="#fff" opacity=".8"/></g>`;
+  const my = frog ? 100 : 112;
+  const mouth = eat ? `<ellipse class="pchew" cx="100" cy="${my + 3}" rx="8" ry="7" fill="#7a2f3a"/><ellipse cx="100" cy="${my + 6}" rx="5" ry="3" fill="#ff7a90"/>` : slp ? `<ellipse cx="100" cy="${my + 2}" rx="3" ry="2.5" fill="#2a1a1a" opacity=".7"/>` : sad ? `<path d="M93 ${my + 6}q7-5 14 0" fill="none" stroke="#2a1a1a" stroke-width="3" stroke-linecap="round"/>` : (kind === 'chick' || kind === 'penguin') ? '' : frog ? `<path d="M80 ${my}q20 16 40 0" fill="none" stroke="#2a5a1a" stroke-width="3.5" stroke-linecap="round"/>` + (hap ? `<path d="M86 ${my + 3}q14 12 28 0z" fill="#ff7a90"/>` : '') : `<path d="M92 ${my}q4 5 8 0q4 5 8 0" fill="none" stroke="#2a1a1a" stroke-width="3" stroke-linecap="round"/>` + (hap ? `<path d="M96 ${my + 3}q4 8 8 0z" fill="#ff7a90"/>` : '');
+  const wings = kind === 'chick' ? `<ellipse class="parm l" cx="56" cy="142" rx="12" ry="20" fill="${c3}" transform="rotate(20 56 142)"/><ellipse class="parm r" cx="144" cy="142" rx="12" ry="20" fill="${c3}" transform="rotate(-20 144 142)"/>`
+    : kind === 'penguin' ? `<ellipse class="parm l" cx="56" cy="144" rx="10" ry="26" fill="${c3}" transform="rotate(22 56 144)"/><ellipse class="parm r" cx="144" cy="144" rx="10" ry="26" fill="${c3}" transform="rotate(-22 144 144)"/>`
+    : kind === 'dragon' ? `<path class="parm l" d="M58 128 26 110 34 136 22 146 56 150z" fill="${c3}"/><path class="parm r" d="M142 128 174 110 166 136 178 146 144 150z" fill="${c3}"/>`
+    : `<ellipse class="parm l" cx="60" cy="146" rx="11" ry="16" fill="${kind === 'panda' ? c3 : c1}" transform="rotate(25 60 146)"/><ellipse class="parm r" cx="140" cy="146" rx="11" ry="16" fill="${kind === 'panda' ? c3 : c1}" transform="rotate(-25 140 146)"/>`;
+  const feetC = kind === 'penguin' || kind === 'chick' ? '#ff9f1c' : c3;
   const em = (e, x, y, f, cls) => e ? `<text class="${cls}" x="${x}" y="${y}" font-size="${f}" text-anchor="middle" dominant-baseline="central">${e}</text>` : '';
-  const head = kind === 'chick' ? 0 : 1;
-  return `<svg class="psvg ${sad ? 'sad' : hap ? 'hap' : ''}" viewBox="0 0 200 200" width="${size}" height="${size}"><ellipse class="psh" cx="100" cy="184" rx="46" ry="8" fill="#0005"/>
-<g class="pall" style="--s:${sc};transform-origin:100px 184px">${tail}
-<g class="pbody"><ellipse cx="80" cy="178" rx="14" ry="8" fill="${c3}"/><ellipse cx="120" cy="178" rx="14" ry="8" fill="${c3}"/><ellipse cx="100" cy="146" rx="44" ry="38" fill="${c1}"/><ellipse cx="100" cy="154" rx="27" ry="24" fill="${c2}"/>${wings}${em(o.neck, 100, 122, 26, 'pw')}${em(o.hand, 152, 148, 30, 'pw phand')}</g>
-<g class="phead">${ears}${head ? `<circle cx="100" cy="92" r="46" fill="${c1}"/>` : `<circle cx="100" cy="96" r="42" fill="${c1}"/>`}${kind === 'dragon' ? `<path d="M100 44l6 10-6 4-6-4z" fill="#fff3c4"/>` : ''}<ellipse cx="100" cy="108" rx="22" ry="15" fill="${c2}" opacity="${kind === 'chick' ? 0 : .9}"/>
-<ellipse class="pblush" cx="70" cy="106" rx="9" ry="5.5" fill="#ff8fab" opacity="${sad ? .2 : .55}"/><ellipse class="pblush" cx="130" cy="106" rx="9" ry="5.5" fill="#ff8fab" opacity="${sad ? .2 : .55}"/>${eyes}${nose}${mouth}${em(o.eyes, 100, 92, 40, 'pw')}${em(o.hat, 100, 48, 44, 'pw phat')}</g></g></svg>`;
+  const face = kind === 'penguin' ? `<ellipse cx="100" cy="98" rx="34" ry="30" fill="#fff"/>` : kind === 'chick' ? '' : `<ellipse cx="100" cy="108" rx="22" ry="15" fill="${c2}" opacity=".9"/>`;
+  const cheekR = kind === 'hamster' ? `<ellipse cx="68" cy="110" rx="18" ry="14" fill="${c2}"/><ellipse cx="132" cy="110" rx="18" ry="14" fill="${c2}"/>` : '';
+  const zz = slp ? `<text class="pzz" x="140" y="40" font-size="22" fill="#fff">z</text><text class="pzz b" x="154" y="22" font-size="16" fill="#fff">z</text>` : '';
+  return `<svg class="psvg ${sad ? 'sad' : hap ? 'hap' : slp ? 'slp' : eat ? 'eat' : ''}" viewBox="${VB}" width="${size}" height="${size * 1.17}"><defs><linearGradient id="gHorn" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#fbbf24"/><stop offset="1" stop-color="#fff7cc"/></linearGradient></defs><ellipse class="psh" cx="100" cy="184" rx="46" ry="8" fill="#0005"/>
+<g class="pall" style="--s:${sc};transform-origin:100px 184px">${em(o.back, 100, 118, 64, 'pw pback')}${tail}
+<g class="pbody"><ellipse cx="80" cy="178" rx="14" ry="8" fill="${feetC}"/><ellipse cx="120" cy="178" rx="14" ry="8" fill="${feetC}"/><ellipse cx="100" cy="146" rx="44" ry="38" fill="${c1}"/><ellipse cx="100" cy="154" rx="27" ry="24" fill="${c2}"/>${wings}${em(o.neck, 100, 122, 26, 'pw')}${em(o.hand, 152, 148, 30, 'pw phand')}</g>
+<g class="phead">${mane}${ears}<circle cx="100" cy="${kind === 'chick' ? 96 : 92}" r="${kind === 'chick' ? 42 : 46}" fill="${c1}"/>${cheekR}${kind === 'dragon' ? `<path d="M100 44l6 10-6 4-6-4z" fill="#fff3c4"/>` : ''}${frog ? `<circle cx="76" cy="66" r="12" fill="#fff"/><circle cx="124" cy="66" r="12" fill="#fff"/>` : ''}${face}${patches}
+<ellipse class="pblush" cx="70" cy="108" rx="9" ry="5.5" fill="#ff8fab" opacity="${sad ? .2 : .6}"/><ellipse class="pblush" cx="130" cy="108" rx="9" ry="5.5" fill="#ff8fab" opacity="${sad ? .2 : .6}"/>${eyes}${nose}${mouth}${em(o.eyes, 100, ey, o.eyes === '💖' || o.eyes === '⭐' ? 20 : 40, 'pw' + (o.eyes === '💖' || o.eyes === '⭐' ? ' pey2' : ''))}${o.eyes === '💖' || o.eyes === '⭐' ? em(o.eyes, exR, ey, 20, 'pw pey2') : ''}${em(o.hat, 100, kind === 'unicorn' ? 30 : 46, 44, 'pw phat')}</g>${zz}</g></svg>`.replace(em(o.eyes, 100, ey, 20, 'pw pey2'), em(o.eyes, exL, ey, 20, 'pw pey2'));
+}
+function petScene(key) {
+  const d = { room: ['🪟', '🪴', '🖼️', '🧶'], garden: ['☀️', '🌷', '🌼', '☁️', '🦋'], beach: ['🌴', '⛱️', '🐚', '☀️', '🌊'], winter: ['⛄', '🎄', '❄️', '❄️', '🌙'], space: ['🪐', '🌙', '⭐', '✨', '☄️'], clouds: ['🌈', '☁️', '☁️', '✨', '💗'], neon: ['🌃', '💜', '✨', '🎶'] }[key] || [];
+  return `<div class="pscene sc-${key}">` + d.map((e, i) => `<i class="pd pd${i}">${e}</i>`).join('') + (key === 'winter' ? '<b class="psnow"></b>' : '') + '</div>';
 }
 async function petGet2(chatId) { return petGet(chatId); }
 async function petFab(c) {
@@ -10104,31 +10199,47 @@ async function petFab(c) {
 }
 async function petSheet() {
   if (!current) return; const c = current; let pt = await petGet(c.chat_id);
-  if (!pt) { let kind = 'cat'; sheet((s, close) => { const name = el('input', { placeholder: 'Имя питомца', maxlength: 20, value: 'Пушок' }); const kr = el('div', { class: 'pet-kinds' }), prev = el('div', { class: 'pet-stage', style: 'height:190px' });
-    const dk = () => { kr.innerHTML = ''; Object.keys(PET_COL).forEach(k => { const b = el('button', { class: kind === k ? 'on' : '', onclick: () => { kind = k; hap(5); dk(); } }); b.innerHTML = petSvg(k, 2, 'happy', null, 64); kr.append(b); }); prev.innerHTML = petSvg(kind, 2, '', null, 180); }; dk();
-    s.append(el('h3', {}, '🧸 Общий питомец'), el('div', { class: 'hint' }, 'Живёт в этом чате, растёт, когда вы переписываетесь, и грустит, если вы пропали. Наряжайте его вместе!'), prev, kr, el('div', { class: 'field' }, name), el('button', { class: 'btn', onclick: async () => { const { error } = await sb.from('chat_pets').insert({ chat_id: c.chat_id, kind, name: name.value.trim() || 'Пушок' }); if (error) { toast('Не вышло'); return; } close(); playEffect('confetti'); toast('🥚 Яйцо появилось! Переписывайтесь — и оно вылупится'); await sb.from('messages').insert({ chat_id: c.chat_id, sender_id: me.id, body: '🥚 У нас теперь общий питомец — ' + (name.value.trim() || 'Пушок') + '! Тапни на него в чате' }); petFab(c); } }, '🥚 Завести')); }); return; }
+  if (!pt) { let kind = 'cat'; sheet((s, close) => { const name = el('input', { placeholder: 'Имя питомца', maxlength: 20, value: 'Пушок' }); const kr = el('div', { class: 'pet-kinds' }), prev = el('div', { class: 'pet-stage' }), pn = el('div', { class: 'hint', style: 'text-align:center;font-weight:800;margin:-4px 0 8px' });
+    const dk = () => { kr.innerHTML = ''; Object.keys(PET_COL).forEach(k => { const b = el('button', { class: kind === k ? 'on' : '', onclick: () => { kind = k; hap(5); dk(); } }); b.innerHTML = petSvg(k, 2, 'happy', null, 54); kr.append(b); }); prev.innerHTML = petScene('room') + '<div class="pchar">' + petSvg(kind, 2, '', null, 190) + '</div>'; pn.textContent = PET_NAMES[kind]; }; dk();
+    s.append(el('h3', {}, '🧸 Общий питомец'), el('div', { class: 'hint' }, 'Живёт в этом чате, растёт, когда вы переписываетесь, и грустит, если вы пропали. Кормите, играйте и наряжайте его вместе!'), prev, pn, kr, el('div', { class: 'field' }, name), el('button', { class: 'btn', onclick: async () => { const { error } = await sb.from('chat_pets').insert({ chat_id: c.chat_id, kind, name: name.value.trim() || 'Пушок' }); if (error) { toast('Не вышло'); return; } close(); playEffect('confetti'); toast('🥚 Яйцо появилось! Переписывайтесь — и оно вылупится'); await sb.from('messages').insert({ chat_id: c.chat_id, sender_id: me.id, body: '🥚 У нас теперь общий питомец — ' + (name.value.trim() || 'Пушок') + '! Тапни на него в чате' }); petFab(c); } }, '🥚 Завести')); }); return; }
   const st = petStage(pt.xp), sad = Date.now() - new Date(pt.last_msg) > 864e5, nx = PET_LV[st + 1]; pt.outfit = pt.outfit || {};
+  const night = new Date().getHours() >= 23 || new Date().getHours() < 7;
   const MOOD = sad ? '😿 Скучает — вы давно не писали друг другу' : Date.now() - new Date(pt.last_msg) < 36e5 ? '💖 Счастлив — вы недавно болтали' : '🙂 Спокоен';
   sheet((s, close) => {
-    const stage = el('div', { class: 'pet-stage' + (sad ? ' sad' : '') }); let moodNow = sad ? 'sad' : '';
-    const draw = () => { stage.innerHTML = petSvg(pt.kind, st, moodNow, pt.outfit, 220) + '<i class="pst a"></i><i class="pst b"></i><i class="pst c"></i>'; };
-    draw();
-    stage.onclick = async e => { if (st === 0) { stage.classList.remove('wob'); void stage.offsetWidth; stage.classList.add('wob'); hap([5, 20, 5]); toast('🥚 Тук-тук… Пишите друг другу — и он вылупится!'); return; }
-      hap(8); moodNow = 'happy'; draw(); stage.classList.remove('jump'); void stage.offsetWidth; stage.classList.add('jump'); setTimeout(() => { moodNow = sad ? 'sad' : ''; draw(); }, 1400);
-      for (let i = 0; i < 6; i++) { const h = el('span', { class: 'petheart', style: `left:${e.clientX}px;top:${e.clientY}px;--dx:${Math.round(Math.random() * 100 - 50)}px;animation-delay:${i * .07}s` }, ['💗', '💖', '✨'][i % 3]); document.body.append(h); setTimeout(() => h.remove(), 1300); }
-      if (!pt.last_pat || Date.now() - new Date(pt.last_pat) > 36e5) { pt.xp += 3; pt.last_pat = new Date().toISOString(); sb.from('chat_pets').update({ xp: pt.xp, last_pat: pt.last_pat }).eq('chat_id', c.chat_id).then(() => {}); bar.style.width = Math.min(100, nx ? (pt.xp - PET_LV[st]) / (nx - PET_LV[st]) * 100 : 100) + '%'; toast('💗 ' + pt.name + ' доволен (+3 XP)'); } };
-    const bar = el('i', { style: `width:${Math.min(100, nx ? (pt.xp - PET_LV[st]) / (nx - PET_LV[st]) * 100 : 100)}%` });
+    const stage = el('div', { class: 'pet-stage big' }), chr = el('div', { class: 'pchar' }), bub = el('div', { class: 'psay' }); let moodNow = sad ? 'sad' : (pt.outfit._sleep ? 'sleep' : ''), busy = 0;
+    const draw = () => { chr.innerHTML = petSvg(pt.kind, st, moodNow, pt.outfit, 210); };
+    const setScene = () => { stage.querySelector('.pscene')?.remove(); stage.insertAdjacentHTML('afterbegin', petScene(pt.outfit.scene || (night ? 'winter' : 'room'))); stage.classList.toggle('dark', moodNow === 'sleep'); };
+    stage.append(chr, bub); draw(); setScene();
+    const say = t => { bub.textContent = t; bub.classList.remove('on'); void bub.offsetWidth; bub.classList.add('on'); };
+    const tmp = (m, ms, cls) => { busy = Date.now() + ms; moodNow = m; draw(); if (cls) { chr.classList.remove('jump', 'spin', 'nom'); void chr.offsetWidth; chr.classList.add(cls); } setTimeout(() => { if (Date.now() >= busy - 30) { moodNow = sad ? 'sad' : (pt.outfit._sleep ? 'sleep' : ''); draw(); } }, ms); };
+    const sayIv = setInterval(() => { if (!stage.isConnected) { clearInterval(sayIv); return; } if (Date.now() < busy) return; const L = st === 0 ? PET_SAY.egg : moodNow === 'sleep' ? PET_SAY.sleep : sad ? PET_SAY.sad : PET_SAY.happy; say(L[Math.floor(Math.random() * L.length)]); }, 6500);
+    setTimeout(() => say(st === 0 ? 'Тук-тук…' : sad ? 'Наконец-то ты тут 🥺' : 'Привет! 💕'), 500);
+    const xpGive = (n, why) => { pt.xp += n; sb.from('chat_pets').update({ xp: pt.xp, last_pat: pt.last_pat, outfit: pt.outfit }).eq('chat_id', c.chat_id).then(() => {}); bar.style.width = Math.min(100, nx ? (pt.xp - PET_LV[st]) / (nx - PET_LV[st]) * 100 : 100) + '%'; xpT.textContent = ['Яйцо', 'Малыш', 'Подросток', 'Взрослый'][st] + ' · уровень ' + (st + 1) + ' · ' + pt.xp + ' XP'; toast(why + ' (+' + n + ' XP)'); };
+    const hearts = (x, y, list) => { for (let i = 0; i < 7; i++) { const h = el('span', { class: 'petheart', style: `left:${x}px;top:${y}px;--dx:${Math.round(Math.random() * 110 - 55)}px;animation-delay:${i * .07}s` }, list[i % list.length]); document.body.append(h); setTimeout(() => h.remove(), 1300); } };
+    chr.onclick = e => { if (st === 0) { chr.classList.remove('wob'); void chr.offsetWidth; chr.classList.add('wob'); hap([5, 20, 5]); say('Тук-тук! Пишите — и я вылуплюсь 🐣'); return; }
+      if (moodNow === 'sleep') { say('Ммм… дай поспать 😴'); return; }
+      hap(8); tmp('happy', 1400, 'jump'); hearts(e.clientX, e.clientY, ['💗', '💖', '✨']); say(['Мур! 💕', 'Ещё-ещё!', 'Обожаю тебя 🥰', 'Хи-хи 😆'][Math.floor(Math.random() * 4)]);
+      if (!pt.last_pat || Date.now() - new Date(pt.last_pat) > 36e5) { pt.last_pat = new Date().toISOString(); xpGive(3, '💗 ' + pt.name + ' доволен'); } };
+    const bar = el('i', { style: `width:${Math.min(100, nx ? (pt.xp - PET_LV[st]) / (nx - PET_LV[st]) * 100 : 100)}%` }), xpT = el('div', { class: 'hint', style: 'text-align:center' }, ['Яйцо', 'Малыш', 'Подросток', 'Взрослый'][st] + ' · уровень ' + (st + 1) + ' · ' + pt.xp + ' XP');
+    const feed = () => { if (st === 0) { toast('🥚 Яйцо пока не ест'); return; } if (moodNow === 'sleep') { toast('😴 Спит. Разбуди сначала'); return; }
+      sheet((s2, close2) => { const g = el('div', { class: 'pw-grid' }); PET_FOOD.forEach(([f, n]) => g.append(el('button', { onclick: () => { close2(); const r = chr.getBoundingClientRect(); const fl = el('span', { class: 'pfood', style: `left:${r.left + r.width / 2}px;top:${r.top + r.height * .45}px` }, f); document.body.append(fl); setTimeout(() => fl.remove(), 900); setTimeout(() => { tmp('eat', 1600, 'nom'); hap([6, 40, 6, 40, 6]); say(['Ням-ням! 😋', 'Вкуснятина!', 'Ещё хочу 🥺'][Math.floor(Math.random() * 3)]); const fd = pt.outfit._fed || 0; if (Date.now() - fd > 3 * 36e5) { pt.outfit = { ...pt.outfit, _fed: Date.now() }; xpGive(2, '😋 Накормлен'); } }, 700); } }, el('i', {}, f), el('small', {}, n)))); s2.append(el('h3', {}, '🍽 Чем покормить?'), g, el('div', { class: 'hint', style: 'margin-top:8px' }, 'Раз в 3 часа еда даёт +2 XP')); }); };
+    const play = () => { if (st === 0 || moodNow === 'sleep') { toast(st === 0 ? '🥚 Сначала пусть вылупится' : '😴 Спит'); return; } const ball = el('span', { class: 'pball' }, ['⚽', '🎾', '🏀', '🧶'][Math.floor(Math.random() * 4)]); stage.append(ball); setTimeout(() => ball.remove(), 1700); setTimeout(() => { tmp('happy', 1500, 'spin'); hap([10, 30, 10]); say(['Поймал! 🎉', 'Ещё разок!', 'Йуху! 🤸'][Math.floor(Math.random() * 3)]); }, 700); };
+    const sleepT = async () => { if (st === 0) return; const on = !pt.outfit._sleep; pt.outfit = { ...pt.outfit }; if (on) pt.outfit._sleep = 1; else delete pt.outfit._sleep; moodNow = on ? 'sleep' : (sad ? 'sad' : ''); draw(); stage.classList.toggle('dark', on); say(on ? 'Спокойной ночи 🌙' : 'Доброе утро! ☀️'); sleepB.lastChild.textContent = on ? 'Разбудить' : 'Уложить'; sleepB.firstChild.textContent = on ? '☀️' : '🌙'; await sb.from('chat_pets').update({ outfit: pt.outfit }).eq('chat_id', c.chat_id); petFab(c); };
+    const sleepB = el('button', { onclick: sleepT }, el('i', {}, pt.outfit._sleep ? '☀️' : '🌙'), el('small', {}, pt.outfit._sleep ? 'Разбудить' : 'Уложить'));
+    const acts = el('div', { class: 'pacts' }, el('button', { onclick: feed }, el('i', {}, '🍽'), el('small', {}, 'Покормить')), el('button', { onclick: play }, el('i', {}, '⚽'), el('small', {}, 'Поиграть')), sleepB, el('button', { onclick: e => chr.onclick(e) }, el('i', {}, '💗'), el('small', {}, 'Погладить')));
     let tab = 'hat'; const tabs = el('div', { class: 'pw-tabs' }), grid = el('div', { class: 'pw-grid' });
-    const drawW = () => { tabs.innerHTML = ''; [['hat', '🎩 Голова'], ['eyes', '🕶️ Очки'], ['neck', '🧣 Шея'], ['hand', '🎈 В лапки']].forEach(([k, l]) => tabs.append(el('button', { class: tab === k ? 'on' : '', onclick: () => { tab = k; drawW(); } }, l)));
-      grid.innerHTML = ''; grid.append(el('button', { class: !pt.outfit[tab] ? 'on' : '', onclick: () => wear(null) }, el('i', {}, '🚫'), el('small', {}, 'Снять')));
+    const TABS = [['hat', '🎩 Голова'], ['eyes', '🕶️ Очки'], ['neck', '🧣 Шея'], ['hand', '🎈 В лапки'], ['back', '🎒 Спина'], ['scene', '🏞 Место']];
+    const drawW = () => { tabs.innerHTML = ''; TABS.forEach(([k, l]) => tabs.append(el('button', { class: tab === k ? 'on' : '', onclick: () => { tab = k; drawW(); } }, l)));
+      grid.innerHTML = '';
+      if (tab === 'scene') { PET_SCENES.forEach(([k, n, lv]) => { const lock = st < lv; const b = el('button', { class: 'psc' + ((pt.outfit.scene || 'room') === k ? ' on' : '') + (lock ? ' lk' : ''), onclick: () => lock ? toast('🔒 Откроется на стадии «' + ['Яйцо', 'Малыш', 'Подросток', 'Взрослый'][lv] + '»') : wear(k) }); b.innerHTML = `<span class="psc-p sc-${k}"></span><small>${lock ? '🔒 ур. ' + (lv + 1) : n}</small>`; grid.append(b); }); return; }
+      grid.append(el('button', { class: !pt.outfit[tab] ? 'on' : '', onclick: () => wear(null) }, el('i', {}, '🚫'), el('small', {}, 'Снять')));
       PET_WEAR[tab].forEach(([e, n, lv]) => { const lock = st < lv; grid.append(el('button', { class: (pt.outfit[tab] === e ? 'on' : '') + (lock ? ' lk' : ''), onclick: () => lock ? toast('🔒 Откроется на стадии «' + ['Яйцо', 'Малыш', 'Подросток', 'Взрослый'][lv] + '»') : wear(e) }, el('i', {}, e), el('small', {}, lock ? '🔒 ур. ' + (lv + 1) : n))); }); };
-    const wear = async e => { if (st === 0) { toast('🥚 Сначала пусть вылупится'); return; } const o = { ...pt.outfit }; if (e) o[tab] = e; else delete o[tab]; pt.outfit = o; hap(6); moodNow = 'happy'; draw(); stage.classList.remove('jump'); void stage.offsetWidth; stage.classList.add('jump'); setTimeout(() => { moodNow = sad ? 'sad' : ''; draw(); }, 1200); drawW(); const { error } = await sb.from('chat_pets').update({ outfit: o }).eq('chat_id', c.chat_id); if (error) toast('Не сохранилось'); else petFab(c); };
+    const wear = async e => { if (st === 0) { toast('🥚 Сначала пусть вылупится'); return; } const o = { ...pt.outfit }; if (e) o[tab] = e; else delete o[tab]; pt.outfit = o; hap(6); if (tab === 'scene') setScene(); else { tmp('happy', 1200, 'spin'); say(['Мне идёт? 😍', 'Красота! ✨', 'Я модный 😎'][Math.floor(Math.random() * 3)]); } drawW(); const { error } = await sb.from('chat_pets').update({ outfit: o }).eq('chat_id', c.chat_id); if (error) toast('Не сохранилось'); else petFab(c); };
     drawW();
-    s.append(stage, el('h3', { style: 'text-align:center;margin:2px 0 0' }, pt.name), el('div', { class: 'hint', style: 'text-align:center' }, ['Яйцо', 'Малыш', 'Подросток', 'Взрослый'][st] + ' · уровень ' + (st + 1) + ' · ' + pt.xp + ' XP'), el('div', { class: 'pet-lv' }, bar),
-      el('div', { class: 'hint', style: 'text-align:center' }, nx ? 'До следующей стадии: ' + (nx - pt.xp) + ' сообщений' : '🏆 Максимальная стадия!'), el('div', { style: 'text-align:center;margin:6px 0 10px;font-weight:700' }, MOOD),
+    s.append(stage, el('h3', { style: 'text-align:center;margin:4px 0 0' }, pt.name), xpT, el('div', { class: 'pet-lv' }, bar),
+      el('div', { class: 'hint', style: 'text-align:center' }, nx ? 'До следующей стадии: ' + (nx - pt.xp) + ' XP' : '🏆 Максимальная стадия!'), el('div', { style: 'text-align:center;margin:6px 0 10px;font-weight:700' }, MOOD), acts,
       el('div', { class: 'ach-h' }, '👗 Гардероб'), tabs, grid,
-      el('div', { class: 'hint', style: 'text-align:center;margin-top:8px' }, 'Тапни на питомца, чтобы погладить 💗 (раз в час +3 XP)'),
-      el('button', { class: 'btn ghost', style: 'margin-top:8px', onclick: async () => { const n = await vDialog({ input: true, title: 'Новое имя', value: pt.name }); if (!n || !n.trim()) return; await sb.from('chat_pets').update({ name: n.trim().slice(0, 20) }).eq('chat_id', c.chat_id); close(); toast('✏️ Теперь его зовут ' + n.trim()); petFab(c); } }, '✏️ Переименовать'));
+      el('button', { class: 'btn ghost', style: 'margin-top:10px', onclick: async () => { const n = await vDialog({ input: true, title: 'Новое имя', value: pt.name }); if (!n || !n.trim()) return; await sb.from('chat_pets').update({ name: n.trim().slice(0, 20) }).eq('chat_id', c.chat_id); close(); toast('✏️ Теперь его зовут ' + n.trim()); petFab(c); } }, '✏️ Переименовать'));
   });
 }
 /* photo filters */
