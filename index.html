@@ -1916,7 +1916,7 @@ html:not(.tb-labels) .tabbar button:not(.on) svg{transform:translateY(1px)}
 ::view-transition-old(root),::view-transition-new(root){animation:none;mix-blend-mode:normal}
 ::view-transition-new(root){animation:vtReveal .65s cubic-bezier(.4,0,.2,1)}
 @keyframes vtReveal{from{clip-path:circle(0 at var(--vx,50%) var(--vy,50%))}to{clip-path:circle(150vmax at var(--vx,50%) var(--vy,50%))}}
-.cmdk{position:fixed;inset:0;z-index:92;background:#05030ccc;backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);display:flex;flex-direction:column;padding:calc(14px + var(--safe-t)) 14px 14px;animation:fade .18s}
+.cmdk{position:fixed;inset:0;z-index:92;background:#07060df2;backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);display:flex;flex-direction:column;padding:calc(14px + var(--safe-t)) 14px 14px;animation:fade .18s}
 .cmdk .in{display:flex;align-items:center;gap:10px;background:#ffffff14;border:1px solid #ffffff22;border-radius:18px;padding:4px 6px 4px 14px;animation:cmdIn .3s cubic-bezier(.2,1.3,.4,1)}
 @keyframes cmdIn{from{transform:translateY(-30px) scale(.96);opacity:0}}
 .cmdk .in input{flex:1;background:none;border:none;outline:none;color:var(--text);font-size:17px;padding:12px 0}
@@ -2128,6 +2128,36 @@ html.glass .fab,html.glass #newBtn{border:1px solid rgba(255,255,255,.3);box-sha
 html.glass #mplayer{border-radius:26px!important;background:var(--gl-bg)!important;border:1px solid var(--gl-bd)!important;box-shadow:var(--gl-hi),var(--gl-sh)!important;backdrop-filter:var(--gl-blur);-webkit-backdrop-filter:var(--gl-blur)}
 html.glass .island{background:var(--gl-bg)!important;border:1px solid var(--gl-bd)!important;box-shadow:var(--gl-hi),var(--gl-sh)!important;backdrop-filter:var(--gl-blur);-webkit-backdrop-filter:var(--gl-blur)}
 html.glass.lite .sheet{background:#1a1630!important}html.glass.lite.light .sheet{background:#fff!important}
+
+/* ===== 2.31 home 2.0 ===== */
+html.home2 #bigTitle{display:none!important}
+html.home2:not(.srch) #tabChats>.search{display:none}
+html.srch #tabChats>.search{display:block!important}
+html.home2 .stories{padding-top:6px!important}
+html.home2 .chips-row{padding-top:2px;padding-bottom:10px}
+html.home2 .hub{padding:0 12px 8px!important;gap:8px!important}
+html.home2 .hc{width:118px!important;height:78px!important;padding:9px 11px!important;border-radius:20px!important}
+html.home2 .hc.ai{width:132px!important}
+html.home2 .hc .hh{font-size:12.5px!important;gap:5px}
+html.home2 .hc .hh small{display:none}
+html.home2 .hc .hh img{width:18px;height:18px}
+html.home2 .hc .sug,html.home2 .hc .ask{display:none!important}
+html.home2 .hc.ai .hb::before{content:'Спросить что угодно';font-size:11px;opacity:.75}
+html.home2 .hc .big{font-size:20px!important}
+html.home2 .hc .sub{font-size:10.5px!important}
+html.home2 .hc .stack .av{width:20px!important;height:20px!important;font-size:8px!important;margin-left:-5px}
+html.home2 .hc .stack{margin-bottom:2px}
+html.home2 .hc .fr~.fr{display:none}
+html.home2 .hc .fr{font-size:11.5px}
+html.home2 .hc .fr .av{width:18px!important;height:18px!important;font-size:8px!important}
+html.home2 .hc.ed{width:auto!important;padding:0 14px!important;font-size:11.5px}
+html.home2 .hc .glow{width:70px;height:70px}
+html.home2 #chatList .row.pinr{background:linear-gradient(135deg,color-mix(in srgb,var(--accent) 12%,transparent),transparent)!important}
+html.home2 .pin-div{height:1px;margin:8px 22px;background:linear-gradient(90deg,transparent,var(--gl-bd,#ffffff22),transparent)}
+html.home2 #chatList{padding-bottom:calc(150px + var(--safe-b))!important}
+html.home2 .fab{width:56px!important;height:56px!important;border-radius:20px!important;right:18px!important}
+html.home2 #chatList .row{padding-top:10px;padding-bottom:10px}
+html.light .cmdk{background:#f5f3fcf5}
 </style>
 </head>
 <body>
@@ -2474,11 +2504,14 @@ function renderChats() {
   if (!introDone) { box.classList.add('intro'); introDone = true; setTimeout(() => box.classList.remove('intro'), 1500); }
   box.append(el('div', { class: 'ptr', id: 'ptr' }, el('div', { class: 'lm' }, 'V')));
   const homeAll = !q && curFolder === 'all';
-  if (homeAll) { box.append(homeHub()); const pins = list.filter(c => c.pinned); if (pins.length) box.append(el('div', { class: 'sec-h2' }, '📌 Закреплённые'), pinTiles(pins)); box.append(el('div', { class: 'sec-h2' }, '💬 Чаты', (() => { const n = list.filter(c => Number(c.unread || 0) && !c.muted).length; return n ? el('b', {}, n + ' с новыми') : null; })())); }
+  if (homeAll) { if (settings.homeV === 'old') { box.append(homeHub()); const pins = list.filter(c => c.pinned); if (pins.length) box.append(el('div', { class: 'sec-h2' }, '📌 Закреплённые'), pinTiles(pins)); box.append(el('div', { class: 'sec-h2' }, '💬 Чаты', (() => { const n = list.filter(c => Number(c.unread || 0) && !c.muted).length; return n ? el('b', {}, n + ' с новыми') : null; })())); } else if (!settings.hubOff) box.append(homeHub()); }
   const hasPin = !homeAll && !q && list.some(c => c.pinned) && list.some(c => !c.pinned);
-  let ri = 0, secPin = false, secRest = false;
-  for (const c of list) {
-    if (homeAll && c.pinned) continue;
+  let ri = 0, secPin = false, secRest = false, pinSeen = false;
+  const ordered = homeAll && settings.homeV !== 'old' ? [...list.filter(c => c.pinned), ...list.filter(c => !c.pinned)] : list;
+  for (const c of ordered) {
+    if (homeAll && c.pinned && settings.homeV === 'old') continue;
+    if (homeAll && settings.homeV !== 'old' && !c.pinned && pinSeen) { pinSeen = false; box.append(el('div', { class: 'pin-div' })); }
+    if (homeAll && settings.homeV !== 'old' && c.pinned) pinSeen = true;
     if (hasPin && c.pinned && !secPin) { secPin = true; box.append(el('div', { class: 'sec-h' }, '📌 Закреплённые')); }
     if (hasPin && !c.pinned && !secRest) { secRest = true; box.append(el('div', { class: 'sec-h' }, '💬 Все чаты')); }
     const peer = c.peer_id ? profiles.get(c.peer_id) : null;
@@ -2487,7 +2520,7 @@ function renderChats() {
     const dr = c.chat_id !== current?.chat_id && getDraft(c.chat_id), tp = typingMap.get(c.chat_id);
     if (c.last_kind === 'system') prev = (c.last_sender === me.id ? 'Ты ' : (profiles.get(c.last_sender)?.display_name || '') + ' ') + (c.last_body || '');
     else { const who = c.last_sender === me.id && hasLast ? 'Ты: ' : c.is_group && !c.is_channel && c.last_sender && profiles.get(c.last_sender) ? profiles.get(c.last_sender).display_name + ': ' : ''; if (hasLast) prev = [who, ...kindPrev(c)]; else prev = who + prev; }
-    const rowEl = longPress(el('div', { class: 'row' + (current?.chat_id === c.chat_id ? ' active' : '') + (Number(c.unread || 0) && !c.muted ? ' unr' : '') + (/^🤖/.test(c.title || '') || (!c.is_group && isBotId(c.peer_id)) ? ' airow' : ''), style: '--i:' + (ri++), onclick: () => openChat(c.chat_id) },
+    const rowEl = longPress(el('div', { class: 'row' + (c.pinned ? ' pinr' : '') + (current?.chat_id === c.chat_id ? ' active' : '') + (Number(c.unread || 0) && !c.muted ? ' unr' : '') + (/^🤖/.test(c.title || '') || (!c.is_group && isBotId(c.peer_id)) ? ' airow' : ''), style: '--i:' + (ri++), onclick: () => openChat(c.chat_id) },
       c.saved ? savedAv(52) : frm(!c.is_group && peer, avatar(c.title, c.avatar_url, 52, !c.is_group && isOnline(peer))),
       el('div', { class: 'meta' },
         el('div', { class: 'l1' }, el('div', { class: 'name' }, !c.is_group ? ngn(peer, c.title || 'Без названия') : (/^\p{Extended_Pictographic}/u.test(c.title || '') ? '' : c.is_channel ? '📢 ' : '👥 ') + (c.title || 'Без названия'), !c.is_group ? decor(peer) : null, !c.is_group && isBday(peer) ? el('span', { class: 'bday-ic' }, '🎂') : null, streakEl(c), c.muted ? el('span', { class: 'mute-ic' }, '🔕') : null, c.pinned ? el('span', { class: 'pin-ic' }, '📌') : null, c.ttl_seconds ? el('span', { class: 'pin-ic' }, '⏱') : null), el('div', { class: 'time' }, shortTime(c.last_at))),
@@ -3126,7 +3159,7 @@ async function openGroupInfo(c) {
 
 
 /* ================= SETTINGS & UPDATES ================= */
-const APP_VERSION = '2.30.0';
+const APP_VERSION = '2.31.0';
 const TK1 = (() => { const t = document.createElement('template'); t.innerHTML = '<svg viewBox="0 0 16 11" width="15" height="11"><path d="M1.5 6l3 3 6.5-7.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>'; return t.content; })();
 const TK2 = (() => { const t = document.createElement('template'); t.innerHTML = '<svg viewBox="0 0 20 11" width="18" height="11"><path d="M1.5 6l3 3 6.5-7.5M8 8.5l.8.6 6.7-7.6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>'; return t.content; })();
 const APP_THEMES = {
@@ -3219,7 +3252,7 @@ function applySettings() {
   ['bub-square', 'bub-pill', 'bub-tail', 'th-dark', 'th-tint', 'th-light'].forEach(k => H.classList.remove(k));
   if (settings.bubble && settings.bubble !== 'round') H.classList.add('bub-' + settings.bubble);
   if (settings.theirs && settings.theirs !== 'glass') H.classList.add('th-' + settings.theirs);
-  H.classList.toggle('compact', !!settings.compact); H.classList.toggle('glass', settings.uiStyle !== 'classic'); H.classList.toggle('appbg', !!settings.appBg); H.classList.toggle('hc', !!settings.hiContrast); H.classList.toggle('rm', !!settings.reduceMotion); H.classList.toggle('onehand', !!settings.oneHand); H.classList.toggle('tb-labels', !!settings.tbLabels); H.classList.toggle('lite', settings.lite === 'on' || (settings.lite !== 'off' && ((navigator.hardwareConcurrency || 8) <= 4 || (navigator.deviceMemory || 8) <= 3)));
+  H.classList.toggle('compact', !!settings.compact); H.classList.toggle('glass', settings.uiStyle !== 'classic'); H.classList.toggle('home2', settings.homeV !== 'old'); H.classList.toggle('appbg', !!settings.appBg); H.classList.toggle('hc', !!settings.hiContrast); H.classList.toggle('rm', !!settings.reduceMotion); H.classList.toggle('onehand', !!settings.oneHand); H.classList.toggle('tb-labels', !!settings.tbLabels); H.classList.toggle('lite', settings.lite === 'on' || (settings.lite !== 'off' && ((navigator.hardwareConcurrency || 8) <= 4 || (navigator.deviceMemory || 8) <= 3)));
   const F = FONTS[settings.font] || FONTS.manrope; r.setProperty('--font', F.css);
   if (F.url && !document.querySelector(`link[data-font="${settings.font}"]`)) document.head.append(el('link', { rel: 'stylesheet', href: F.url, 'data-font': settings.font }));
   if (typeof current !== 'undefined' && current) setTimeout(() => startLiveWall(), 0);
@@ -3349,6 +3382,8 @@ function buildSettings(s, close) {
         toggleRow('📏', '#64748b33', 'Компактный режим', 'Плотный список, без историй и карточек', 'compact'),
         toggleRow('🏷', '#8b5cf633', 'Подписи у всех вкладок', 'Выкл: подпись только у открытой', 'tbLabels'),
         toggleRow('🌌', '#06b6d433', 'Живой фон приложения', 'Мягкие переливы, двигаются при наклоне телефона', 'appBg'),
+        cycleRow('🏠', '#6366f133', 'Главный экран', 'homeV', { new: 'Новый', old: 'Как раньше' }),
+        toggleRow('🧩', '#f59e0b33', 'Спрятать карточки на главной', null, 'hubOff'),
         el('div', { class: 'set-row', onclick: () => hubEdit() }, el('div', { class: 'ic', style: 'background:#f59e0b33' }, '🧩'), el('div', { class: 'tx' }, el('b', {}, 'Карточки на главной'), el('small', {}, 'Погода, музыка, виксы… — выбрать и переставить')), el('div', { class: 'val' }, '›')),
         el('div', { class: 'set-row', onclick: () => cmdPalette() }, el('div', { class: 'ic', style: 'background:#22c55e33' }, '⌘'), el('div', { class: 'tx' }, el('b', {}, 'Быстрый поиск'), el('small', {}, 'Лупа 🔍 сверху — чаты, люди и действия')), el('div', { class: 'val' }, '›')),
         toggleRow('🎨', '#ec489933', 'Цвет чата под аватарку собеседника', null, 'autoTint'),
@@ -9182,6 +9217,7 @@ function cmdPalette() {
     if (q) { const pp = [...profiles.values()].filter(p => p.id !== me.id && ((p.display_name || '').toLowerCase().includes(q) || (p.username || '').toLowerCase().includes(q))).slice(0, 6); if (pp.length) { res.append(el('div', { class: 'grp' }, 'Люди')); pp.forEach(p => res.append(item(avatar(p.display_name, p.avatar_url, 40), p.display_name, '@' + (p.username || ''), () => openProfile(p.id)))); } }
     const ac = CMD_ACTIONS.filter(a => !q || a[1].toLowerCase().includes(q) || a[2].includes(q)).slice(0, q ? 8 : 18);
     if (ac.length) { res.append(el('div', { class: 'grp' }, 'Действия')); ac.forEach(a => res.append(item(a[0], a[1], null, a[3]))); }
+    if (q.length >= 2) { res.append(el('div', { class: 'grp' }, 'Сообщения')); res.append(item('💬', 'Искать «' + inp.value.trim() + '» в переписках', 'по всем чатам', () => { switchTab('Chats'); const cs = $('#chatSearch'); cs.value = inp.value.trim(); document.documentElement.classList.add('srch'); renderChats(); })); }
     if (!res.children.length) res.append(el('div', { class: 'empty' }, 'Ничего не нашлось'));
   };
   inp.oninput = draw; inp.onkeydown = e => { if (e.key === 'Enter') res.querySelector('.it')?.click(); if (e.key === 'Escape') ov.remove(); };
