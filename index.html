@@ -2071,6 +2071,63 @@ html.light .vdlg{background:#fff}html.light .vdlg .bb .no{background:#1b15300d}
 .gc-grid[data-n="2"]{grid-template-columns:1fr;grid-template-rows:1fr 1fr}.gc-grid[data-n="2"] .gc-tile{aspect-ratio:auto}
 .gc-grid[data-n="3"],.gc-grid[data-n="4"]{grid-template-columns:1fr 1fr}
 .gc-grid[data-n="5"],.gc-grid[data-n="6"],.gc-grid[data-n="7"],.gc-grid[data-n="8"]{grid-template-columns:1fr 1fr;gap:6px}.gc-grid[data-n="7"] .gc-tile,.gc-grid[data-n="8"] .gc-tile{aspect-ratio:4/3}
+
+/* ===== 2.30 LIQUID GLASS ===== */
+html.glass{--gl-bg:linear-gradient(135deg,rgba(255,255,255,.13),rgba(255,255,255,.035) 60%,rgba(255,255,255,.07));--gl-bd:rgba(255,255,255,.16);--gl-hi:inset 0 1px 0 rgba(255,255,255,.32),inset 0 -1px 0 rgba(255,255,255,.05),inset 1px 0 0 rgba(255,255,255,.06);--gl-sh:0 10px 34px rgba(0,0,0,.32);--gl-blur:blur(26px) saturate(190%) brightness(1.05)}
+html.glass.light{--gl-bg:linear-gradient(135deg,rgba(255,255,255,.78),rgba(255,255,255,.5) 60%,rgba(255,255,255,.62));--gl-bd:rgba(255,255,255,.9);--gl-hi:inset 0 1px 0 #fff,inset 0 -1px 0 rgba(27,21,48,.04);--gl-sh:0 10px 30px rgba(27,21,48,.1)}
+html.glass body{background:radial-gradient(120% 80% at 10% 0%,color-mix(in srgb,var(--accent) 26%,#07060d),transparent 60%),radial-gradient(90% 70% at 100% 100%,color-mix(in srgb,var(--accent3) 24%,#07060d),transparent 60%),#07060d}
+html.glass.light body{background:radial-gradient(120% 80% at 10% 0%,color-mix(in srgb,var(--accent) 22%,#f6f4ff),transparent 60%),radial-gradient(90% 70% at 100% 100%,color-mix(in srgb,var(--accent3) 18%,#fdf4fb),transparent 60%),#f5f3fc}
+html.glass:not(.lite) #appBgL{display:block}
+html.glass #appBgL i{opacity:.75}
+/* floating header capsule */
+html.glass #side>.top{margin:calc(8px + var(--safe-t)) 10px 0;left:0;right:0;border-radius:28px!important;background:var(--gl-bg),rgba(14,11,28,.45)!important;border:1px solid var(--gl-bd)!important;box-shadow:var(--gl-hi),var(--gl-sh)!important;backdrop-filter:var(--gl-blur);-webkit-backdrop-filter:var(--gl-blur);padding-top:8px!important;padding-bottom:8px!important}
+html.glass .icon-btn{border-radius:50%}
+html.glass .top .icon-btn,html.glass .ctop .icon-btn{background:rgba(255,255,255,.07);box-shadow:inset 0 1px 0 rgba(255,255,255,.18)}
+html.glass.light .top .icon-btn,html.glass.light .ctop .icon-btn{background:rgba(255,255,255,.6)}
+/* dock */
+html.glass .tabbar{border-radius:32px!important;background:var(--gl-bg),rgba(14,11,28,.62)!important;border:1px solid var(--gl-bd)!important;box-shadow:var(--gl-hi),0 14px 40px rgba(0,0,0,.4)!important;backdrop-filter:var(--gl-blur)!important;-webkit-backdrop-filter:var(--gl-blur)!important}
+html.glass .tabbar .ind{border-radius:24px!important;background:radial-gradient(120% 120% at 50% 0%,rgba(255,255,255,.34),rgba(255,255,255,.08) 60%)!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.5),inset 0 -2px 6px rgba(255,255,255,.08),0 6px 18px color-mix(in srgb,var(--accent) 45%,transparent)!important;border:1px solid rgba(255,255,255,.28)!important}
+html.glass.light .tabbar{background:var(--gl-bg),rgba(255,255,255,.55)!important}
+html.glass.light .tabbar .ind{background:radial-gradient(120% 120% at 50% 0%,#fff,rgba(255,255,255,.6))!important}
+html.glass .tabbar button.on{color:#fff}html.glass.light .tabbar button.on{color:var(--accent)}
+/* cards */
+html.glass .hub .hc{border:1px solid var(--gl-bd)!important;box-shadow:var(--gl-hi),0 6px 22px rgba(0,0,0,.22)!important}
+html.glass #chatList .row,html.glass .set-group,html.glass .mtile,html.glass .post,html.glass .shop .it,html.glass .quest,html.glass .sp-search input,html.glass .pstats div,html.glass .lv-stats div,html.glass .mu-row,html.glass .mu-pl,html.glass .cm-pv{background:var(--gl-bg)!important;border:1px solid var(--gl-bd)!important;box-shadow:var(--gl-hi),0 4px 18px rgba(0,0,0,.18)!important}
+html.glass #chatList .row{margin:6px 10px!important;border-radius:24px!important}
+html.glass #chatList .row:active{transform:scale(.985)}
+html.glass #chatList .row.on,html.glass #chatList .row.sel{background:linear-gradient(135deg,color-mix(in srgb,var(--accent) 30%,transparent),rgba(255,255,255,.05))!important}
+html.glass .set-group{border-radius:26px!important}
+html.glass .hub .hc{border-radius:26px!important}
+/* chips & search */
+html.glass .fchip{background:var(--gl-bg)!important;border:1px solid var(--gl-bd)!important;box-shadow:var(--gl-hi)!important}
+html.glass .fchip.on{background:linear-gradient(135deg,var(--accent),var(--accent3))!important;border-color:rgba(255,255,255,.3)!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.4),0 6px 18px color-mix(in srgb,var(--accent) 45%,transparent)!important;color:#fff!important}
+html.glass .search input,html.glass #chatSearch{background:var(--gl-bg)!important;border:1px solid var(--gl-bd)!important;box-shadow:var(--gl-hi)!important;border-radius:22px!important}
+/* buttons */
+html.glass .btn{position:relative;overflow:hidden;border:1px solid rgba(255,255,255,.22)!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.45),inset 0 -2px 8px rgba(0,0,0,.12),0 10px 26px color-mix(in srgb,var(--accent) 38%,transparent)!important;border-radius:20px!important}
+html.glass .btn::after{content:'';position:absolute;left:8%;right:8%;top:1px;height:45%;border-radius:20px 20px 40% 40%;background:linear-gradient(rgba(255,255,255,.28),rgba(255,255,255,0));pointer-events:none}
+html.glass .btn.ghost{background:var(--gl-bg)!important;border:1px solid var(--gl-bd)!important;box-shadow:var(--gl-hi)!important}
+html.glass .btn.ghost::after{opacity:.4}
+/* sheets & dialogs */
+html.glass .sheet{background:linear-gradient(180deg,rgba(40,34,72,.72),rgba(16,13,30,.86))!important;border:1px solid var(--gl-bd)!important;border-bottom:none!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.28),0 -20px 60px rgba(0,0,0,.45)!important;backdrop-filter:blur(30px) saturate(180%)!important;-webkit-backdrop-filter:blur(30px) saturate(180%)!important;border-radius:32px 32px 0 0!important}
+html.glass.light .sheet{background:linear-gradient(180deg,rgba(255,255,255,.86),rgba(250,248,255,.94))!important}
+html.glass .menu button{background:rgba(255,255,255,.04);margin-bottom:4px;border:1px solid rgba(255,255,255,.06)}
+html.glass.light .menu button{background:rgba(255,255,255,.6);border-color:rgba(27,21,48,.05)}
+html.glass .vdlg{background:linear-gradient(180deg,rgba(44,38,80,.82),rgba(18,15,34,.9))!important;border:1px solid var(--gl-bd)!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.3),0 30px 80px rgba(0,0,0,.6)!important;backdrop-filter:blur(30px) saturate(180%);-webkit-backdrop-filter:blur(30px) saturate(180%);border-radius:30px!important}
+html.glass.light .vdlg{background:rgba(255,255,255,.9)!important}
+html.glass .toast{background:var(--gl-bg)!important;border:1px solid var(--gl-bd)!important;box-shadow:var(--gl-hi),var(--gl-sh)!important;backdrop-filter:var(--gl-blur);-webkit-backdrop-filter:var(--gl-blur);border-radius:22px!important}
+/* chat screen */
+html.glass .ctop{border-radius:30px!important;background:var(--gl-bg)!important;border:1px solid var(--gl-bd)!important;box-shadow:var(--gl-hi),var(--gl-sh)!important}
+html.glass .composer{border-radius:30px!important;background:var(--gl-bg)!important;border:1px solid var(--gl-bd)!important;box-shadow:var(--gl-hi),0 12px 34px rgba(0,0,0,.4)!important;backdrop-filter:var(--gl-blur);-webkit-backdrop-filter:var(--gl-blur)}
+html.glass .m:not(.mine) .bub:not(.circ):not(.jumbo):not(.stk):not(.sk){background:linear-gradient(135deg,rgba(255,255,255,.14),rgba(255,255,255,.06))!important;border:1px solid rgba(255,255,255,.12);box-shadow:inset 0 1px 0 rgba(255,255,255,.2)}
+html.glass.light .m:not(.mine) .bub:not(.circ):not(.jumbo):not(.stk):not(.sk){background:rgba(255,255,255,.86)!important;border-color:#fff}
+html.glass .m.mine .bub:not(.circ):not(.jumbo):not(.stk):not(.sk){box-shadow:inset 0 1px 0 rgba(255,255,255,.35),0 6px 18px color-mix(in srgb,var(--accent) 30%,transparent)}
+html.glass .send-btn,html.glass #sendBtn{box-shadow:inset 0 1px 0 rgba(255,255,255,.45),0 6px 18px color-mix(in srgb,var(--accent) 50%,transparent)!important}
+/* misc */
+html.glass .stories .st .ring,html.glass .stories .av{box-shadow:0 6px 18px rgba(0,0,0,.35)}
+html.glass .fab,html.glass #newBtn{border:1px solid rgba(255,255,255,.3);box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 12px 30px color-mix(in srgb,var(--accent) 50%,transparent)!important}
+html.glass #mplayer{border-radius:26px!important;background:var(--gl-bg)!important;border:1px solid var(--gl-bd)!important;box-shadow:var(--gl-hi),var(--gl-sh)!important;backdrop-filter:var(--gl-blur);-webkit-backdrop-filter:var(--gl-blur)}
+html.glass .island{background:var(--gl-bg)!important;border:1px solid var(--gl-bd)!important;box-shadow:var(--gl-hi),var(--gl-sh)!important;backdrop-filter:var(--gl-blur);-webkit-backdrop-filter:var(--gl-blur)}
+html.glass.lite .sheet{background:#1a1630!important}html.glass.lite.light .sheet{background:#fff!important}
 </style>
 </head>
 <body>
@@ -3069,7 +3126,7 @@ async function openGroupInfo(c) {
 
 
 /* ================= SETTINGS & UPDATES ================= */
-const APP_VERSION = '2.29.0';
+const APP_VERSION = '2.30.0';
 const TK1 = (() => { const t = document.createElement('template'); t.innerHTML = '<svg viewBox="0 0 16 11" width="15" height="11"><path d="M1.5 6l3 3 6.5-7.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>'; return t.content; })();
 const TK2 = (() => { const t = document.createElement('template'); t.innerHTML = '<svg viewBox="0 0 20 11" width="18" height="11"><path d="M1.5 6l3 3 6.5-7.5M8 8.5l.8.6 6.7-7.6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>'; return t.content; })();
 const APP_THEMES = {
@@ -3135,7 +3192,7 @@ const FONTS = {
   mont: { name: 'Модерн', css: "'Montserrat'", url: 'https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap' },
   serif: { name: 'Книжный', css: "'Lora'", url: 'https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&display=swap' },
 };
-const DEFAULTS = { autoStt: true, ghostStories: false, ghostTyping: false, showListening: true, xfade: true, eq: 'flat', chatPattern: true, uiSounds: true, haptics: true, bigFx: true, autoTint: true, mode: 'dark', wall: 'glow', bubble: 'round', theirs: 'glass', font: 'manrope', compact: false, sndIn: 'ding', sndOut: 'pop', theme: 'violet', size: 'm', sound: true, vibro: true, enterSend: false, notify: false };
+const DEFAULTS = { uiStyle: 'glass', autoStt: true, ghostStories: false, ghostTyping: false, showListening: true, xfade: true, eq: 'flat', chatPattern: true, uiSounds: true, haptics: true, bigFx: true, autoTint: true, mode: 'dark', wall: 'glow', bubble: 'round', theirs: 'glass', font: 'manrope', compact: false, sndIn: 'ding', sndOut: 'pop', theme: 'violet', size: 'm', sound: true, vibro: true, enterSend: false, notify: false };
 let settings = { ...DEFAULTS };
 try { settings = { ...DEFAULTS, ...JSON.parse(localStorage.getItem('viks-settings') || '{}') }; } catch {}
 let lastMode = null, lastTap = { x: innerWidth / 2, y: innerHeight / 2 };
@@ -3162,7 +3219,7 @@ function applySettings() {
   ['bub-square', 'bub-pill', 'bub-tail', 'th-dark', 'th-tint', 'th-light'].forEach(k => H.classList.remove(k));
   if (settings.bubble && settings.bubble !== 'round') H.classList.add('bub-' + settings.bubble);
   if (settings.theirs && settings.theirs !== 'glass') H.classList.add('th-' + settings.theirs);
-  H.classList.toggle('compact', !!settings.compact); H.classList.toggle('appbg', !!settings.appBg); H.classList.toggle('hc', !!settings.hiContrast); H.classList.toggle('rm', !!settings.reduceMotion); H.classList.toggle('onehand', !!settings.oneHand); H.classList.toggle('tb-labels', !!settings.tbLabels); H.classList.toggle('lite', settings.lite === 'on' || (settings.lite !== 'off' && ((navigator.hardwareConcurrency || 8) <= 4 || (navigator.deviceMemory || 8) <= 3)));
+  H.classList.toggle('compact', !!settings.compact); H.classList.toggle('glass', settings.uiStyle !== 'classic'); H.classList.toggle('appbg', !!settings.appBg); H.classList.toggle('hc', !!settings.hiContrast); H.classList.toggle('rm', !!settings.reduceMotion); H.classList.toggle('onehand', !!settings.oneHand); H.classList.toggle('tb-labels', !!settings.tbLabels); H.classList.toggle('lite', settings.lite === 'on' || (settings.lite !== 'off' && ((navigator.hardwareConcurrency || 8) <= 4 || (navigator.deviceMemory || 8) <= 3)));
   const F = FONTS[settings.font] || FONTS.manrope; r.setProperty('--font', F.css);
   if (F.url && !document.querySelector(`link[data-font="${settings.font}"]`)) document.head.append(el('link', { rel: 'stylesheet', href: F.url, 'data-font': settings.font }));
   if (typeof current !== 'undefined' && current) setTimeout(() => startLiveWall(), 0);
@@ -3288,6 +3345,7 @@ function buildSettings(s, close) {
         cycleRow('💬', '#8b5cf633', 'Форма пузырей', 'bubble', { round: 'Круглые', tail: 'С хвостиком', square: 'Квадратные', pill: 'Таблетки' }),
         cycleRow('🫧', '#0ea5e933', 'Пузыри собеседника', 'theirs', { glass: 'Стекло', dark: 'Тёмные', tint: 'Цветные', light: 'Светлые' }),
         cycleRow('🔤', '#eab30833', 'Шрифт', 'font', Object.fromEntries(Object.entries(FONTS).map(([k, f]) => [k, f.name]))),
+        cycleRow('💎', '#8b5cf633', 'Стиль интерфейса', 'uiStyle', { glass: 'Liquid Glass', classic: 'Классика' }),
         toggleRow('📏', '#64748b33', 'Компактный режим', 'Плотный список, без историй и карточек', 'compact'),
         toggleRow('🏷', '#8b5cf633', 'Подписи у всех вкладок', 'Выкл: подпись только у открытой', 'tbLabels'),
         toggleRow('🌌', '#06b6d433', 'Живой фон приложения', 'Мягкие переливы, двигаются при наклоне телефона', 'appBg'),
@@ -5472,7 +5530,7 @@ function renderSettingsRoot() {
       st ? el('div', { class: 'st' }, st) : null),
     setSearch(box),
     el('div', { class: 'set-group' }, catRow('<span style="font-size:17px">🛍</span>', 'linear-gradient(135deg,#f59e0b,#f97316)', 'Магазин', (vix.bal != null ? vix.bal + ' виксов · ' : '') + 'рамки, пузыри, темы, стикеры', shopPage)),
-    el('div', { class: 'set-group' }, catRow('<span style="font-size:17px;color:#fff">✦</span>', 'linear-gradient(135deg,#f59e0b,#ec4899,#8b5cf6)', 'Viks Premium', isPremium() ? 'Активен ✅ · стикеры с эффектами' : 'Премиум-стикеры и фишки · скоро', premiumPage)),
+    el('div', { class: 'set-group' }, catRow('<span style="font-size:17px;color:#fff">✦</span>', 'linear-gradient(135deg,#f59e0b,#ec4899,#8b5cf6)', 'Viks Premium', isPremium() ? 'Активен ✅ · стикеры с эффектами' : 'Премиум-стикеры, ИИ, ×2 виксов · за виксы', premiumPage)),
     el('div', { class: 'set-group' },
       catRow(SI.user, 'linear-gradient(135deg,#3b9cff,#1d6fe0)', 'Аккаунт', 'Имя, аватарка, статус, «О себе»', () => openMyProfile()),
       catRow('<svg viewBox="0 0 24 24" fill="#fff"><path d="M6 3h12a1 1 0 0 1 1 1v17l-7-4-7 4V4a1 1 0 0 1 1-1z"/></svg>', 'linear-gradient(135deg,#38bdf8,#2563eb)', 'Избранное', 'Заметки и сохранённые сообщения', openSaved),
