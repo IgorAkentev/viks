@@ -2606,6 +2606,40 @@ html.rm .psvg *{animation:none!important}
 .pw-grid button.psc{padding:6px}
 .pet-kinds{grid-template-columns:repeat(6,1fr)!important}
 .pet-kinds button svg{width:50px;height:58px}
+
+/* pet walk + cards */
+.pet-walk{position:absolute;z-index:6;width:76px;height:90px;transition-property:left;transition-timing-function:linear;pointer-events:none}
+.pet-walk .pw-c{pointer-events:auto;cursor:pointer;width:62px;height:72px;margin:0 auto;transition:transform .25s;filter:drop-shadow(0 6px 10px #0007)}
+.pet-walk .pw-c svg{width:62px;height:72px}
+.pet-walk .pw-n{position:absolute;left:50%;bottom:-6px;transform:translateX(-50%);font-size:9.5px;font-weight:800;padding:1px 6px;border-radius:8px;background:#0008;color:#fff;white-space:nowrap;opacity:.85}
+.pet-walk.walk .pw-c svg{animation:pwWalk .32s ease-in-out infinite alternate}
+@keyframes pwWalk{from{transform:translateY(0) rotate(-4deg)}to{transform:translateY(-6px) rotate(4deg)}}
+.pet-walk.jump .pw-c svg{animation:pJump .7s cubic-bezier(.3,1.6,.5,1)}
+.pet-walk.spin .pw-c svg{animation:pSpin .8s cubic-bezier(.3,1.2,.5,1)}
+.pet-walk.sit .pw-c svg{transform:scale(1.06,.88) translateY(5px);transition:transform .3s}
+.pet-walk.wave .pw-c .parm.r{animation:pWave2 .5s ease-in-out 3!important}
+@keyframes pWave2{50%{transform:rotate(-50deg)}}
+.pet-walk.wob .pw-c svg{animation:pEgg .6s ease 2}
+.pw-say{position:absolute;bottom:100%;left:50%;transform:translateX(-50%) scale(.6);opacity:0;padding:6px 11px;border-radius:14px;background:#fff;color:#2a1f3d;font-size:12px;font-weight:800;white-space:nowrap;box-shadow:0 6px 16px #0005;pointer-events:none;transition:opacity .25s,transform .3s cubic-bezier(.2,1.5,.4,1)}
+.pw-say::after{content:'';position:absolute;left:50%;bottom:-5px;width:10px;height:10px;background:#fff;transform:translateX(-50%) rotate(45deg);border-radius:2px}
+.pw-say.on{opacity:1;transform:translateX(-50%) scale(1)}
+.petcard{width:230px;max-width:100%;border-radius:20px;overflow:hidden;cursor:pointer;background:#ffffff0a}
+.petcard .pc-st{position:relative;height:160px;display:flex;align-items:flex-end;justify-content:center;overflow:hidden}
+.petcard .pc-st .pscene{z-index:0}
+.petcard .pc-ch{position:relative;z-index:2;margin-bottom:-6px}
+.petcard .pc-ch.jump svg{animation:pcJump 1.6s cubic-bezier(.3,1.6,.5,1) infinite}
+@keyframes pcJump{0%,60%,100%{transform:none}20%{transform:translateY(-18px) scale(1.03,.97)}40%{transform:scale(1.06,.92)}}
+.petcard .pc-ch.wave .parm.r{animation:pWave2 .6s ease-in-out infinite!important}
+.petcard .pc-h{position:absolute;z-index:3;font-style:normal;font-size:22px;animation:pcH 2.4s ease-in-out infinite}
+.petcard .pc-h.a{left:22%;top:30%}.petcard .pc-h.b{right:20%;top:20%;animation-delay:.8s}.petcard .pc-h.c{right:30%;top:48%;animation-delay:1.6s;font-size:26px}
+@keyframes pcH{0%{transform:translateY(10px) scale(.4);opacity:0}30%{opacity:1;transform:translateY(0) scale(1)}100%{transform:translateY(-30px) scale(1.1);opacity:0}}
+.petcard .pc-tx{padding:9px 12px 11px;display:flex;flex-direction:column;gap:1px}
+.petcard .pc-tx b{font-size:12px;color:var(--accent2)}.petcard .pc-tx span{font-size:14.5px;font-weight:700}
+.pmsg{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;margin-bottom:12px}
+.pmsg button{display:flex;flex-direction:column;align-items:center;gap:2px;padding:9px 0;border-radius:16px;background:linear-gradient(160deg,#f472b622,#a78bfa18);border:1px solid #ffffff14}
+.pmsg button i{font-style:normal;font-size:22px}.pmsg button small{font-size:10px;font-weight:700;color:var(--muted)}
+.pw-tog{display:flex;align-items:center;justify-content:space-between;padding:12px 4px;margin-top:8px;font-weight:700}
+.pw-tog input{width:22px;height:22px;accent-color:var(--accent)}
 </style>
 </head>
 <body>
@@ -3034,6 +3068,7 @@ async function onNewMessage(m) {
   await e2eDec(m);
   if (current && m.chat_id === current.chat_id && !document.hidden) wordFx(m);
   if (m.kind === 'system' && /оформление чата/.test(m.body || '') && m.sender_id !== me.id) chatThemeFetch(m.chat_id);
+  if (petW && current && m.chat_id === current.chat_id && m.kind !== 'system') { petW.react(m.sender_id === me.id ? 'out' : 'in'); if (/^🐾pet:|^🥚/.test(m.body || '')) petGet(m.chat_id).then(pt => pt && petW && petW.refresh(pt)); }
   if (current && m.chat_id === current.chat_id && m.sender_id !== me.id && !document.hidden) { uiSound('recv'); hap(8); if (m.kind === 'sticker' && /^premium:/.test(m.media_url || '')) setTimeout(() => premFx(m.body), 250); }
   if (isBotId(m.sender_id)) aiDone(m.chat_id);
   if (current && m.chat_id === current.chat_id) { lwKick();
@@ -3080,7 +3115,7 @@ function closeChatView() {
   mediaNodes.clear(); reacts.clear();
   main.style.transform = ''; main.style.transition = ''; applyChatTheme(null); stopLiveWall();
   current = null; msgs = [];
-  if (typingCh) { sb.removeChannel(typingCh); typingCh = null; } typers.clear(); main.style.animation = '';
+  if (typingCh) { sb.removeChannel(typingCh); typingCh = null; } typers.clear(); main.style.animation = ''; if (petW) { petW.stop(); petW = null; }
   main.classList.remove('open'); main.innerHTML = '';
   main.append(el('div', { class: 'placeholder' }, el('div', {}, el('div', { class: 'logo-mark' }, 'V'), 'Выбери чат или начни новый')));
   if (me) renderChats();
@@ -3169,7 +3204,7 @@ async function openChat(chatId) {
   typingCh = sb.channel('typing-' + chatId).on('broadcast', { event: 'typing' }, ({ payload }) => {
     if (payload.uid === me.id || current?.chat_id !== chatId) return;
     const t = $('#typing'); if (!t) return;
-    typers.set(payload.uid, { name: payload.name, until: Date.now() + 3200 }); drawTyping(t, c);
+    typers.set(payload.uid, { name: payload.name, until: Date.now() + 3200 }); drawTyping(t, c); if (petW && !c.is_group && Math.random() < .4) petW.react('typing');
     if (sub.dataset.prev === undefined) sub.dataset.prev = sub.textContent;
     sub.innerHTML = ''; sub.append((c.is_group ? payload.name + ' ' : '') + 'печатает', el('span', { class: 'tdots' }, el('i'), el('i'), el('i'))); sub.classList.add('on');
     clearTimeout(typingT); typingT = setTimeout(() => { typers.clear(); if ($('#typing')) $('#typing').textContent = ''; if (sub.dataset.prev !== undefined) { sub.textContent = sub.dataset.prev; delete sub.dataset.prev; sub.classList.toggle('on', sub.textContent === 'в сети'); } }, 3000);
@@ -3250,7 +3285,7 @@ function renderMsgs(scroll) {
     const firstOfRun = !prev || prev.sender_id !== m.sender_id || new Date(prev.created_at).toDateString() !== d.toDateString();
     const sender = profiles.get(m.sender_id);
     const isCirc = !m.deleted && m.kind === 'circle';
-    const skn = !m.deleted && (m.kind || 'text') === 'text' && !m.image_url && !m.poll && !m.game && m.body && !/^(♫|🎵 listen:|📺 watch:|✦gift:|🎁|📍|👤 contact:|🛍gift:|🪙send:|📅ev:|🌙gn:|☀️gm:)/.test(m.body) && sender && sender.bubble ? ' sk sk-' + sender.bubble.slice(3) : '';
+    const skn = !m.deleted && (m.kind || 'text') === 'text' && !m.image_url && !m.poll && !m.game && m.body && !/^(♫|🎵 listen:|📺 watch:|✦gift:|🎁|📍|👤 contact:|🛍gift:|🪙send:|📅ev:|🌙gn:|☀️gm:|🐾pet:)/.test(m.body) && sender && sender.bubble ? ' sk sk-' + sender.bubble.slice(3) : '';
     const bub = el('div', { class: 'bub' + (m.deleted ? ' del' : '') + (isCirc ? ' circ' : '') + skn });
     if (current.is_group && !current.is_channel && !mine && firstOfRun) bub.append(el('div', { class: 'who', style: 'color:' + (sender?.name_color || nameColor(m.sender_id)) }, ngn(sender, sender?.display_name || '…'), decor(sender)));
     if (!m.deleted && m.fwd_from) bub.append(el('div', { class: 'fwd' }, '↪️ Переслано от ' + (profiles.get(m.fwd_from)?.display_name || '…')));
@@ -3277,6 +3312,7 @@ function renderMsgs(scroll) {
       else if (m.body && (m.kind || 'text') === 'text' && /^(🛍gift:|🪙send:)/.test(m.body)) bub.append(vixCard(m));
       else if (m.body && (m.kind || 'text') === 'text' && /^📅ev:/.test(m.body)) bub.append(evCard(m));
       else if (m.body && (m.kind || 'text') === 'text' && /^(🌙gn:|☀️gm:)/.test(m.body)) { bub.classList.add('cardb'); bub.append(gnCard(m)); }
+      else if (m.body && (m.kind || 'text') === 'text' && /^🐾pet:/.test(m.body)) { bub.classList.add('cardb'); bub.append(petCard(m)); }
       else if (m.body && (m.kind || 'text') === 'text' && /^✦gift:\d+$/.test(m.body)) { bub.classList.add('giftb'); const dd = +m.body.split(':')[1]; bub.append(el('div', { class: 'gift-card', onclick: ev => { ev.stopPropagation(); if (!mine) premGiftShow(dd); else premFx('👑', true); } }, animEmoji('🎁'), el('b', {}, 'Viks Premium в подарок!'), el('small', {}, 'на ' + dd + ' ' + plural(dd, 'день', 'дня', 'дней') + ' ✦'))); if (!mine && typeof m.id === 'number' && Date.now() - new Date(m.created_at) < 3 * 864e5) { try { if (!localStorage.getItem('viks-pg-' + m.id)) { localStorage.setItem('viks-pg-' + m.id, 1); setTimeout(() => premGiftShow(dd), 600); } } catch {} } }
       else if (m.body && (m.kind || 'text') === 'text' && GEO_RE.test(m.body)) bub.append(locEl(m.body));
       else if (m.body && (m.kind || 'text') === 'text' && /^🛰 live:/.test(m.body)) bub.append(liveLocEl(m));
@@ -3622,7 +3658,7 @@ async function openGroupInfo(c) {
 
 
 /* ================= SETTINGS & UPDATES ================= */
-const APP_VERSION = '2.38.0';
+const APP_VERSION = '2.39.0';
 const TK1 = (() => { const t = document.createElement('template'); t.innerHTML = '<svg viewBox="0 0 16 11" width="15" height="11"><path d="M1.5 6l3 3 6.5-7.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>'; return t.content; })();
 const TK2 = (() => { const t = document.createElement('template'); t.innerHTML = '<svg viewBox="0 0 20 11" width="18" height="11"><path d="M1.5 6l3 3 6.5-7.5M8 8.5l.8.6 6.7-7.6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>'; return t.content; })();
 const APP_THEMES = {
@@ -3922,7 +3958,7 @@ $('#setBtn').onclick = () => switchTab('Settings');
 let rec = null, playing = null, storiesT = null;
 const mediaNodes = new Map();
 const fmtDur = s => { s = Math.max(0, Math.round(s || 0)); return Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0'); };
-const msgLabel = m => (m.kind || 'text') === 'text' && /^🌙gn:/.test(m.body || '') ? '🌙 Спокойной ночи' : (m.kind || 'text') === 'text' && /^☀️gm:/.test(m.body || '') ? '☀️ Доброе утро' : (m.kind || 'text') === 'text' && /^📅ev:/.test(m.body || '') ? '📅 Событие' : (m.kind || 'text') === 'text' && /^🛍gift:/.test(m.body || '') ? '🎁 Подарок из магазина' : (m.kind || 'text') === 'text' && /^🪙send:/.test(m.body || '') ? '🪙 Перевод виксов' : (m.kind || 'text') === 'text' && /^♫pl:/.test(m.body || '') ? '📚 Плейлист' : (m.kind || 'text') === 'text' && /^♫au:/.test(m.body || '') ? '🎵 ' + (muParse(m.body).title || 'Трек') : (m.kind || 'text') === 'text' && /^✦gift:\d+$/.test(m.body || '') ? '🎁 Viks Premium в подарок' : (m.kind || 'text') === 'text' && /^🎵 listen:/.test(m.body || '') ? '🎵 ' + (m.body.split('|')[1] || 'Трек') : (m.kind || 'text') === 'text' && /^📺 watch:/.test(m.body || '') ? '📺 Совместный просмотр' : m.kind === 'sea' ? '🚢 Морской бой' : m.kind === 'rps' ? '✊ Камень-ножницы-бумага' : (m.kind || 'text') === 'text' && m.body && /^e2e:/.test(m.body) ? '🔐 Зашифрованное сообщение' : (m.kind || 'text') === 'text' && m.body && /^🛰 live:/.test(m.body) ? '🛰 Делится местом' : (m.kind || 'text') === 'text' && m.body && /^📍 geo:/.test(m.body) ? '📍 Геолокация' : m.kind === 'voice' ? '🎤 Голосовое' : m.kind === 'circle' ? '⭕ Кружок' : m.kind === 'video' ? '🎬 ' + (m.body || 'Видео') : m.kind === 'file' ? '📎 ' + (m.file_name || 'Файл') : m.kind === 'sticker' ? (m.body || 'Стикер') : m.kind === 'call' ? '📞 ' + (m.body || 'Звонок') : m.kind === 'poll' ? '📊 ' + (m.body || 'Опрос') : m.kind === 'game' ? (m.body || '🎲') + ' Игра' : m.kind === 'ttt' ? '❌⭕ Крестики-нолики' : m.kind === 'system' ? '⏱ ' + (m.body || '') : m.image_url ? '📷 ' + (m.body || 'Фото') : (m.body || '');
+const msgLabel = m => (m.kind || 'text') === 'text' && /^🐾pet:/.test(m.body || '') ? '🐾 ' + ((PET_MSG[(m.body || '').slice(5).trim()] || [])[1] || 'Питомец') : (m.kind || 'text') === 'text' && /^🌙gn:/.test(m.body || '') ? '🌙 Спокойной ночи' : (m.kind || 'text') === 'text' && /^☀️gm:/.test(m.body || '') ? '☀️ Доброе утро' : (m.kind || 'text') === 'text' && /^📅ev:/.test(m.body || '') ? '📅 Событие' : (m.kind || 'text') === 'text' && /^🛍gift:/.test(m.body || '') ? '🎁 Подарок из магазина' : (m.kind || 'text') === 'text' && /^🪙send:/.test(m.body || '') ? '🪙 Перевод виксов' : (m.kind || 'text') === 'text' && /^♫pl:/.test(m.body || '') ? '📚 Плейлист' : (m.kind || 'text') === 'text' && /^♫au:/.test(m.body || '') ? '🎵 ' + (muParse(m.body).title || 'Трек') : (m.kind || 'text') === 'text' && /^✦gift:\d+$/.test(m.body || '') ? '🎁 Viks Premium в подарок' : (m.kind || 'text') === 'text' && /^🎵 listen:/.test(m.body || '') ? '🎵 ' + (m.body.split('|')[1] || 'Трек') : (m.kind || 'text') === 'text' && /^📺 watch:/.test(m.body || '') ? '📺 Совместный просмотр' : m.kind === 'sea' ? '🚢 Морской бой' : m.kind === 'rps' ? '✊ Камень-ножницы-бумага' : (m.kind || 'text') === 'text' && m.body && /^e2e:/.test(m.body) ? '🔐 Зашифрованное сообщение' : (m.kind || 'text') === 'text' && m.body && /^🛰 live:/.test(m.body) ? '🛰 Делится местом' : (m.kind || 'text') === 'text' && m.body && /^📍 geo:/.test(m.body) ? '📍 Геолокация' : m.kind === 'voice' ? '🎤 Голосовое' : m.kind === 'circle' ? '⭕ Кружок' : m.kind === 'video' ? '🎬 ' + (m.body || 'Видео') : m.kind === 'file' ? '📎 ' + (m.file_name || 'Файл') : m.kind === 'sticker' ? (m.body || 'Стикер') : m.kind === 'call' ? '📞 ' + (m.body || 'Звонок') : m.kind === 'poll' ? '📊 ' + (m.body || 'Опрос') : m.kind === 'game' ? (m.body || '🎲') + ' Игра' : m.kind === 'ttt' ? '❌⭕ Крестики-нолики' : m.kind === 'system' ? '⏱ ' + (m.body || '') : m.image_url ? '📷 ' + (m.body || 'Фото') : (m.body || '');
 const EXT = { 'audio/webm': 'webm', 'audio/mp4': 'm4a', 'audio/ogg': 'ogg', 'audio/mpeg': 'mp3', 'video/webm': 'webm', 'video/mp4': 'mp4', 'video/quicktime': 'mov', 'image/jpeg': 'jpg' };
 function nameColor(id) { let h = 0; for (const ch of String(id)) h = (h * 31 + ch.charCodeAt(0)) >>> 0; return ['#ff8a80', '#ffb74d', '#ffd54f', '#81c784', '#4dd0e1', '#82a8ff', '#b39dff', '#f48fb1'][h % 8]; }
 function syncComposer() {
@@ -4791,7 +4827,8 @@ function applyChatTheme(chatId) {
 async function chatThemeShare(chatId, t) {
   const { error } = await sb.rpc('set_chat_theme', { c: chatId, t });
   if (error) { toast(/admin/.test(error.message) ? 'Тема поменялась только у тебя — в группе её меняют админы' : 'Тема поменялась только у тебя'); return; }
-  sb.from('messages').insert({ chat_id: chatId, sender_id: me.id, kind: 'system', body: t ? 'изменил(а) оформление чата 🎨' : 'сбросил(а) оформление чата' }).then(() => {});
+  let last = 0; try { last = +localStorage.getItem('viks-thm-' + chatId) || 0; localStorage.setItem('viks-thm-' + chatId, Date.now()); } catch {}
+  if (Date.now() - last > 10 * 60e3) sb.from('messages').insert({ chat_id: chatId, sender_id: me.id, kind: 'system', body: t ? 'изменил(а) оформление чата 🎨' : 'сбросил(а) оформление чата' }).then(() => {});
 }
 async function chatThemeFetch(chatId) {
   const { data } = await sb.from('chats').select('theme').eq('id', chatId).maybeSingle(); if (!data) return;
@@ -10129,7 +10166,8 @@ async function gnSend(k) {
 const PETS = { cat: ['🥚', '🐱', '😺', '🦁'], dog: ['🥚', '🐶', '🐕', '🐺'], bunny: ['🥚', '🐰', '🐇', '🦄'], chick: ['🥚', '🐣', '🐥', '🦚'], bear: ['🥚', '🐻', '🧸', '🐼'], dragon: ['🥚', '🦎', '🐲', '🐉'] };
 const PET_LV = [0, 20, 150, 500];
 const petStage = xp => xp >= 500 ? 3 : xp >= 150 ? 2 : xp >= 20 ? 1 : 0;
-async function petGet(chatId) { const { data } = await sb.from('chat_pets').select('*').eq('chat_id', chatId).maybeSingle(); return data; }
+const petCache = new Map();
+async function petGet(chatId) { const { data } = await sb.from('chat_pets').select('*').eq('chat_id', chatId).maybeSingle(); if (data) petCache.set(chatId, data); else petCache.delete(chatId); return data; }
 const PET_COL = { cat: ['#f6a75b', '#ffe3c2', '#e07f2f'], dog: ['#d9a066', '#f7e2c4', '#8a5a33'], bunny: ['#f4eef8', '#ffd1e3', '#d8cde3'], chick: ['#ffd54a', '#fff1a8', '#f0a500'], bear: ['#a0714f', '#e9c9a7', '#6d4a32'], dragon: ['#6fcf7f', '#d7f7c8', '#3f9e58'],
   fox: ['#f28c38', '#fff4e8', '#c4621a'], panda: ['#f7f7f7', '#ffffff', '#26262b'], penguin: ['#33415c', '#ffffff', '#1d2638'], unicorn: ['#fbf6ff', '#ffe4f3', '#e3d4f5'], frog: ['#7ed957', '#e3ffc9', '#4fa83a'], hamster: ['#f2c38b', '#fff3e2', '#c98f52'] };
 const PET_NAMES = { cat: 'Котик', dog: 'Пёсик', bunny: 'Зайка', chick: 'Цыпа', bear: 'Мишка', dragon: 'Дракоша', fox: 'Лисёнок', panda: 'Панда', penguin: 'Пингвин', unicorn: 'Единорог', frog: 'Лягушонок', hamster: 'Хомяк' };
@@ -10192,10 +10230,52 @@ function petScene(key) {
   return `<div class="pscene sc-${key}">` + d.map((e, i) => `<i class="pd pd${i}">${e}</i>`).join('') + (key === 'winter' ? '<b class="psnow"></b>' : '') + '</div>';
 }
 async function petGet2(chatId) { return petGet(chatId); }
+/* walking pet in chat */
+let petW = null;
 async function petFab(c) {
-  main.querySelector('.pet-fab')?.remove(); if (!c || c.is_group || c.saved) return; const pt = await petGet(c.chat_id); if (!pt || !current || current.chat_id !== c.chat_id) return;
-  const sad = Date.now() - new Date(pt.last_msg) > 864e5, head = main.querySelector('.ctop'); const top = head ? head.getBoundingClientRect().bottom - main.getBoundingClientRect().top + 60 : 120;
-  const f = el('div', { class: 'pet-fab' + (sad ? ' sad' : ''), style: 'top:' + top + 'px', title: pt.name, onclick: () => petSheet() }); f.innerHTML = petSvg(pt.kind, petStage(pt.xp), sad ? 'sad' : '', pt.outfit, 50); main.append(f);
+  if (petW) { petW.stop(); petW = null; } main.querySelector('.pet-fab')?.remove(); main.querySelector('.pet-walk')?.remove();
+  if (!c || c.is_group || c.saved || settings.petWalk === false) return; const pt = await petGet(c.chat_id); if (!pt || !current || current.chat_id !== c.chat_id) return;
+  const st = petStage(pt.xp), sad = Date.now() - new Date(pt.last_msg) > 864e5, slp = !!(pt.outfit || {})._sleep;
+  const box = el('div', { class: 'pet-walk' }), chr = el('div', { class: 'pw-c' }), say = el('div', { class: 'pw-say' }), name = el('div', { class: 'pw-n' }, pt.name);
+  box.append(say, chr, name); main.append(box);
+  let x = 30 + Math.random() * 120, dir = 1, mood = sad ? 'sad' : slp ? 'sleep' : '', alive = true, busyT = 0, T = null;
+  const draw = m => { chr.innerHTML = petSvg(pt.kind, st, m != null ? m : mood, pt.outfit, 62); };
+  const W = () => (main.clientWidth || innerWidth) - 90;
+  const pos = () => { const comp = main.querySelector('.composer:not(.hidden)') || main.querySelector('.rec-bar') || main.querySelector('.composer'); const mt = main.getBoundingClientRect().top; const top = comp ? comp.getBoundingClientRect().top - mt : main.clientHeight - 80; box.style.top = (top - 86) + 'px'; };
+  const place = (dur) => { box.style.transitionDuration = (dur || 0) + 'ms'; box.style.left = x + 'px'; chr.style.transform = `scaleX(${dir})`; };
+  const speak = (t, ms = 2600) => { say.textContent = t; say.classList.remove('on'); void say.offsetWidth; say.classList.add('on'); clearTimeout(say._t); say._t = setTimeout(() => say.classList.remove('on'), ms); };
+  const act = (cls, ms, m) => { busyT = Date.now() + ms; if (m != null) draw(m); box.classList.remove('jump', 'spin', 'wave', 'sit', 'walk'); void box.offsetWidth; box.classList.add(cls); setTimeout(() => { box.classList.remove(cls); if (m != null) draw(); }, ms); };
+  const brain = () => { if (!alive) return; if (!box.isConnected) { stop(); return; } pos();
+    if (Date.now() < busyT) { T = setTimeout(brain, 600); return; }
+    if (st === 0) { act('wob', 1200); T = setTimeout(brain, 3500 + Math.random() * 3000); return; }
+    if (mood === 'sleep') { if (Math.random() < .3) speak('Zzz… 💤', 1800); T = setTimeout(brain, 5000); return; }
+    const r = Math.random();
+    if (r < .5) { const nx = Math.max(6, Math.min(W(), x + (Math.random() - .5) * 260)); dir = nx > x ? 1 : -1; const dur = Math.abs(nx - x) * 18 + 300; x = nx; box.classList.add('walk'); place(dur); busyT = Date.now() + dur; setTimeout(() => box.classList.remove('walk'), dur); }
+    else if (r < .62) act('jump', 700, 'happy');
+    else if (r < .72) act('wave', 1400);
+    else if (r < .8) act('sit', 2200);
+    else if (r < .86) act('spin', 900, 'happy');
+    else { const L = sad ? PET_SAY.sad : PET_SAY.happy; speak(L[Math.floor(Math.random() * L.length)]); }
+    T = setTimeout(brain, 2200 + Math.random() * 2600); };
+  const stop = () => { alive = false; clearTimeout(T); clearInterval(pv); box.remove(); };
+  const pv = setInterval(pos, 800);
+  chr.onclick = e => { e.stopPropagation(); if (st > 0 && mood !== 'sleep') { act('jump', 800, 'happy'); hap(6); speak(['Мур! 💕', 'Хи-хи 😆', 'Обнимашки! 🤗', 'Открой меня 👀'][Math.floor(Math.random() * 4)], 1600); } setTimeout(() => petSheet(), 350); };
+  draw(); pos(); place(0); setTimeout(() => speak(st === 0 ? 'Тук-тук… 🥚' : sad ? 'Я скучал 🥺' : slp ? 'Zzz… 💤' : 'Привет! 👋'), 900); T = setTimeout(brain, 2500);
+  petW = { stop, react: (kind) => { if (!alive || st === 0) return; if (kind === 'in') { if (mood === 'sleep') { speak('Ммм? Тебе написали 💌', 1800); return; } act('jump', 800, 'happy'); speak(['Тебе написали! 💌', 'Ооо, новое сообщение!', 'Это она? 😍', 'Отвечай скорее!'][Math.floor(Math.random() * 4)], 2000); } else if (kind === 'out' && Math.random() < .35 && mood !== 'sleep') { act('spin', 900, 'happy'); speak(['💕', 'Мило!', 'Ещё напиши ✨'][Math.floor(Math.random() * 3)], 1400); } else if (kind === 'typing' && mood !== 'sleep' && Date.now() > busyT) { speak('Она печатает… 👀', 1500); } }, refresh: (npt) => { Object.assign(pt, npt); mood = (Date.now() - new Date(pt.last_msg) > 864e5) ? 'sad' : (pt.outfit || {})._sleep ? 'sleep' : ''; draw(); } };
+}
+/* pet cards in chat */
+const PET_MSG = { hug: ['🤗', 'Обнимашки тебе!', 'happy'], kiss: ['💋', 'Чмок! Это от нас', 'happy'], miss: ['🥺', 'Я по тебе скучаю…', 'sad'], gn: ['🌙', 'Спокойной ночи! Сладких снов', 'sleep'], hi: ['👋', 'Приветик!', 'happy'], love: ['💕', 'Вы самые лучшие!', 'happy'], fed: ['🍰', 'Меня покормили! Ням', 'eat'] };
+async function petSend(k) {
+  if (!current) return; const { error } = await sb.from('messages').insert({ chat_id: current.chat_id, sender_id: me.id, body: '🐾pet:' + k }); if (error) toast(sendErr(error)); else hap([6, 30, 6]);
+}
+function petCard(m) {
+  const k = m.body.replace(/^🐾pet:/, '').trim(), d = PET_MSG[k] || PET_MSG.hi, box = el('div', { class: 'petcard' }), stg = el('div', { class: 'pc-st' });
+  const fill = pt => { stg.innerHTML = petScene((pt.outfit || {}).scene || 'room') + '<div class="pc-ch ' + (k === 'hug' || k === 'love' ? 'jump' : k === 'hi' ? 'wave' : '') + '">' + petSvg(pt.kind, Math.max(1, petStage(pt.xp)), d[2], pt.outfit, 120) + '</div>' + (k === 'hug' || k === 'kiss' || k === 'love' ? '<i class="pc-h a">💗</i><i class="pc-h b">💖</i><i class="pc-h c">' + d[0] + '</i>' : k === 'gn' ? '<i class="pc-h a">⭐</i><i class="pc-h b">✨</i>' : k === 'miss' ? '<i class="pc-h a">💧</i>' : ''); nm.textContent = pt.name; };
+  const nm = el('b', {}, '…');
+  box.append(stg, el('div', { class: 'pc-tx' }, nm, el('span', {}, d[0] + ' ' + d[1])));
+  const ch = m.chat_id, pt0 = petCache.get(ch); if (pt0) fill(pt0); else petGet(ch).then(pt => { if (pt) fill(pt); else stg.innerHTML = '<div style="font-size:60px;text-align:center;padding:20px">🧸</div>'; });
+  box.onclick = e => { e.stopPropagation(); if (current && current.chat_id === ch) petSheet(); };
+  return box;
 }
 async function petSheet() {
   if (!current) return; const c = current; let pt = await petGet(c.chat_id);
@@ -10211,20 +10291,20 @@ async function petSheet() {
     const setScene = () => { stage.querySelector('.pscene')?.remove(); stage.insertAdjacentHTML('afterbegin', petScene(pt.outfit.scene || (night ? 'winter' : 'room'))); stage.classList.toggle('dark', moodNow === 'sleep'); };
     stage.append(chr, bub); draw(); setScene();
     const say = t => { bub.textContent = t; bub.classList.remove('on'); void bub.offsetWidth; bub.classList.add('on'); };
-    const tmp = (m, ms, cls) => { busy = Date.now() + ms; moodNow = m; draw(); if (cls) { chr.classList.remove('jump', 'spin', 'nom'); void chr.offsetWidth; chr.classList.add(cls); } setTimeout(() => { if (Date.now() >= busy - 30) { moodNow = sad ? 'sad' : (pt.outfit._sleep ? 'sleep' : ''); draw(); } }, ms); };
+    const tmp = (m, ms, cls) => { busy = Date.now() + ms; moodNow = m; draw(); if (cls) { chr.classList.remove('jump', 'spin', 'nom', 'wob'); void chr.offsetWidth; chr.classList.add(cls); clearTimeout(chr._ct); chr._ct = setTimeout(() => chr.classList.remove(cls), ms - 50); } setTimeout(() => { if (Date.now() >= busy - 30) { moodNow = sad ? 'sad' : (pt.outfit._sleep ? 'sleep' : ''); draw(); } }, ms); };
     const sayIv = setInterval(() => { if (!stage.isConnected) { clearInterval(sayIv); return; } if (Date.now() < busy) return; const L = st === 0 ? PET_SAY.egg : moodNow === 'sleep' ? PET_SAY.sleep : sad ? PET_SAY.sad : PET_SAY.happy; say(L[Math.floor(Math.random() * L.length)]); }, 6500);
     setTimeout(() => say(st === 0 ? 'Тук-тук…' : sad ? 'Наконец-то ты тут 🥺' : 'Привет! 💕'), 500);
     const xpGive = (n, why) => { pt.xp += n; sb.from('chat_pets').update({ xp: pt.xp, last_pat: pt.last_pat, outfit: pt.outfit }).eq('chat_id', c.chat_id).then(() => {}); bar.style.width = Math.min(100, nx ? (pt.xp - PET_LV[st]) / (nx - PET_LV[st]) * 100 : 100) + '%'; xpT.textContent = ['Яйцо', 'Малыш', 'Подросток', 'Взрослый'][st] + ' · уровень ' + (st + 1) + ' · ' + pt.xp + ' XP'; toast(why + ' (+' + n + ' XP)'); };
     const hearts = (x, y, list) => { for (let i = 0; i < 7; i++) { const h = el('span', { class: 'petheart', style: `left:${x}px;top:${y}px;--dx:${Math.round(Math.random() * 110 - 55)}px;animation-delay:${i * .07}s` }, list[i % list.length]); document.body.append(h); setTimeout(() => h.remove(), 1300); } };
-    chr.onclick = e => { if (st === 0) { chr.classList.remove('wob'); void chr.offsetWidth; chr.classList.add('wob'); hap([5, 20, 5]); say('Тук-тук! Пишите — и я вылуплюсь 🐣'); return; }
+    chr.onclick = e => { if (st === 0) { chr.classList.remove('wob'); void chr.offsetWidth; chr.classList.add('wob'); setTimeout(() => chr.classList.remove('wob'), 1300); hap([5, 20, 5]); say('Тук-тук! Пишите — и я вылуплюсь 🐣'); return; }
       if (moodNow === 'sleep') { say('Ммм… дай поспать 😴'); return; }
       hap(8); tmp('happy', 1400, 'jump'); hearts(e.clientX, e.clientY, ['💗', '💖', '✨']); say(['Мур! 💕', 'Ещё-ещё!', 'Обожаю тебя 🥰', 'Хи-хи 😆'][Math.floor(Math.random() * 4)]);
       if (!pt.last_pat || Date.now() - new Date(pt.last_pat) > 36e5) { pt.last_pat = new Date().toISOString(); xpGive(3, '💗 ' + pt.name + ' доволен'); } };
     const bar = el('i', { style: `width:${Math.min(100, nx ? (pt.xp - PET_LV[st]) / (nx - PET_LV[st]) * 100 : 100)}%` }), xpT = el('div', { class: 'hint', style: 'text-align:center' }, ['Яйцо', 'Малыш', 'Подросток', 'Взрослый'][st] + ' · уровень ' + (st + 1) + ' · ' + pt.xp + ' XP');
     const feed = () => { if (st === 0) { toast('🥚 Яйцо пока не ест'); return; } if (moodNow === 'sleep') { toast('😴 Спит. Разбуди сначала'); return; }
-      sheet((s2, close2) => { const g = el('div', { class: 'pw-grid' }); PET_FOOD.forEach(([f, n]) => g.append(el('button', { onclick: () => { close2(); const r = chr.getBoundingClientRect(); const fl = el('span', { class: 'pfood', style: `left:${r.left + r.width / 2}px;top:${r.top + r.height * .45}px` }, f); document.body.append(fl); setTimeout(() => fl.remove(), 900); setTimeout(() => { tmp('eat', 1600, 'nom'); hap([6, 40, 6, 40, 6]); say(['Ням-ням! 😋', 'Вкуснятина!', 'Ещё хочу 🥺'][Math.floor(Math.random() * 3)]); const fd = pt.outfit._fed || 0; if (Date.now() - fd > 3 * 36e5) { pt.outfit = { ...pt.outfit, _fed: Date.now() }; xpGive(2, '😋 Накормлен'); } }, 700); } }, el('i', {}, f), el('small', {}, n)))); s2.append(el('h3', {}, '🍽 Чем покормить?'), g, el('div', { class: 'hint', style: 'margin-top:8px' }, 'Раз в 3 часа еда даёт +2 XP')); }); };
+      sheet((s2, close2) => { const g = el('div', { class: 'pw-grid' }); PET_FOOD.forEach(([f, n]) => g.append(el('button', { onclick: () => { close2(); const r = chr.getBoundingClientRect(); const fl = el('span', { class: 'pfood', style: `left:${r.left + r.width / 2}px;top:${r.top + r.height * .45}px` }, f); document.body.append(fl); setTimeout(() => fl.remove(), 900); setTimeout(() => { tmp('eat', 1600, 'nom'); hap([6, 40, 6, 40, 6]); say(['Ням-ням! 😋', 'Вкуснятина!', 'Ещё хочу 🥺'][Math.floor(Math.random() * 3)]); const fd = pt.outfit._fed || 0; if (Date.now() - fd > 3 * 36e5) { pt.outfit = { ...pt.outfit, _fed: Date.now() }; xpGive(2, '😋 Накормлен'); petSend('fed'); } }, 700); } }, el('i', {}, f), el('small', {}, n)))); s2.append(el('h3', {}, '🍽 Чем покормить?'), g, el('div', { class: 'hint', style: 'margin-top:8px' }, 'Раз в 3 часа еда даёт +2 XP')); }); };
     const play = () => { if (st === 0 || moodNow === 'sleep') { toast(st === 0 ? '🥚 Сначала пусть вылупится' : '😴 Спит'); return; } const ball = el('span', { class: 'pball' }, ['⚽', '🎾', '🏀', '🧶'][Math.floor(Math.random() * 4)]); stage.append(ball); setTimeout(() => ball.remove(), 1700); setTimeout(() => { tmp('happy', 1500, 'spin'); hap([10, 30, 10]); say(['Поймал! 🎉', 'Ещё разок!', 'Йуху! 🤸'][Math.floor(Math.random() * 3)]); }, 700); };
-    const sleepT = async () => { if (st === 0) return; const on = !pt.outfit._sleep; pt.outfit = { ...pt.outfit }; if (on) pt.outfit._sleep = 1; else delete pt.outfit._sleep; moodNow = on ? 'sleep' : (sad ? 'sad' : ''); draw(); stage.classList.toggle('dark', on); say(on ? 'Спокойной ночи 🌙' : 'Доброе утро! ☀️'); sleepB.lastChild.textContent = on ? 'Разбудить' : 'Уложить'; sleepB.firstChild.textContent = on ? '☀️' : '🌙'; await sb.from('chat_pets').update({ outfit: pt.outfit }).eq('chat_id', c.chat_id); petFab(c); };
+    const sleepT = async () => { if (st === 0) return; const on = !pt.outfit._sleep; pt.outfit = { ...pt.outfit }; if (on) pt.outfit._sleep = 1; else delete pt.outfit._sleep; moodNow = on ? 'sleep' : (sad ? 'sad' : ''); draw(); stage.classList.toggle('dark', on); say(on ? 'Спокойной ночи 🌙' : 'Доброе утро! ☀️'); sleepB.lastChild.textContent = on ? 'Разбудить' : 'Уложить'; sleepB.firstChild.textContent = on ? '☀️' : '🌙'; await sb.from('chat_pets').update({ outfit: pt.outfit }).eq('chat_id', c.chat_id); petCache.set(c.chat_id, pt); petW ? petW.refresh(pt) : petFab(c); };
     const sleepB = el('button', { onclick: sleepT }, el('i', {}, pt.outfit._sleep ? '☀️' : '🌙'), el('small', {}, pt.outfit._sleep ? 'Разбудить' : 'Уложить'));
     const acts = el('div', { class: 'pacts' }, el('button', { onclick: feed }, el('i', {}, '🍽'), el('small', {}, 'Покормить')), el('button', { onclick: play }, el('i', {}, '⚽'), el('small', {}, 'Поиграть')), sleepB, el('button', { onclick: e => chr.onclick(e) }, el('i', {}, '💗'), el('small', {}, 'Погладить')));
     let tab = 'hat'; const tabs = el('div', { class: 'pw-tabs' }), grid = el('div', { class: 'pw-grid' });
@@ -10234,11 +10314,13 @@ async function petSheet() {
       if (tab === 'scene') { PET_SCENES.forEach(([k, n, lv]) => { const lock = st < lv; const b = el('button', { class: 'psc' + ((pt.outfit.scene || 'room') === k ? ' on' : '') + (lock ? ' lk' : ''), onclick: () => lock ? toast('🔒 Откроется на стадии «' + ['Яйцо', 'Малыш', 'Подросток', 'Взрослый'][lv] + '»') : wear(k) }); b.innerHTML = `<span class="psc-p sc-${k}"></span><small>${lock ? '🔒 ур. ' + (lv + 1) : n}</small>`; grid.append(b); }); return; }
       grid.append(el('button', { class: !pt.outfit[tab] ? 'on' : '', onclick: () => wear(null) }, el('i', {}, '🚫'), el('small', {}, 'Снять')));
       PET_WEAR[tab].forEach(([e, n, lv]) => { const lock = st < lv; grid.append(el('button', { class: (pt.outfit[tab] === e ? 'on' : '') + (lock ? ' lk' : ''), onclick: () => lock ? toast('🔒 Откроется на стадии «' + ['Яйцо', 'Малыш', 'Подросток', 'Взрослый'][lv] + '»') : wear(e) }, el('i', {}, e), el('small', {}, lock ? '🔒 ур. ' + (lv + 1) : n))); }); };
-    const wear = async e => { if (st === 0) { toast('🥚 Сначала пусть вылупится'); return; } const o = { ...pt.outfit }; if (e) o[tab] = e; else delete o[tab]; pt.outfit = o; hap(6); if (tab === 'scene') setScene(); else { tmp('happy', 1200, 'spin'); say(['Мне идёт? 😍', 'Красота! ✨', 'Я модный 😎'][Math.floor(Math.random() * 3)]); } drawW(); const { error } = await sb.from('chat_pets').update({ outfit: o }).eq('chat_id', c.chat_id); if (error) toast('Не сохранилось'); else petFab(c); };
+    const wear = async e => { if (st === 0) { toast('🥚 Сначала пусть вылупится'); return; } const o = { ...pt.outfit }; if (e) o[tab] = e; else delete o[tab]; pt.outfit = o; hap(6); if (tab === 'scene') setScene(); else { tmp('happy', 1200, 'spin'); say(['Мне идёт? 😍', 'Красота! ✨', 'Я модный 😎'][Math.floor(Math.random() * 3)]); } drawW(); const { error } = await sb.from('chat_pets').update({ outfit: o }).eq('chat_id', c.chat_id); if (error) toast('Не сохранилось'); else { petCache.set(c.chat_id, pt); petW ? petW.refresh(pt) : petFab(c); } };
     drawW();
     s.append(stage, el('h3', { style: 'text-align:center;margin:4px 0 0' }, pt.name), xpT, el('div', { class: 'pet-lv' }, bar),
       el('div', { class: 'hint', style: 'text-align:center' }, nx ? 'До следующей стадии: ' + (nx - pt.xp) + ' XP' : '🏆 Максимальная стадия!'), el('div', { style: 'text-align:center;margin:6px 0 10px;font-weight:700' }, MOOD), acts,
+      st > 0 ? el('div', { class: 'ach-h' }, '💌 Передать от ' + pt.name) : null, st > 0 ? el('div', { class: 'pmsg' }, ['hug', 'kiss', 'miss', 'love', 'hi', 'gn'].map(k => el('button', { onclick: () => { close(); petSend(k); } }, el('i', {}, PET_MSG[k][0]), el('small', {}, ({ hug: 'Обнять', kiss: 'Чмок', miss: 'Скучаю', love: 'Люблю', hi: 'Привет', gn: 'Ночи' })[k])))) : null,
       el('div', { class: 'ach-h' }, '👗 Гардероб'), tabs, grid,
+      el('label', { class: 'pw-tog' }, el('span', {}, '🚶 Гуляет по чату'), (() => { const cb = el('input', { type: 'checkbox' }); cb.checked = settings.petWalk !== false; cb.onchange = () => { settings.petWalk = cb.checked; saveSettings(); petFab(c); }; return cb; })()),
       el('button', { class: 'btn ghost', style: 'margin-top:10px', onclick: async () => { const n = await vDialog({ input: true, title: 'Новое имя', value: pt.name }); if (!n || !n.trim()) return; await sb.from('chat_pets').update({ name: n.trim().slice(0, 20) }).eq('chat_id', c.chat_id); close(); toast('✏️ Теперь его зовут ' + n.trim()); petFab(c); } }, '✏️ Переименовать'));
   });
 }
