@@ -1113,11 +1113,26 @@ html.light .pcard{background:#fff;border-color:#0000000d}
 .wparty .wt{display:flex;align-items:center;gap:8px;padding:calc(8px + var(--safe-t)) 10px 8px}.wparty .wt b{flex:1;font-size:16px}
 .wparty .wp{width:100%;aspect-ratio:16/9;background:#111}.wparty .wp iframe,.wparty .wp>div{width:100%;height:100%}
 .wparty .who{display:flex;align-items:center;gap:6px;padding:12px;font-size:13px;opacity:.85;flex-wrap:wrap}
-.wparty .wr{display:flex;gap:8px;justify-content:center;padding:6px 12px}.wparty .wr button{width:50px;height:50px;border-radius:50%;background:#ffffff14;font-size:24px}
-.wparty .wlog{flex:1;overflow:hidden;position:relative}
+.wparty .wr{display:flex;gap:8px;justify-content:center;padding:6px 12px}.wparty .wr button{width:44px;height:44px;border-radius:50%;background:#ffffff14;font-size:21px}
+.wparty .wlog{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+.wparty .wchat{flex:1;min-height:0;position:relative;display:flex;flex-direction:column}
+.wparty .wmsgs{flex:1;overflow-y:auto;padding:6px 12px;display:flex;flex-direction:column;gap:6px;-webkit-mask-image:linear-gradient(transparent,#000 24px)}
+.wparty .wsys{align-self:center;font-size:11.5px;opacity:.5;text-align:center;padding:6px 10px;margin-top:auto}
+.wparty .wm{display:flex;align-items:flex-end;gap:6px;max-width:85%;animation:fadeUp .25s}
+.wparty .wm.me{align-self:flex-end}
+.wparty .wm .wb{background:#ffffff16;border-radius:16px 16px 16px 5px;padding:7px 11px;font-size:14.5px;line-height:1.3;word-break:break-word}
+.wparty .wm.me .wb{background:var(--accent);border-radius:16px 16px 5px 16px}
+.wparty .wm .wb b{display:block;font-size:11.5px;color:var(--accent2);margin-bottom:1px}
+.wparty .wtyp{display:flex;align-items:center;gap:5px;padding:0 14px;height:22px;font-size:12px;opacity:.8}
+.wparty .wtyp .av{margin-left:-5px;box-shadow:0 0 0 1.5px #000}.wparty .wtyp .av:first-child{margin-left:0}
+.wparty .dts{display:inline-flex;gap:2px;margin-left:2px}.wparty .dts b{width:4px;height:4px;border-radius:50%;background:#fff;animation:tbDot 1.2s infinite}.wparty .dts b:nth-child(2){animation-delay:.18s}.wparty .dts b:nth-child(3){animation-delay:.36s}
+.wparty .wcomp{display:flex;gap:8px;padding:6px 10px calc(10px + var(--safe-b))}
+.wparty .wcomp input{flex:1;min-width:0;background:#ffffff14;border:1px solid #ffffff1a;border-radius:22px;padding:11px 15px;color:#fff;font-size:15px}
+.wparty .wcomp button{width:44px;height:44px;border-radius:50%;background:var(--accent);color:#fff;flex:none;display:grid;place-items:center}
+.wparty .wcomp button svg{width:20px;height:20px}
 .wparty .wfloat{position:absolute;bottom:0;font-size:34px;animation:wfl 2.4s ease-out forwards;pointer-events:none}
 @keyframes wfl{0%{transform:translateY(0) scale(.6);opacity:0}15%{opacity:1;transform:translateY(-30px) scale(1.1)}100%{transform:translateY(-260px) scale(1);opacity:0}}
-.wparty .wsync{font-size:12px;opacity:.6;text-align:center;padding:4px 12px calc(14px + var(--safe-b))}
+.wparty .wsync{font-size:11.5px;opacity:.55;text-align:center;padding:2px 12px}
 .atrow{display:flex;gap:10px;overflow-x:auto;padding:4px 14px 12px;scrollbar-width:none}
 .atc{flex:none;width:96px;cursor:pointer;text-align:center;font-size:12.5px;font-weight:700}
 .atc .pv{height:150px;border-radius:18px;margin-bottom:6px;position:relative;overflow:hidden;border:2px solid transparent;box-shadow:0 6px 16px #0006}
@@ -3509,7 +3524,7 @@ async function openGroupInfo(c) {
 
 
 /* ================= SETTINGS & UPDATES ================= */
-const APP_VERSION = '2.36.0';
+const APP_VERSION = '2.36.1';
 const TK1 = (() => { const t = document.createElement('template'); t.innerHTML = '<svg viewBox="0 0 16 11" width="15" height="11"><path d="M1.5 6l3 3 6.5-7.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>'; return t.content; })();
 const TK2 = (() => { const t = document.createElement('template'); t.innerHTML = '<svg viewBox="0 0 20 11" width="18" height="11"><path d="M1.5 6l3 3 6.5-7.5M8 8.5l.8.6 6.7-7.6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>'; return t.content; })();
 const APP_THEMES = {
@@ -7422,12 +7437,20 @@ let ytApiP = null;
 function ytApi() { if (!ytApiP) ytApiP = new Promise(ok => { if (window.YT && YT.Player) return ok(); window.onYouTubeIframeAPIReady = () => ok(); const sc = document.createElement('script'); sc.src = 'https://www.youtube.com/iframe_api'; document.head.append(sc); }); return ytApiP; }
 async function openWatch(id, m) {
   const holder = el('div', { id: 'ytp' + Date.now() }), who = el('div', { class: 'who' }), log = el('div', { class: 'wlog' }), sync = el('div', { class: 'wsync' }, 'Подключаюсь…');
+  const wmsgs = el('div', { class: 'wmsgs' }, el('div', { class: 'wsys' }, '💬 Чат комнаты — пиши, пока смотрите. Сообщения видят все, кто сейчас тут')), wtyp = el('div', { class: 'wtyp' }), winp = el('input', { placeholder: 'Написать всем…', maxlength: 300, enterkeyhint: 'send' });
+  const typers = new Map(); let typT = 0;
+  const drawTyp = () => { const n = Date.now(); for (const [u, t] of typers) if (n - t > 3500) typers.delete(u); const ids = [...typers.keys()]; wtyp.innerHTML = ''; if (!ids.length) return; ids.slice(0, 3).forEach(u => { const p = profiles.get(u) || {}; wtyp.append(avatar(p.display_name, p.avatar_url, 18)); }); wtyp.append(el('span', {}, (ids.length > 1 ? ids.length + ' пишут' : ((profiles.get(ids[0]) || {}).display_name || '').split(' ')[0] + ' пишет')), el('i', { class: 'dts' }, el('b'), el('b'), el('b'))); };
+  const addMsg = (uid, text) => { const p = uid === me.id ? me : profiles.get(uid) || {}; const mine = uid === me.id; const row = el('div', { class: 'wm' + (mine ? ' me' : '') }, mine ? null : avatar(p.display_name, p.avatar_url, 28), el('div', { class: 'wb' }, mine ? null : el('b', {}, (p.display_name || '…').split(' ')[0]), el('span', {}, text))); wmsgs.append(row); while (wmsgs.children.length > 120) wmsgs.firstChild.remove(); wmsgs.scrollTop = wmsgs.scrollHeight; };
+  const wsend = () => { const t = winp.value.trim(); if (!t) return; winp.value = ''; addMsg(me.id, t); ch.send({ type: 'broadcast', event: 'w', payload: { t: 'msg', u: me.id, x: t } }); hap(5); };
+  winp.onkeydown = e => { if (e.key === 'Enter') { e.preventDefault(); wsend(); } };
+  winp.oninput = () => { if (Date.now() - typT > 1500) { typT = Date.now(); ch.send({ type: 'broadcast', event: 'w', payload: { t: 'typing', u: me.id } }); } };
+  const typIv = setInterval(drawTyp, 1000);
   const ov = el('div', { class: 'wparty' }, el('div', { class: 'wt' }, el('button', { class: 'icon-btn', html: ICON.back, onclick: () => L.close() }), el('b', {}, '📺 Смотрим вместе')), el('div', { class: 'wp' }, holder), who,
-    el('div', { class: 'wr' }, ['😂', '🔥', '😱', '❤️', '👏', '💀'].map(e => el('button', { onclick: () => { floatW(e); ch.send({ type: 'broadcast', event: 'w', payload: { t: 'react', e } }); } }, e))), log, sync);
+    el('div', { class: 'wr' }, ['😂', '🔥', '😱', '❤️', '👏', '💀'].map(e => el('button', { onclick: () => { floatW(e); hap(5); ch.send({ type: 'broadcast', event: 'w', payload: { t: 'react', e } }); } }, e))), el('div', { class: 'wchat' }, wmsgs, log), wtyp, sync, el('div', { class: 'wcomp' }, winp, el('button', { html: ICON.send, onclick: () => wsend() })));
   document.body.append(ov);
   let player = null, applying = 0, alive = true, lastAct = 0;
   const ch = sb.channel('watch-' + m.chat_id + '-' + m.id, { config: { presence: { key: me.id } } });
-  const L = pushLayer(() => { alive = false; try { player && player.destroy(); } catch {} sb.removeChannel(ch); ov.remove(); });
+  const L = pushLayer(() => { alive = false; clearInterval(typIv); try { player && player.destroy(); } catch {} sb.removeChannel(ch); ov.remove(); });
   const floatW = e => { const f = el('div', { class: 'wfloat', style: 'left:' + (10 + Math.random() * 80) + '%' }, e); log.append(f); setTimeout(() => f.remove(), 2500); };
   const state = () => player && player.getCurrentTime ? { t: 'state', playing: player.getPlayerState() === 1, time: player.getCurrentTime(), at: Date.now() } : null;
   const apply = st => {
@@ -7440,6 +7463,8 @@ async function openWatch(id, m) {
   ch.on('broadcast', { event: 'w' }, ({ payload: d }) => {
     if (!alive || !d) return;
     if (d.t === 'react') floatW(d.e);
+    if (d.t === 'msg' && d.u && d.x) { typers.delete(d.u); drawTyp(); fetchProfiles([d.u]).then(() => addMsg(d.u, String(d.x).slice(0, 300))); hap(4); }
+    if (d.t === 'typing' && d.u && d.u !== me.id) { typers.set(d.u, Date.now()); fetchProfiles([d.u]).then(drawTyp); }
     if (d.t === 'hello') { const st = state(); if (st) ch.send({ type: 'broadcast', event: 'w', payload: st }); }
     if (d.t === 'state') apply(d);
   }).on('presence', { event: 'sync' }, async () => {
