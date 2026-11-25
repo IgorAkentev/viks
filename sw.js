@@ -1,4 +1,4 @@
-const CACHE = 'viks-shell-v2';
+const CACHE = 'viks-shell-v3';
 const STATIC = 'viks-static-v1';
 self.addEventListener('install', () => self.skipWaiting());
 self.addEventListener('activate', e => e.waitUntil(self.clients.claim()));
@@ -27,18 +27,23 @@ self.addEventListener('push', e => {
   e.waitUntil((async () => {
     const wins = await self.clients.matchAll({ type: 'window', includeUncontrolled: true });
     if (wins.some(w => w.focused && w.visibilityState === 'visible')) return;
+    let prev = 0; try { const old = await self.registration.getNotifications({ tag: d.tag }); old.forEach(n => { prev += (n.data && n.data.n) || 1; }); } catch {}
+    const n = prev + 1;
     await self.registration.showNotification(d.title || 'Viks', {
-      body: d.body || '', icon: d.icon || 'icon-192.png', badge: 'icon-192.png', tag: d.tag, renotify: true,
-      data: { chat_id: d.chat_id }, vibrate: [60, 40, 60]
+      body: (n > 1 ? '(' + n + ') ' : '') + (d.body || ''), icon: d.icon || 'icon-192.png', badge: 'icon-192.png', image: d.image || undefined, tag: d.tag, renotify: !d.quiet, silent: !!d.quiet,
+      data: { chat_id: d.chat_id, n }, vibrate: d.quiet ? [] : [60, 40, 60], timestamp: Date.now(),
+      actions: d.chat_id ? [{ action: 'reply', title: '↩ Ответить' }, { action: 'open', title: 'Открыть' }] : []
     });
+    try { const all = await self.registration.getNotifications(); let tot = 0; all.forEach(x => tot += (x.data && x.data.n) || 1); if (self.navigator.setAppBadge) await self.navigator.setAppBadge(tot); } catch {}
   })());
 });
 self.addEventListener('notificationclick', e => {
   e.notification.close();
-  const id = e.action && e.action.startsWith('c:') ? e.action.slice(2) : e.notification.data && e.notification.data.chat_id;
+  const id = e.action && e.action.startsWith('c:') ? e.action.slice(2) : e.notification.data && e.notification.data.chat_id, reply = e.action === 'reply';
   e.waitUntil((async () => {
+    try { const all = await self.registration.getNotifications(); let tot = 0; all.forEach(x => tot += (x.data && x.data.n) || 1); if (self.navigator.setAppBadge) { if (tot) await self.navigator.setAppBadge(tot); else await self.navigator.clearAppBadge(); } } catch {}
     const wins = await self.clients.matchAll({ type: 'window', includeUncontrolled: true });
-    for (const w of wins) { try { await w.focus(); if (id) w.postMessage({ open: id }); return; } catch {} }
-    await self.clients.openWindow('./' + (id ? '?chat=' + id : ''));
+    for (const w of wins) { try { await w.focus(); if (id) w.postMessage({ open: id, reply }); return; } catch {} }
+    await self.clients.openWindow('./' + (id ? '?chat=' + id + (reply ? '&reply=1' : '') : ''));
   })());
 });
