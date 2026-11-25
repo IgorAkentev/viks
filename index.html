@@ -146,7 +146,7 @@ input,textarea{font:inherit;color:var(--text)}
 .av-edit .cam svg{width:16px;height:16px}
 .viewer{position:fixed;inset:0;background:#000e;z-index:60;display:grid;place-items:center;padding:20px}
 .viewer img{max-width:100%;max-height:100%;border-radius:8px}
-.toast{position:fixed;left:50%;bottom:calc(90px + var(--safe-b));transform:translateX(-50%);background:#2b3040;padding:11px 18px;border-radius:12px;font-size:14px;z-index:70;box-shadow:0 10px 30px #0008;max-width:90vw}
+.toast{position:fixed;left:50%;bottom:calc(90px + var(--safe-b));transform:translateX(-50%);background:#2b3040;padding:11px 18px;border-radius:12px;font-size:14px;z-index:210;box-shadow:0 10px 30px #0008;max-width:90vw}
 .spin{width:22px;height:22px;border:3px solid #ffffff30;border-top-color:#fff;border-radius:50%;animation:sp 0.7s linear infinite;margin:30px auto}
 @keyframes sp{to{transform:rotate(360deg)}}
 ::-webkit-scrollbar{width:6px}::-webkit-scrollbar-thumb{background:#ffffff1a;border-radius:3px}
@@ -1995,7 +1995,7 @@ html.onehand .tabbar button{padding:10px 0 9px}html.onehand .tabbar button svg{w
 .toast{border-radius:var(--r-m)!important;box-shadow:var(--sh-2)}
 .hint{line-height:1.45}
 /* vdialog */
-.vdlg-bg{position:fixed;inset:0;z-index:99;background:#0009;display:grid;place-items:center;padding:24px;animation:fade .15s}
+.vdlg-bg{position:fixed;inset:0;z-index:130;background:#0009;display:grid;place-items:center;padding:24px;animation:fade .15s}
 .vdlg{width:100%;max-width:340px;background:var(--panel);border:1px solid #ffffff14;border-radius:var(--r-xl);padding:22px 18px 16px;box-shadow:0 30px 80px #000a;animation:dlgPop .28s cubic-bezier(.2,1.3,.4,1);text-align:center}
 @keyframes dlgPop{from{transform:scale(.88);opacity:0}}
 .vdlg .ic{font-size:40px;margin-bottom:6px}
@@ -2672,7 +2672,7 @@ html.rm .psvg *{animation:none!important}
 .pgl{display:flex;flex-direction:column;gap:8px;margin-top:10px}
 .pgl button{display:flex;align-items:center;gap:12px;padding:14px;border-radius:20px;background:linear-gradient(160deg,#ffffff12,#ffffff05);border:1px solid #ffffff14;text-align:left}
 .pgl button i{font-style:normal;font-size:34px}.pgl b{display:block;font-size:15px}.pgl small{color:var(--muted);font-size:12px}
-.pgame{position:fixed;inset:0;z-index:95;background:linear-gradient(180deg,#1e1b4b,#4c1d95 60%,#831843);display:flex;flex-direction:column;color:#fff;animation:fade .25s;touch-action:none}
+.pgame{position:fixed;inset:0;z-index:120;background:linear-gradient(180deg,#1e1b4b,#4c1d95 60%,#831843);display:flex;flex-direction:column;color:#fff;animation:fade .25s;touch-action:none}
 .pgame.visit{background:#0b0b10}
 .pg-top{display:flex;align-items:center;gap:10px;padding:calc(10px + var(--safe-t)) 12px 8px;font-weight:800;font-size:16px}
 .pg-top button{width:40px;height:40px;border-radius:50%;background:#ffffff1c;color:#fff;font-size:18px}
@@ -3512,7 +3512,7 @@ function viewImage(src) { galViewer([{ image_url: src }], 0); }
 
 /* ================= PROFILES ================= */
 async function openProfile(uid, fromEl, view) {
-  if (uid && me && uid !== me.id && typeof uid === 'string') sb.rpc('log_profile_view', { owner: uid }).then(() => {});
+  if (uid && me && uid !== me.id && typeof uid === 'string' && /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(uid) && !(typeof isBotId === 'function' && isBotId(uid))) sb.rpc('log_profile_view', { owner: uid }).then(() => {});
   if (!uid) return;
   if (uid === me.id && !view) return openMyProfile();
   const self = uid === me.id;
@@ -3724,7 +3724,7 @@ async function openGroupInfo(c) {
 
 
 /* ================= SETTINGS & UPDATES ================= */
-const APP_VERSION = '2.40.1';
+const APP_VERSION = '2.40.2';
 const TK1 = (() => { const t = document.createElement('template'); t.innerHTML = '<svg viewBox="0 0 16 11" width="15" height="11"><path d="M1.5 6l3 3 6.5-7.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>'; return t.content; })();
 const TK2 = (() => { const t = document.createElement('template'); t.innerHTML = '<svg viewBox="0 0 20 11" width="18" height="11"><path d="M1.5 6l3 3 6.5-7.5M8 8.5l.8.6 6.7-7.6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>'; return t.content; })();
 const APP_THEMES = {
@@ -10508,9 +10508,10 @@ function petHouse(pt, c, onChange) {
 }
 /* games */
 function petGames(pt, c, onDone) {
-  if (petStage(pt.xp) === 0) { toast('🥚 Сначала пусть вылупится'); return; } if (petIsSleep(pt)) { toast('😴 Спит. Разбуди сначала'); return; }
+  if (petStage(pt.xp) === 0) { toast('🥚 Сначала пусть вылупится'); return; }
+  if (petIsSleep(pt)) { vConfirm('😴 ' + pt.name + ' спит. Разбудить и поиграть?').then(ok => { if (!ok) return; pt.outfit = { ...pt.outfit }; delete pt.outfit._sleep; pt.data.wake = new Date().toDateString(); petSave(pt, c, { outfit: pt.outfit }); petGames(pt, c, onDone); }); return; }
   sheet((s, close) => s.append(el('h3', {}, '🎮 Мини-игры'), el('div', { class: 'hint' }, 'За игры — XP (до 15 в день) и настроение'),
-    el('div', { class: 'pgl' }, [['catch', '🍪', 'Поймай вкусняшку', 'Двигай питомца и лови еду. Бомбы не трогай!'], ['cups', '🎁', 'Прятки', 'Под каким подарком спрятался питомец?'], ['beat', '💗', 'Ритм сердечек', 'Тапай по сердечкам, пока кружок не исчез']].map(([k, i, n, d]) => el('button', { onclick: () => { close(); setTimeout(() => petGame(k, pt, c, onDone), 60); } }, el('i', {}, i), el('div', {}, el('b', {}, n), el('small', {}, d)))))));
+    el('div', { class: 'pgl' }, [['catch', '🍪', 'Поймай вкусняшку', 'Двигай питомца и лови еду. Бомбы не трогай!'], ['cups', '🎁', 'Прятки', 'Под каким подарком спрятался питомец?'], ['beat', '💗', 'Ритм сердечек', 'Тапай по сердечкам, пока кружок не исчез']].map(([k, i, n, d]) => el('button', { onclick: () => petGame(k, pt, c, onDone) }, el('i', {}, i), el('div', {}, el('b', {}, n), el('small', {}, d)))))));
 }
 function petGame(k, pt, c, onDone) {
   const st = petStage(pt.xp), ov = el('div', { class: 'pgame' }), hud = el('div', { class: 'pg-hud' }), area = el('div', { class: 'pg-area' }); let score = 0, alive = true, raf = 0, iv = 0;
@@ -10571,7 +10572,7 @@ async function petVisit(pt, c) {
   if (petStage(pt.xp) === 0) { toast('🥚 Сначала пусть вылупится'); return; }
   const list = (await petTopLoad() || []).filter(x => x.chat_id !== c.chat_id); if (!list) return;
   sheet((s, close) => { const g = el('div', { class: 'ptop' }); if (!list.length) g.append(el('div', { class: 'empty' }, 'Пока никто не открыл своего питомца для гостей. Включи «Показывать в рейтинге» — и к вам тоже будут ходить 🏡'));
-    list.slice(0, 20).forEach(f => { const r = el('button', { class: 'ptop-r', onclick: () => { close(); petVisitScene(pt, c, f); } }); r.innerHTML = '<span class="pv">' + petSvg(f.kind, petStage(f.xp), 'happy', f.outfit, 46) + '</span>'; r.append(el('div', {}, el('b', {}, f.name), el('small', {}, PET_NAMES[f.kind] + ' · ' + STAGES[petStage(f.xp)] + (f.owners ? ' · у ' + f.owners : ''))), el('span', { class: 'go' }, 'В гости →')); g.append(r); });
+    list.slice(0, 20).forEach(f => { const r = el('button', { class: 'ptop-r', onclick: () => petVisitScene(pt, c, f) }); r.innerHTML = '<span class="pv">' + petSvg(f.kind, petStage(f.xp), 'happy', f.outfit, 46) + '</span>'; r.append(el('div', {}, el('b', {}, f.name), el('small', {}, PET_NAMES[f.kind] + ' · ' + STAGES[petStage(f.xp)] + (f.owners ? ' · у ' + f.owners : ''))), el('span', { class: 'go' }, 'В гости →')); g.append(r); });
     s.append(el('h3', {}, '🏡 Сходить в гости'), el('div', { class: 'hint' }, 'Выбери, к кому пойдёт ' + pt.name), g); });
 }
 function petVisitScene(pt, c, f) {
