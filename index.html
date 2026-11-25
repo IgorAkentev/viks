@@ -2725,7 +2725,7 @@ html.rm .psvg *{animation:none!important}
     </form>
     <form id="regForm" class="hidden">
       <div class="field"><label>Имя (как тебя видят)</label><input id="rName" maxlength="40" required></div>
-      <div class="field"><label>Юзернейм</label><input id="rUser" maxlength="24" placeholder="латиница, цифры, _" autocapitalize="off" autocomplete="off" required><div class="hint" id="rUserHint"></div></div>
+      <div class="field"><label>Юзернейм</label><input id="rUser" maxlength="25" placeholder="например: alina_fedorova" autocapitalize="off" autocorrect="off" spellcheck="false" autocomplete="off" required><div class="hint" id="rUserHint"></div></div>
       <div class="field"><label>Почта</label><input id="rEmail" type="email" autocomplete="email" required></div>
       <div class="field"><label>Пароль</label><input id="rPass" type="password" minlength="6" autocomplete="new-password" required><div class="hint">минимум 6 символов</div></div>
       <button class="btn" id="rBtn">Создать аккаунт</button>
@@ -2928,10 +2928,11 @@ $('#tabReg').onclick = () => { $('#tabReg').classList.add('on'); $('#tabLogin').
 
 let userCheckT, userOk = false;
 $('#rUser').addEventListener('input', () => {
-  const u = $('#rUser').value.trim(), h = $('#rUserHint');
+  const raw = $('#rUser').value, clean = raw.replace(/[\s\u200b-\u200f\u2060\ufeff@]/g, ''); if (clean !== raw) $('#rUser').value = clean;
+  const u = clean, h = $('#rUserHint');
   userOk = false; clearTimeout(userCheckT);
   if (!u) { h.textContent = ''; return; }
-  if (!/^[a-zA-Z0-9_]{3,24}$/.test(u)) { h.className = 'hint bad'; h.textContent = '3–24 символа: латиница, цифры, _'; return; }
+  if (!/^[a-zA-Z0-9_]{3,24}$/.test(u)) { h.className = 'hint bad'; h.textContent = /[а-яё]/i.test(u) ? 'Только латиница: русские буквы нельзя' : u.length < 3 ? 'Минимум 3 символа' : u.length > 24 ? 'Максимум 24 символа' : 'Можно только латиницу, цифры и _ (без пробелов и значков)'; return; }
   h.className = 'hint'; h.textContent = 'проверяю…';
   userCheckT = setTimeout(async () => {
     const { data, error } = await sb.rpc('username_available', { u });
@@ -2949,8 +2950,8 @@ $('#loginForm').onsubmit = async e => {
 };
 $('#regForm').onsubmit = async e => {
   e.preventDefault(); authMsg();
-  const username = $('#rUser').value.trim();
-  if (!userOk) { authMsg('Выбери свободный юзернейм'); return; }
+  const username = $('#rUser').value.replace(/[\s\u200b-\u200f\u2060\ufeff@]/g, '');
+  if (!userOk) { authMsg(/^[a-zA-Z0-9_]{3,24}$/.test(username) ? 'Подожди секунду — проверяю, свободен ли юзернейм' : 'Юзернейм: только латиница, цифры и _ (без @ и пробелов)'); return; }
   $('#rBtn').disabled = true;
   const { data, error } = await sb.auth.signUp({
     email: $('#rEmail').value.trim(), password: $('#rPass').value,
@@ -3724,7 +3725,7 @@ async function openGroupInfo(c) {
 
 
 /* ================= SETTINGS & UPDATES ================= */
-const APP_VERSION = '2.40.2';
+const APP_VERSION = '2.40.3';
 const TK1 = (() => { const t = document.createElement('template'); t.innerHTML = '<svg viewBox="0 0 16 11" width="15" height="11"><path d="M1.5 6l3 3 6.5-7.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>'; return t.content; })();
 const TK2 = (() => { const t = document.createElement('template'); t.innerHTML = '<svg viewBox="0 0 20 11" width="18" height="11"><path d="M1.5 6l3 3 6.5-7.5M8 8.5l.8.6 6.7-7.6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>'; return t.content; })();
 const APP_THEMES = {
